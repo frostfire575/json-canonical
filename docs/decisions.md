@@ -1,0 +1,23 @@
+# Decisions
+
+## ADR 001 — Separate compatibility from text processing (2026-10-19)
+Accepted. Preserve upstream traversal in a typed JS fallback, including quirks;
+offer Rust text APIs separately. Rejected automatic serde conversion of live JS
+objects: it changes numbers, UTF-16, getters, comparator and toJSON behavior.
+Direct Node-API traversal is an experiment for later profiling, not the default.
+
+## ADR 002 — Native token-preserving text output
+Accepted for MVP. Use serde_json RawValue for validation/traversal; preserve raw
+primitive tokens, decode keys for UTF-16 sorting, and reject duplicate decoded
+keys and lone surrogate keys. Text API is explicitly distinct from JS stringify.
+Bound bytes and nesting; never relax compatibility implicitly for speed.
+
+## ADR 003 — Version-required cache
+Accepted. Require an explicit version argument each time. Cache stores one result
+per weakly-held object, supports delete/clear, and recomputes for a changed version.
+Caller must change version on any observable mutation; document that responsibility.
+
+## ADR 004 — Local Git workflow
+User authorizes local commits, branches and merges. Use a local implementation
+branch after the initial memory commit; merge stable verified milestones locally.
+No push, publish or release is authorized.
