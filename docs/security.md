@@ -24,4 +24,7 @@ Cache correctness depends on explicit versions. Change versions for nested and
 external state changes too. WeakMap avoids retaining keys, not cached output
 memory while keys are live. Native binaries are executable code; only load
 trusted artifacts. Dependency audit findings and release blockers are recorded
-in roadmap evidence. No general security certification is claimed.
+in [audit evidence](audits/README.md). On2026-10-19 pnpm audit reported zero
+advisories; OSV queries for38 locked registry crates returned no advisories.
+These database results do not establish absence of defects. No general security
+certification is claimed.

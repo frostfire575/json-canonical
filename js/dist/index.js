@@ -6,6 +6,7 @@ exports.stringifyBatch = stringifyBatch;
 exports.createSerializerCache = createSerializerCache;
 exports.stringifyJson = stringifyJson;
 exports.stringifyJsonBatch = stringifyJsonBatch;
+exports.selectJson = selectJson;
 /** Upstream-compatible traversal, deliberately using JavaScript semantics. */
 function stringify(data, options) {
     const opts = typeof options === 'function' ? { cmp: options } : options || {};
@@ -118,5 +119,24 @@ function stringifyJsonBatch(inputs, options) {
     if (total > 67108864)
         throw new RangeError('Batch input limit is 64 MiB');
     return native().stringifyJsonBatch(inputs, ...limits(options));
+}
+/** Extract raw JSON text using a JSON Pointer subset; missing paths yield undefined. */
+function selectJson(input, path, options) {
+    if (typeof input !== 'string' || !input.isWellFormed())
+        throw new TypeError('input must be well-formed JSON text');
+    if (typeof path !== 'string' || !path.isWellFormed())
+        throw new TypeError('path must be a well-formed string');
+    if (path !== '' && !path.startsWith('/'))
+        throw new RangeError('path must be empty or start with /');
+    if (Buffer.byteLength(path) > 65536)
+        throw new RangeError('Path limit is 64 KiB');
+    const segments = path === '' ? [] : path.slice(1).split('/').map(segment => {
+        if (/~(?![01])/u.test(segment))
+            throw new RangeError('Invalid JSON pointer escape');
+        return segment.replace(/~1/g, '/').replace(/~0/g, '~');
+    });
+    if (segments.length > 128)
+        throw new RangeError('Path limit is 128 segments');
+    return native().selectJson(input, segments, ...limits(options)) ?? undefined;
 }
 exports.default = stringify;

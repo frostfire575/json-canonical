@@ -22,4 +22,8 @@ when a native API is requested. Official napi CLI generates the platform loader.
 Batch compatibility calls preserve input order. Native text batching reduces
 boundary crossings. Caching must require a caller-provided version on each call;
 identity alone never implies immutability. WeakMap storage does not retain keys.
-Parsing/selection/async/streaming/hashing need separate evidence before adoption.
+Selective extraction validates syntax and bounds on the full input, then uses
+Serde visitors to retain only the matching raw value at each path level. It
+avoids constructing full JS or Rust object trees, but may scan a subtree again
+for deeper paths. It returns raw JSON text and has separate duplicate/Unicode
+semantics. Parsing/async/streaming/hashing remain deferred pending use cases.

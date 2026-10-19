@@ -12,7 +12,7 @@
       "require": { "types": "./js/dist/index.d.ts", "default": "./js/index.cjs" }
     }
   },
-  "files": ["js/dist", "js/index.cjs", "js/index.mjs", "js/index.d.mts", "native", "LICENSE", "NOTICE", "README.md", "docs/api.md", "docs/compatibility.md"],
+  "files": ["js/dist", "js/index.cjs", "js/index.mjs", "js/index.d.mts", "native", "LICENSE", "NOTICE", "THIRD_PARTY_NOTICES.txt", "README.md", "docs/api.md", "docs/compatibility.md"],
   "engines": { "node": ">=22.13.0" },
   "packageManager": "pnpm@12.10.1",
   "napi": {
@@ -28,7 +28,10 @@
     "test:rust": "cargo test --locked",
     "bench": "node benches/run.cjs",
     "check": "pnpm build && pnpm test:rust && pnpm test && pnpm test:types",
-    "test:pack": "node scripts/test-pack.cjs"
+    "test:pack": "node scripts/test-pack.cjs",
+    "audit:deps": "node scripts/audit.cjs",
+    "setup:upstream": "node scripts/setup-upstream.cjs",
+    "licenses:generate": "node scripts/license-notices.cjs"
   },
   "devDependencies": {
     "@napi-rs/cli": "3.10.8",

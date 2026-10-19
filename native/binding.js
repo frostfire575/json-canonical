@@ -778,5 +778,6 @@ function __napiStampBindingTarget(exportsObject, target) {
 // linked import resolves to `undefined`.
 module.exports.__napiBindingTarget = __napiStampBindingTarget(nativeBinding, __napiLoadedBindingTarget)
 module.exports = nativeBinding
+module.exports.selectJson = nativeBinding.selectJson
 module.exports.stringifyJson = nativeBinding.stringifyJson
 module.exports.stringifyJsonBatch = nativeBinding.stringifyJsonBatch

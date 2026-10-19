@@ -1,0 +1,2843 @@
+{
+  "timestamp": "2026-10-19T00:07:07.143Z",
+  "command": "node benches/run.cjs",
+  "workingDirectory": "D:\\misc\\npm\\stable-json-rs",
+  "configuration": {
+    "BENCH_REPS": "9",
+    "BENCH_SAMPLE_MS": "100",
+    "BENCH_DATASETS": "tiny,dependency-lock,public-api-data,deep,wide,unicode",
+    "BENCH_METHODS": "upstream,public-stringify,upstream-from-text,native-text,native-roundtrip",
+    "note": "null means variable unset; when BENCH_METHODS is unset, batch/cache extras are automatically included for batch-32"
+  },
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "osRelease": "10.0.26300",
+    "node": "v24.20.0",
+    "v8": "13.6.233.17-node.53",
+    "cpu": "12th Gen Intel(R) Core(TM) i7-12700K",
+    "logicalCpus": 20,
+    "totalMemoryBytes": 34087682048,
+    "rust": "rustc 1.98.1 (48a229cea 2026-09-01)",
+    "commit": "28326e78193cc29119a30683afb6aeaeac09556f",
+    "dirty": "M package.json\n?? benches/results/2026-10-19T00-06-17-364Z-30392.json\n?? docs/audits/\n?? scripts/audit.cjs",
+    "upstreamCommit": "49e230da2c84247b29ad4de02c9395793caefd15",
+    "dependencies": {
+      "safe-stable-stringify": "2.5.0",
+      "fast-stable-stringify": "1.0.0",
+      "@napi-rs/cli": "3.10.8"
+    },
+    "sourceHashes": {
+      "benches/run.cjs": "e1d2c3afc33c2a18bbb9db61adb668e307170ba49ee68f49bed6345c2d28c36e",
+      "benches/datasets.cjs": "8470c22014d46ba70006945e2543e15711951fbd54482ae0e729e8d8f1d0a457",
+      "js/dist/index.js": "cafdb45c97fabc4cf5f29da0c88b2de75bc79ddac110703ebee142b5f13ee9fa",
+      "src/lib.rs": "0507b14063fbaabc9747293d609e868b5efe17f736827c13d9dd01c8dfff3746",
+      "src/engine.rs": "85a9c8cd4d7d1d0a55c8cb8f24dce9f81279afbddb8bf0ebb035497ba666e307",
+      "pnpm-lock.yaml": "268854350104379c6e5698c2504908ef61cc5870655b68fab4c2ce58624b6fab"
+    },
+    "nativeArtifacts": [
+      {
+        "file": "stable-json-rs.win32-x64-msvc.node",
+        "sha256": "117e5a5b6fade6a31a012586b982dd5eddd378fc9e112a981ed1259bd729f07e"
+      }
+    ]
+  },
+  "coldStart": [
+    {
+      "module": "./upstream/fast-json-stable-stringify",
+      "status": "OK",
+      "medianRequireMs": 3.6918000000000006,
+      "samples": [
+        3.5321999999999996,
+        3.6709000000000014,
+        3.6918000000000006,
+        3.815599999999998,
+        3.714600000000001
+      ],
+      "contract": "fresh process require duration; OS disk cache may be warm; process startup excluded"
+    },
+    {
+      "module": "./js/index.cjs",
+      "status": "OK",
+      "medianRequireMs": 3.814799999999998,
+      "samples": [
+        3.693900000000001,
+        3.9784999999999986,
+        4.040700000000001,
+        3.7692000000000014,
+        3.814799999999998
+      ],
+      "contract": "fresh process require duration; OS disk cache may be warm; process startup excluded"
+    },
+    {
+      "module": "./native/binding.js",
+      "status": "OK",
+      "medianRequireMs": 5.1678000000000015,
+      "samples": [
+        5.337300000000001,
+        5.1678000000000015,
+        4.8641000000000005,
+        5.1035,
+        5.248200000000001
+      ],
+      "contract": "fresh process require duration; OS disk cache may be warm; process startup excluded"
+    }
+  ],
+  "results": [
+    {
+      "dataset": "tiny",
+      "method": "upstream",
+      "status": "OK",
+      "comparableStableOperation": true,
+      "unitsPerOperation": 1,
+      "jsonBytes": 28,
+      "sha256": "a8702ef49388dccdb1d596f08dba7395ffbd1abbfe7bafec100b250b14a5a065",
+      "outputBytes": 28,
+      "repetitions": 9,
+      "sampleMs": 100,
+      "medianOpsPerSecond": 1751914.131735448,
+      "medianItemsPerSecond": 1751914.131735448,
+      "medianLatencyUs": 0.5708042317173382,
+      "madPercent": 0.6154694428282824,
+      "minOpsPerSecond": 1716465.6578905287,
+      "maxOpsPerSecond": 1782696.8367767183,
+      "outputMiBPerSecond": 46.78115433558707,
+      "cpuMicroseconds": {
+        "user": 860000,
+        "system": 47000
+      },
+      "rssBeforeBytes": 54509568,
+      "rssAfterBytes": 54648832,
+      "processMaxRssBytes": 55922688,
+      "heapUsedBeforeBytes": 7439128,
+      "heapUsedAfterBytes": 9931352,
+      "timerDelayMs": {
+        "median": 100.0798000000002,
+        "max": 100.20009999999999,
+        "samples": [
+          100.20009999999999,
+          100.07259999999997,
+          100.09440000000001,
+          100.07749999999999,
+          100.16200000000003,
+          100.082,
+          100.06110000000001,
+          100.07119999999998,
+          100.0798000000002
+        ]
+      },
+      "samples": [
+        {
+          "iterations": 175408,
+          "elapsedMs": 100.04810000000003,
+          "opsPerSecond": 1753236.693150594
+        },
+        {
+          "iterations": 174160,
+          "elapsedMs": 100.02690000000001,
+          "opsPerSecond": 1741131.635590026
+        },
+        {
+          "iterations": 178336,
+          "elapsedMs": 100.03720000000004,
+          "opsPerSecond": 1782696.8367767183
+        },
+        {
+          "iterations": 174368,
+          "elapsedMs": 100.03070000000002,
+          "opsPerSecond": 1743144.8545296588
+        },
+        {
+          "iterations": 178096,
+          "elapsedMs": 100.07479999999998,
+          "opsPerSecond": 1779628.8376294535
+        },
+        {
+          "iterations": 171696,
+          "elapsedMs": 100.02879999999993,
+          "opsPerSecond": 1716465.6578905287
+        },
+        {
+          "iterations": 174112,
+          "elapsedMs": 100.02440000000001,
+          "opsPerSecond": 1740695.2703540334
+        },
+        {
+          "iterations": 175632,
+          "elapsedMs": 100.03660000000002,
+          "opsPerSecond": 1755677.4220635244
+        },
+        {
+          "iterations": 175248,
+          "elapsedMs": 100.03230000000008,
+          "opsPerSecond": 1751914.131735448
+        }
+      ],
+      "sink": 119178880
+    },
+    {
+      "dataset": "tiny",
+      "method": "public-stringify",
+      "status": "OK",
+      "comparableStableOperation": true,
+      "unitsPerOperation": 1,
+      "jsonBytes": 28,
+      "sha256": "a8702ef49388dccdb1d596f08dba7395ffbd1abbfe7bafec100b250b14a5a065",
+      "outputBytes": 28,
+      "repetitions": 9,
+      "sampleMs": 100,
+      "medianOpsPerSecond": 1742198.8002690934,
+      "medianItemsPerSecond": 1742198.8002690934,
+      "medianLatencyUs": 0.5739873083631695,
+      "madPercent": 1.4359548610841095,
+      "minOpsPerSecond": 1672111.6127303767,
+      "maxOpsPerSecond": 1804985.1437437758,
+      "outputMiBPerSecond": 46.52172699693166,
+      "cpuMicroseconds": {
+        "user": 860000,
+        "system": 31000
+      },
+      "rssBeforeBytes": 54607872,
+      "rssAfterBytes": 54792192,
+      "processMaxRssBytes": 56176640,
+      "heapUsedBeforeBytes": 9818456,
+      "heapUsedAfterBytes": 9088280,
+      "timerDelayMs": {
+        "median": 100.072,
+        "max": 100.19310000000002,
+        "samples": [
+          100.19310000000002,
+          100.08019999999999,
+          100.065,
+          100.07310000000007,
+          100.12279999999998,
+          100.072,
+          100.05819999999994,
+          100.06439999999986,
+          100.06790000000001
+        ]
+      },
+      "samples": [
+        {
+          "iterations": 171792,
+          "elapsedMs": 100.04299999999998,
+          "opsPerSecond": 1717181.6119068803
+        },
+        {
+          "iterations": 173376,
+          "elapsedMs": 100.0326,
+          "opsPerSecond": 1733194.9784370295
+        },
+        {
+          "iterations": 174416,
+          "elapsedMs": 100.02019999999999,
+          "opsPerSecond": 1743807.7508343316
+        },
+        {
+          "iterations": 173696,
+          "elapsedMs": 100.02959999999996,
+          "opsPerSecond": 1736446.0119804544
+        },
+        {
+          "iterations": 174288,
+          "elapsedMs": 100.03910000000008,
+          "opsPerSecond": 1742198.8002690934
+        },
+        {
+          "iterations": 176976,
+          "elapsedMs": 100.02409999999998,
+          "opsPerSecond": 1769333.5906046648
+        },
+        {
+          "iterations": 180544,
+          "elapsedMs": 100.02520000000004,
+          "opsPerSecond": 1804985.1437437758
+        },
+        {
+          "iterations": 167264,
+          "elapsedMs": 100.03160000000003,
+          "opsPerSecond": 1672111.6127303767
+        },
+        {
+          "iterations": 179168,
+          "elapsedMs": 100.02600000000007,
+          "opsPerSecond": 1791214.2842860844
+        }
+      ],
+      "sink": 118222592
+    },
+    {
+      "dataset": "tiny",
+      "method": "upstream-from-text",
+      "status": "OK",
+      "comparableStableOperation": true,
+      "inputContract": "pre-existing JSON text; parsing included",
+      "unitsPerOperation": 1,
+      "jsonBytes": 28,
+      "sha256": "a8702ef49388dccdb1d596f08dba7395ffbd1abbfe7bafec100b250b14a5a065",
+      "outputBytes": 28,
+      "repetitions": 9,
+      "sampleMs": 100,
+      "medianOpsPerSecond": 1165090.4728581428,
+      "medianItemsPerSecond": 1165090.4728581428,
+      "medianLatencyUs": 0.8583024437122458,
+      "madPercent": 0.5359226277011948,
+      "minOpsPerSecond": 1146123.784168016,
+      "maxOpsPerSecond": 1180976.4890423156,
+      "outputMiBPerSecond": 31.11127208712387,
+      "cpuMicroseconds": {
+        "user": 828000,
+        "system": 63000
+      },
+      "rssBeforeBytes": 54706176,
+      "rssAfterBytes": 54915072,
+      "processMaxRssBytes": 56328192,
+      "heapUsedBeforeBytes": 11507392,
+      "heapUsedAfterBytes": 8408976,
+      "timerDelayMs": {
+        "median": 100.07840000000004,
+        "max": 100.19399999999996,
+        "samples": [
+          100.19399999999996,
+          100.09629999999999,
+          100.07840000000004,
+          100.07040000000006,
+          100.11509999999998,
+          100.08030000000008,
+          100.0598,
+          100.05939999999998,
+          100.07200000000012
+        ]
+      },
+      "samples": [
+        {
+          "iterations": 115360,
+          "elapsedMs": 100.03900000000002,
+          "opsPerSecond": 1153150.2713941562
+        },
+        {
+          "iterations": 117168,
+          "elapsedMs": 100.02950000000004,
+          "opsPerSecond": 1171334.4563353804
+        },
+        {
+          "iterations": 115664,
+          "elapsedMs": 100.03380000000004,
+          "opsPerSecond": 1156249.1877745318
+        },
+        {
+          "iterations": 116880,
+          "elapsedMs": 100.02650000000006,
+          "opsPerSecond": 1168490.350057234
+        },
+        {
+          "iterations": 116272,
+          "elapsedMs": 100.03039999999999,
+          "opsPerSecond": 1162366.6405412757
+        },
+        {
+          "iterations": 116544,
+          "elapsedMs": 100.02999999999997,
+          "opsPerSecond": 1165090.4728581428
+        },
+        {
+          "iterations": 118128,
+          "elapsedMs": 100.02570000000003,
+          "opsPerSecond": 1180976.4890423156
+        },
+        {
+          "iterations": 114640,
+          "elapsedMs": 100.02409999999998,
+          "opsPerSecond": 1146123.784168016
+        },
+        {
+          "iterations": 117024,
+          "elapsedMs": 100.0268000000001,
+          "opsPerSecond": 1169926.459708797
+        }
+      ],
+      "sink": 79263776
+    },
+    {
+      "dataset": "tiny",
+      "method": "native-text",
+      "status": "OK",
+      "comparableStableOperation": true,
+      "inputContract": "pre-existing JSON text; object conversion excluded",
+      "unitsPerOperation": 1,
+      "jsonBytes": 28,
+      "sha256": "a8702ef49388dccdb1d596f08dba7395ffbd1abbfe7bafec100b250b14a5a065",
+      "outputBytes": 28,
+      "repetitions": 9,
+      "sampleMs": 100,
+      "medianOpsPerSecond": 2265672.7190571823,
+      "medianItemsPerSecond": 2265672.7190571823,
+      "medianLatencyUs": 0.4413700141193082,
+      "madPercent": 0.3607446576987745,
+      "minOpsPerSecond": 2247758.4695312805,
+      "maxOpsPerSecond": 2310561.688142939,
+      "outputMiBPerSecond": 60.49998868332015,
+      "cpuMicroseconds": {
+        "user": 860000,
+        "system": 31000
+      },
+      "rssBeforeBytes": 55087104,
+      "rssAfterBytes": 55214080,
+      "processMaxRssBytes": 55386112,
+      "heapUsedBeforeBytes": 10972688,
+      "heapUsedAfterBytes": 8935992,
+      "timerDelayMs": {
+        "median": 100.08140000000003,
+        "max": 100.19950000000003,
+        "samples": [
+          100.19950000000003,
+          100.07650000000001,
+          100.08760000000001,
+          100.08140000000003,
+          100.1372,
+          100.08510000000001,
+          100.07180000000005,
+          100.06899999999996,
+          100.0788
+        ]
+      },
+      "samples": [
+        {
+          "iterations": 231168,
+          "elapsedMs": 100.04839999999999,
+          "opsPerSecond": 2310561.688142939
+        },
+        {
+          "iterations": 225520,
+          "elapsedMs": 100.02950000000004,
+          "opsPerSecond": 2254534.9122009
+        },
+        {
+          "iterations": 226640,
+          "elapsedMs": 100.03210000000001,
+          "opsPerSecond": 2265672.7190571823
+        },
+        {
+          "iterations": 225952,
+          "elapsedMs": 100.03390000000002,
+          "opsPerSecond": 2258754.2822983004
+        },
+        {
+          "iterations": 226352,
+          "elapsedMs": 100.03399999999999,
+          "opsPerSecond": 2262750.664773977
+        },
+        {
+          "iterations": 227456,
+          "elapsedMs": 100.03140000000008,
+          "opsPerSecond": 2273846.0123521197
+        },
+        {
+          "iterations": 230000,
+          "elapsedMs": 100.0349,
+          "opsPerSecond": 2299197.580044565
+        },
+        {
+          "iterations": 224848,
+          "elapsedMs": 100.03210000000001,
+          "opsPerSecond": 2247758.4695312805
+        },
+        {
+          "iterations": 226864,
+          "elapsedMs": 100.02970000000005,
+          "opsPerSecond": 2267966.4139750483
+        }
+      ],
+      "sink": 154326432
+    },
+    {
+      "dataset": "tiny",
+      "method": "native-roundtrip",
+      "status": "OK",
+      "comparableStableOperation": true,
+      "inputContract": "JS object; JSON.stringify conversion included",
+      "unitsPerOperation": 1,
+      "jsonBytes": 28,
+      "sha256": "a8702ef49388dccdb1d596f08dba7395ffbd1abbfe7bafec100b250b14a5a065",
+      "outputBytes": 28,
+      "repetitions": 9,
+      "sampleMs": 100,
+      "medianOpsPerSecond": 1619543.288792561,
+      "medianItemsPerSecond": 1619543.288792561,
+      "medianLatencyUs": 0.6174580246913578,
+      "madPercent": 0.8226284193518908,
+      "minOpsPerSecond": 1606220.4654352472,
+      "maxOpsPerSecond": 1679056.580383814,
+      "outputMiBPerSecond": 43.24647148722811,
+      "cpuMicroseconds": {
+        "user": 860000,
+        "system": 31000
+      },
+      "rssBeforeBytes": 55296000,
+      "rssAfterBytes": 55472128,
+      "processMaxRssBytes": 55484416,
+      "heapUsedBeforeBytes": 8784184,
+      "heapUsedAfterBytes": 9463496,
+      "timerDelayMs": {
+        "median": 100.07819999999992,
+        "max": 100.19320000000002,
+        "samples": [
+          100.19320000000002,
+          100.08639999999997,
+          100.07549999999998,
+          100.07249999999999,
+          100.1114,
+          100.08100000000002,
+          100.0666,
+          100.0621000000001,
+          100.07819999999992
+        ]
+      },
+      "samples": [
+        {
+          "iterations": 160880,
+          "elapsedMs": 100.04649999999998,
+          "opsPerSecond": 1608052.2557010993
+        },
+        {
+          "iterations": 161696,
+          "elapsedMs": 100.03430000000003,
+          "opsPerSecond": 1616405.5728884987
+        },
+        {
+          "iterations": 161712,
+          "elapsedMs": 100.02779999999996,
+          "opsPerSecond": 1616670.5655827685
+        },
+        {
+          "iterations": 165024,
+          "elapsedMs": 100.02829999999994,
+          "opsPerSecond": 1649773.1142086799
+        },
+        {
+          "iterations": 167952,
+          "elapsedMs": 100.0276,
+          "opsPerSecond": 1679056.580383814
+        },
+        {
+          "iterations": 165808,
+          "elapsedMs": 100.02750000000003,
+          "opsPerSecond": 1657624.1533578262
+        },
+        {
+          "iterations": 163920,
+          "elapsedMs": 100.03160000000003,
+          "opsPerSecond": 1638682.176432247
+        },
+        {
+          "iterations": 162000,
+          "elapsedMs": 100.02819999999997,
+          "opsPerSecond": 1619543.288792561
+        },
+        {
+          "iterations": 160672,
+          "elapsedMs": 100.03110000000015,
+          "opsPerSecond": 1606220.4654352472
+        }
+      ],
+      "sink": 110481024
+    },
+    {
+      "dataset": "dependency-lock",
+      "method": "upstream",
+      "status": "OK",
+      "comparableStableOperation": true,
+      "unitsPerOperation": 1,
+      "jsonBytes": 93728,
+      "sha256": "5f8afda0d3a8190dd04d7561ef72ec6cd3abe74c45b1ba6a720b8dbfff7ac64e",
+      "outputBytes": 93728,
+      "repetitions": 9,
+      "sampleMs": 100,
+      "medianOpsPerSecond": 2023.3935422616871,
+      "medianItemsPerSecond": 2023.3935422616871,
+      "medianLatencyUs": 494.21923076923076,
+      "madPercent": 1.6410445811848684,
+      "minOpsPerSecond": 1747.1653235333242,
+      "maxOpsPerSecond": 2095.6809325780137,
+      "outputMiBPerSecond": 180.86302750501957,
+      "cpuMicroseconds": {
+        "user": 859000,
+        "system": 63000
+      },
+      "rssBeforeBytes": 79982592,
+      "rssAfterBytes": 114364416,
+      "processMaxRssBytes": 114606080,
+      "heapUsedBeforeBytes": 14647496,
+      "heapUsedAfterBytes": 15221736,
+      "timerDelayMs": {
+        "median": 103.48080000000004,
+        "max": 108.26180000000011,
+        "samples": [
+          106.1574,
+          104.55720000000002,
+          100.78430000000003,
+          101.45870000000002,
+          102.88710000000003,
+          103.48080000000004,
+          102.58139999999992,
+          108.26180000000011,
+          106.96730000000002
+        ]
+      },
+      "samples": [
+        {
+          "iterations": 208,
+          "elapsedMs": 106.01300000000003,
+          "opsPerSecond": 1962.0235254166935
+        },
+        {
+          "iterations": 208,
+          "elapsedMs": 104.5127,
+          "opsPerSecond": 1990.1887521803571
+        },
+        {
+          "iterations": 176,
+          "elapsedMs": 100.7346,
+          "opsPerSecond": 1747.1653235333242
+        },
+        {
+          "iterations": 208,
+          "elapsedMs": 101.41179999999997,
+          "opsPerSecond": 2051.0433697064846
+        },
+        {
+          "iterations": 208,
+          "elapsedMs": 102.79759999999999,
+          "opsPerSecond": 2023.3935422616871
+        },
+        {
+          "iterations": 208,
+          "elapsedMs": 103.4162,
+          "opsPerSecond": 2011.2903007459176
+        },
+        {
+          "iterations": 208,
+          "elapsedMs": 102.53590000000008,
+          "opsPerSecond": 2028.557802681791
+        },
+        {
+          "iterations": 224,
+          "elapsedMs": 108.1825,
+          "opsPerSecond": 2070.5751854505115
+        },
+        {
+          "iterations": 224,
+          "elapsedMs": 106.88650000000007,
+          "opsPerSecond": 2095.6809325780137
+        }
+      ],
+      "sink": 211558656
+    },
+    {
+      "dataset": "dependency-lock",
+      "method": "public-stringify",
+      "status": "OK",
+      "comparableStableOperation": true,
+      "unitsPerOperation": 1,
+      "jsonBytes": 93728,
+      "sha256": "5f8afda0d3a8190dd04d7561ef72ec6cd3abe74c45b1ba6a720b8dbfff7ac64e",
+      "outputBytes": 93728,
+      "repetitions": 9,
+      "sampleMs": 100,
+      "medianOpsPerSecond": 1988.8376486966895,
+      "medianItemsPerSecond": 1988.8376486966895,
+      "medianLatencyUs": 502.8062500000001,
+      "madPercent": 1.765210723793742,
+      "minOpsPerSecond": 1877.3797254723263,
+      "maxOpsPerSecond": 2025.0877213479298,
+      "outputMiBPerSecond": 177.77421487526254,
+      "cpuMicroseconds": {
+        "user": 875000,
+        "system": 47000
+      },
+      "rssBeforeBytes": 80187392,
+      "rssAfterBytes": 114548736,
+      "processMaxRssBytes": 114700288,
+      "heapUsedBeforeBytes": 20986720,
+      "heapUsedAfterBytes": 24664528,
+      "timerDelayMs": {
+        "median": 103.31050000000005,
+        "max": 108.12559999999999,
+        "samples": [
+          108.12559999999999,
+          101.34620000000001,
+          102.31639999999993,
+          104.64609999999993,
+          103.31050000000005,
+          104.22500000000002,
+          105.07330000000002,
+          102.76610000000005,
+          102.82449999999994
+        ]
+      },
+      "samples": [
+        {
+          "iterations": 208,
+          "elapsedMs": 107.98130000000003,
+          "opsPerSecond": 1926.25945418327
+        },
+        {
+          "iterations": 192,
+          "elapsedMs": 101.29860000000002,
+          "opsPerSecond": 1895.3865107711258
+        },
+        {
+          "iterations": 192,
+          "elapsedMs": 102.27020000000005,
+          "opsPerSecond": 1877.3797254723263
+        },
+        {
+          "iterations": 208,
+          "elapsedMs": 104.58370000000002,
+          "opsPerSecond": 1988.8376486966895
+        },
+        {
+          "iterations": 208,
+          "elapsedMs": 103.21310000000005,
+          "opsPerSecond": 2015.2480644414316
+        },
+        {
+          "iterations": 208,
+          "elapsedMs": 104.1694,
+          "opsPerSecond": 1996.7476053428359
+        },
+        {
+          "iterations": 208,
+          "elapsedMs": 105.029,
+          "opsPerSecond": 1980.4054118386352
+        },
+        {
+          "iterations": 208,
+          "elapsedMs": 102.71159999999998,
+          "opsPerSecond": 2025.0877213479298
+        },
+        {
+          "iterations": 208,
+          "elapsedMs": 102.76960000000008,
+          "opsPerSecond": 2023.9448241503308
+        }
+      ],
+      "sink": 208557824
+    },
+    {
+      "dataset": "dependency-lock",
+      "method": "upstream-from-text",
+      "status": "OK",
+      "comparableStableOperation": true,
+      "inputContract": "pre-existing JSON text; parsing included",
+      "unitsPerOperation": 1,
+      "jsonBytes": 93728,
+      "sha256": "5f8afda0d3a8190dd04d7561ef72ec6cd3abe74c45b1ba6a720b8dbfff7ac64e",
+      "outputBytes": 93728,
+      "repetitions": 9,
+      "sampleMs": 100,
+      "medianOpsPerSecond": 1341.567826967563,
+      "medianItemsPerSecond": 1341.567826967563,
+      "medianLatencyUs": 745.3965277777778,
+      "madPercent": 1.6298326085661543,
+      "minOpsPerSecond": 1247.4065151652476,
+      "maxOpsPerSecond": 1367.3278899756813,
+      "outputMiBPerSecond": 119.91736343957494,
+      "cpuMicroseconds": {
+        "user": 938000,
+        "system": 31000
+      },
+      "rssBeforeBytes": 80060416,
+      "rssAfterBytes": 114323456,
+      "processMaxRssBytes": 114634752,
+      "heapUsedBeforeBytes": 9920232,
+      "heapUsedAfterBytes": 34060944,
+      "timerDelayMs": {
+        "median": 106.83530000000002,
+        "max": 111.80350000000004,
+        "samples": [
+          107.48569999999998,
+          106.83530000000002,
+          111.80350000000004,
+          108.0299,
+          102.70360000000005,
+          105.49189999999999,
+          109.1536000000001,
+          106.08889999999985,
+          105.36559999999986
+        ]
+      },
+      "samples": [
+        {
+          "iterations": 144,
+          "elapsedMs": 107.33709999999999,
+          "opsPerSecond": 1341.567826967563
+        },
+        {
+          "iterations": 144,
+          "elapsedMs": 106.79230000000001,
+          "opsPerSecond": 1348.4118236988995
+        },
+        {
+          "iterations": 144,
+          "elapsedMs": 111.75729999999999,
+          "opsPerSecond": 1288.5064331368064
+        },
+        {
+          "iterations": 144,
+          "elapsedMs": 107.93259999999998,
+          "opsPerSecond": 1334.165951714311
+        },
+        {
+          "iterations": 128,
+          "elapsedMs": 102.61289999999997,
+          "opsPerSecond": 1247.4065151652476
+        },
+        {
+          "iterations": 144,
+          "elapsedMs": 105.44119999999998,
+          "opsPerSecond": 1365.6900718125364
+        },
+        {
+          "iterations": 144,
+          "elapsedMs": 109.1155,
+          "opsPerSecond": 1319.7025170576132
+        },
+        {
+          "iterations": 144,
+          "elapsedMs": 106.05389999999989,
+          "opsPerSecond": 1357.8001374772655
+        },
+        {
+          "iterations": 144,
+          "elapsedMs": 105.31490000000008,
+          "opsPerSecond": 1367.3278899756813
+        }
+      ],
+      "sink": 145540352
+    },
+    {
+      "dataset": "dependency-lock",
+      "method": "native-text",
+      "status": "OK",
+      "comparableStableOperation": true,
+      "inputContract": "pre-existing JSON text; object conversion excluded",
+      "unitsPerOperation": 1,
+      "jsonBytes": 93728,
+      "sha256": "5f8afda0d3a8190dd04d7561ef72ec6cd3abe74c45b1ba6a720b8dbfff7ac64e",
+      "outputBytes": 93728,
+      "repetitions": 9,
+      "sampleMs": 100,
+      "medianOpsPerSecond": 3277.1279874532797,
+      "medianItemsPerSecond": 3277.1279874532797,
+      "medianLatencyUs": 305.14523809523826,
+      "madPercent": 1.6996862943616984,
+      "minOpsPerSecond": 2672.2443217264267,
+      "maxOpsPerSecond": 3382.078825496256,
+      "outputMiBPerSecond": 292.92931748201465,
+      "cpuMicroseconds": {
+        "user": 703000,
+        "system": 203000
+      },
+      "rssBeforeBytes": 51851264,
+      "rssAfterBytes": 58589184,
+      "processMaxRssBytes": 58925056,
+      "heapUsedBeforeBytes": 10000784,
+      "heapUsedAfterBytes": 15749160,
+      "timerDelayMs": {
+        "median": 102.57569999999998,
+        "max": 104.4031,
+        "samples": [
+          101.93409999999997,
+          102.49360000000001,
+          104.20490000000001,
+          102.57569999999998,
+          104.4031,
+          104.34100000000001,
+          102.48919999999998,
+          101.42029999999988,
+          104.13059999999996
+        ]
+      },
+      "samples": [
+        {
+          "iterations": 272,
+          "elapsedMs": 101.78710000000001,
+          "opsPerSecond": 2672.2443217264267
+        },
+        {
+          "iterations": 320,
+          "elapsedMs": 102.44419999999997,
+          "opsPerSecond": 3123.6517050257617
+        },
+        {
+          "iterations": 336,
+          "elapsedMs": 104.1574,
+          "opsPerSecond": 3225.886974905288
+        },
+        {
+          "iterations": 336,
+          "elapsedMs": 102.52880000000005,
+          "opsPerSecond": 3277.1279874532797
+        },
+        {
+          "iterations": 336,
+          "elapsedMs": 104.30160000000001,
+          "opsPerSecond": 3221.427092201845
+        },
+        {
+          "iterations": 352,
+          "elapsedMs": 104.27589999999998,
+          "opsPerSecond": 3375.6601477426716
+        },
+        {
+          "iterations": 336,
+          "elapsedMs": 102.4298,
+          "opsPerSecond": 3280.2953827889933
+        },
+        {
+          "iterations": 336,
+          "elapsedMs": 101.37549999999999,
+          "opsPerSecond": 3314.410286509068
+        },
+        {
+          "iterations": 352,
+          "elapsedMs": 104.0780000000002,
+          "opsPerSecond": 3382.078825496256
+        }
+      ],
+      "sink": 325590272
+    },
+    {
+      "dataset": "dependency-lock",
+      "method": "native-roundtrip",
+      "status": "OK",
+      "comparableStableOperation": true,
+      "inputContract": "JS object; JSON.stringify conversion included",
+      "unitsPerOperation": 1,
+      "jsonBytes": 93728,
+      "sha256": "5f8afda0d3a8190dd04d7561ef72ec6cd3abe74c45b1ba6a720b8dbfff7ac64e",
+      "outputBytes": 93728,
+      "repetitions": 9,
+      "sampleMs": 100,
+      "medianOpsPerSecond": 2172.020114457704,
+      "medianItemsPerSecond": 2172.020114457704,
+      "medianLatencyUs": 460.4008928571426,
+      "madPercent": 2.1628011110942627,
+      "minOpsPerSecond": 1770.2688872477022,
+      "maxOpsPerSecond": 2230.593586844278,
+      "outputMiBPerSecond": 194.14816025532883,
+      "cpuMicroseconds": {
+        "user": 782000,
+        "system": 157000
+      },
+      "rssBeforeBytes": 51228672,
+      "rssAfterBytes": 51998720,
+      "processMaxRssBytes": 52084736,
+      "heapUsedBeforeBytes": 12002088,
+      "heapUsedAfterBytes": 12378136,
+      "timerDelayMs": {
+        "median": 103.1739,
+        "max": 108.6149,
+        "samples": [
+          108.6149,
+          103.8381,
+          106.63989999999995,
+          103.1739,
+          100.50980000000004,
+          105.46900000000005,
+          102.93049999999994,
+          102.53940000000011,
+          103.02359999999999
+        ]
+      },
+      "samples": [
+        {
+          "iterations": 192,
+          "elapsedMs": 108.4581,
+          "opsPerSecond": 1770.2688872477022
+        },
+        {
+          "iterations": 192,
+          "elapsedMs": 103.79399999999998,
+          "opsPerSecond": 1849.8179085496274
+        },
+        {
+          "iterations": 224,
+          "elapsedMs": 106.59340000000003,
+          "opsPerSecond": 2101.4434289552632
+        },
+        {
+          "iterations": 224,
+          "elapsedMs": 103.12979999999993,
+          "opsPerSecond": 2172.020114457704
+        },
+        {
+          "iterations": 224,
+          "elapsedMs": 100.42169999999999,
+          "opsPerSecond": 2230.593586844278
+        },
+        {
+          "iterations": 224,
+          "elapsedMs": 105.40959999999995,
+          "opsPerSecond": 2125.043639289022
+        },
+        {
+          "iterations": 224,
+          "elapsedMs": 102.88969999999995,
+          "opsPerSecond": 2177.0886687394377
+        },
+        {
+          "iterations": 224,
+          "elapsedMs": 102.49559999999997,
+          "opsPerSecond": 2185.4596685126003
+        },
+        {
+          "iterations": 224,
+          "elapsedMs": 102.97520000000009,
+          "opsPerSecond": 2175.281038541317
+        }
+      ],
+      "sink": 217560320
+    },
+    {
+      "dataset": "public-api-data",
+      "method": "upstream",
+      "status": "OK",
+      "comparableStableOperation": true,
+      "unitsPerOperation": 1,
+      "jsonBytes": 1085130,
+      "sha256": "a12b6a68c636a1e7e1d668710cff7b6e490a4f05b84a6262bf702b90b0c50268",
+      "outputBytes": 1085130,
+      "repetitions": 9,
+      "sampleMs": 100,
+      "medianOpsPerSecond": 166.16324396347125,
+      "medianItemsPerSecond": 166.16324396347125,
+      "medianLatencyUs": 6018.178124999994,
+      "madPercent": 3.188981841621335,
+      "minOpsPerSecond": 138.87936504354303,
+      "maxOpsPerSecond": 171.4621596409153,
+      "outputMiBPerSecond": 171.95579616745144,
+      "cpuMicroseconds": {
+        "user": 1297000,
+        "system": 203000
+      },
+      "rssBeforeBytes": 134299648,
+      "rssAfterBytes": 201568256,
+      "processMaxRssBytes": 220946432,
+      "heapUsedBeforeBytes": 52296240,
+      "heapUsedAfterBytes": 65164536,
+      "timerDelayMs": {
+        "median": 187.37009999999987,
+        "max": 200.0584,
+        "samples": [
+          115.416,
+          106.80990000000003,
+          105.27819999999997,
+          200.0584,
+          189.74630000000002,
+          192.6362999999999,
+          187.37009999999987,
+          190.30090000000018,
+          186.6775
+        ]
+      },
+      "samples": [
+        {
+          "iterations": 16,
+          "elapsedMs": 115.2079,
+          "opsPerSecond": 138.87936504354303
+        },
+        {
+          "iterations": 16,
+          "elapsedMs": 106.73360000000002,
+          "opsPerSecond": 149.9059340263984
+        },
+        {
+          "iterations": 16,
+          "elapsedMs": 105.22339999999997,
+          "opsPerSecond": 152.05743209210124
+        },
+        {
+          "iterations": 32,
+          "elapsedMs": 200.0059,
+          "opsPerSecond": 159.9952801392359
+        },
+        {
+          "iterations": 32,
+          "elapsedMs": 189.65240000000006,
+          "opsPerSecond": 168.72973924927916
+        },
+        {
+          "iterations": 32,
+          "elapsedMs": 192.58169999999984,
+          "opsPerSecond": 166.16324396347125
+        },
+        {
+          "iterations": 32,
+          "elapsedMs": 187.3329000000001,
+          "opsPerSecond": 170.81890047076612
+        },
+        {
+          "iterations": 32,
+          "elapsedMs": 190.25900000000001,
+          "opsPerSecond": 168.191780677918
+        },
+        {
+          "iterations": 32,
+          "elapsedMs": 186.63010000000008,
+          "opsPerSecond": 171.4621596409153
+        }
+      ],
+      "sink": 295182832
+    },
+    {
+      "dataset": "public-api-data",
+      "method": "public-stringify",
+      "status": "OK",
+      "comparableStableOperation": true,
+      "unitsPerOperation": 1,
+      "jsonBytes": 1085130,
+      "sha256": "a12b6a68c636a1e7e1d668710cff7b6e490a4f05b84a6262bf702b90b0c50268",
+      "outputBytes": 1085130,
+      "repetitions": 9,
+      "sampleMs": 100,
+      "medianOpsPerSecond": 166.78976098506035,
+      "medianItemsPerSecond": 166.78976098506035,
+      "medianLatencyUs": 5995.571874999999,
+      "madPercent": 1.9111793922693625,
+      "minOpsPerSecond": 149.3406609817655,
+      "maxOpsPerSecond": 169.9876227762166,
+      "outputMiBPerSecond": 172.60415395519118,
+      "cpuMicroseconds": {
+        "user": 1453000,
+        "system": 203000
+      },
+      "rssBeforeBytes": 135462912,
+      "rssAfterBytes": 203231232,
+      "processMaxRssBytes": 218042368,
+      "heapUsedBeforeBytes": 52332416,
+      "heapUsedAfterBytes": 65128128,
+      "timerDelayMs": {
+        "median": 191.28900000000021,
+        "max": 196.192,
+        "samples": [
+          107.31440000000003,
+          188.3209,
+          196.192,
+          191.90210000000002,
+          190.53930000000003,
+          190.95269999999982,
+          191.28900000000021,
+          195.64509999999996,
+          195.98050000000012
+        ]
+      },
+      "samples": [
+        {
+          "iterations": 16,
+          "elapsedMs": 107.13760000000002,
+          "opsPerSecond": 149.3406609817655
+        },
+        {
+          "iterations": 32,
+          "elapsedMs": 188.24900000000002,
+          "opsPerSecond": 169.9876227762166
+        },
+        {
+          "iterations": 32,
+          "elapsedMs": 196.14560000000006,
+          "opsPerSecond": 163.1441133525299
+        },
+        {
+          "iterations": 32,
+          "elapsedMs": 191.85829999999999,
+          "opsPerSecond": 166.78976098506035
+        },
+        {
+          "iterations": 32,
+          "elapsedMs": 190.4355999999999,
+          "opsPerSecond": 168.03580843077668
+        },
+        {
+          "iterations": 32,
+          "elapsedMs": 190.89280000000008,
+          "opsPerSecond": 167.63335233177986
+        },
+        {
+          "iterations": 32,
+          "elapsedMs": 191.2496000000001,
+          "opsPerSecond": 167.32061138951394
+        },
+        {
+          "iterations": 32,
+          "elapsedMs": 195.5965000000001,
+          "opsPerSecond": 163.60210944469856
+        },
+        {
+          "iterations": 32,
+          "elapsedMs": 195.91910000000007,
+          "opsPerSecond": 163.33272253700628
+        }
+      ],
+      "sink": 329910224
+    },
+    {
+      "dataset": "public-api-data",
+      "method": "upstream-from-text",
+      "status": "OK",
+      "comparableStableOperation": true,
+      "inputContract": "pre-existing JSON text; parsing included",
+      "unitsPerOperation": 1,
+      "jsonBytes": 1085130,
+      "sha256": "a12b6a68c636a1e7e1d668710cff7b6e490a4f05b84a6262bf702b90b0c50268",
+      "outputBytes": 1085130,
+      "repetitions": 9,
+      "sampleMs": 100,
+      "medianOpsPerSecond": 137.91403301144794,
+      "medianItemsPerSecond": 137.91403301144794,
+      "medianLatencyUs": 7250.893749999988,
+      "madPercent": 0.801188186877992,
+      "minOpsPerSecond": 132.6865967463588,
+      "maxOpsPerSecond": 141.81857504241262,
+      "outputMiBPerSecond": 142.7218004624486,
+      "cpuMicroseconds": {
+        "user": 984000,
+        "system": 62000
+      },
+      "rssBeforeBytes": 206192640,
+      "rssAfterBytes": 225320960,
+      "processMaxRssBytes": 227500032,
+      "heapUsedBeforeBytes": 53709288,
+      "heapUsedAfterBytes": 97336288,
+      "timerDelayMs": {
+        "median": 116.05289999999991,
+        "max": 120.9556,
+        "samples": [
+          120.9556,
+          119.54320000000001,
+          116.03480000000002,
+          116.99720000000002,
+          114.00700000000006,
+          112.88600000000008,
+          116.05289999999991,
+          115.92259999999987,
+          116.81179999999995
+        ]
+      },
+      "samples": [
+        {
+          "iterations": 16,
+          "elapsedMs": 120.5849,
+          "opsPerSecond": 132.6865967463588
+        },
+        {
+          "iterations": 16,
+          "elapsedMs": 119.49850000000004,
+          "opsPerSecond": 133.8928940530634
+        },
+        {
+          "iterations": 16,
+          "elapsedMs": 115.98810000000003,
+          "opsPerSecond": 137.94518575612494
+        },
+        {
+          "iterations": 16,
+          "elapsedMs": 116.95130000000006,
+          "opsPerSecond": 136.8090820709132
+        },
+        {
+          "iterations": 16,
+          "elapsedMs": 113.90859999999998,
+          "opsPerSecond": 140.46349441569822
+        },
+        {
+          "iterations": 16,
+          "elapsedMs": 112.8202,
+          "opsPerSecond": 141.81857504241262
+        },
+        {
+          "iterations": 16,
+          "elapsedMs": 116.01429999999982,
+          "opsPerSecond": 137.91403301144794
+        },
+        {
+          "iterations": 16,
+          "elapsedMs": 115.88439999999991,
+          "opsPerSecond": 138.06862701105595
+        },
+        {
+          "iterations": 16,
+          "elapsedMs": 116.75999999999999,
+          "opsPerSecond": 137.03323055841042
+        }
+      ],
+      "sink": 191000656
+    },
+    {
+      "dataset": "public-api-data",
+      "method": "native-text",
+      "status": "OK",
+      "comparableStableOperation": true,
+      "inputContract": "pre-existing JSON text; object conversion excluded",
+      "unitsPerOperation": 1,
+      "jsonBytes": 1085130,
+      "sha256": "a12b6a68c636a1e7e1d668710cff7b6e490a4f05b84a6262bf702b90b0c50268",
+      "outputBytes": 1085130,
+      "repetitions": 9,
+      "sampleMs": 100,
+      "medianOpsPerSecond": 231.6830980663872,
+      "medianItemsPerSecond": 231.6830980663872,
+      "medianLatencyUs": 4316.240625000002,
+      "madPercent": 1.3101695474700918,
+      "minOpsPerSecond": 216.38625487460774,
+      "maxOpsPerSecond": 240.3023002937695,
+      "outputMiBPerSecond": 239.7597124145305,
+      "cpuMicroseconds": {
+        "user": 813000,
+        "system": 437000
+      },
+      "rssBeforeBytes": 73134080,
+      "rssAfterBytes": 68268032,
+      "processMaxRssBytes": 104075264,
+      "heapUsedBeforeBytes": 18848024,
+      "heapUsedAfterBytes": 12449648,
+      "timerDelayMs": {
+        "median": 138.16880000000003,
+        "max": 147.9466,
+        "samples": [
+          137.4468,
+          140.2074,
+          139.89160000000004,
+          138.16880000000003,
+          138.32510000000002,
+          136.39750000000004,
+          133.2199999999998,
+          133.3574000000001,
+          147.9466
+        ]
+      },
+      "samples": [
+        {
+          "iterations": 32,
+          "elapsedMs": 137.29359999999997,
+          "opsPerSecond": 233.07714270730762
+        },
+        {
+          "iterations": 32,
+          "elapsedMs": 140.15500000000003,
+          "opsPerSecond": 228.31864721201524
+        },
+        {
+          "iterations": 32,
+          "elapsedMs": 139.83940000000007,
+          "opsPerSecond": 228.8339337840407
+        },
+        {
+          "iterations": 32,
+          "elapsedMs": 138.11970000000008,
+          "opsPerSecond": 231.6830980663872
+        },
+        {
+          "iterations": 32,
+          "elapsedMs": 138.23199999999997,
+          "opsPerSecond": 231.4948781758204
+        },
+        {
+          "iterations": 32,
+          "elapsedMs": 136.33349999999996,
+          "opsPerSecond": 234.71853946388828
+        },
+        {
+          "iterations": 32,
+          "elapsedMs": 133.16560000000004,
+          "opsPerSecond": 240.3023002937695
+        },
+        {
+          "iterations": 32,
+          "elapsedMs": 133.30459999999994,
+          "opsPerSecond": 240.05173114806252
+        },
+        {
+          "iterations": 32,
+          "elapsedMs": 147.88369999999986,
+          "opsPerSecond": 216.38625487460774
+        }
+      ],
+      "sink": 364637616
+    },
+    {
+      "dataset": "public-api-data",
+      "method": "native-roundtrip",
+      "status": "OK",
+      "comparableStableOperation": true,
+      "inputContract": "JS object; JSON.stringify conversion included",
+      "unitsPerOperation": 1,
+      "jsonBytes": 1085130,
+      "sha256": "a12b6a68c636a1e7e1d668710cff7b6e490a4f05b84a6262bf702b90b0c50268",
+      "outputBytes": 1085130,
+      "repetitions": 9,
+      "sampleMs": 100,
+      "medianOpsPerSecond": 164.1875206196438,
+      "medianItemsPerSecond": 164.1875206196438,
+      "medianLatencyUs": 6090.5968749999965,
+      "madPercent": 2.019033520918686,
+      "minOpsPerSecond": 154.5798134221652,
+      "maxOpsPerSecond": 171.61268732597398,
+      "outputMiBPerSecond": 169.91119790076644,
+      "cpuMicroseconds": {
+        "user": 922000,
+        "system": 625000
+      },
+      "rssBeforeBytes": 76337152,
+      "rssAfterBytes": 72802304,
+      "processMaxRssBytes": 121135104,
+      "heapUsedBeforeBytes": 22097664,
+      "heapUsedAfterBytes": 16598728,
+      "timerDelayMs": {
+        "median": 191.0818999999999,
+        "max": 197.8963,
+        "samples": [
+          103.71430000000001,
+          194.51279999999997,
+          197.8963,
+          100.25380000000007,
+          195.96109999999987,
+          186.5293999999999,
+          190.8288,
+          191.0818999999999,
+          194.95299999999997
+        ]
+      },
+      "samples": [
+        {
+          "iterations": 16,
+          "elapsedMs": 103.50640000000001,
+          "opsPerSecond": 154.5798134221652
+        },
+        {
+          "iterations": 32,
+          "elapsedMs": 194.46079999999995,
+          "opsPerSecond": 164.55758692754532
+        },
+        {
+          "iterations": 32,
+          "elapsedMs": 197.84849999999994,
+          "opsPerSecond": 161.73991715883622
+        },
+        {
+          "iterations": 16,
+          "elapsedMs": 100.19600000000003,
+          "opsPerSecond": 159.68701345363084
+        },
+        {
+          "iterations": 32,
+          "elapsedMs": 195.85590000000002,
+          "opsPerSecond": 163.38542775581433
+        },
+        {
+          "iterations": 32,
+          "elapsedMs": 186.46640000000002,
+          "opsPerSecond": 171.61268732597398
+        },
+        {
+          "iterations": 32,
+          "elapsedMs": 190.78459999999995,
+          "opsPerSecond": 167.7284225246692
+        },
+        {
+          "iterations": 32,
+          "elapsedMs": 191.04189999999994,
+          "opsPerSecond": 167.5025216981197
+        },
+        {
+          "iterations": 32,
+          "elapsedMs": 194.89909999999986,
+          "opsPerSecond": 164.1875206196438
+        }
+      ],
+      "sink": 312546528
+    },
+    {
+      "dataset": "deep",
+      "method": "upstream",
+      "status": "OK",
+      "comparableStableOperation": true,
+      "unitsPerOperation": 1,
+      "jsonBytes": 1043,
+      "sha256": "550e9cf869cd26fdd3d576825e49b98146532efd358968bf15f1f0a5fc3d1559",
+      "outputBytes": 1043,
+      "repetitions": 9,
+      "sampleMs": 100,
+      "medianOpsPerSecond": 43641.72620611722,
+      "medianItemsPerSecond": 43641.72620611722,
+      "medianLatencyUs": 22.91385073260074,
+      "madPercent": 0.4258929936629448,
+      "minOpsPerSecond": 42853.6878356689,
+      "maxOpsPerSecond": 45552.48875422935,
+      "outputMiBPerSecond": 43.40965312288309,
+      "cpuMicroseconds": {
+        "user": 844000,
+        "system": 47000
+      },
+      "rssBeforeBytes": 54697984,
+      "rssAfterBytes": 63295488,
+      "processMaxRssBytes": 63324160,
+      "heapUsedBeforeBytes": 9949656,
+      "heapUsedAfterBytes": 15890424,
+      "timerDelayMs": {
+        "median": 100.20839999999998,
+        "max": 100.43069999999997,
+        "samples": [
+          100.43069999999997,
+          100.1055,
+          100.31800000000004,
+          100.35720000000003,
+          100.24369999999999,
+          100.14210000000003,
+          100.07150000000001,
+          100.13709999999992,
+          100.20839999999998
+        ]
+      },
+      "samples": [
+        {
+          "iterations": 4368,
+          "elapsedMs": 100.27899999999997,
+          "opsPerSecond": 43558.47186350085
+        },
+        {
+          "iterations": 4288,
+          "elapsedMs": 100.06139999999999,
+          "opsPerSecond": 42853.6878356689
+        },
+        {
+          "iterations": 4368,
+          "elapsedMs": 100.27420000000006,
+          "opsPerSecond": 43560.5569528353
+        },
+        {
+          "iterations": 4384,
+          "elapsedMs": 100.31320000000005,
+          "opsPerSecond": 43703.121822452056
+        },
+        {
+          "iterations": 4352,
+          "elapsedMs": 100.14760000000001,
+          "opsPerSecond": 43455.859151891804
+        },
+        {
+          "iterations": 4368,
+          "elapsedMs": 100.08770000000004,
+          "opsPerSecond": 43641.72620611722
+        },
+        {
+          "iterations": 4528,
+          "elapsedMs": 100.03480000000002,
+          "opsPerSecond": 45264.24804168149
+        },
+        {
+          "iterations": 4560,
+          "elapsedMs": 100.10429999999997,
+          "opsPerSecond": 45552.48875422935
+        },
+        {
+          "iterations": 4544,
+          "elapsedMs": 100.10590000000002,
+          "opsPerSecond": 45391.929946186974
+        }
+      ],
+      "sink": 52840320
+    },
+    {
+      "dataset": "deep",
+      "method": "public-stringify",
+      "status": "OK",
+      "comparableStableOperation": true,
+      "unitsPerOperation": 1,
+      "jsonBytes": 1043,
+      "sha256": "550e9cf869cd26fdd3d576825e49b98146532efd358968bf15f1f0a5fc3d1559",
+      "outputBytes": 1043,
+      "repetitions": 9,
+      "sampleMs": 100,
+      "medianOpsPerSecond": 43392.64259398667,
+      "medianItemsPerSecond": 43392.64259398667,
+      "medianLatencyUs": 23.04538143382352,
+      "madPercent": 0.7918750999069799,
+      "minOpsPerSecond": 37305.773825774835,
+      "maxOpsPerSecond": 44398.573017086615,
+      "outputMiBPerSecond": 43.16189405968484,
+      "cpuMicroseconds": {
+        "user": 844000,
+        "system": 16000
+      },
+      "rssBeforeBytes": 54710272,
+      "rssAfterBytes": 63279104,
+      "processMaxRssBytes": 63340544,
+      "heapUsedBeforeBytes": 10055736,
+      "heapUsedAfterBytes": 8410640,
+      "timerDelayMs": {
+        "median": 100.31529999999998,
+        "max": 100.47610000000003,
+        "samples": [
+          100.47610000000003,
+          100.31529999999998,
+          100.32920000000007,
+          100.2423,
+          100.45480000000009,
+          100.09000000000003,
+          100.39329999999995,
+          100.24170000000015,
+          100.23119999999994
+        ]
+      },
+      "samples": [
+        {
+          "iterations": 4352,
+          "elapsedMs": 100.29349999999997,
+          "opsPerSecond": 43392.64259398667
+        },
+        {
+          "iterations": 4416,
+          "elapsedMs": 100.25029999999998,
+          "opsPerSecond": 44049.74349203943
+        },
+        {
+          "iterations": 4384,
+          "elapsedMs": 100.27999999999997,
+          "opsPerSecond": 43717.59074591146
+        },
+        {
+          "iterations": 4336,
+          "elapsedMs": 100.19680000000005,
+          "opsPerSecond": 43274.83512447501
+        },
+        {
+          "iterations": 3744,
+          "elapsedMs": 100.35980000000006,
+          "opsPerSecond": 37305.773825774835
+        },
+        {
+          "iterations": 4352,
+          "elapsedMs": 100.03559999999993,
+          "opsPerSecond": 43504.51239358792
+        },
+        {
+          "iterations": 4320,
+          "elapsedMs": 100.35069999999996,
+          "opsPerSecond": 43049.02706209326
+        },
+        {
+          "iterations": 4272,
+          "elapsedMs": 100.20169999999996,
+          "opsPerSecond": 42634.007207462564
+        },
+        {
+          "iterations": 4448,
+          "elapsedMs": 100.18340000000012,
+          "opsPerSecond": 44398.573017086615
+        }
+      ],
+      "sink": 51824160
+    },
+    {
+      "dataset": "deep",
+      "method": "upstream-from-text",
+      "status": "OK",
+      "comparableStableOperation": true,
+      "inputContract": "pre-existing JSON text; parsing included",
+      "unitsPerOperation": 1,
+      "jsonBytes": 1043,
+      "sha256": "550e9cf869cd26fdd3d576825e49b98146532efd358968bf15f1f0a5fc3d1559",
+      "outputBytes": 1043,
+      "repetitions": 9,
+      "sampleMs": 100,
+      "medianOpsPerSecond": 31241.625481052313,
+      "medianItemsPerSecond": 31241.625481052313,
+      "medianLatencyUs": 32.008577806122425,
+      "madPercent": 1.1183241706072835,
+      "minOpsPerSecond": 30258.541319332133,
+      "maxOpsPerSecond": 32472.571421749457,
+      "outputMiBPerSecond": 31.07549226449734,
+      "cpuMicroseconds": {
+        "user": 766000,
+        "system": 93000
+      },
+      "rssBeforeBytes": 54726656,
+      "rssAfterBytes": 63553536,
+      "processMaxRssBytes": 63565824,
+      "heapUsedBeforeBytes": 9352944,
+      "heapUsedAfterBytes": 11949800,
+      "timerDelayMs": {
+        "median": 100.42279999999997,
+        "max": 100.56049999999999,
+        "samples": [
+          100.42279999999997,
+          100.56049999999999,
+          100.1431,
+          100.32939999999996,
+          100.55090000000007,
+          100.46410000000003,
+          100.27370000000008,
+          100.43719999999996,
+          100.29299999999989
+        ]
+      },
+      "samples": [
+        {
+          "iterations": 3168,
+          "elapsedMs": 100.28169999999997,
+          "opsPerSecond": 31591.008130097525
+        },
+        {
+          "iterations": 3264,
+          "elapsedMs": 100.5156,
+          "opsPerSecond": 32472.571421749457
+        },
+        {
+          "iterations": 3136,
+          "elapsedMs": 100.09519999999998,
+          "opsPerSecond": 31330.173674661728
+        },
+        {
+          "iterations": 3104,
+          "elapsedMs": 100.28140000000008,
+          "opsPerSecond": 30952.89854349857
+        },
+        {
+          "iterations": 3040,
+          "elapsedMs": 100.46749999999997,
+          "opsPerSecond": 30258.541319332133
+        },
+        {
+          "iterations": 3104,
+          "elapsedMs": 100.41579999999999,
+          "opsPerSecond": 30911.470107293877
+        },
+        {
+          "iterations": 3168,
+          "elapsedMs": 100.23770000000002,
+          "opsPerSecond": 31604.87521162197
+        },
+        {
+          "iterations": 3136,
+          "elapsedMs": 100.37889999999993,
+          "opsPerSecond": 31241.625481052313
+        },
+        {
+          "iterations": 3088,
+          "elapsedMs": 100.2337,
+          "opsPerSecond": 30808.001700027038
+        }
+      ],
+      "sink": 37738080
+    },
+    {
+      "dataset": "deep",
+      "method": "native-text",
+      "status": "OK",
+      "comparableStableOperation": true,
+      "inputContract": "pre-existing JSON text; object conversion excluded",
+      "unitsPerOperation": 1,
+      "jsonBytes": 1043,
+      "sha256": "550e9cf869cd26fdd3d576825e49b98146532efd358968bf15f1f0a5fc3d1559",
+      "outputBytes": 1043,
+      "repetitions": 9,
+      "sampleMs": 100,
+      "medianOpsPerSecond": 70884.40872285339,
+      "medianItemsPerSecond": 70884.40872285339,
+      "medianLatencyUs": 14.10747466216215,
+      "madPercent": 1.3198428622009575,
+      "minOpsPerSecond": 68863.31590447013,
+      "maxOpsPerSecond": 73860.76366753863,
+      "outputMiBPerSecond": 70.50746755403145,
+      "cpuMicroseconds": {
+        "user": 828000,
+        "system": 63000
+      },
+      "rssBeforeBytes": 55050240,
+      "rssAfterBytes": 55123968,
+      "processMaxRssBytes": 55275520,
+      "heapUsedBeforeBytes": 8532632,
+      "heapUsedAfterBytes": 11974296,
+      "timerDelayMs": {
+        "median": 100.21710000000007,
+        "max": 100.29390000000001,
+        "samples": [
+          100.29390000000001,
+          100.18630000000002,
+          100.23440000000005,
+          100.19060000000002,
+          100.21710000000007,
+          100.1291,
+          100.18280000000004,
+          100.25850000000014,
+          100.26420000000007
+        ]
+      },
+      "samples": [
+        {
+          "iterations": 6976,
+          "elapsedMs": 100.15129999999999,
+          "opsPerSecond": 69654.61257117981
+        },
+        {
+          "iterations": 6896,
+          "elapsedMs": 100.1404,
+          "opsPerSecond": 68863.31590447013
+        },
+        {
+          "iterations": 7008,
+          "elapsedMs": 100.18749999999994,
+          "opsPerSecond": 69948.84591391146
+        },
+        {
+          "iterations": 7104,
+          "elapsedMs": 100.14390000000003,
+          "opsPerSecond": 70937.92033264131
+        },
+        {
+          "iterations": 7216,
+          "elapsedMs": 100.12799999999993,
+          "opsPerSecond": 72067.75327580702
+        },
+        {
+          "iterations": 7392,
+          "elapsedMs": 100.08019999999999,
+          "opsPerSecond": 73860.76366753863
+        },
+        {
+          "iterations": 7136,
+          "elapsedMs": 100.14729999999997,
+          "opsPerSecond": 71255.04132412958
+        },
+        {
+          "iterations": 7088,
+          "elapsedMs": 100.22019999999986,
+          "opsPerSecond": 70724.26516809994
+        },
+        {
+          "iterations": 7104,
+          "elapsedMs": 100.21949999999993,
+          "opsPerSecond": 70884.40872285339
+        }
+      ],
+      "sink": 85269840
+    },
+    {
+      "dataset": "deep",
+      "method": "native-roundtrip",
+      "status": "OK",
+      "comparableStableOperation": true,
+      "inputContract": "JS object; JSON.stringify conversion included",
+      "unitsPerOperation": 1,
+      "jsonBytes": 1043,
+      "sha256": "550e9cf869cd26fdd3d576825e49b98146532efd358968bf15f1f0a5fc3d1559",
+      "outputBytes": 1043,
+      "repetitions": 9,
+      "sampleMs": 100,
+      "medianOpsPerSecond": 50782.80171751266,
+      "medianItemsPerSecond": 50782.80171751266,
+      "medianLatencyUs": 19.691705974842776,
+      "madPercent": 0.5832864926346293,
+      "minOpsPerSecond": 50091.42882211361,
+      "maxOpsPerSecond": 51633.994111246866,
+      "outputMiBPerSecond": 50.512754622808174,
+      "cpuMicroseconds": {
+        "user": 890000,
+        "system": 15000
+      },
+      "rssBeforeBytes": 55144448,
+      "rssAfterBytes": 55291904,
+      "processMaxRssBytes": 55869440,
+      "heapUsedBeforeBytes": 8292200,
+      "heapUsedAfterBytes": 10545000,
+      "timerDelayMs": {
+        "median": 100.27250000000004,
+        "max": 100.36720000000003,
+        "samples": [
+          100.36720000000003,
+          100.27250000000004,
+          100.19210000000004,
+          100.36310000000003,
+          100.2894,
+          100.14470000000006,
+          100.33120000000008,
+          100.22660000000008,
+          100.18460000000005
+        ]
+      },
+      "samples": [
+        {
+          "iterations": 5088,
+          "elapsedMs": 100.21099999999998,
+          "opsPerSecond": 50772.86924589118
+        },
+        {
+          "iterations": 5072,
+          "elapsedMs": 100.2269,
+          "opsPerSecond": 50605.176853718905
+        },
+        {
+          "iterations": 5056,
+          "elapsedMs": 100.1454,
+          "opsPerSecond": 50486.59249451298
+        },
+        {
+          "iterations": 5104,
+          "elapsedMs": 100.31700000000001,
+          "opsPerSecond": 50878.71447511389
+        },
+        {
+          "iterations": 5168,
+          "elapsedMs": 100.15700000000004,
+          "opsPerSecond": 51598.98958634941
+        },
+        {
+          "iterations": 5168,
+          "elapsedMs": 100.08910000000003,
+          "opsPerSecond": 51633.994111246866
+        },
+        {
+          "iterations": 5024,
+          "elapsedMs": 100.29660000000001,
+          "opsPerSecond": 50091.42882211361
+        },
+        {
+          "iterations": 5088,
+          "elapsedMs": 100.19140000000004,
+          "opsPerSecond": 50782.80171751266
+        },
+        {
+          "iterations": 5120,
+          "elapsedMs": 100.14149999999995,
+          "opsPerSecond": 51127.65436906779
+        }
+      ],
+      "sink": 61197360
+    },
+    {
+      "dataset": "wide",
+      "method": "upstream",
+      "status": "OK",
+      "comparableStableOperation": true,
+      "unitsPerOperation": 1,
+      "jsonBytes": 21784,
+      "sha256": "a85e7f6ca036307b47f0c105c26552afeddfbc52befe36500add5d02ace8a686",
+      "outputBytes": 21784,
+      "repetitions": 9,
+      "sampleMs": 100,
+      "medianOpsPerSecond": 4046.6178154294817,
+      "medianItemsPerSecond": 4046.6178154294817,
+      "medianLatencyUs": 247.1199519230769,
+      "madPercent": 1.1125121470471495,
+      "minOpsPerSecond": 3928.582302326015,
+      "maxOpsPerSecond": 4119.921404576282,
+      "outputMiBPerSecond": 84.0678429520758,
+      "cpuMicroseconds": {
+        "user": 859000,
+        "system": 31000
+      },
+      "rssBeforeBytes": 62730240,
+      "rssAfterBytes": 79925248,
+      "processMaxRssBytes": 80080896,
+      "heapUsedBeforeBytes": 8009624,
+      "heapUsedAfterBytes": 15021512,
+      "timerDelayMs": {
+        "median": 101.9185,
+        "max": 104.53499999999997,
+        "samples": [
+          102.17750000000001,
+          104.00099999999998,
+          102.84879999999993,
+          104.53499999999997,
+          101.9185,
+          100.09139999999991,
+          101.0104,
+          101.7084000000001,
+          101.81790000000001
+        ]
+      },
+      "samples": [
+        {
+          "iterations": 416,
+          "elapsedMs": 102.01930000000002,
+          "opsPerSecond": 4077.659815348664
+        },
+        {
+          "iterations": 416,
+          "elapsedMs": 103.95120000000003,
+          "opsPerSecond": 4001.877804200431
+        },
+        {
+          "iterations": 416,
+          "elapsedMs": 102.80189999999999,
+          "opsPerSecond": 4046.6178154294817
+        },
+        {
+          "iterations": 416,
+          "elapsedMs": 104.4883000000001,
+          "opsPerSecond": 3981.3069980083856
+        },
+        {
+          "iterations": 400,
+          "elapsedMs": 101.81790000000001,
+          "opsPerSecond": 3928.582302326015
+        },
+        {
+          "iterations": 400,
+          "elapsedMs": 100.01159999999993,
+          "opsPerSecond": 3999.53605381776
+        },
+        {
+          "iterations": 416,
+          "elapsedMs": 100.9728,
+          "opsPerSecond": 4119.921404576282
+        },
+        {
+          "iterations": 416,
+          "elapsedMs": 101.67079999999999,
+          "opsPerSecond": 4091.6369301707086
+        },
+        {
+          "iterations": 416,
+          "elapsedMs": 101.76329999999984,
+          "opsPerSecond": 4087.917746378121
+        }
+      ],
+      "sink": 98134400
+    },
+    {
+      "dataset": "wide",
+      "method": "public-stringify",
+      "status": "OK",
+      "comparableStableOperation": true,
+      "unitsPerOperation": 1,
+      "jsonBytes": 21784,
+      "sha256": "a85e7f6ca036307b47f0c105c26552afeddfbc52befe36500add5d02ace8a686",
+      "outputBytes": 21784,
+      "repetitions": 9,
+      "sampleMs": 100,
+      "medianOpsPerSecond": 4145.527961885063,
+      "medianItemsPerSecond": 4145.527961885063,
+      "medianLatencyUs": 241.22379807692286,
+      "madPercent": 0.929112589372047,
+      "minOpsPerSecond": 4056.708098398576,
+      "maxOpsPerSecond": 4280.007608902415,
+      "outputMiBPerSecond": 86.12268554850026,
+      "cpuMicroseconds": {
+        "user": 828000,
+        "system": 78000
+      },
+      "rssBeforeBytes": 62828544,
+      "rssAfterBytes": 79925248,
+      "processMaxRssBytes": 80007168,
+      "heapUsedBeforeBytes": 9619936,
+      "heapUsedAfterBytes": 12287056,
+      "timerDelayMs": {
+        "median": 101.37760000000003,
+        "max": 103.38879999999995,
+        "samples": [
+          101.0771,
+          102.63309999999996,
+          100.25159999999994,
+          100.51499999999999,
+          101.37760000000003,
+          102.1903000000001,
+          102.58850000000007,
+          103.38879999999995,
+          100.39919999999984
+        ]
+      },
+      "samples": [
+        {
+          "iterations": 432,
+          "elapsedMs": 100.93440000000001,
+          "opsPerSecond": 4280.007608902415
+        },
+        {
+          "iterations": 432,
+          "elapsedMs": 102.58699999999999,
+          "opsPerSecond": 4211.059880881594
+        },
+        {
+          "iterations": 416,
+          "elapsedMs": 100.17700000000002,
+          "opsPerSecond": 4152.649809836588
+        },
+        {
+          "iterations": 416,
+          "elapsedMs": 100.471,
+          "opsPerSecond": 4140.4982532273
+        },
+        {
+          "iterations": 416,
+          "elapsedMs": 101.29020000000003,
+          "opsPerSecond": 4107.01133969525
+        },
+        {
+          "iterations": 416,
+          "elapsedMs": 102.09870000000001,
+          "opsPerSecond": 4074.488705536897
+        },
+        {
+          "iterations": 416,
+          "elapsedMs": 102.5462,
+          "opsPerSecond": 4056.708098398576
+        },
+        {
+          "iterations": 432,
+          "elapsedMs": 103.34680000000003,
+          "opsPerSecond": 4180.100399818861
+        },
+        {
+          "iterations": 416,
+          "elapsedMs": 100.34909999999991,
+          "opsPerSecond": 4145.527961885063
+        }
+      ],
+      "sink": 100587760
+    },
+    {
+      "dataset": "wide",
+      "method": "upstream-from-text",
+      "status": "OK",
+      "comparableStableOperation": true,
+      "inputContract": "pre-existing JSON text; parsing included",
+      "unitsPerOperation": 1,
+      "jsonBytes": 21784,
+      "sha256": "a85e7f6ca036307b47f0c105c26552afeddfbc52befe36500add5d02ace8a686",
+      "outputBytes": 21784,
+      "repetitions": 9,
+      "sampleMs": 100,
+      "medianOpsPerSecond": 2470.0077380711186,
+      "medianItemsPerSecond": 2470.0077380711186,
+      "medianLatencyUs": 404.8570312499997,
+      "madPercent": 1.799183834349009,
+      "minOpsPerSecond": 2382.647180583808,
+      "maxOpsPerSecond": 2627.1030104475626,
+      "outputMiBPerSecond": 51.314018789426086,
+      "cpuMicroseconds": {
+        "user": 875000,
+        "system": 31000
+      },
+      "rssBeforeBytes": 54587392,
+      "rssAfterBytes": 63606784,
+      "processMaxRssBytes": 63627264,
+      "heapUsedBeforeBytes": 9186152,
+      "heapUsedAfterBytes": 15062728,
+      "timerDelayMs": {
+        "median": 103.68970000000002,
+        "max": 106.47029999999995,
+        "samples": [
+          100.94050000000001,
+          103.75600000000003,
+          100.52509999999995,
+          103.68970000000002,
+          103.73360000000002,
+          102.90999999999997,
+          103.56989999999996,
+          106.47029999999995,
+          105.60840000000007
+        ]
+      },
+      "samples": [
+        {
+          "iterations": 240,
+          "elapsedMs": 100.72829999999999,
+          "opsPerSecond": 2382.647180583808
+        },
+        {
+          "iterations": 256,
+          "elapsedMs": 103.7088,
+          "opsPerSecond": 2468.450121879725
+        },
+        {
+          "iterations": 256,
+          "elapsedMs": 100.47310000000004,
+          "opsPerSecond": 2547.9456690397715
+        },
+        {
+          "iterations": 256,
+          "elapsedMs": 103.64339999999993,
+          "opsPerSecond": 2470.0077380711186
+        },
+        {
+          "iterations": 256,
+          "elapsedMs": 103.59040000000005,
+          "opsPerSecond": 2471.271469170887
+        },
+        {
+          "iterations": 256,
+          "elapsedMs": 102.86069999999995,
+          "opsPerSecond": 2488.8028177914416
+        },
+        {
+          "iterations": 272,
+          "elapsedMs": 103.53610000000003,
+          "opsPerSecond": 2627.1030104475626
+        },
+        {
+          "iterations": 256,
+          "elapsedMs": 106.43770000000006,
+          "opsPerSecond": 2405.1628323422983
+        },
+        {
+          "iterations": 256,
+          "elapsedMs": 105.54230000000007,
+          "opsPerSecond": 2425.5677581405735
+        }
+      ],
+      "sink": 61684480
+    },
+    {
+      "dataset": "wide",
+      "method": "native-text",
+      "status": "OK",
+      "comparableStableOperation": true,
+      "inputContract": "pre-existing JSON text; object conversion excluded",
+      "unitsPerOperation": 1,
+      "jsonBytes": 21784,
+      "sha256": "a85e7f6ca036307b47f0c105c26552afeddfbc52befe36500add5d02ace8a686",
+      "outputBytes": 21784,
+      "repetitions": 9,
+      "sampleMs": 100,
+      "medianOpsPerSecond": 4223.026639282162,
+      "medianItemsPerSecond": 4223.026639282162,
+      "medianLatencyUs": 236.79699074074082,
+      "madPercent": 0.9088047116031845,
+      "minOpsPerSecond": 4118.404118404119,
+      "maxOpsPerSecond": 4318.117300856828,
+      "outputMiBPerSecond": 87.7327082730509,
+      "cpuMicroseconds": {
+        "user": 922000,
+        "system": 0
+      },
+      "rssBeforeBytes": 51924992,
+      "rssAfterBytes": 52199424,
+      "processMaxRssBytes": 52264960,
+      "heapUsedBeforeBytes": 11804224,
+      "heapUsedAfterBytes": 8549464,
+      "timerDelayMs": {
+        "median": 101.94280000000003,
+        "max": 103.32379999999989,
+        "samples": [
+          103.24190000000002,
+          101.23139999999995,
+          102.35159999999996,
+          101.0584,
+          103.32379999999989,
+          103.25909999999999,
+          101.94280000000003,
+          100.78690000000006,
+          100.09030000000007
+        ]
+      },
+      "samples": [
+        {
+          "iterations": 432,
+          "elapsedMs": 103.07849999999999,
+          "opsPerSecond": 4190.980660370495
+        },
+        {
+          "iterations": 432,
+          "elapsedMs": 101.17750000000001,
+          "opsPerSecond": 4269.723999901164
+        },
+        {
+          "iterations": 432,
+          "elapsedMs": 102.29630000000003,
+          "opsPerSecond": 4223.026639282162
+        },
+        {
+          "iterations": 416,
+          "elapsedMs": 101.00999999999999,
+          "opsPerSecond": 4118.404118404119
+        },
+        {
+          "iterations": 432,
+          "elapsedMs": 103.23450000000003,
+          "opsPerSecond": 4184.647574212108
+        },
+        {
+          "iterations": 432,
+          "elapsedMs": 103.1857,
+          "opsPerSecond": 4186.626635279888
+        },
+        {
+          "iterations": 432,
+          "elapsedMs": 101.90089999999998,
+          "opsPerSecond": 4239.412998315031
+        },
+        {
+          "iterations": 432,
+          "elapsedMs": 100.74640000000011,
+          "opsPerSecond": 4287.994409725802
+        },
+        {
+          "iterations": 432,
+          "elapsedMs": 100.04359999999997,
+          "opsPerSecond": 4318.117300856828
+        }
+      ],
+      "sink": 103391600
+    },
+    {
+      "dataset": "wide",
+      "method": "native-roundtrip",
+      "status": "OK",
+      "comparableStableOperation": true,
+      "inputContract": "JS object; JSON.stringify conversion included",
+      "unitsPerOperation": 1,
+      "jsonBytes": 21784,
+      "sha256": "a85e7f6ca036307b47f0c105c26552afeddfbc52befe36500add5d02ace8a686",
+      "outputBytes": 21784,
+      "repetitions": 9,
+      "sampleMs": 100,
+      "medianOpsPerSecond": 2541.38940538437,
+      "medianItemsPerSecond": 2541.38940538437,
+      "medianLatencyUs": 393.485546875,
+      "madPercent": 1.4654153754655803,
+      "minOpsPerSecond": 2493.0345976719364,
+      "maxOpsPerSecond": 2691.2094413959467,
+      "outputMiBPerSecond": 52.79696160020172,
+      "cpuMicroseconds": {
+        "user": 875000,
+        "system": 16000
+      },
+      "rssBeforeBytes": 51871744,
+      "rssAfterBytes": 52236288,
+      "processMaxRssBytes": 52445184,
+      "heapUsedBeforeBytes": 7694184,
+      "heapUsedAfterBytes": 11863808,
+      "timerDelayMs": {
+        "median": 102.27860000000004,
+        "max": 105.81740000000002,
+        "samples": [
+          105.45779999999999,
+          102.27860000000004,
+          101.5908,
+          100.79009999999994,
+          101.16650000000004,
+          105.27030000000002,
+          105.81740000000002,
+          102.7222999999999,
+          101.43720000000008
+        ]
+      },
+      "samples": [
+        {
+          "iterations": 272,
+          "elapsedMs": 105.29849999999999,
+          "opsPerSecond": 2583.1327131915464
+        },
+        {
+          "iterations": 256,
+          "elapsedMs": 102.23039999999997,
+          "opsPerSecond": 2504.1474942874142
+        },
+        {
+          "iterations": 256,
+          "elapsedMs": 101.53769999999997,
+          "opsPerSecond": 2521.2310304448506
+        },
+        {
+          "iterations": 256,
+          "elapsedMs": 100.73230000000001,
+          "opsPerSecond": 2541.38940538437
+        },
+        {
+          "iterations": 272,
+          "elapsedMs": 101.06979999999999,
+          "opsPerSecond": 2691.2094413959467
+        },
+        {
+          "iterations": 272,
+          "elapsedMs": 105.20959999999991,
+          "opsPerSecond": 2585.3154084798366
+        },
+        {
+          "iterations": 272,
+          "elapsedMs": 105.78120000000001,
+          "opsPerSecond": 2571.3453808427203
+        },
+        {
+          "iterations": 256,
+          "elapsedMs": 102.6860999999999,
+          "opsPerSecond": 2493.0345976719364
+        },
+        {
+          "iterations": 256,
+          "elapsedMs": 101.3710000000001,
+          "opsPerSecond": 2525.3770802300437
+        }
+      ],
+      "sink": 63436880
+    },
+    {
+      "dataset": "unicode",
+      "method": "upstream",
+      "status": "OK",
+      "comparableStableOperation": true,
+      "unitsPerOperation": 1,
+      "jsonBytes": 39491,
+      "sha256": "8eeb93e76b5e3e1c047fa1b1d9580572697b110d05109e9bd26bc5750328c619",
+      "outputBytes": 39491,
+      "repetitions": 9,
+      "sampleMs": 100,
+      "medianOpsPerSecond": 18802.739543216925,
+      "medianItemsPerSecond": 18802.739543216925,
+      "medianLatencyUs": 53.18373940677965,
+      "madPercent": 0.8827963790830803,
+      "minOpsPerSecond": 18239.781757046097,
+      "maxOpsPerSecond": 19806.625835467228,
+      "outputMiBPerSecond": 708.1403611194416,
+      "cpuMicroseconds": {
+        "user": 906000,
+        "system": 0
+      },
+      "rssBeforeBytes": 63279104,
+      "rssAfterBytes": 80453632,
+      "processMaxRssBytes": 80576512,
+      "heapUsedBeforeBytes": 15642936,
+      "heapUsedAfterBytes": 16376216,
+      "timerDelayMs": {
+        "median": 100.54319999999996,
+        "max": 101.15950000000001,
+        "samples": [
+          101.15950000000001,
+          100.79650000000004,
+          100.2149,
+          100.49569999999994,
+          100.54319999999996,
+          100.50110000000006,
+          100.45090000000005,
+          100.91370000000006,
+          100.70409999999993
+        ]
+      },
+      "samples": [
+        {
+          "iterations": 1888,
+          "elapsedMs": 100.97070000000002,
+          "opsPerSecond": 18698.49372144592
+        },
+        {
+          "iterations": 1968,
+          "elapsedMs": 100.7509,
+          "opsPerSecond": 19533.324268071054
+        },
+        {
+          "iterations": 1984,
+          "elapsedMs": 100.16850000000005,
+          "opsPerSecond": 19806.625835467228
+        },
+        {
+          "iterations": 1872,
+          "elapsedMs": 100.44900000000007,
+          "opsPerSecond": 18636.322910133487
+        },
+        {
+          "iterations": 1872,
+          "elapsedMs": 100.44669999999996,
+          "opsPerSecond": 18636.749639360984
+        },
+        {
+          "iterations": 1904,
+          "elapsedMs": 100.44219999999996,
+          "opsPerSecond": 18956.17579065374
+        },
+        {
+          "iterations": 1888,
+          "elapsedMs": 100.41089999999997,
+          "opsPerSecond": 18802.739543216925
+        },
+        {
+          "iterations": 1840,
+          "elapsedMs": 100.87840000000006,
+          "opsPerSecond": 18239.781757046097
+        },
+        {
+          "iterations": 1904,
+          "elapsedMs": 100.65560000000005,
+          "opsPerSecond": 18915.98679060081
+        }
+      ],
+      "sink": 380866800
+    },
+    {
+      "dataset": "unicode",
+      "method": "public-stringify",
+      "status": "OK",
+      "comparableStableOperation": true,
+      "unitsPerOperation": 1,
+      "jsonBytes": 39491,
+      "sha256": "8eeb93e76b5e3e1c047fa1b1d9580572697b110d05109e9bd26bc5750328c619",
+      "outputBytes": 39491,
+      "repetitions": 9,
+      "sampleMs": 100,
+      "medianOpsPerSecond": 18577.307699559704,
+      "medianItemsPerSecond": 18577.307699559704,
+      "medianLatencyUs": 53.829113247863184,
+      "madPercent": 1.342465292722065,
+      "minOpsPerSecond": 17261.547405823178,
+      "maxOpsPerSecond": 18996.062108343373,
+      "outputMiBPerSecond": 699.6502479203341,
+      "cpuMicroseconds": {
+        "user": 891000,
+        "system": 16000
+      },
+      "rssBeforeBytes": 63610880,
+      "rssAfterBytes": 80728064,
+      "processMaxRssBytes": 80834560,
+      "heapUsedBeforeBytes": 10058704,
+      "heapUsedAfterBytes": 24027296,
+      "timerDelayMs": {
+        "median": 100.36059999999998,
+        "max": 100.85469999999998,
+        "samples": [
+          100.59299999999996,
+          100.15049999999997,
+          100.3349,
+          100.36059999999998,
+          100.85469999999998,
+          100.50210000000004,
+          100.65179999999998,
+          100.26959999999997,
+          100.16550000000007
+        ]
+      },
+      "samples": [
+        {
+          "iterations": 1824,
+          "elapsedMs": 100.4462,
+          "opsPerSecond": 18158.974655088994
+        },
+        {
+          "iterations": 1840,
+          "elapsedMs": 100.10479999999995,
+          "opsPerSecond": 18380.736987636963
+        },
+        {
+          "iterations": 1888,
+          "elapsedMs": 100.28309999999993,
+          "opsPerSecond": 18826.701607748477
+        },
+        {
+          "iterations": 1840,
+          "elapsedMs": 100.31399999999996,
+          "opsPerSecond": 18342.404848774855
+        },
+        {
+          "iterations": 1872,
+          "elapsedMs": 100.76809999999989,
+          "opsPerSecond": 18577.307699559704
+        },
+        {
+          "iterations": 1872,
+          "elapsedMs": 100.45150000000001,
+          "opsPerSecond": 18635.859096180742
+        },
+        {
+          "iterations": 1904,
+          "elapsedMs": 100.5995999999999,
+          "opsPerSecond": 18926.51660642788
+        },
+        {
+          "iterations": 1904,
+          "elapsedMs": 100.23130000000015,
+          "opsPerSecond": 18996.062108343373
+        },
+        {
+          "iterations": 1728,
+          "elapsedMs": 100.1069,
+          "opsPerSecond": 17261.547405823178
+        }
+      ],
+      "sink": 372364000
+    },
+    {
+      "dataset": "unicode",
+      "method": "upstream-from-text",
+      "status": "OK",
+      "comparableStableOperation": true,
+      "inputContract": "pre-existing JSON text; parsing included",
+      "unitsPerOperation": 1,
+      "jsonBytes": 39491,
+      "sha256": "8eeb93e76b5e3e1c047fa1b1d9580572697b110d05109e9bd26bc5750328c619",
+      "outputBytes": 39491,
+      "repetitions": 9,
+      "sampleMs": 100,
+      "medianOpsPerSecond": 12008.195203349824,
+      "medianItemsPerSecond": 12008.195203349824,
+      "medianLatencyUs": 83.276461038961,
+      "madPercent": 7.702595216229355,
+      "minOpsPerSecond": 9101.714655257583,
+      "maxOpsPerSecond": 12933.13787263853,
+      "outputMiBPerSecond": 452.24727323101797,
+      "cpuMicroseconds": {
+        "user": 891000,
+        "system": 16000
+      },
+      "rssBeforeBytes": 63664128,
+      "rssAfterBytes": 71200768,
+      "processMaxRssBytes": 71274496,
+      "heapUsedBeforeBytes": 11415480,
+      "heapUsedAfterBytes": 23480400,
+      "timerDelayMs": {
+        "median": 100.55549999999994,
+        "max": 102.69619999999998,
+        "samples": [
+          100.2019,
+          100.26099999999997,
+          100.80540000000002,
+          100.55549999999994,
+          100.75210000000004,
+          102.69619999999998,
+          100.25379999999996,
+          101.09209999999996,
+          100.24279999999999
+        ]
+      },
+      "samples": [
+        {
+          "iterations": 1248,
+          "elapsedMs": 100.0489,
+          "opsPerSecond": 12473.900262771505
+        },
+        {
+          "iterations": 1296,
+          "elapsedMs": 100.20769999999999,
+          "opsPerSecond": 12933.13787263853
+        },
+        {
+          "iterations": 1280,
+          "elapsedMs": 100.7541,
+          "opsPerSecond": 12704.19764555487
+        },
+        {
+          "iterations": 1232,
+          "elapsedMs": 100.4488,
+          "opsPerSecond": 12264.954882487396
+        },
+        {
+          "iterations": 976,
+          "elapsedMs": 100.55989999999997,
+          "opsPerSecond": 9705.658020741868
+        },
+        {
+          "iterations": 1232,
+          "elapsedMs": 102.59659999999997,
+          "opsPerSecond": 12008.195203349824
+        },
+        {
+          "iterations": 912,
+          "elapsedMs": 100.20090000000005,
+          "opsPerSecond": 9101.714655257583
+        },
+        {
+          "iterations": 1008,
+          "elapsedMs": 101.04879999999991,
+          "opsPerSecond": 9975.378233091345
+        },
+        {
+          "iterations": 1008,
+          "elapsedMs": 100.19049999999993,
+          "opsPerSecond": 10060.834111018517
+        }
+      ],
+      "sink": 233094000
+    },
+    {
+      "dataset": "unicode",
+      "method": "native-text",
+      "status": "OK",
+      "comparableStableOperation": true,
+      "inputContract": "pre-existing JSON text; object conversion excluded",
+      "unitsPerOperation": 1,
+      "jsonBytes": 39491,
+      "sha256": "8eeb93e76b5e3e1c047fa1b1d9580572697b110d05109e9bd26bc5750328c619",
+      "outputBytes": 39491,
+      "repetitions": 9,
+      "sampleMs": 100,
+      "medianOpsPerSecond": 3954.996701000352,
+      "medianItemsPerSecond": 3954.996701000352,
+      "medianLatencyUs": 252.84471153846127,
+      "madPercent": 7.807585451878203,
+      "minOpsPerSecond": 3013.2722749214486,
+      "maxOpsPerSecond": 4508.071293592999,
+      "outputMiBPerSecond": 148.9513156120347,
+      "cpuMicroseconds": {
+        "user": 843000,
+        "system": 15000
+      },
+      "rssBeforeBytes": 52277248,
+      "rssAfterBytes": 52469760,
+      "processMaxRssBytes": 52727808,
+      "heapUsedBeforeBytes": 9236784,
+      "heapUsedAfterBytes": 11682288,
+      "timerDelayMs": {
+        "median": 100.96219999999994,
+        "max": 105.23800000000006,
+        "samples": [
+          100.37259999999998,
+          100.98770000000002,
+          100.55020000000002,
+          100.96219999999994,
+          100.95519999999999,
+          103.00069999999994,
+          101.30000000000007,
+          100.40819999999997,
+          105.23800000000006
+        ]
+      },
+      "samples": [
+        {
+          "iterations": 400,
+          "elapsedMs": 100.19900000000001,
+          "opsPerSecond": 3992.0558089402084
+        },
+        {
+          "iterations": 368,
+          "elapsedMs": 100.92679999999996,
+          "opsPerSecond": 3646.2069539507856
+        },
+        {
+          "iterations": 368,
+          "elapsedMs": 100.49489999999997,
+          "opsPerSecond": 3661.8773689013083
+        },
+        {
+          "iterations": 304,
+          "elapsedMs": 100.88699999999994,
+          "opsPerSecond": 3013.2722749214486
+        },
+        {
+          "iterations": 368,
+          "elapsedMs": 100.83010000000002,
+          "opsPerSecond": 3649.7038086841126
+        },
+        {
+          "iterations": 464,
+          "elapsedMs": 102.92650000000003,
+          "opsPerSecond": 4508.071293592999
+        },
+        {
+          "iterations": 448,
+          "elapsedMs": 101.23339999999996,
+          "opsPerSecond": 4425.4169078584755
+        },
+        {
+          "iterations": 448,
+          "elapsedMs": 100.3623,
+          "opsPerSecond": 4463.827552776292
+        },
+        {
+          "iterations": 416,
+          "elapsedMs": 105.18339999999989,
+          "opsPerSecond": 3954.996701000352
+        }
+      ],
+      "sink": 80336800
+    },
+    {
+      "dataset": "unicode",
+      "method": "native-roundtrip",
+      "status": "OK",
+      "comparableStableOperation": true,
+      "inputContract": "JS object; JSON.stringify conversion included",
+      "unitsPerOperation": 1,
+      "jsonBytes": 39491,
+      "sha256": "8eeb93e76b5e3e1c047fa1b1d9580572697b110d05109e9bd26bc5750328c619",
+      "outputBytes": 39491,
+      "repetitions": 9,
+      "sampleMs": 100,
+      "medianOpsPerSecond": 3889.1476252378475,
+      "medianItemsPerSecond": 3889.1476252378475,
+      "medianLatencyUs": 257.12574999999987,
+      "madPercent": 4.596905321864753,
+      "minOpsPerSecond": 3350.5982213907764,
+      "maxOpsPerSecond": 4106.123552862887,
+      "outputMiBPerSecond": 146.47133719279083,
+      "cpuMicroseconds": {
+        "user": 828000,
+        "system": 47000
+      },
+      "rssBeforeBytes": 52088832,
+      "rssAfterBytes": 60850176,
+      "processMaxRssBytes": 60854272,
+      "heapUsedBeforeBytes": 10848312,
+      "heapUsedAfterBytes": 9152872,
+      "timerDelayMs": {
+        "median": 102.07499999999993,
+        "max": 103.54590000000007,
+        "samples": [
+          100.58789999999999,
+          102.27440000000001,
+          103.54590000000007,
+          101.36680000000001,
+          102.07499999999993,
+          103.06600000000003,
+          100.32320000000004,
+          102.88930000000005,
+          101.40730000000008
+        ]
+      },
+      "samples": [
+        {
+          "iterations": 336,
+          "elapsedMs": 100.28060000000002,
+          "opsPerSecond": 3350.5982213907764
+        },
+        {
+          "iterations": 352,
+          "elapsedMs": 102.22030000000001,
+          "opsPerSecond": 3443.543014450163
+        },
+        {
+          "iterations": 384,
+          "elapsedMs": 103.49380000000002,
+          "opsPerSecond": 3710.3671910781122
+        },
+        {
+          "iterations": 416,
+          "elapsedMs": 101.31209999999999,
+          "opsPerSecond": 4106.123552862887
+        },
+        {
+          "iterations": 416,
+          "elapsedMs": 101.98530000000005,
+          "opsPerSecond": 4079.0192312029258
+        },
+        {
+          "iterations": 384,
+          "elapsedMs": 103.01020000000005,
+          "opsPerSecond": 3727.7861803976675
+        },
+        {
+          "iterations": 400,
+          "elapsedMs": 100.26490000000001,
+          "opsPerSecond": 3989.4319946461815
+        },
+        {
+          "iterations": 400,
+          "elapsedMs": 102.85029999999995,
+          "opsPerSecond": 3889.1476252378475
+        },
+        {
+          "iterations": 400,
+          "elapsedMs": 101.3565000000001,
+          "opsPerSecond": 3946.4661861844047
+        }
+      ],
+      "sink": 75645600
+    }
+  ],
+  "limitations": [
+    "Sampled RSS and process maximum RSS include runtime, fixture preparation, require and warmup; they are not allocation counts or serializer-only peaks.",
+    "Timer probes measure synchronous sample-burst blocking plus timer scheduling, not per-request event-loop delay or asynchronous responsiveness.",
+    "Native text accepts pre-existing JSON; compare separately with parse-and-sort JS and use native-roundtrip for JS object conversion cost.",
+    "JSON.stringify-context is not stable serialization; all stable-compatible candidates must match the oracle exact string before timing.",
+    "Each cell uses a fresh process. Runs are serial and fixed-order; OS scheduling, thermal state and GC influence results. These are local exploratory measurements, not cross-platform claims."
+  ]
+}

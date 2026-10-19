@@ -14,6 +14,33 @@ pub struct Member<'a> {
     pub value: Node<'a>,
 }
 
+/// Allocation-free nesting check, for selection without building a token tree.
+/// The whole input must already have passed serde validation.
+pub fn validate_depth(text: &str, max_depth: usize) -> Result<(), String> {
+    let mut cursor = Cursor { text, pos: 0 };
+    let mut depth = 0;
+    while let Some(&byte) = text.as_bytes().get(cursor.pos) {
+        match byte {
+            b'"' => {
+                cursor.string()?;
+                continue;
+            }
+            b'{' | b'[' => {
+                depth += 1;
+                if depth > max_depth {
+                    return Err("JSON nesting limit exceeded".into());
+                }
+            }
+            b'}' | b']' => {
+                depth -= 1;
+            }
+            _ => {}
+        }
+        cursor.pos += 1;
+    }
+    Ok(())
+}
+
 pub fn parse(text: &str, max_depth: usize) -> Result<Node<'_>, String> {
     let mut cursor = Cursor { text, pos: 0 };
     let result = cursor.value(0, max_depth)?;

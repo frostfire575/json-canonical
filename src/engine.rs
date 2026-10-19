@@ -3,7 +3,7 @@ use serde_json::value::RawValue;
 
 #[derive(Clone, Copy)]
 pub struct Limits {
-    depth: usize,
+    pub(crate) depth: usize,
     bytes: usize,
 }
 impl Limits {
@@ -18,14 +18,18 @@ impl Limits {
 }
 
 pub fn stringify(input: &str, limits: Limits) -> Result<String, String> {
-    if input.len() > limits.bytes {
-        return Err("JSON input byte limit exceeded".into());
-    }
-    let root: &RawValue = serde_json::from_str(input).map_err(|e| e.to_string())?;
+    let root = validate(input, limits)?;
     let mut output = String::with_capacity(input.len().min(limits.bytes));
     let tree = tree::parse(root.get(), limits.depth)?;
     write(&tree, &mut output, limits)?;
     Ok(output)
+}
+
+pub(crate) fn validate(input: &str, limits: Limits) -> Result<&RawValue, String> {
+    if input.len() > limits.bytes {
+        return Err("JSON input byte limit exceeded".into());
+    }
+    serde_json::from_str(input).map_err(|e| e.to_string())
 }
 
 fn append(out: &mut String, text: &str, limits: Limits) -> Result<(), String> {

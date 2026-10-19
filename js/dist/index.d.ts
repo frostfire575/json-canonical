@@ -30,4 +30,6 @@ export interface JsonTextOptions {
 export declare function stringifyJson(input: string, options?: JsonTextOptions): string;
 /** Single native call. Maximum 1024 documents and 64 MiB combined UTF-8 input. */
 export declare function stringifyJsonBatch(inputs: readonly string[], options?: JsonTextOptions): string[];
+/** Extract raw JSON text using a JSON Pointer subset; missing paths yield undefined. */
+export declare function selectJson(input: string, path: string, options?: JsonTextOptions): string | undefined;
 export default stringify;

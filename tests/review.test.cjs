@@ -247,3 +247,116 @@ test('review scanner: depth limits count empty and mixed object/array containers
   assert.equal(api.stringifyJson('{"a":[],"b":{}}', { maxDepth: 2 }), '{"a":[],"b":{}}');
   assert.throws(() => api.stringifyJson('{"a":[],"b":{}}', { maxDepth: 1 }), /nesting/);
 });
+
+test('review selection: 3500 seeded raw-token and pointer cases match independent AST traversal', () => {
+  let state = 0xdca619f2;
+  const random = () => { state ^= state << 13; state ^= state >>> 17; state ^= state << 5; return (state >>> 0) / 0x100000000; };
+  const pick = values => values[Math.floor(random() * values.length)];
+  const keys = ['', '/', '~', '~1', '~01', 'a/b~c', '😀', '\ue000', 'বাংলা', 'e\u0301', 'é', '\u0000', '__proto__', 'constructor', '0', '00', '01', 'length'];
+  const leaves = ['null', 'true', 'false', '-0', '0.00', '1e+002', '42', '"\\ud800"', '"\\/"', '"commas, braces{}[] quotes\\" slash\\\\"'];
+  function make(depth) {
+    if (depth > 4 || random() < 0.4) return { text: pick(leaves), kind: 'scalar' };
+    const children = Array.from({ length: Math.floor(random() * 5) }, () => make(depth + 1));
+    if (random() < 0.5) return { text: '[ ' + children.map(child => child.text).join(' ,\n') + ' ]', kind: 'array', children };
+    const entries = children.map(child => [pick(keys), child]);
+    const text = '{\n' + entries.map(([key, child]) => {
+      const token = random() < 0.5 ? JSON.stringify(key).replaceAll('/', '\\/') : '"' + Array.from({ length: key.length }, (_, i) => '\\u' + key.charCodeAt(i).toString(16).padStart(4, '0')).join('') + '"';
+      return token + ' : ' + child.text;
+    }).join(' , ') + '\n}';
+    return { text, kind: 'object', entries };
+  }
+  function resolve(node, segments) {
+    for (const segment of segments) {
+      if (node.kind === 'array') {
+        if (!/^(0|[1-9][0-9]*)$/.test(segment) || Number(segment) >= node.children.length) return undefined;
+        node = node.children[Number(segment)];
+      } else if (node.kind === 'object') {
+        const entry = node.entries.findLast(([key]) => key === segment);
+        if (!entry) return undefined;
+        node = entry[1];
+      } else return undefined;
+    }
+    return node.text;
+  }
+  function parsedSelection(input, segments) {
+    let value = JSON.parse(input);
+    for (const segment of segments) {
+      if (value === null || typeof value !== 'object') return undefined;
+      if (Array.isArray(value) && !/^(0|[1-9][0-9]*)$/.test(segment)) return undefined;
+      if (!Object.hasOwn(value, segment)) return undefined;
+      value = value[segment];
+    }
+    return value;
+  }
+  for (let i = 0; i < 3500; i++) {
+    const tree = make(0);
+    const segments = [];
+    let current = tree;
+    while (random() < 0.7 && segments.length < 7) {
+      if (current?.kind === 'object' && current.entries.length && random() < 0.8) {
+        const key = pick(current.entries)[0];
+        segments.push(key);
+        current = current.entries.findLast(entry => entry[0] === key)[1];
+      } else if (current?.kind === 'array' && current.children.length && random() < 0.8) {
+        const index = Math.floor(random() * current.children.length);
+        segments.push(String(index)); current = current.children[index];
+      } else {
+        segments.push(pick([...keys, 'missing', '-1', '999999999999999999999999999999']));
+        current = undefined;
+      }
+    }
+    const pointer = segments.length ? '/' + segments.map(segment => segment.replaceAll('~', '~0').replaceAll('/', '~1')).join('/') : '';
+    const actual = api.selectJson('\r\n' + tree.text + '\t', pointer);
+    assert.equal(actual, resolve(tree, segments), 'case ' + i + ': ' + pointer + ' from ' + tree.text);
+    assert.deepEqual(actual === undefined ? undefined : JSON.parse(actual), parsedSelection(tree.text, segments));
+  }
+});
+
+test('review selection: duplicates, array index grammar, missing/null and lexical preservation', () => {
+  const input = '{"a":{"x":1},"\\u0061":{"x":null},"zero":-0.000,"huge":1E9999,"precision":123456789012345678901234567890.0001,"raw":"\\ud800"}';
+  assert.equal(api.selectJson(input, '/a/x'), 'null');
+  assert.equal(api.selectJson(input, '/a/missing'), undefined);
+  assert.equal(api.selectJson(input, '/a/x/further'), undefined);
+  assert.equal(api.selectJson(input, '/zero'), '-0.000');
+  assert.equal(api.selectJson(input, '/huge'), '1E9999');
+  assert.equal(api.selectJson(input, '/precision'), '123456789012345678901234567890.0001');
+  assert.equal(api.selectJson(input, '/raw'), '"\\ud800"');
+  for (const pointer of ['/00', '/01', '/+0', '/-0', '/-1', '/1.0', '/1e0', '/١', '/length', '/constructor', '/__proto__', '/', '/18446744073709551616'])
+    assert.equal(api.selectJson('[0,1]', pointer), undefined, pointer);
+  assert.equal(api.selectJson('{"00":1,"-0":2,"length":3,"__proto__":4}', '/00'), '1');
+  assert.equal(api.selectJson('{"00":1,"-0":2,"length":3,"__proto__":4}', '/__proto__'), '4');
+  for (const invalid of ['/~', '/~2', '/~~0', '/~10~9', '#/x', 'x'])
+    assert.throws(() => api.selectJson('{}', invalid), RangeError);
+  assert.equal(api.selectJson('{"~1":1,"/":2,"~01":3}', '/~01'), '1');
+  assert.equal(api.selectJson('{"~1":1,"/":2,"~01":3}', '/~1'), '2');
+  assert.equal(api.selectJson('{"~1":1,"/":2,"~01":3}', '/~001'), '3');
+  assert.equal(api.selectJson(' { "x": [ 1, 2 ] } ', ''), '{ "x": [ 1, 2 ] }');
+});
+
+test('review selection: validates unselected siblings/depth, ignores structural text inside strings', () => {
+  const deep = '{"selected":1,"other":' + '['.repeat(128) + '0' + ']'.repeat(128) + '}';
+  for (const pointer of ['/selected', '/missing', '']) assert.throws(() => api.selectJson(deep, pointer), /nesting/);
+  for (const input of ['{"selected":1,"other":[0,]}', '{"selected":1,"other":"\\x00"}', '{"selected":1,"other":1e}', '{"selected":1} garbage'])
+    for (const pointer of ['/selected', '/missing', '']) assert.throws(() => api.selectJson(input, pointer), Error);
+  const braces = JSON.stringify({ selected: '[[[[{{{{}}}}]]]]', other: 'quotes" backslash\\ unicode😀' });
+  assert.equal(api.selectJson(braces, '/selected', { maxDepth: 1 }), '"[[[[{{{{}}}}]]]]"');
+  const values = Array.from({ length: 20000 }, (_, i) => ({ index: i, payload: '[{}]\\"' }));
+  const large = JSON.stringify(values);
+  assert.equal(api.selectJson(large, '/19999/index'), '19999');
+  assert.equal(api.selectJson(large, '/20000'), undefined);
+  assert.throws(() => api.selectJson(large, '/0', { maxBytes: 100 }), /byte limit/);
+  assert.throws(() => api.selectJson('{}', '/' + 'é'.repeat(32768)), /64 KiB/);
+  assert.throws(() => api.selectJson('{}', '/'.repeat(129)), /128 segments/);
+  for (const input of [null, 1, Buffer.from('{}')]) assert.throws(() => api.selectJson(input, ''), TypeError);
+  for (const pointer of [null, 1, [], '/\ud800']) assert.throws(() => api.selectJson('{}', pointer), TypeError);
+});
+
+test('review selection: visited object keys require Unicode scalar strings, raw subtrees remain text', () => {
+  const input = '{"a":1,"\\ud800":2}';
+  assert.equal(api.selectJson(input, ''), input);
+  assert.throws(() => api.selectJson(input, '/a'), error => error instanceof Error && error.code === 'InvalidArg');
+  const nested = '{"a":1,"other":{"\\ud800":2}}';
+  assert.equal(api.selectJson(nested, '/a'), '1');
+  assert.equal(api.selectJson(nested, '/other'), '{"\\ud800":2}');
+  assert.throws(() => api.selectJson(nested, '/other/missing'), error => error instanceof Error && error.code === 'InvalidArg');
+});

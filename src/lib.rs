@@ -1,4 +1,5 @@
 mod engine;
+mod selection;
 mod tree;
 
 use napi::{Error, Result, Status};
@@ -9,6 +10,19 @@ fn options(depth: Option<u32>, bytes: Option<u32>) -> Result<engine::Limits> {
 }
 fn invalid(message: String) -> Error {
     Error::new(Status::InvalidArg, message)
+}
+
+#[napi]
+pub fn select_json(
+    input: String,
+    path: Vec<String>,
+    max_depth: Option<u32>,
+    max_bytes: Option<u32>,
+) -> Result<Option<String>> {
+    if path.len() > 128 {
+        return Err(invalid("Path limit is 128 segments".into()));
+    }
+    selection::select(&input, &path, options(max_depth, max_bytes)?).map_err(invalid)
 }
 
 #[napi]

@@ -1,93 +1,113 @@
 # Local release-addon benchmark evaluation
 
-Measured 2026-10-19 UTC at commit `9c4a1fe4ef1a525ae97b5368ed4dd9b7d4f24d1c`, Windows x64 10.0.26300, Node v24.20.0, V8 13.6.233.17-node.53, 12th Gen Intel(R) Core(TM) i7-12700K, rustc 1.98.1 (48a229cea 2026-09-01), 32 GiB RAM. The lead built the actual addon in Cargo release mode before these runs. Native artifact SHA-256: `2b5bc47096a4ee7f3430442bf8c42aba6f1cbe9d12d150a92b87e5f688ff52ad`. Other operating systems are UNVERIFIED.
+The optimized native text engine improves the measured real API and dependency-lock text workloads. Deep-input performance improved substantially after removing repeated subtree parsing. Unicode-heavy input remains much slower than JavaScript. Ordinary object inputs and small batches still need workload-specific decisions; no automatic native routing is justified.
 
-The compatibility API stays close to upstream. The native API provides a measurable benefit for some already-serialized JSON workloads, but loses heavily on deep and Unicode-heavy data. Converting ordinary JS objects to text before native processing is slower than the direct upstream object serializer on every fixture in this matrix except the small batch-array fixture. No general Rust speedup is supported.
+Measured 2026-10-19 UTC, Windows x64 10.0.26300, Node v24.20.0, V8 13.6.233.17-node.53, 12th Gen Intel(R) Core(TM) i7-12700K, rustc 1.98.1 (48a229cea 2026-09-01), 32 GiB RAM. Optimized commit: `28326e78193cc29119a30683afb6aeaeac09556f`; native SHA-256: `117e5a5b6fade6a31a012586b982dd5eddd378fc9e112a981ed1259bd729f07e`. Baseline commit: `9c4a1fe4ef1a525ae97b5368ed4dd9b7d4f24d1c`. The actual release-mode addon is used, including JS/native conversion and return costs. Other platforms are UNVERIFIED.
 
-Raw evidence:
+## Evidence and reproduction
 
-- [Full matrix, 7 repetitions per cell, 35 ms target](results/2026-10-19T00-00-39-680Z-30968.json): 102 cells, all exact-output checks passed.
-- [Targeted confirmation, 9 repetitions per cell, 100 ms target](results/2026-10-19T00-01-33-156Z-10332.json): 30 cells, all exact-output checks passed.
-- [Batch/cache confirmation, 9 repetitions per cell, 100 ms target](results/2026-10-19T00-02-16-315Z-17604.json): 6 cells, all exact-output checks passed.
+- [Full optimized matrix (7 x 35 ms)](results/2026-10-19T00-06-17-364Z-30392.json): 102 cells, all exact-output checks passed before timing.
+- [First optimized confirmation (9 x 100 ms)](results/2026-10-19T00-07-07-143Z-9768.json): 30 cells, all exact-output checks passed before timing.
+- [Second optimized confirmation (9 x 100 ms)](results/2026-10-19T00-07-51-677Z-8716.json): 30 cells, all exact-output checks passed before timing.
+- [Batch/cache confirmation (9 x 100 ms)](results/2026-10-19T00-08-36-762Z-25396.json): 6 cells, all exact-output checks passed before timing.
+- [Same-native batch/loop comparison (9 x 100 ms)](results/2026-10-19T00-08-59-583Z-26116.json): 3 cells, all exact-output checks passed before timing.
+- [Before-optimization confirmation (9 x 100 ms)](results/2026-10-19T00-01-33-156Z-10332.json): 30 cells, all exact-output checks passed before timing.
 
-Earlier baselines are preserved with contamination and missing-dependency annotations in [results/NOTES.md](results/NOTES.md). Reproduce with `node benches/run.cjs`; set the exact `configuration` environment overrides recorded in each raw report (null means unset). Source, fixture, native artifact and dependency hashes/versions are recorded. Full fixture provenance and licenses are in [data/manifest.json](data/manifest.json).
+[BASELINE_REPORT.md](BASELINE_REPORT.md) preserves the original findings and failures. Earlier runs remain in [results/NOTES.md](results/NOTES.md), including missing-dependency and concurrent-build caveats. Run `node benches/run.cjs` with the exact `configuration` environment values in each report (null means unset). Metadata includes source/native/fixture hashes, package versions, machine, Git dirty state and commit. The benchmark harness self-tests pass 4/4 with `node --test benches/harness.test.cjs`.
 
-## Confirmed object-input API
+## Before/after optimization
 
-Rates are median operations/second. Public stringify is the JavaScript compatibility implementation. Native roundtrip includes JSON.stringify conversion on every operation. Relative percentages are rate changes versus direct upstream serialization.
+Median ops/s for identical pre-existing-text operations. Before and both after confirmations use nine 100 ms samples plus 200 ms warmup. Columns show both independent runs instead of hiding between-run variation.
 
-| Workload | Upstream | Public stringify | Public change | Native roundtrip | Roundtrip change |
+| Workload | Before native text | After run 1 | After run 2 | Change, run 2/before | After run 2 MAD |
 |---|---:|---:|---:|---:|---:|
-| tiny | 1,727,602 | 1,749,612.9 | +1.3% | 1,237,722.6 | -28.4% |
-| dependency-lock | 1,968.1 | 1,964.5 | -0.2% | 1,453.2 | -26.2% |
-| public-api-data | 169.1 | 164.9 | -2.4% | 129.8 | -23.2% |
-| deep | 42,741.8 | 43,548.4 | +1.9% | 10,194.3 | -76.1% |
-| wide | 4,151.7 | 4,153 | +0.0% | 2,230.1 | -46.3% |
-| unicode | 18,496.1 | 18,714.5 | +1.2% | 3,903.5 | -78.9% |
+| tiny | 1,398,832.6 | 2,265,672.7 | 2,261,414 | +61.7% | 1.4% |
+| dependency-lock | 1,781.1 | 3,277.1 | 3,376.9 | +89.6% | 4.3% |
+| public-api-data | 171.6 | 231.7 | 230.6 | +34.4% | 1.9% |
+| deep | 10,632 | 70,884.4 | 72,084.2 | +578.0% | 0.9% |
+| wide | 3,341.7 | 4,223 | 4,262.3 | +27.5% | 1.4% |
+| unicode | 4,316.4 | 3,955 | 4,432.3 | +2.7% | 0.7% |
 
-All confirmed public-stringify cells meet the provisional <=5% regression gate. Differences of a few percent are similar to observed sample and between-run variability and should not be advertised as wins.
+The single-validation scanner removes the old repeated RawValue subtree reparsing. The [Rust stage profile](results/2026-10-19-single-pass-stage-profile.txt) separately measured original-text real API validation at 0.57 ms, scan/sort/drop at 2.47 ms and emission of a prebuilt tree at 0.49 ms, with whole-engine median 3.65 ms. Stage measurements are Rust-only and exclude napi conversion; their input retains original whitespace and differs from the minified public-API benchmark input. Allocation and sorting work in scan/sort/drop remains the main measured stage; the experiment does not attribute individual allocation counts.
 
-## Confirmed pre-existing text input
+## Equivalent pre-existing-text comparison
 
-The equivalent JS operation is JSON.parse(input) followed by the pinned upstream serializer. Every timed native result exactly matches that output on these fixtures, whose inputs were produced by JSON.stringify outside timing. The general native text API preserves scalar token spellings and is not interchangeable with JS serialization for arbitrary JSON text.
+The JS baseline parses the input and applies the pinned upstream serializer. Inputs are normalized with JSON.stringify outside timing, so exact output equality is valid on these fixtures. General native text semantics preserve scalar token spelling; arbitrary JSON text is not equivalent to JS object serialization.
 
-| Workload | JS parse + upstream ops/s | Native text ops/s | Rate change | Native MAD | Native latency |
+| Workload | JS parse + upstream | Native run 1 | Native run 2 | Run 2 vs JS | Native latency, run 2 |
 |---|---:|---:|---:|---:|---:|
-| tiny | 1,137,699.2 | 1,398,832.6 | +23.0% | 0.7% | 0.7 us |
-| dependency-lock | 1,333.7 | 1,781.1 | +33.5% | 0.8% | 561.5 us |
-| public-api-data | 137.8 | 171.6 | +24.6% | 0.8% | 5826.2 us |
-| deep | 31,065.5 | 10,632 | -65.8% | 0.5% | 94.1 us |
-| wide | 2,531.1 | 3,341.7 | +32.0% | 1.4% | 299.2 us |
-| unicode | 13,073.5 | 4,316.4 | -67.0% | 1.6% | 231.7 us |
+| tiny | 1,178,071.3 | 2,265,672.7 | 2,261,414 | +92.0% | 0.4 us |
+| dependency-lock | 1,337.6 | 3,277.1 | 3,376.9 | +152.5% | 296.1 us |
+| public-api-data | 137 | 231.7 | 230.6 | +68.4% | 4336.5 us |
+| deep | 31,469.6 | 70,884.4 | 72,084.2 | +129.1% | 13.9 us |
+| wide | 2,485.9 | 4,223 | 4,262.3 | +71.5% | 234.6 us |
+| unicode | 13,134.2 | 3,955 | 4,432.3 | -66.3% | 225.6 us |
 
-The >=10% native-text gate is met locally on the real TypeScript dependency lock and JSONPlaceholder service backing dataset, plus tiny/wide synthetic data. Deep and Unicode workloads fail the performance gate. Source inspection suggests repeated subtree validation/parsing in the RawValue implementation and UTF-16 key-comparator work as bottleneck candidates; these are hypotheses, not profiler findings. Profiling and a once-parsed architecture experiment remain follow-up work. Keep native text explicit and do not route arbitrary object-input serialization to it automatically.
+The provisional >=10% native-text improvement gate is met in both longer confirmations on real TypeScript dependency metadata and JSONPlaceholder service backing data, and on tiny/deep/wide synthetic fixtures. Unicode fails the gate in both runs; do not recommend this API for Unicode-heavy input based on these measurements. The 35 ms exploratory dependency-lock cell measured 2,483.8 ops/s versus 3,277.1/3,376.9 in longer confirmations. Warmup/run-duration, allocator and scheduling effects are not isolated; this observed variation limits precision of any single percentage claim.
+
+## Ordinary JS object input
+
+Latest confirmation medians. Public stringify keeps upstream JS semantics. Native roundtrip includes JSON.stringify on every call, so both conversion and native return costs are measured. Roundtrip values match upstream for these fixtures; this is not a full JavaScript-semantics compatibility promise.
+
+| Workload | Upstream | Public stringify | Public vs upstream | Native roundtrip | Roundtrip vs upstream |
+|---|---:|---:|---:|---:|---:|
+| tiny | 1,752,624 | 1,730,374.6 | -1.3% | 1,603,067.9 | -8.5% |
+| dependency-lock | 1,978.3 | 1,987.6 | +0.5% | 2,217.9 | +12.1% |
+| public-api-data | 168.6 | 166.4 | -1.3% | 167.3 | -0.7% |
+| deep | 43,749 | 41,605.1 | -4.9% | 50,984.8 | +16.5% |
+| wide | 4,080.9 | 4,202.7 | +3.0% | 2,551 | -37.5% |
+| unicode | 18,616 | 18,905.3 | +1.6% | 4,024.5 | -78.4% |
+
+All public-stringify cells in both longer confirmations meet the provisional <=5% regression gate. The shorter full-matrix deep/public cell was 11.9% below upstream; the longer repeats do not reproduce that regression. Small differences are sensitive to JIT, GC and scheduling and should not be marketed as improvements. Native roundtrip wins on some fixtures and loses on others, including wide/Unicode inputs. Keep the ordinary compatibility API in JavaScript.
 
 ## Full matrix and competitors
 
-All figures below are median ops/s from the shorter exploratory matrix. JSON.stringify is included only as context; it does not promise equivalent stable key ordering. Competitor compatibility is verified only for these particular fixtures. safe-stable-stringify 2.5.0 and fast-stable-stringify 1.0.0 are not assumed to match the full upstream API.
+Shorter full-matrix medians in ops/s. JSON.stringify is context only and does not promise stable ordering. safe-stable-stringify 2.5.0 and fast-stable-stringify 1.0.0 match these fixtures, but their complete semantics differ from the upstream compatibility API.
 
 | Workload | JSON.stringify context | Upstream | safe-stable | fast-stable | Public stringify | Native text |
 |---|---:|---:|---:|---:|---:|---:|
-| tiny | 9,053,527.1 | 1,780,290.4 | 3,049,716.1 | 2,019,846.8 | 1,698,230.6 | 1,588,907.8 |
-| upstream-api-fixture | 296,276 | 63,094.9 | 81,244.9 | 68,136.5 | 63,279.3 | 64,460.7 |
-| application-config | 646,945.2 | 124,918.4 | 189,033.5 | 145,012.6 | 127,131.7 | 136,066.1 |
-| dependency-lock | 8,739 | 1,924.6 | 2,658.2 | 2,109.2 | 1,939.7 | 1,874.5 |
-| public-api-data | 582.8 | 167.9 | 233.4 | 178 | 170.7 | 172.4 |
-| deep | 197,339.6 | 43,310.9 | 83,101.5 | 54,741.6 | 44,347.2 | 10,702.2 |
-| wide | 7,868.8 | 4,051.8 | 4,635.6 | 4,329.7 | 3,893.2 | 3,239.9 |
-| unicode | 40,805.2 | 17,888.6 | 16,361.5 | 19,085.1 | 18,509.8 | 4,275.4 |
-| large-string | 9,270.3 | 5,585.4 | 5,173.2 | 5,481.3 | 5,510.7 | 5,005.7 |
-| record-array | 7,731.2 | 1,428.4 | 2,225.5 | 1,700.6 | 1,439.7 | 1,675 |
-| backend-payload | 7,761.5 | 1,390.2 | 2,150.5 | 1,625.7 | 1,441.3 | 1,340.3 |
-| batch-32 | 363,803.4 | 43,257.5 | 88,958.3 | 56,916.5 | 44,499.7 | 55,524.7 |
+| tiny | 9,071,597.6 | 1,785,566.5 | 2,998,158.7 | 2,015,605.6 | 1,740,411.5 | 2,293,430.6 |
+| upstream-api-fixture | 296,497.3 | 62,827.6 | 81,369.6 | 66,899.5 | 62,173.3 | 116,672.2 |
+| application-config | 655,743.3 | 127,290.8 | 188,159 | 142,904.8 | 127,616.4 | 234,209.1 |
+| dependency-lock | 9,092 | 1,891.9 | 2,728 | 2,257.2 | 1,939.2 | 2,483.8 |
+| public-api-data | 557.2 | 169.1 | 238.6 | 176.5 | 167.7 | 232.1 |
+| deep | 197,393.5 | 42,534.4 | 81,984.2 | 53,215.4 | 37,457.8 | 70,205.6 |
+| wide | 8,388.2 | 4,113.1 | 4,562.3 | 4,243.5 | 4,256.7 | 4,178.5 |
+| unicode | 43,679.7 | 18,227.5 | 16,638.9 | 18,758.4 | 19,223.2 | 4,467.1 |
+| large-string | 9,315.1 | 5,238.7 | 5,605.2 | 5,636.8 | 6,127.9 | 5,621.4 |
+| record-array | 7,503 | 1,435.4 | 2,226.9 | 1,643.8 | 1,438.3 | 1,793.3 |
+| backend-payload | 7,630 | 1,397.4 | 2,090.7 | 1,577.6 | 1,457.8 | 2,150.4 |
+| batch-32 | 373,244.4 | 44,386.4 | 93,316.5 | 54,893.5 | 43,561.9 | 94,558.6 |
 
-Existing JavaScript competitors beat this project's compatibility wrapper on many ordinary-object datasets. This project cannot honestly claim to be the fastest stable serializer.
+Existing JavaScript competitors beat the compatibility wrapper on many ordinary-object workloads. No claim to be the fastest stable serializer is supported. Fixture sources, dates, hashes, structure and retained MIT/Apache notices are in [data/manifest.json](data/manifest.json). Real TypeScript lock/config files and JSONPlaceholder service backing data are supplemented by deterministic synthetic isolation cases. JSONPlaceholder intentionally contains fictional service data, not private user data.
 
-## Batch and cache confirmation
+## Batch and cache
 
-Each batch operation handles 32 documents. Both batch candidates include identical serialization of the returned list of strings, so result consumption and output checking are equivalent.
+Batch input contains 32 tiny documents; both candidates include identical conversion of the returned string list to a string for consumption. The final same-engine comparison separates native-engine benefits from batching benefits.
 
-| Method | Batches or calls/s | Items/s | MAD |
+| Method | Batches/s | Documents/s | MAD |
 |---|---:|---:|---:|
-| batch-public | 36,574.5 | 1,170,385 | 1.6% |
-| batch-upstream-loop | 39,416.9 | 1,261,340.3 | 0.7% |
-| batch-text-native | 34,028.6 | 1,088,914.6 | 2.3% |
-| batch-text-upstream-loop | 26,105.9 | 835,389.4 | 1.4% |
-| cache-hit | 87,862,088.1 | 87,862,088.1 | 1.2% |
-| cache-miss | 44,229.1 | 44,229.1 | 3.1% |
+| batch-text-native | 48,922.4 | 1,565,517.7 | 0.4% |
+| batch-text-native-loop | 50,527.8 | 1,616,890 | 1.6% |
+| batch-text-upstream-loop | 25,956.7 | 830,612.9 | 0.4% |
 
-Public JS batch changes throughput by -7.2% relative to the upstream loop, failing the speed gate; it is an ordered convenience API, not an acceleration claim. Native pre-existing-text batch changes throughput by +30.3% versus parsing/serializing each document in JavaScript. This does not isolate boundary-crossing savings; it compares the complete operations.
+Native batch is -3.2% versus calling the same native engine 32 times, and +88.5% versus JavaScript parse+upstream. The first result provides no evidence of a boundary-amortization speedup on this workload. Treat batching as an ordered convenience with a single call, not a guaranteed throughput optimization. No large-document batch extrapolation is justified.
 
-Cache-hit returns one already-computed string for unchanged object identity and explicit version. Cache-miss increments the version each call and performs real serialization. Their large difference is expected skipped work, not faster serialization; the caller must update versions after every serialization-visible mutation. Hit timings include the benchmark's checksum overhead and can approach the harness overhead floor. No automatic mutation detection is promised.
+| Cache/JS batch method | Calls or batches/s | MAD |
+|---|---:|---:|
+| batch-public | 36,408.5 | 1.7% |
+| batch-upstream-loop | 38,777.5 | 2.4% |
+| cache-hit | 87,615,277.1 | 1.1% |
+| cache-miss | 44,262.5 | 0.7% |
+
+Public JS batch is -6.1% versus the upstream loop and fails a speed-improvement gate. Cache-hit returns an already-computed string for the same identity/version; cache-miss changes the explicit version and performs real serialization. The large gap reflects skipped work, not a faster serializer. Callers must update versions after every serialization-visible mutation. Cache-hit measurement approaches harness/checksum overhead and is not an automatic deep mutation-detection claim.
 
 ## Memory, CPU, startup and blocking
 
-For the JSONPlaceholder full-matrix cells, lifetime process maximum RSS was 85.2 MiB for native text versus 205.4 MiB for parse+upstream. These are isolated process maxima including V8, fixture setup, warmup and loading; they are not native allocations or per-call peaks. The raw reports also retain sampled RSS/heap, CPU user/system microseconds, throughput and every timing sample. Allocations are NOT MEASURED.
+For the optimized full-matrix real API cells, lifetime process maximum RSS was 87.5 MiB for native text versus 205.3 MiB for parse+upstream. These process maxima include V8, fixture loading, warmup and require; they are not serializer-only peaks or allocation counts. The raw JSON retains sampled heap/RSS, CPU user/system microseconds, output MiB/s and every sample. Allocations are NOT MEASURED.
 
-Median fresh-process require durations (OS cache potentially warm, excluding process startup): ./upstream/fast-json-stable-stringify 3.54 ms; ./js/index.cjs 3.78 ms; ./native/binding.js 4.99 ms. The JS wrapper loads native code lazily, so addon loading is measured separately.
+Median fresh-process require times, potentially warm OS disk cache and excluding process startup: ./upstream/fast-json-stable-stringify 3.60 ms; ./js/index.cjs 3.87 ms; ./native/binding.js 5.07 ms. The wrapper loads native lazily, so binding require is recorded separately.
 
-Reported latency is the reciprocal of median sample throughput: an amortized per-operation duration, not individually timed call percentiles. All APIs measured here are synchronous and block the event loop during their work. Timer probes are burst durations plus scheduling delay, not per-request p99 latency. The checksum reads each output length and middle code unit, which may force V8 concatenated strings to flatten; this output-consumption cost is included for all candidates. The 16-operation clock-check batch can overshoot target sample durations on large inputs; actual elapsed time is recorded. No async or streaming responsiveness claim is made.
+Latency is the reciprocal of median sample throughput: an amortized per-operation duration, not individually timed call percentiles. All measured APIs are synchronous. Timer probes cover benchmark burst blocking plus scheduling and do not establish per-request p99 latency or async responsiveness. The 16-call timer-check batch can overshoot the target duration; actual elapsed time is used. The checksum touches length and a middle UTF-16 code unit, which may flatten V8 ropes; that output-consumption cost is included for all methods.
 
-## Validation and limits
-
-`node --test benches/harness.test.cjs` passed 4/4: retained fixture bytes/hashes/licenses, deterministic dataset generation, validated worker measurements, and the five-repetition minimum. These checks test the benchmark harness; the project's separate Rust, binding, differential and type tests determine API correctness. Runs were serial with builds/tests paused, but scheduler state, power management and GC remain uncontrolled. Measurements are local evidence with MAD summaries, not confidence intervals or universal production performance guarantees. Longer randomized-order and workload-specific runs are recommended before deployment decisions.
+Runs were serial and isolated from builds/tests, but CPU placement, thermal state, power mode and GC remain uncontrolled. Within-run MAD is not a confidence interval and does not capture all between-run differences. These local measurements justify retaining the explicit native text API and the scanner optimization while preserving the Unicode caveat; deployment and cross-platform claims require additional evidence.

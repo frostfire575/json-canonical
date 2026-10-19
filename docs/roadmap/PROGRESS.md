@@ -38,3 +38,17 @@ Packed artifact installed offline with lifecycle scripts disabled, CJS/ESM/nativ
 calls PASS. Created nonpublishing3-target CI and bundle candidate workflow; remote
 jobs have NOT RUN. `.gitattributes` preserves exact fixture bytes across platforms.
 Scanner optimization performance acceptance remains IN_PROGRESS pending new matrix.
+
+## 2026-10-19 — optimization accepted; selective experiment and license/audit
+Two9x100ms confirmations validate scanner gains on real lock/API and synthetic
+deep/tiny/wide; Unicode remains66% slower than JS parse+upstream. Native batching
+does NOT beat same-native loop (3.2%slower); retain convenience API withoutspeedclaim.
+JS batch6.1%slower; cachehits skip work under explicit version contract. Allraw
+evidence and competing library results retained in benches/REPORT.md.
+Implemented raw selective extraction experimentalpointerAPI, wholeinputsyntax/depth
+validation and explicit Unicode/duplicate restrictions. Independent3500 pathcases
+pass. `pnpm check`: Rust5,Node33,strictCJS/ESMtypes PASS. Clippy PASS. New packed
+artifact includesselect and38Rustcrate license texts; offlineCJS/ESM/native PASS.
+License generator initiallyfound napi crates omitLICENSEtext: vendored exact
+workspaceSHA license references and preserved attribution. pnpm audit zeroadvisories;
+OSV38cratequeries noadvisories returned. Select performance stillpending.

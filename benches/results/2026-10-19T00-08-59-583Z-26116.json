@@ -1,0 +1,371 @@
+{
+  "timestamp": "2026-10-19T00:08:59.583Z",
+  "command": "node benches/run.cjs",
+  "workingDirectory": "D:\\misc\\npm\\stable-json-rs",
+  "configuration": {
+    "BENCH_REPS": "9",
+    "BENCH_SAMPLE_MS": "100",
+    "BENCH_DATASETS": "batch-32",
+    "BENCH_METHODS": "batch-text-native,batch-text-native-loop,batch-text-upstream-loop",
+    "note": "null means variable unset; when BENCH_METHODS is unset, batch/cache extras are automatically included for batch-32"
+  },
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "osRelease": "10.0.26300",
+    "node": "v24.20.0",
+    "v8": "13.6.233.17-node.53",
+    "cpu": "12th Gen Intel(R) Core(TM) i7-12700K",
+    "logicalCpus": 20,
+    "totalMemoryBytes": 34087682048,
+    "rust": "rustc 1.98.1 (48a229cea 2026-09-01)",
+    "commit": "28326e78193cc29119a30683afb6aeaeac09556f",
+    "dirty": "M benches/run.cjs\n M docs/roadmap/TASKS.md\n M docs/security.md\n M package.json\n?? benches/results/2026-10-19T00-06-17-364Z-30392.json\n?? benches/results/2026-10-19T00-07-07-143Z-9768.json\n?? benches/results/2026-10-19T00-07-51-677Z-8716.json\n?? benches/results/2026-10-19T00-08-36-762Z-25396.json\n?? docs/audits/\n?? docs/roadmap/phases/advanced-evaluation.md\n?? scripts/audit.cjs\n?? scripts/license-notices.cjs",
+    "upstreamCommit": "49e230da2c84247b29ad4de02c9395793caefd15",
+    "dependencies": {
+      "safe-stable-stringify": "2.5.0",
+      "fast-stable-stringify": "1.0.0",
+      "@napi-rs/cli": "3.10.8"
+    },
+    "sourceHashes": {
+      "benches/run.cjs": "1d4a7e0d9352dbef5a519f1a59ff16e8ac36525aa039478f8697a2bd27591de0",
+      "benches/datasets.cjs": "8470c22014d46ba70006945e2543e15711951fbd54482ae0e729e8d8f1d0a457",
+      "js/dist/index.js": "cafdb45c97fabc4cf5f29da0c88b2de75bc79ddac110703ebee142b5f13ee9fa",
+      "src/lib.rs": "0507b14063fbaabc9747293d609e868b5efe17f736827c13d9dd01c8dfff3746",
+      "src/engine.rs": "85a9c8cd4d7d1d0a55c8cb8f24dce9f81279afbddb8bf0ebb035497ba666e307",
+      "pnpm-lock.yaml": "268854350104379c6e5698c2504908ef61cc5870655b68fab4c2ce58624b6fab"
+    },
+    "nativeArtifacts": [
+      {
+        "file": "stable-json-rs.win32-x64-msvc.node",
+        "sha256": "117e5a5b6fade6a31a012586b982dd5eddd378fc9e112a981ed1259bd729f07e"
+      }
+    ]
+  },
+  "coldStart": [
+    {
+      "module": "./upstream/fast-json-stable-stringify",
+      "status": "OK",
+      "medianRequireMs": 3.7611999999999988,
+      "samples": [
+        3.7485,
+        3.852499999999999,
+        3.8450000000000006,
+        3.7611999999999988,
+        3.5588999999999995
+      ],
+      "contract": "fresh process require duration; OS disk cache may be warm; process startup excluded"
+    },
+    {
+      "module": "./js/index.cjs",
+      "status": "OK",
+      "medianRequireMs": 3.7688999999999986,
+      "samples": [
+        3.724500000000001,
+        3.6918000000000006,
+        3.819799999999999,
+        3.7688999999999986,
+        3.9678000000000004
+      ],
+      "contract": "fresh process require duration; OS disk cache may be warm; process startup excluded"
+    },
+    {
+      "module": "./native/binding.js",
+      "status": "OK",
+      "medianRequireMs": 4.9331,
+      "samples": [
+        4.8979,
+        4.881499999999999,
+        4.9643999999999995,
+        4.9331,
+        4.986000000000002
+      ],
+      "contract": "fresh process require duration; OS disk cache may be warm; process startup excluded"
+    }
+  ],
+  "results": [
+    {
+      "dataset": "batch-32",
+      "method": "batch-text-native",
+      "status": "OK",
+      "comparableStableOperation": true,
+      "inputContract": "batch of pre-existing JSON texts",
+      "unitsPerOperation": 32,
+      "jsonBytes": 1485,
+      "sha256": "423e7670cd181ac284ead8ceac19286db5a234fbf5e13fccc644fd16b441005e",
+      "outputBytes": 1869,
+      "repetitions": 9,
+      "sampleMs": 100,
+      "medianOpsPerSecond": 48922.4275756219,
+      "medianItemsPerSecond": 1565517.6824199008,
+      "medianLatencyUs": 20.440522875817003,
+      "madPercent": 0.42540008725960043,
+      "minOpsPerSecond": 48714.31152602569,
+      "maxOpsPerSecond": 49462.93819825263,
+      "outputMiBPerSecond": 87.20018113979086,
+      "cpuMicroseconds": {
+        "user": 891000,
+        "system": 0
+      },
+      "rssBeforeBytes": 55476224,
+      "rssAfterBytes": 55668736,
+      "processMaxRssBytes": 56152064,
+      "heapUsedBeforeBytes": 9567640,
+      "heapUsedAfterBytes": 8756752,
+      "timerDelayMs": {
+        "median": 100.30939999999987,
+        "max": 100.56830000000002,
+        "samples": [
+          100.47719999999998,
+          100.21270000000004,
+          100.34789999999998,
+          100.22199999999998,
+          100.56830000000002,
+          100.13150000000007,
+          100.31720000000007,
+          100.30939999999987,
+          100.21669999999995
+        ]
+      },
+      "samples": [
+        {
+          "iterations": 4960,
+          "elapsedMs": 100.33480000000003,
+          "opsPerSecond": 49434.49331637676
+        },
+        {
+          "iterations": 4928,
+          "elapsedMs": 100.17289999999997,
+          "opsPerSecond": 49194.94194537646
+        },
+        {
+          "iterations": 4896,
+          "elapsedMs": 100.29789999999997,
+          "opsPerSecond": 48814.581362122255
+        },
+        {
+          "iterations": 4880,
+          "elapsedMs": 100.17590000000007,
+          "opsPerSecond": 48714.31152602569
+        },
+        {
+          "iterations": 4912,
+          "elapsedMs": 100.45820000000003,
+          "opsPerSecond": 48895.95871715797
+        },
+        {
+          "iterations": 4896,
+          "elapsedMs": 100.07680000000005,
+          "opsPerSecond": 48922.4275756219
+        },
+        {
+          "iterations": 4928,
+          "elapsedMs": 100.28160000000003,
+          "opsPerSecond": 49141.61720594804
+        },
+        {
+          "iterations": 4960,
+          "elapsedMs": 100.27710000000002,
+          "opsPerSecond": 49462.93819825263
+        },
+        {
+          "iterations": 4880,
+          "elapsedMs": 100.1712,
+          "opsPerSecond": 48716.59718561822
+        }
+      ],
+      "sink": 106207760
+    },
+    {
+      "dataset": "batch-32",
+      "method": "batch-text-native-loop",
+      "status": "OK",
+      "comparableStableOperation": true,
+      "inputContract": "batch of pre-existing JSON texts",
+      "unitsPerOperation": 32,
+      "jsonBytes": 1485,
+      "sha256": "423e7670cd181ac284ead8ceac19286db5a234fbf5e13fccc644fd16b441005e",
+      "outputBytes": 1869,
+      "repetitions": 9,
+      "sampleMs": 100,
+      "medianOpsPerSecond": 50527.81378262045,
+      "medianItemsPerSecond": 1616890.0410438543,
+      "medianLatencyUs": 19.7910799050633,
+      "madPercent": 1.6404702544622465,
+      "minOpsPerSecond": 49484.55253892669,
+      "maxOpsPerSecond": 51932.90268972489,
+      "outputMiBPerSecond": 90.06164928409349,
+      "cpuMicroseconds": {
+        "user": 812000,
+        "system": 47000
+      },
+      "rssBeforeBytes": 55316480,
+      "rssAfterBytes": 55443456,
+      "processMaxRssBytes": 56385536,
+      "heapUsedBeforeBytes": 9498344,
+      "heapUsedAfterBytes": 12115624,
+      "timerDelayMs": {
+        "median": 100.22809999999993,
+        "max": 100.4374,
+        "samples": [
+          100.4374,
+          100.42779999999999,
+          100.22809999999993,
+          100.17269999999996,
+          100.327,
+          100.11899999999991,
+          100.09100000000001,
+          100.15819999999985,
+          100.22810000000004
+        ]
+      },
+      "samples": [
+        {
+          "iterations": 5104,
+          "elapsedMs": 100.29139999999998,
+          "opsPerSecond": 50891.70158159125
+        },
+        {
+          "iterations": 5184,
+          "elapsedMs": 100.34199999999998,
+          "opsPerSecond": 51663.31147475634
+        },
+        {
+          "iterations": 5184,
+          "elapsedMs": 100.17980000000006,
+          "opsPerSecond": 51746.95896777591
+        },
+        {
+          "iterations": 5200,
+          "elapsedMs": 100.12919999999997,
+          "opsPerSecond": 51932.90268972489
+        },
+        {
+          "iterations": 4960,
+          "elapsedMs": 100.23329999999999,
+          "opsPerSecond": 49484.55253892669
+        },
+        {
+          "iterations": 5056,
+          "elapsedMs": 100.06370000000004,
+          "opsPerSecond": 50527.81378262045
+        },
+        {
+          "iterations": 5008,
+          "elapsedMs": 100.05090000000007,
+          "opsPerSecond": 50054.52224817564
+        },
+        {
+          "iterations": 4976,
+          "elapsedMs": 100.12289999999996,
+          "opsPerSecond": 49698.920027286484
+        },
+        {
+          "iterations": 4992,
+          "elapsedMs": 100.17879999999991,
+          "opsPerSecond": 49830.90234660432
+        }
+      ],
+      "sink": 109282608
+    },
+    {
+      "dataset": "batch-32",
+      "method": "batch-text-upstream-loop",
+      "status": "OK",
+      "comparableStableOperation": true,
+      "inputContract": "batch of pre-existing JSON texts",
+      "unitsPerOperation": 32,
+      "jsonBytes": 1485,
+      "sha256": "423e7670cd181ac284ead8ceac19286db5a234fbf5e13fccc644fd16b441005e",
+      "outputBytes": 1869,
+      "repetitions": 9,
+      "sampleMs": 100,
+      "medianOpsPerSecond": 25956.65398028566,
+      "medianItemsPerSecond": 830612.9273691411,
+      "medianLatencyUs": 38.52576687116568,
+      "madPercent": 0.410204308102373,
+      "minOpsPerSecond": 25692.505787296774,
+      "maxOpsPerSecond": 26990.688013000257,
+      "outputMiBPerSecond": 46.26558903613462,
+      "cpuMicroseconds": {
+        "user": 766000,
+        "system": 94000
+      },
+      "rssBeforeBytes": 54849536,
+      "rssAfterBytes": 63479808,
+      "processMaxRssBytes": 63496192,
+      "heapUsedBeforeBytes": 11206592,
+      "heapUsedAfterBytes": 9055672,
+      "timerDelayMs": {
+        "median": 100.4222,
+        "max": 100.83099999999996,
+        "samples": [
+          100.4222,
+          100.83099999999996,
+          100.32179999999994,
+          100.58950000000004,
+          100.17660000000001,
+          100.4914,
+          100.21439999999996,
+          100.51189999999997,
+          100.17460000000005
+        ]
+      },
+      "samples": [
+        {
+          "iterations": 2592,
+          "elapsedMs": 100.27009999999999,
+          "opsPerSecond": 25850.178667419303
+        },
+        {
+          "iterations": 2624,
+          "elapsedMs": 100.7663,
+          "opsPerSecond": 26040.452016199863
+        },
+        {
+          "iterations": 2576,
+          "elapsedMs": 100.2627,
+          "opsPerSecond": 25692.505787296774
+        },
+        {
+          "iterations": 2608,
+          "elapsedMs": 100.54270000000008,
+          "opsPerSecond": 25939.227810671466
+        },
+        {
+          "iterations": 2592,
+          "elapsedMs": 100.07369999999992,
+          "opsPerSecond": 25900.911028571965
+        },
+        {
+          "iterations": 2640,
+          "elapsedMs": 100.44540000000006,
+          "opsPerSecond": 26282.935803929282
+        },
+        {
+          "iterations": 2704,
+          "elapsedMs": 100.18269999999995,
+          "opsPerSecond": 26990.688013000257
+        },
+        {
+          "iterations": 2608,
+          "elapsedMs": 100.47520000000009,
+          "opsPerSecond": 25956.65398028566
+        },
+        {
+          "iterations": 2688,
+          "elapsedMs": 100.12819999999988,
+          "opsPerSecond": 26845.583961361564
+        }
+      ],
+      "sink": 56382672
+    }
+  ],
+  "limitations": [
+    "Sampled RSS and process maximum RSS include runtime, fixture preparation, require and warmup; they are not allocation counts or serializer-only peaks.",
+    "Timer probes measure synchronous sample-burst blocking plus timer scheduling, not per-request event-loop delay or asynchronous responsiveness.",
+    "Native text accepts pre-existing JSON; compare separately with parse-and-sort JS and use native-roundtrip for JS object conversion cost.",
+    "JSON.stringify-context is not stable serialization; all stable-compatible candidates must match the oracle exact string before timing.",
+    "Each cell uses a fresh process. Runs are serial and fixed-order; OS scheduling, thermal state and GC influence results. These are local exploratory measurements, not cross-platform claims."
+  ]
+}

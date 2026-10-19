@@ -3,6 +3,7 @@
 #[allow(dead_code)] // test-only helpers are compiled without a test harness here
 mod engine;
 #[path = "../src/tree.rs"]
+#[allow(dead_code)] // standalone stage harness does not include selection
 mod tree;
 use std::{
     hint::black_box,

@@ -26,7 +26,26 @@ TypeScript dependency lock1,937.8 ops/s (MAD0.9%), config129,098.6 ops/s,
 Unicode18,627.8 ops/s, record array1,394.8 ops/s. Command:
 `node benches/run.cjs`; raw `2026-10-18T23-55-47-261Z-23840.json`.
 A subsequent competitor-only run overlapped compilation and is exploratory,
-not acceptance evidence. Full isolated native comparisons are pending.
+not acceptance evidence. Full isolated release comparisons and two9x100ms
+confirmations are in [the benchmark report](../benches/REPORT.md), with raw samples.
+
+Second longer confirmation (pre-existing normalized JSON text):
+
+| Dataset | JS parse + upstream ops/s | Rust text ops/s | Rust vs JS |
+|---|---:|---:|---:|
+| Real dependency lock |1337.6|3376.9|+152.5% throughput|
+| Real public API data |137.0|230.6|+68.4% throughput|
+| Deep synthetic |31469.6|72084.2|+129.1% throughput|
+| Unicode synthetic |13134.2|4432.3|-66.3% throughput|
+
+These are workload-specific measurements on one machine, not general package
+speed claims. Ordinary JS-object roundtrips often lose; the compatibility API
+stays in JS. Rust batch32 is3.2% below repeated same-native calls, so boundary
+amortization is not demonstrated. JS batch convenience is6.1% below upstream
+loop in this run. Cache hits skip traversal under an explicit unchanged-version
+assertion; they are not faster actual serialization or mutation detection.
+See report for variability, raw data, cold loading, CPU/RSS and unfavorable cells.
+Selective extraction benchmarks are still pending.
 
 Performance gate: correctness first; intended workload median >=10% improvement
 across repeated independent runs with no unexplained >10% regression before an

@@ -39,9 +39,11 @@ function loadMethod(name, value) {
   }
   if (name === 'native-roundtrip') return { fn: () => api.stringifyJson(JSON.stringify(value)), expected, comparable: true, input: 'JS object; JSON.stringify conversion included' };
   if (name === 'batch-public') return { fn: () => JSON.stringify(api.stringifyBatch(value)), expected: JSON.stringify(value.map((v) => oracle(v))), comparable: true, units: value.length };
-  if (name === 'batch-text-native') {
+  if (name === 'batch-text-native' || name === 'batch-text-native-loop') {
     const inputs = value.map((v) => JSON.stringify(v));
-    const fn = () => JSON.stringify(api.stringifyJsonBatch(inputs));
+    const fn = name === 'batch-text-native'
+      ? () => JSON.stringify(api.stringifyJsonBatch(inputs))
+      : () => JSON.stringify(inputs.map((input) => api.stringifyJson(input)));
     return { fn, expected: JSON.stringify(value.map((v) => oracle(v))), comparable: true, units: value.length, input: 'batch of pre-existing JSON texts' };
   }
   if (name === 'cache-hit' || name === 'cache-miss') {
@@ -166,7 +168,7 @@ async function main() {
       'Each cell uses a fresh process. Runs are serial and fixed-order; OS scheduling, thermal state and GC influence results. These are local exploratory measurements, not cross-platform claims.']
   };
   for (const dataset of selected) {
-    const allMethods = [...methods, ...(dataset === 'batch-32' && !process.env.BENCH_METHODS ? ['batch-public', 'batch-upstream-loop', 'batch-text-native', 'batch-text-upstream-loop', 'cache-hit', 'cache-miss'] : [])];
+    const allMethods = [...methods, ...(dataset === 'batch-32' && !process.env.BENCH_METHODS ? ['batch-public', 'batch-upstream-loop', 'batch-text-native', 'batch-text-native-loop', 'batch-text-upstream-loop', 'cache-hit', 'cache-miss'] : [])];
     for (const method of allMethods) {
       const result = spawnSync(process.execPath, [__filename, '--worker', dataset, method], { cwd: root, encoding: 'utf8', timeout: 120000 });
       const item = result.status === 0 ? JSON.parse(result.stdout) : { dataset, method, status: 'ERROR', reason: result.stderr || result.error?.message };

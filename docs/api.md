@@ -51,3 +51,27 @@ strings are rejected before native conversion. Native validation/limit errors
 are Error with Node-API InvalidArg code; wrapper type/range errors use TypeError
 or RangeError. Native loading failures propagate when requesting a native API.
 Native processing is synchronous and blocks the event loop.
+
+## Selective JSON text extraction
+`selectJson(input: string, path: string, options?: JsonTextOptions): string | undefined`
+extracts raw JSON text without constructing the whole document as JS objects.
+For example `selectJson('{"users":[{"name":"Ada"}]}', '/users/0/name')`
+returns `'"Ada"'`. `JSON.parse` the result if a JavaScript value is needed.
+Selected JSON null returns `'null'`; missing paths return undefined.
+
+The path uses a small JSON Pointer syntax: empty string selects root, `/a/0`
+selects object field then array index, `~1` encodes `/`, `~0` encodes `~`.
+No URI fragments or expressions. Invalid syntax throws; missing array indices,
+leading-zero indices, `-` or traversal through scalars return undefined. Maximum
+128 path segments /64KiB path bytes. Whole input syntax and nesting are validated
+even for missing/early selections; maxBytes/maxDepth are the same as text sorting.
+
+Raw selected objects/arrays retain key order, internal whitespace, duplicate keys
+and token spelling. Traversed object keys must decode to Unicode scalar strings:
+a lone surrogate key at a traversed object level throws even if another key is
+requested. Unvisited subtrees/root raw text may retain escaped surrogate keys.
+On traversed duplicate names the last occurrence wins, like JSON.parse. These
+choices mean this is a JSON Pointer subset, not a full RFC6901 compliance claim.
+Rust only materializes one path-level decoded key at a time and scans raw values;
+it still validates/scans all bytes and copies input/output at Node-API boundaries.
+Deep paths may scan a subtree repeatedly. Calls are synchronous.

@@ -35,3 +35,17 @@ Reproduce: `pnpm check`. Review details: INDEPENDENT_REVIEW.md; tests live in te
 - `node scripts/setup-upstream.cjs`: PASS pin and read-only checkout verification.
 - Independent scanner source/re-execution review: PASS, see INDEPENDENT_REVIEW.md.
 - Cross-platform CI executions remain NOT RUN (no remote push authorized).
+
+## 2026-10-19 selection and final dependency notices candidate
+- `pnpm check`: PASS Rust5, Node33, strict types; JS includes14500 generated inputs
+  across compatibility/native lexical/selection cases and16 upstream assertions.
+- Independent selection review:3500 generated paths plus invalid siblings, array
+  grammar, rawlexemes, Unicode and20000element array; see INDEPENDENT_REVIEW.md.
+- `cargo clippy --all-targets --locked -- -D warnings`: PASS.
+- `pnpm licenses:generate`: PASS38 packages after resolving missing napi crate
+  LICENSEtext from pinned workspace commits; THIRD_PARTY_NOTICES.txt distributed.
+- `pnpm audit:deps`: PASS pnpm zeroadvisories and OSV38lockedcratequeries nohits;
+  inventory and raw responses in docs/audits/2026-10-19T00-06-38-891Z.
+- `pnpm test:pack`: PASSselect plusCJS/ESM/native+thirdpartynotices;
+  artifact `.pack-test/1792368713493-11320/stable-json-rs-0.1.0.tgz`.
+- Selection performance acceptance NOTRUN at this milestone.

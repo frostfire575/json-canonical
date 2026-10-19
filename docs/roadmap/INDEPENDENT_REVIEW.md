@@ -171,10 +171,75 @@ Independent verification against the already rebuilt release addon:
 |---|---|
 | `node --test tests/review.test.cjs` | PASS: 14/14, zero skipped |
 | `cargo test --locked` | PASS: 3/3; zero doc tests |
-| `node --test tests/*.test.cjs tests/*.test.mjs` | PASS: 27/27, zero skipped; 11,000 generated unique inputs across the suites |
+| `node --test tests/*.test.cjs tests/*.test.mjs` | PASS: 27/27, zero skipped; 11,000 generated inputs across the suites |
 | `pnpm test:types` | PASS, compiler exit 0 |
 
 No correctness defect was found in the optimized scanner within these checks.
 No benchmarks were run during this review; performance acceptance belongs to the
 separate isolated before/after measurements. Cross-platform execution remains
 unverified locally.
+
+## Experimental selective extraction review — 2026-10-19
+
+Reviewed `src/selection.rs`, `tree::validate_depth`, native exports and TypeScript
+pointer decoding against base revision `28326e7`, with uncommitted selection
+implementation built by the lead. Input is completely serde-validated and then
+checked for maximum nesting across the **entire document** before traversal.
+The selector walks path-level objects/arrays using borrowed RawValue slices.
+It returns raw selected JSON text, not JavaScript objects; `undefined` means
+missing and the string `"null"` represents a selected JSON null. Root extraction
+trims whitespace outside the root token while retaining internal whitespace.
+
+Source review verified pointer escape order (`~1` before `~0`), rejection of
+unknown pointer escapes and URI-fragment syntax, canonical unsigned decimal
+array indices, checked usize parsing for excessive indices, exact decoded object
+key matching, and last duplicate match at each path level. No dynamic expression
+evaluation or prototype lookup occurs in native selection. Whole-input depth
+scanning ignores braces/brackets inside validated strings. Its decrement assumes
+prior balanced-input validation; preserving that invariant remains essential.
+
+An explicit Unicode scope boundary was reported to the lead and retained:
+**visited path-level object keys must decode as Unicode scalar strings**. A
+lone-surrogate key in the same visited object can cause InvalidArg even when a
+different key was requested. Root and raw subtree returns, or unvisited objects,
+can retain escaped lone-surrogate keys without decoding them. Pointer JS strings
+must be well-formed UTF-16. This is a documented pointer subset, not full
+JSON.parse/RFC6901 equivalence. Tests preserve these distinctions rather than
+silently replacing invalid Unicode keys.
+
+Added four independent test groups:
+
+- 3,500 seeded AST/path cases. Each expected raw output comes from independently
+  traversing generated nodes, including duplicate members resolved last-wins;
+  returned text is also JSON.parse-compared with own-property traversal within
+  the documented scalar-Unicode/index grammar scope. Cases include empty keys,
+  `/`, `~`, nested escape sequences, Unicode, combining characters, numeric-looking
+  object keys, prototype-named own keys, primitive continuation and missing paths.
+- Exact lexical retention for huge precision/exponents, signed zero and escaped
+  surrogate values; null versus missing; root whitespace; malformed pointer
+  escapes and noncanonical/overflow array indices.
+- Invalid and excessively nested unselected siblings, including when selecting
+  an early field, missing field or root; delimiter characters inside strings;
+  a 20,000-record array selected at its end; byte/path/segment/type boundaries.
+- Path-level surrogate-key restriction, contrasted with root and unvisited raw
+  subtree behavior.
+
+Verification (no benchmark commands ran during this review):
+
+| Command | Outcome |
+|---|---|
+| `cargo test --locked` | PASS: 3/3; zero doc tests |
+| `node --test tests/*.test.cjs tests/*.test.mjs` | PASS: 33/33, zero skipped; 18 review tests; 14,500 generated inputs across the suites |
+| `pnpm test:types` | PASS, compiler exit 0 |
+
+The first review-only run passed 17/18: a test asserted guessed surrogate-error
+wording, while serde actually returned `unexpected end of hex escape`. The test
+now checks the documented native `InvalidArg` category and still requires a
+thrown error; all surrounding tests were rerun successfully. No implementation
+change was needed for that assertion correction.
+
+No implementation defect was found in this bounded selection review. Performance
+and acceptance of the experimental API remain subject to isolated measurements;
+no throughput claim follows from passing tests. Large inputs are scanned more
+than once, and path-level serde traversal is repeated for each path component;
+the API does not promise sublinear total validation time or asynchronous work.

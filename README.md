@@ -19,9 +19,10 @@ per-platform optional packages remain an alternative release layout.
 
 ```js
 // CommonJS
-const { stringify, stringifyJson } = require('stable-json-rs');
+const { stringify, stringifyJson, selectJson } = require('stable-json-rs');
 stringify({ b: 2, a: 1 }); // '{"a":1,"b":2}'
 stringifyJson('{"b":2,"a":1}'); // '{"a":1,"b":2}', Rust text engine
+selectJson('{"users":[{"name":"Ada"}]}', '/users/0/name'); // '"Ada"'
 ```
 
 ```ts
@@ -47,11 +48,18 @@ Windows x64 has a verified local release build. Linux x64 and macOS ARM64 are
 targeted by CI but **UNVERIFIED** until their jobs execute. Node 24.20.0 is the
 only locally tested runtime.
 
-Initial measured upstream baseline on this Windows i7-12700K / Node 24.20.0:
-tiny object about 1.73M ops/s; real 143,844-byte dependency lock about 1,938 ops/s
-(7 samples, 35 ms each). These are short baseline measurements, not claims of
-Rust speedup. See [performance](docs/performance.md) and raw artifacts under
-`benches/results` for complete comparisons and limitations.
+Measured on Windows i7-12700K / Node24.20.0 (9×100ms samples, second confirmation):
+
+| Existing JSON text | JSON.parse + upstream ops/s | Rust text ops/s |
+|---|---:|---:|
+| Real dependency lock |1338|3377|
+| Real API dataset |137|231|
+| Unicode-heavy synthetic |13134|4432|
+
+Rust wins on selected text workloads and loses on Unicode-heavy input. Ordinary
+object conversion can erase gains; batch calls show no measured advantage over
+same-native repeated calls. See [performance](docs/performance.md) and
+[full evidence](benches/REPORT.md) for variability, CPU/memory and raw artifacts.
 
 [API](docs/api.md) · [compatibility](docs/compatibility.md) ·
 [architecture](docs/architecture.md) · [security](docs/security.md) ·

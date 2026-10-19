@@ -26,6 +26,8 @@ const api = require('stable-json-rs');
 assert.equal(api.stringify({z:1,a:2}), '{"a":2,"z":1}');
 assert.equal(api.stringifyJson('{"z":1,"a":2}'), '{"a":2,"z":1}');
 assert.deepEqual(api.stringifyJsonBatch(['{"z":1,"a":2}']), ['{"a":2,"z":1}']);
+assert.equal(api.selectJson('{"a":[1,2]}', '/a/1'), '2');
+assert.ok(require('node:fs').statSync(require('node:path').join(require('node:path').dirname(require.resolve('stable-json-rs')), '../THIRD_PARTY_NOTICES.txt')).size > 0);
 import('stable-json-rs').then(esm => {
   assert.equal(esm.default({z:1,a:2}), '{"a":2,"z":1}');
   assert.equal(esm.stringifyJson('0'), '0');

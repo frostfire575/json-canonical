@@ -31,7 +31,7 @@ public release, using official napi create-npm-dirs tooling and separate approva
 Fixture bytes are excluded from Git line-ending conversion for checksum stability.
 
 ## ADR 006 — Single validation, borrowed token tree
-Provisional until before/after acceptance samples complete. Repeated RawValue
+Accepted after two longer end-to-end confirmation runs. Repeated RawValue
 subtree deserialization was65–67% slower than parse+upstream on deep/Unicode
 workloads. Replace that strategy with one complete serde validation, then safe
 structural scanning, borrowed unescaped keys/scalars and one output emission.
@@ -40,3 +40,17 @@ malformed cases, depth bounds and generated oracle tests must stay passing. The
 scanner is never a standalone validator. No unsafe code introduced. Stage timings
 in `cargo bench --bench engine` distinguish validation, scan/sort and emission;
 these Rust-only results are not end-to-end npm API performance claims.
+
+## ADR 007 — Raw selective extraction
+Experimental until performance gate confirmed. RawValue visitors walk path-level
+containers without constructing a JS DOM or full Rust token tree. A separate
+allocation-free scan enforces whole-document depth after serde syntax validation.
+Use JSON Pointer subset (no fragments/expressions), last duplicate wins, raw text
+output and undefined for missing. Traversed object keys must decode as Unicode
+scalar strings, while untouched raw subtrees need not. These differences are
+explicit; no full RFC6901 compliance claim. Tests independently cover3500 paths.
+
+## ADR 008 — CI host selection
+Use macos-15 ARM64 rather than near-deprecated macos-14; current hosted runner
+labels checked against [GitHub's runner reference](https://docs.github.com/en/actions/reference/runners/github-hosted-runners)
+on2026-10-19. CI definitions remain unexecuted evidence until jobs run.

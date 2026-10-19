@@ -9,6 +9,8 @@
  */
 export declare const __napiBindingTarget: 'native' | 'wasm32-wasi' | 'wasm32-wasip1'
 
+export declare function selectJson(input: string, path: Array<string>, maxDepth?: number | undefined | null, maxBytes?: number | undefined | null): string | null
+
 export declare function stringifyJson(input: string, maxDepth?: number | undefined | null, maxBytes?: number | undefined | null): string
 
 export declare function stringifyJsonBatch(inputs: Array<string>, maxDepth?: number | undefined | null, maxBytes?: number | undefined | null): Array<string>

@@ -40,6 +40,8 @@ identity/version; cache-miss changes the explicit version for every call.
 `batch-text-native` compares a single native batch call with
 `batch-text-upstream-loop` parsing each pre-existing text and applying upstream.
 Both return a list of strings, and both include the same result-list consumption.
+`batch-text-native-loop` calls the same native text engine once per document;
+this is the comparison that isolates whether batching itself adds a benefit.
 
 PowerShell examples:
 
