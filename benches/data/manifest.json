@@ -1,0 +1,57 @@
+[
+  {
+    "file": "typescript-package-lock.json",
+    "source": "https://raw.githubusercontent.com/microsoft/TypeScript/5237fd46890956e4bb8177a1a05dcd69e4166560/package-lock.json",
+    "commit": "5237fd46890956e4bb8177a1a05dcd69e4166560",
+    "license": "Apache-2.0",
+    "licenseFile": "typescript-LICENSE.txt",
+    "purpose": "Real dependency metadata; large nested package graph object.",
+    "retrievedAt": "2026-10-18T23:56:25.261Z",
+    "bytes": 143844,
+    "sha256": "52b6c9bd0a26ef1b0fc27dfbfaa00df6a047cdddd587d07c4f6c1c3345faf5cf",
+    "structure": "object with 5 root properties"
+  },
+  {
+    "file": "typescript-package.json",
+    "source": "https://raw.githubusercontent.com/microsoft/TypeScript/5237fd46890956e4bb8177a1a05dcd69e4166560/package.json",
+    "commit": "5237fd46890956e4bb8177a1a05dcd69e4166560",
+    "license": "Apache-2.0",
+    "licenseFile": "typescript-LICENSE.txt",
+    "purpose": "Real application/development configuration; medium nested object.",
+    "retrievedAt": "2026-10-18T23:56:25.262Z",
+    "bytes": 1838,
+    "sha256": "2828c1d269bd9c80d634131ec107ac69f1cfc3bf1f98d24c112c825c8acd7902",
+    "structure": "object with 12 root properties"
+  },
+  {
+    "file": "upstream-test.json",
+    "source": "https://raw.githubusercontent.com/epoberezkin/fast-json-stable-stringify/49e230da2c84247b29ad4de02c9395793caefd15/benchmark/test.json",
+    "commit": "49e230da2c84247b29ad4de02c9395793caefd15",
+    "license": "MIT",
+    "licenseFile": "upstream-LICENSE",
+    "purpose": "Established upstream benchmark fixture; array of API-shaped records. Mock fixture, not a captured production response.",
+    "retrievedAt": "2026-10-18T23:56:25.262Z",
+    "bytes": 3965,
+    "sha256": "a309a6d29ddefa0dee5628f8f2f9e50adab7f406e05fd465beafda68339739b8",
+    "structure": "array of 3 entries"
+  },
+  {
+    "file": "jsonplaceholder-data.json",
+    "source": "https://raw.githubusercontent.com/typicode/jsonplaceholder/7ae4432ac3f60e7226a899c25e04826207d07098/data.json",
+    "commit": "7ae4432ac3f60e7226a899c25e04826207d07098",
+    "license": "MIT",
+    "licenseFile": "jsonplaceholder-LICENSE",
+    "purpose": "Actual JSONPlaceholder public API service backing data; fictional posts/comments/albums/photos/todos/users. Large arrays and nested API records, not private user information.",
+    "retrievedAt": "2026-10-19T00:00:05.305Z",
+    "bytes": 1378184,
+    "sha256": "e1feb959cada8c58528e199b1cfe6cf4c43734e47dc8c3b39cbba35916e07479",
+    "structure": {
+      "posts": 100,
+      "comments": 500,
+      "albums": 100,
+      "photos": 5000,
+      "users": 10,
+      "todos": 200
+    }
+  }
+]

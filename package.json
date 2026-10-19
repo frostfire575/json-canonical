@@ -1,0 +1,41 @@
+{
+  "name": "stable-json-rs",
+  "version": "0.1.0",
+  "description": "Compatibility-first stable JSON with a bounded Rust JSON-text engine",
+  "license": "MIT",
+  "main": "js/index.cjs",
+  "module": "js/index.mjs",
+  "types": "js/dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": { "types": "./js/index.d.mts", "default": "./js/index.mjs" },
+      "require": { "types": "./js/dist/index.d.ts", "default": "./js/index.cjs" }
+    }
+  },
+  "files": ["js/dist", "js/index.cjs", "js/index.mjs", "js/index.d.mts", "native", "LICENSE", "NOTICE", "README.md", "docs/api.md", "docs/compatibility.md"],
+  "engines": { "node": ">=22.13.0" },
+  "packageManager": "pnpm@12.10.1",
+  "napi": {
+    "binaryName": "stable-json-rs",
+    "targets": ["x86_64-pc-windows-msvc", "x86_64-unknown-linux-gnu", "aarch64-apple-darwin"]
+  },
+  "scripts": {
+    "build:native": "napi build --release --platform --output-dir native --js binding.js --dts binding.d.ts",
+    "build:js": "tsc -p tsconfig.json",
+    "build": "pnpm build:native && pnpm build:js",
+    "test": "node --test tests/*.test.cjs tests/*.test.mjs",
+    "test:types": "tsc -p tests/tsconfig.json",
+    "test:rust": "cargo test --locked",
+    "bench": "node benches/run.cjs",
+    "check": "pnpm build && pnpm test:rust && pnpm test && pnpm test:types",
+    "test:pack": "node scripts/test-pack.cjs"
+  },
+  "devDependencies": {
+    "@napi-rs/cli": "3.10.8",
+    "@types/node": "^24.0.0",
+    "fast-stable-stringify": "^1.0.0",
+    "safe-stable-stringify": "^2.5.0",
+    "tape": "^5.9.0",
+    "typescript": "7.0.2"
+  }
+}

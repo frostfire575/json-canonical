@@ -1,0 +1,575 @@
+{
+  "timestamp": "2026-10-18T23:59:44.673Z",
+  "command": "node benches/run.cjs",
+  "workingDirectory": "D:\\misc\\npm\\stable-json-rs",
+  "configuration": {
+    "BENCH_REPS": "7",
+    "BENCH_SAMPLE_MS": "35",
+    "BENCH_DATASETS": "tiny,wide,deep",
+    "BENCH_METHODS": "upstream-from-text,native-text",
+    "note": "null means variable unset; when BENCH_METHODS is unset, batch/cache extras are automatically included for batch-32"
+  },
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "osRelease": "10.0.26300",
+    "node": "v24.20.0",
+    "v8": "13.6.233.17-node.53",
+    "cpu": "12th Gen Intel(R) Core(TM) i7-12700K",
+    "logicalCpus": 20,
+    "totalMemoryBytes": 34087682048,
+    "rust": "rustc 1.98.1 (48a229cea 2026-09-01)",
+    "commit": "41f6d0a3d481169bcf9b15d092394db6a6b9524c",
+    "dirty": "?? Cargo.lock\n?? Cargo.toml\n?? LICENSE\n?? NOTICE\n?? benches/\n?? build.rs\n?? docs/research.md\n?? js/\n?? native/\n?? package.json\n?? pnpm-lock.yaml\n?? src/\n?? tests/\n?? tsconfig.json",
+    "upstreamCommit": "49e230da2c84247b29ad4de02c9395793caefd15",
+    "dependencies": {
+      "safe-stable-stringify": "2.5.0",
+      "fast-stable-stringify": "1.0.0",
+      "@napi-rs/cli": "3.10.8"
+    },
+    "sourceHashes": {
+      "benches/run.cjs": "e1d2c3afc33c2a18bbb9db61adb668e307170ba49ee68f49bed6345c2d28c36e",
+      "benches/datasets.cjs": "00e1f111d47e8eb26413ff935c17d62eb11a182a235e5c4e11e1ef9ab08a52c4",
+      "js/dist/index.js": "cafdb45c97fabc4cf5f29da0c88b2de75bc79ddac110703ebee142b5f13ee9fa",
+      "src/lib.rs": "6cb52314b77d08bc1440a1113679d4dc8fdb4136385e0dd271aef06003fedd0c",
+      "src/engine.rs": "85ad23f8c9241759468af5d87e48675953b1bcd801f2b1ec1f7c8d557d0087ad",
+      "pnpm-lock.yaml": "268854350104379c6e5698c2504908ef61cc5870655b68fab4c2ce58624b6fab"
+    },
+    "nativeArtifacts": [
+      {
+        "file": "stable-json-rs.win32-x64-msvc.node",
+        "sha256": "2b5bc47096a4ee7f3430442bf8c42aba6f1cbe9d12d150a92b87e5f688ff52ad"
+      }
+    ]
+  },
+  "coldStart": [
+    {
+      "module": "./upstream/fast-json-stable-stringify",
+      "status": "OK",
+      "medianRequireMs": 3.8320000000000007,
+      "samples": [
+        3.8320000000000007,
+        3.6416000000000004,
+        3.4642000000000017,
+        4.0947,
+        3.9557
+      ],
+      "contract": "fresh process require duration; OS disk cache may be warm; process startup excluded"
+    },
+    {
+      "module": "./js/index.cjs",
+      "status": "OK",
+      "medianRequireMs": 3.8123000000000005,
+      "samples": [
+        3.506499999999999,
+        3.8123000000000005,
+        3.9078999999999997,
+        3.6952999999999996,
+        3.8581000000000003
+      ],
+      "contract": "fresh process require duration; OS disk cache may be warm; process startup excluded"
+    },
+    {
+      "module": "./native/binding.js",
+      "status": "OK",
+      "medianRequireMs": 5.014200000000001,
+      "samples": [
+        5.4003,
+        4.7178,
+        4.913800000000002,
+        5.014200000000001,
+        5.182999999999998
+      ],
+      "contract": "fresh process require duration; OS disk cache may be warm; process startup excluded"
+    }
+  ],
+  "results": [
+    {
+      "dataset": "tiny",
+      "method": "upstream-from-text",
+      "status": "OK",
+      "comparableStableOperation": true,
+      "inputContract": "pre-existing JSON text; parsing included",
+      "unitsPerOperation": 1,
+      "jsonBytes": 28,
+      "sha256": "a8702ef49388dccdb1d596f08dba7395ffbd1abbfe7bafec100b250b14a5a065",
+      "outputBytes": 28,
+      "repetitions": 7,
+      "sampleMs": 35,
+      "medianOpsPerSecond": 1156295.1499334709,
+      "medianItemsPerSecond": 1156295.1499334709,
+      "medianLatencyUs": 0.8648310944290794,
+      "madPercent": 2.233975740026133,
+      "minOpsPerSecond": 943404.8379735285,
+      "maxOpsPerSecond": 1182499.9143943114,
+      "outputMiBPerSecond": 30.876411626946627,
+      "cpuMicroseconds": {
+        "user": 234000,
+        "system": 15000
+      },
+      "rssBeforeBytes": 48967680,
+      "rssAfterBytes": 49049600,
+      "processMaxRssBytes": 50544640,
+      "heapUsedBeforeBytes": 6613760,
+      "heapUsedAfterBytes": 8010216,
+      "timerDelayMs": {
+        "median": 35.10079999999999,
+        "max": 35.22580000000001,
+        "samples": [
+          35.22580000000001,
+          35.0771,
+          35.111999999999995,
+          35.07219999999998,
+          35.10700000000003,
+          35.09280000000001,
+          35.10079999999999
+        ]
+      },
+      "samples": [
+        {
+          "iterations": 41440,
+          "elapsedMs": 35.044399999999996,
+          "opsPerSecond": 1182499.9143943114
+        },
+        {
+          "iterations": 41408,
+          "elapsedMs": 35.028400000000005,
+          "opsPerSecond": 1182126.5030660834
+        },
+        {
+          "iterations": 40288,
+          "elapsedMs": 35.06650000000002,
+          "opsPerSecond": 1148902.798967675
+        },
+        {
+          "iterations": 41200,
+          "elapsedMs": 35.028099999999995,
+          "opsPerSecond": 1176198.5377454103
+        },
+        {
+          "iterations": 40496,
+          "elapsedMs": 35.0222,
+          "opsPerSecond": 1156295.1499334709
+        },
+        {
+          "iterations": 36144,
+          "elapsedMs": 35.03469999999999,
+          "opsPerSecond": 1031662.8942163058
+        },
+        {
+          "iterations": 33072,
+          "elapsedMs": 35.05599999999998,
+          "opsPerSecond": 943404.8379735285
+        }
+      ],
+      "sink": 21821024
+    },
+    {
+      "dataset": "tiny",
+      "method": "native-text",
+      "status": "OK",
+      "comparableStableOperation": true,
+      "inputContract": "pre-existing JSON text; object conversion excluded",
+      "unitsPerOperation": 1,
+      "jsonBytes": 28,
+      "sha256": "a8702ef49388dccdb1d596f08dba7395ffbd1abbfe7bafec100b250b14a5a065",
+      "outputBytes": 28,
+      "repetitions": 7,
+      "sampleMs": 35,
+      "medianOpsPerSecond": 1539998.5157191064,
+      "medianItemsPerSecond": 1539998.5157191064,
+      "medianLatencyUs": 0.6493512752075916,
+      "madPercent": 0.27766864542989517,
+      "minOpsPerSecond": 1519362.862554483,
+      "maxOpsPerSecond": 1559117.0934808645,
+      "outputMiBPerSecond": 41.12239688886164,
+      "cpuMicroseconds": {
+        "user": 234000,
+        "system": 0
+      },
+      "rssBeforeBytes": 49500160,
+      "rssAfterBytes": 49590272,
+      "processMaxRssBytes": 50581504,
+      "heapUsedBeforeBytes": 6097288,
+      "heapUsedAfterBytes": 8189360,
+      "timerDelayMs": {
+        "median": 35.12919999999997,
+        "max": 35.2518,
+        "samples": [
+          35.2518,
+          35.11940000000001,
+          35.1593,
+          35.08159999999998,
+          35.12919999999997,
+          35.16899999999998,
+          35.0831
+        ]
+      },
+      "samples": [
+        {
+          "iterations": 53264,
+          "elapsedMs": 35.056799999999996,
+          "opsPerSecond": 1519362.862554483
+        },
+        {
+          "iterations": 54672,
+          "elapsedMs": 35.066,
+          "opsPerSecond": 1559117.0934808645
+        },
+        {
+          "iterations": 54032,
+          "elapsedMs": 35.106599999999986,
+          "opsPerSecond": 1539083.8189969985
+        },
+        {
+          "iterations": 53952,
+          "elapsedMs": 35.033799999999985,
+          "opsPerSecond": 1539998.5157191064
+        },
+        {
+          "iterations": 54112,
+          "elapsedMs": 35.04039999999998,
+          "opsPerSecond": 1544274.6087373442
+        },
+        {
+          "iterations": 53968,
+          "elapsedMs": 35.09770000000003,
+          "opsPerSecond": 1537650.6152824815
+        },
+        {
+          "iterations": 54192,
+          "elapsedMs": 35.038700000000006,
+          "opsPerSecond": 1546632.7232460105
+        }
+      ],
+      "sink": 29980224
+    },
+    {
+      "dataset": "wide",
+      "method": "upstream-from-text",
+      "status": "OK",
+      "comparableStableOperation": true,
+      "inputContract": "pre-existing JSON text; parsing included",
+      "unitsPerOperation": 1,
+      "jsonBytes": 21784,
+      "sha256": "a85e7f6ca036307b47f0c105c26552afeddfbc52befe36500add5d02ace8a686",
+      "outputBytes": 21784,
+      "repetitions": 7,
+      "sampleMs": 35,
+      "medianOpsPerSecond": 2424.328132812776,
+      "medianItemsPerSecond": 2424.328132812776,
+      "medianLatencyUs": 412.4854166666667,
+      "madPercent": 0.9709876637650553,
+      "minOpsPerSecond": 2292.022805626917,
+      "maxOpsPerSecond": 2497.950899652629,
+      "outputMiBPerSecond": 50.36503223914481,
+      "cpuMicroseconds": {
+        "user": 250000,
+        "system": 31000
+      },
+      "rssBeforeBytes": 48422912,
+      "rssAfterBytes": 52944896,
+      "processMaxRssBytes": 53030912,
+      "heapUsedBeforeBytes": 7799136,
+      "heapUsedAfterBytes": 8661528,
+      "timerDelayMs": {
+        "median": 39.6412,
+        "max": 42.10129999999998,
+        "samples": [
+          42.10129999999998,
+          39.772999999999996,
+          39.6412,
+          38.4735,
+          39.30060000000003,
+          39.9581,
+          38.88659999999999
+        ]
+      },
+      "samples": [
+        {
+          "iterations": 96,
+          "elapsedMs": 41.884399999999985,
+          "opsPerSecond": 2292.022805626917
+        },
+        {
+          "iterations": 96,
+          "elapsedMs": 39.726699999999994,
+          "opsPerSecond": 2416.5108101100773
+        },
+        {
+          "iterations": 96,
+          "elapsedMs": 39.598600000000005,
+          "opsPerSecond": 2424.328132812776
+        },
+        {
+          "iterations": 96,
+          "elapsedMs": 38.4315,
+          "opsPerSecond": 2497.950899652629
+        },
+        {
+          "iterations": 96,
+          "elapsedMs": 39.217799999999954,
+          "opsPerSecond": 2447.8680599115737
+        },
+        {
+          "iterations": 96,
+          "elapsedMs": 39.90869999999995,
+          "opsPerSecond": 2405.4905321396113
+        },
+        {
+          "iterations": 96,
+          "elapsedMs": 38.85079999999999,
+          "opsPerSecond": 2470.9915883328017
+        }
+      ],
+      "sink": 18575440
+    },
+    {
+      "dataset": "wide",
+      "method": "native-text",
+      "status": "OK",
+      "comparableStableOperation": true,
+      "inputContract": "pre-existing JSON text; object conversion excluded",
+      "unitsPerOperation": 1,
+      "jsonBytes": 21784,
+      "sha256": "a85e7f6ca036307b47f0c105c26552afeddfbc52befe36500add5d02ace8a686",
+      "outputBytes": 21784,
+      "repetitions": 7,
+      "sampleMs": 35,
+      "medianOpsPerSecond": 3389.381702634716,
+      "medianItemsPerSecond": 3389.381702634716,
+      "medianLatencyUs": 295.0390624999999,
+      "madPercent": 1.2140866209262156,
+      "minOpsPerSecond": 3302.6462453040504,
+      "maxOpsPerSecond": 3430.5317324185253,
+      "outputMiBPerSecond": 70.41386700648752,
+      "cpuMicroseconds": {
+        "user": 250000,
+        "system": 16000
+      },
+      "rssBeforeBytes": 46219264,
+      "rssAfterBytes": 46346240,
+      "processMaxRssBytes": 46673920,
+      "heapUsedBeforeBytes": 6560184,
+      "heapUsedAfterBytes": 7312912,
+      "timerDelayMs": {
+        "median": 37.85669999999999,
+        "max": 38.804100000000005,
+        "samples": [
+          37.45360000000001,
+          38.70740000000001,
+          37.61869999999999,
+          38.65720000000002,
+          37.85669999999999,
+          38.804100000000005,
+          37.49349999999998
+        ]
+      },
+      "samples": [
+        {
+          "iterations": 128,
+          "elapsedMs": 37.312,
+          "opsPerSecond": 3430.5317324185253
+        },
+        {
+          "iterations": 128,
+          "elapsedMs": 38.64859999999999,
+          "opsPerSecond": 3311.8922807035715
+        },
+        {
+          "iterations": 128,
+          "elapsedMs": 37.57049999999998,
+          "opsPerSecond": 3406.9283081140807
+        },
+        {
+          "iterations": 128,
+          "elapsedMs": 38.61530000000002,
+          "opsPerSecond": 3314.7482992492596
+        },
+        {
+          "iterations": 128,
+          "elapsedMs": 37.764999999999986,
+          "opsPerSecond": 3389.381702634716
+        },
+        {
+          "iterations": 128,
+          "elapsedMs": 38.7568,
+          "opsPerSecond": 3302.6462453040504
+        },
+        {
+          "iterations": 128,
+          "elapsedMs": 37.4554,
+          "opsPerSecond": 3417.397758400658
+        }
+      ],
+      "sink": 24884080
+    },
+    {
+      "dataset": "deep",
+      "method": "upstream-from-text",
+      "status": "OK",
+      "comparableStableOperation": true,
+      "inputContract": "pre-existing JSON text; parsing included",
+      "unitsPerOperation": 1,
+      "jsonBytes": 1043,
+      "sha256": "550e9cf869cd26fdd3d576825e49b98146532efd358968bf15f1f0a5fc3d1559",
+      "outputBytes": 1043,
+      "repetitions": 7,
+      "sampleMs": 35,
+      "medianOpsPerSecond": 30824.93533279879,
+      "medianItemsPerSecond": 30824.93533279879,
+      "medianLatencyUs": 32.44126838235296,
+      "madPercent": 1.451905225444268,
+      "minOpsPerSecond": 30003.153740592043,
+      "maxOpsPerSecond": 31440.719719083958,
+      "outputMiBPerSecond": 30.66101794444002,
+      "cpuMicroseconds": {
+        "user": 250000,
+        "system": 15000
+      },
+      "rssBeforeBytes": 48295936,
+      "rssAfterBytes": 53227520,
+      "processMaxRssBytes": 53248000,
+      "heapUsedBeforeBytes": 7036480,
+      "heapUsedAfterBytes": 6867656,
+      "timerDelayMs": {
+        "median": 35.30189999999999,
+        "max": 35.45009999999999,
+        "samples": [
+          35.331999999999994,
+          35.2115,
+          35.0668,
+          35.45009999999999,
+          35.30189999999999,
+          35.16569999999996,
+          35.33359999999999
+        ]
+      },
+      "samples": [
+        {
+          "iterations": 1056,
+          "elapsedMs": 35.19630000000001,
+          "opsPerSecond": 30003.153740592043
+        },
+        {
+          "iterations": 1056,
+          "elapsedMs": 35.143699999999995,
+          "opsPerSecond": 30048.05982295547
+        },
+        {
+          "iterations": 1072,
+          "elapsedMs": 35.019000000000005,
+          "opsPerSecond": 30611.953510951193
+        },
+        {
+          "iterations": 1104,
+          "elapsedMs": 35.302599999999984,
+          "opsPerSecond": 31272.48417963551
+        },
+        {
+          "iterations": 1088,
+          "elapsedMs": 35.207100000000025,
+          "opsPerSecond": 30902.85766223288
+        },
+        {
+          "iterations": 1104,
+          "elapsedMs": 35.11370000000005,
+          "opsPerSecond": 31440.719719083958
+        },
+        {
+          "iterations": 1088,
+          "elapsedMs": 35.296100000000024,
+          "opsPerSecond": 30824.93533279879
+        }
+      ],
+      "sink": 10617120
+    },
+    {
+      "dataset": "deep",
+      "method": "native-text",
+      "status": "OK",
+      "comparableStableOperation": true,
+      "inputContract": "pre-existing JSON text; object conversion excluded",
+      "unitsPerOperation": 1,
+      "jsonBytes": 1043,
+      "sha256": "550e9cf869cd26fdd3d576825e49b98146532efd358968bf15f1f0a5fc3d1559",
+      "outputBytes": 1043,
+      "repetitions": 7,
+      "sampleMs": 35,
+      "medianOpsPerSecond": 10680.521676730652,
+      "medianItemsPerSecond": 10680.521676730652,
+      "medianLatencyUs": 93.62838541666663,
+      "madPercent": 1.0315796572828506,
+      "minOpsPerSecond": 10396.831226656574,
+      "maxOpsPerSecond": 10898.532955290471,
+      "outputMiBPerSecond": 10.623725994901724,
+      "cpuMicroseconds": {
+        "user": 235000,
+        "system": 0
+      },
+      "rssBeforeBytes": 44728320,
+      "rssAfterBytes": 45748224,
+      "processMaxRssBytes": 45948928,
+      "heapUsedBeforeBytes": 7409520,
+      "heapUsedAfterBytes": 8121128,
+      "timerDelayMs": {
+        "median": 35.6318,
+        "max": 36.223299999999995,
+        "samples": [
+          35.37819999999999,
+          35.99940000000001,
+          35.6318,
+          35.43630000000002,
+          36.223299999999995,
+          35.497199999999964,
+          36.129999999999995
+        ]
+      },
+      "samples": [
+        {
+          "iterations": 384,
+          "elapsedMs": 35.2341,
+          "opsPerSecond": 10898.532955290471
+        },
+        {
+          "iterations": 384,
+          "elapsedMs": 35.953299999999984,
+          "opsPerSecond": 10680.521676730652
+        },
+        {
+          "iterations": 384,
+          "elapsedMs": 35.58619999999999,
+          "opsPerSecond": 10790.69976563949
+        },
+        {
+          "iterations": 368,
+          "elapsedMs": 35.395399999999995,
+          "opsPerSecond": 10396.831226656574
+        },
+        {
+          "iterations": 384,
+          "elapsedMs": 36.1191,
+          "opsPerSecond": 10631.49414021944
+        },
+        {
+          "iterations": 384,
+          "elapsedMs": 35.435599999999965,
+          "opsPerSecond": 10836.559843772939
+        },
+        {
+          "iterations": 384,
+          "elapsedMs": 36.065499999999986,
+          "opsPerSecond": 10647.294505829675
+        }
+      ],
+      "sink": 3749280
+    }
+  ],
+  "limitations": [
+    "Sampled RSS and process maximum RSS include runtime, fixture preparation, require and warmup; they are not allocation counts or serializer-only peaks.",
+    "Timer probes measure synchronous sample-burst blocking plus timer scheduling, not per-request event-loop delay or asynchronous responsiveness.",
+    "Native text accepts pre-existing JSON; compare separately with parse-and-sort JS and use native-roundtrip for JS object conversion cost.",
+    "JSON.stringify-context is not stable serialization; all stable-compatible candidates must match the oracle exact string before timing.",
+    "Each cell uses a fresh process. Runs are serial and fixed-order; OS scheduling, thermal state and GC influence results. These are local exploratory measurements, not cross-platform claims."
+  ]
+}

@@ -1,0 +1,1895 @@
+{
+  "timestamp": "2026-10-18T23:55:47.261Z",
+  "command": "BENCH_REPS=7 BENCH_SAMPLE_MS=35 BENCH_DATASETS=tiny,upstream-api-fixture,application-config,dependency-lock,deep,wide,unicode,large-string,record-array,backend-payload,batch-32 BENCH_METHODS=JSON.stringify-context,upstream,safe-stable-stringify,fast-stable-stringify node benches/run.cjs",
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "osRelease": "10.0.26300",
+    "node": "v24.20.0",
+    "v8": "13.6.233.17-node.53",
+    "cpu": "12th Gen Intel(R) Core(TM) i7-12700K",
+    "logicalCpus": 20,
+    "totalMemoryBytes": 34087682048,
+    "rust": "rustc 1.98.1 (48a229cea 2026-09-01)",
+    "commit": "41f6d0a3d481169bcf9b15d092394db6a6b9524c",
+    "dirty": "?? benches/",
+    "upstreamCommit": "49e230da2c84247b29ad4de02c9395793caefd15"
+  },
+  "coldStart": [
+    {
+      "module": "./upstream/fast-json-stable-stringify",
+      "status": "OK",
+      "medianRequireMs": 3.6532999999999998,
+      "samples": [
+        3.6575999999999986,
+        3.7209000000000003,
+        3.6532999999999998,
+        3.4962000000000018,
+        3.6249999999999982
+      ],
+      "contract": "fresh process require duration; OS disk cache may be warm; process startup excluded"
+    },
+    {
+      "module": "./js/index.cjs",
+      "status": "UNAVAILABLE",
+      "reason": "node:internal/modules/cjs/loader:1568\r\n  throw err;\r\n  ^\r\n\r\nError: Cannot find module './js/index.cjs'\r\nRequire stack:\r\n- D:\\misc\\npm\\stable-json-rs\\[eval]\r\n    at Module._resolveFilename (node:internal/modules/cjs/loader:1564:15)\r\n    at wrapResolveFilename (node:internal/modules/cjs/loader:1118:27)\r\n    at defaultResolveImplForCJSLoading (node:internal/modules/cjs/loader:1142:10)\r\n    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1169:12)\r\n    at Module._load (node:internal/modules/cjs/loader:1341:5)\r\n    at wrapModuleLoad (node:internal/modules/cjs/loader:261:19)\r\n    at Module.require (node:internal/modules/cjs/loader:1674:12)\r\n    at require (node:internal/modules/helpers:157:16)\r\n    at [eval]:1:76\r\n    at runScriptInThisContext (node:internal/vm:219:10) {\r\n  code: 'MODULE_NOT_FOUND',\r\n  requireStack: [ 'D:\\\\misc\\\\npm\\\\stable-json-rs\\\\[eval]' ]\r\n}\r\n\r\nNode.js v24.20.0"
+    }
+  ],
+  "results": [
+    {
+      "dataset": "tiny",
+      "method": "JSON.stringify-context",
+      "status": "OK",
+      "comparableStableOperation": false,
+      "unitsPerOperation": 1,
+      "jsonBytes": 28,
+      "sha256": "a8702ef49388dccdb1d596f08dba7395ffbd1abbfe7bafec100b250b14a5a065",
+      "outputBytes": 28,
+      "repetitions": 7,
+      "sampleMs": 35,
+      "medianOpsPerSecond": 8861558.13827343,
+      "medianLatencyUs": 0.11284697164948447,
+      "madPercent": 2.7218187238183025,
+      "minOpsPerSecond": 8508713.825632123,
+      "maxOpsPerSecond": 9150773.567196075,
+      "outputMiBPerSecond": 236.6291311947403,
+      "cpuMicroseconds": {
+        "user": 250000,
+        "system": 0
+      },
+      "rssBeforeBytes": 47923200,
+      "rssAfterBytes": 48062464,
+      "processMaxRssBytes": 48152576,
+      "heapUsedBeforeBytes": 7197360,
+      "heapUsedAfterBytes": 7386312,
+      "timerDelayMs": {
+        "median": 35.077199999999976,
+        "max": 35.20370000000001,
+        "samples": [
+          35.20370000000001,
+          35.075199999999995,
+          35.07130000000001,
+          35.077199999999976,
+          35.114600000000024,
+          35.12389999999999,
+          35.06200000000001
+        ]
+      },
+      "samples": [
+        {
+          "iterations": 320752,
+          "elapsedMs": 35.05189999999999,
+          "opsPerSecond": 9150773.567196075
+        },
+        {
+          "iterations": 320400,
+          "elapsedMs": 35.0273,
+          "opsPerSecond": 9147150.936555203
+        },
+        {
+          "iterations": 298016,
+          "elapsedMs": 35.0248,
+          "opsPerSecond": 8508713.825632123
+        },
+        {
+          "iterations": 318864,
+          "elapsedMs": 35.02940000000001,
+          "opsPerSecond": 9102753.686903
+        },
+        {
+          "iterations": 306848,
+          "elapsedMs": 35.02679999999998,
+          "opsPerSecond": 8760377.7678806
+        },
+        {
+          "iterations": 310400,
+          "elapsedMs": 35.02769999999998,
+          "opsPerSecond": 8861558.13827343
+        },
+        {
+          "iterations": 307248,
+          "elapsedMs": 35.0274,
+          "opsPerSecond": 8771647.338940373
+        }
+      ],
+      "sink": 363914160
+    },
+    {
+      "dataset": "tiny",
+      "method": "upstream",
+      "status": "OK",
+      "comparableStableOperation": true,
+      "unitsPerOperation": 1,
+      "jsonBytes": 28,
+      "sha256": "a8702ef49388dccdb1d596f08dba7395ffbd1abbfe7bafec100b250b14a5a065",
+      "outputBytes": 28,
+      "repetitions": 7,
+      "sampleMs": 35,
+      "medianOpsPerSecond": 1730117.236104611,
+      "medianLatencyUs": 0.5779955133280548,
+      "madPercent": 0.35891594351491624,
+      "minOpsPerSecond": 1722507.7081192194,
+      "maxOpsPerSecond": 1784118.2635115269,
+      "outputMiBPerSecond": 46.199114428452596,
+      "cpuMicroseconds": {
+        "user": 234000,
+        "system": 0
+      },
+      "rssBeforeBytes": 48304128,
+      "rssAfterBytes": 48570368,
+      "processMaxRssBytes": 49950720,
+      "heapUsedBeforeBytes": 7382056,
+      "heapUsedAfterBytes": 7701312,
+      "timerDelayMs": {
+        "median": 35.073499999999996,
+        "max": 35.18429999999999,
+        "samples": [
+          35.18429999999999,
+          35.07219999999998,
+          35.073499999999996,
+          35.065,
+          35.107999999999976,
+          35.096299999999985,
+          35.06389999999999
+        ]
+      },
+      "samples": [
+        {
+          "iterations": 60624,
+          "elapsedMs": 35.04039999999999,
+          "opsPerSecond": 1730117.236104611
+        },
+        {
+          "iterations": 60784,
+          "elapsedMs": 35.028400000000005,
+          "opsPerSecond": 1735277.6604126934
+        },
+        {
+          "iterations": 60336,
+          "elapsedMs": 35.02799999999999,
+          "opsPerSecond": 1722507.7081192194
+        },
+        {
+          "iterations": 62480,
+          "elapsedMs": 35.020099999999985,
+          "opsPerSecond": 1784118.2635115269
+        },
+        {
+          "iterations": 60384,
+          "elapsedMs": 35.0274,
+          "opsPerSecond": 1723907.569502732
+        },
+        {
+          "iterations": 61328,
+          "elapsedMs": 35.03369999999995,
+          "opsPerSecond": 1750543.048550398
+        },
+        {
+          "iterations": 60592,
+          "elapsedMs": 35.02840000000003,
+          "opsPerSecond": 1729796.3937833286
+        }
+      ],
+      "sink": 33761728
+    },
+    {
+      "dataset": "tiny",
+      "method": "safe-stable-stringify",
+      "status": "UNAVAILABLE",
+      "reason": "Cannot find module 'safe-stable-stringify'\nRequire stack:\n- D:\\misc\\npm\\stable-json-rs\\benches\\run.cjs"
+    },
+    {
+      "dataset": "tiny",
+      "method": "fast-stable-stringify",
+      "status": "UNAVAILABLE",
+      "reason": "Cannot find module 'fast-stable-stringify'\nRequire stack:\n- D:\\misc\\npm\\stable-json-rs\\benches\\run.cjs"
+    },
+    {
+      "dataset": "upstream-api-fixture",
+      "method": "JSON.stringify-context",
+      "status": "OK",
+      "comparableStableOperation": false,
+      "unitsPerOperation": 1,
+      "jsonBytes": 2929,
+      "sha256": "53771b6c7b6dfec175bfd04f0eb65548c71b627048a042a9c893837dd6d34935",
+      "outputBytes": 2929,
+      "repetitions": 7,
+      "sampleMs": 35,
+      "medianOpsPerSecond": 297638.74781735375,
+      "medianLatencyUs": 3.359777607361965,
+      "madPercent": 1.229248313102211,
+      "minOpsPerSecond": 288309.6591719081,
+      "maxOpsPerSecond": 304771.46417481004,
+      "outputMiBPerSecond": 831.3979075975697,
+      "cpuMicroseconds": {
+        "user": 234000,
+        "system": 15000
+      },
+      "rssBeforeBytes": 48177152,
+      "rssAfterBytes": 48308224,
+      "processMaxRssBytes": 48553984,
+      "heapUsedBeforeBytes": 5930248,
+      "heapUsedAfterBytes": 7937176,
+      "timerDelayMs": {
+        "median": 35.15559999999999,
+        "max": 35.2221,
+        "samples": [
+          35.2221,
+          35.15559999999999,
+          35.1174,
+          35.09699999999998,
+          35.16300000000001,
+          35.190499999999986,
+          35.112599999999986
+        ]
+      },
+      "samples": [
+        {
+          "iterations": 10432,
+          "elapsedMs": 35.04920000000001,
+          "opsPerSecond": 297638.74781735375
+        },
+        {
+          "iterations": 10144,
+          "elapsedMs": 35.03999999999999,
+          "opsPerSecond": 289497.71689497726
+        },
+        {
+          "iterations": 10112,
+          "elapsedMs": 35.07339999999999,
+          "opsPerSecond": 288309.6591719081
+        },
+        {
+          "iterations": 10304,
+          "elapsedMs": 35.05000000000001,
+          "opsPerSecond": 293980.0285306704
+        },
+        {
+          "iterations": 10688,
+          "elapsedMs": 35.06890000000001,
+          "opsPerSecond": 304771.46417481004
+        },
+        {
+          "iterations": 10464,
+          "elapsedMs": 35.122299999999996,
+          "opsPerSecond": 297930.37471919553
+        },
+        {
+          "iterations": 10512,
+          "elapsedMs": 35.073500000000024,
+          "opsPerSecond": 299713.4588792106
+        }
+      ],
+      "sink": 285224960
+    },
+    {
+      "dataset": "upstream-api-fixture",
+      "method": "upstream",
+      "status": "OK",
+      "comparableStableOperation": true,
+      "unitsPerOperation": 1,
+      "jsonBytes": 2929,
+      "sha256": "53771b6c7b6dfec175bfd04f0eb65548c71b627048a042a9c893837dd6d34935",
+      "outputBytes": 2929,
+      "repetitions": 7,
+      "sampleMs": 35,
+      "medianOpsPerSecond": 61753.621214185136,
+      "medianLatencyUs": 16.193382352941185,
+      "madPercent": 0.2757549110840071,
+      "minOpsPerSecond": 60329.43044254808,
+      "maxOpsPerSecond": 62415.2894679894,
+      "outputMiBPerSecond": 172.49713567385507,
+      "cpuMicroseconds": {
+        "user": 234000,
+        "system": 15000
+      },
+      "rssBeforeBytes": 48435200,
+      "rssAfterBytes": 52891648,
+      "processMaxRssBytes": 53030912,
+      "heapUsedBeforeBytes": 6241008,
+      "heapUsedAfterBytes": 6672328,
+      "timerDelayMs": {
+        "median": 35.234399999999994,
+        "max": 35.4661,
+        "samples": [
+          35.4661,
+          35.185299999999984,
+          35.164799999999985,
+          35.12540000000001,
+          35.39949999999999,
+          35.321699999999964,
+          35.234399999999994
+        ]
+      },
+      "samples": [
+        {
+          "iterations": 2176,
+          "elapsedMs": 35.31739999999999,
+          "opsPerSecond": 61612.68949582927
+        },
+        {
+          "iterations": 2176,
+          "elapsedMs": 35.13990000000001,
+          "opsPerSecond": 61923.90985745547
+        },
+        {
+          "iterations": 2192,
+          "elapsedMs": 35.11959999999999,
+          "opsPerSecond": 62415.2894679894
+        },
+        {
+          "iterations": 2128,
+          "elapsedMs": 35.0804,
+          "opsPerSecond": 60660.65381238527
+        },
+        {
+          "iterations": 2128,
+          "elapsedMs": 35.273000000000025,
+          "opsPerSecond": 60329.43044254808
+        },
+        {
+          "iterations": 2176,
+          "elapsedMs": 35.23680000000002,
+          "opsPerSecond": 61753.621214185136
+        },
+        {
+          "iterations": 2176,
+          "elapsedMs": 35.19540000000001,
+          "opsPerSecond": 61826.26138643117
+        }
+      ],
+      "sink": 59262112
+    },
+    {
+      "dataset": "upstream-api-fixture",
+      "method": "safe-stable-stringify",
+      "status": "UNAVAILABLE",
+      "reason": "Cannot find module 'safe-stable-stringify'\nRequire stack:\n- D:\\misc\\npm\\stable-json-rs\\benches\\run.cjs"
+    },
+    {
+      "dataset": "upstream-api-fixture",
+      "method": "fast-stable-stringify",
+      "status": "UNAVAILABLE",
+      "reason": "Cannot find module 'fast-stable-stringify'\nRequire stack:\n- D:\\misc\\npm\\stable-json-rs\\benches\\run.cjs"
+    },
+    {
+      "dataset": "application-config",
+      "method": "JSON.stringify-context",
+      "status": "OK",
+      "comparableStableOperation": false,
+      "unitsPerOperation": 1,
+      "jsonBytes": 1370,
+      "sha256": "6faddd2dbc96b1fd682050a9b79f082dcc0a4289103040ceafbb82573f570d84",
+      "outputBytes": 1370,
+      "repetitions": 7,
+      "sampleMs": 35,
+      "medianOpsPerSecond": 632782.8062045588,
+      "medianLatencyUs": 1.5803210678210675,
+      "madPercent": 0.45790000055948055,
+      "minOpsPerSecond": 614708.3589033665,
+      "maxOpsPerSecond": 636531.4969506183,
+      "outputMiBPerSecond": 826.7521328928428,
+      "cpuMicroseconds": {
+        "user": 203000,
+        "system": 31000
+      },
+      "rssBeforeBytes": 48091136,
+      "rssAfterBytes": 48173056,
+      "processMaxRssBytes": 48418816,
+      "heapUsedBeforeBytes": 7677984,
+      "heapUsedAfterBytes": 7960152,
+      "timerDelayMs": {
+        "median": 35.09110000000004,
+        "max": 35.19959999999999,
+        "samples": [
+          35.19959999999999,
+          35.1002,
+          35.077,
+          35.07849999999999,
+          35.112799999999964,
+          35.09110000000004,
+          35.07279999999997
+        ]
+      },
+      "samples": [
+        {
+          "iterations": 22176,
+          "elapsedMs": 35.045199999999994,
+          "opsPerSecond": 632782.8062045588
+        },
+        {
+          "iterations": 22128,
+          "elapsedMs": 35.05239999999998,
+          "opsPerSecond": 631283.4499206906
+        },
+        {
+          "iterations": 22272,
+          "elapsedMs": 35.0291,
+          "opsPerSecond": 635814.2230317079
+        },
+        {
+          "iterations": 21536,
+          "elapsedMs": 35.03450000000001,
+          "opsPerSecond": 614708.3589033665
+        },
+        {
+          "iterations": 22064,
+          "elapsedMs": 35.02860000000001,
+          "opsPerSecond": 629885.2937314078
+        },
+        {
+          "iterations": 22304,
+          "elapsedMs": 35.039900000000046,
+          "opsPerSecond": 636531.4969506183
+        },
+        {
+          "iterations": 22272,
+          "elapsedMs": 35.037800000000004,
+          "opsPerSecond": 635656.3482867074
+        }
+      ],
+      "sink": 284812128
+    },
+    {
+      "dataset": "application-config",
+      "method": "upstream",
+      "status": "OK",
+      "comparableStableOperation": true,
+      "unitsPerOperation": 1,
+      "jsonBytes": 1370,
+      "sha256": "6faddd2dbc96b1fd682050a9b79f082dcc0a4289103040ceafbb82573f570d84",
+      "outputBytes": 1370,
+      "repetitions": 7,
+      "sampleMs": 35,
+      "medianOpsPerSecond": 129098.61099667876,
+      "medianLatencyUs": 7.7460167253521135,
+      "madPercent": 1.0203824609384062,
+      "minOpsPerSecond": 127726.30078403415,
+      "maxOpsPerSecond": 131885.93463888232,
+      "outputMiBPerSecond": 168.67170054001798,
+      "cpuMicroseconds": {
+        "user": 250000,
+        "system": 0
+      },
+      "rssBeforeBytes": 48349184,
+      "rssAfterBytes": 48414720,
+      "processMaxRssBytes": 49225728,
+      "heapUsedBeforeBytes": 6366480,
+      "heapUsedAfterBytes": 6217536,
+      "timerDelayMs": {
+        "median": 35.169100000000014,
+        "max": 35.55129999999997,
+        "samples": [
+          35.21539999999999,
+          35.12270000000001,
+          35.169100000000014,
+          35.144499999999994,
+          35.27679999999998,
+          35.110299999999995,
+          35.55129999999997
+        ]
+      },
+      "samples": [
+        {
+          "iterations": 4480,
+          "elapsedMs": 35.05990000000001,
+          "opsPerSecond": 127781.31141275355
+        },
+        {
+          "iterations": 4480,
+          "elapsedMs": 35.07500000000002,
+          "opsPerSecond": 127726.30078403415
+        },
+        {
+          "iterations": 4576,
+          "elapsedMs": 35.12570000000002,
+          "opsPerSecond": 130274.98384373826
+        },
+        {
+          "iterations": 4624,
+          "elapsedMs": 35.10140000000001,
+          "opsPerSecond": 131732.63744466027
+        },
+        {
+          "iterations": 4544,
+          "elapsedMs": 35.197900000000004,
+          "opsPerSecond": 129098.61099667876
+        },
+        {
+          "iterations": 4624,
+          "elapsedMs": 35.06060000000002,
+          "opsPerSecond": 131885.93463888232
+        },
+        {
+          "iterations": 4576,
+          "elapsedMs": 35.517499999999984,
+          "opsPerSecond": 128837.89681143106
+        }
+      ],
+      "sink": 59569616
+    },
+    {
+      "dataset": "application-config",
+      "method": "safe-stable-stringify",
+      "status": "UNAVAILABLE",
+      "reason": "Cannot find module 'safe-stable-stringify'\nRequire stack:\n- D:\\misc\\npm\\stable-json-rs\\benches\\run.cjs"
+    },
+    {
+      "dataset": "application-config",
+      "method": "fast-stable-stringify",
+      "status": "UNAVAILABLE",
+      "reason": "Cannot find module 'fast-stable-stringify'\nRequire stack:\n- D:\\misc\\npm\\stable-json-rs\\benches\\run.cjs"
+    },
+    {
+      "dataset": "dependency-lock",
+      "method": "JSON.stringify-context",
+      "status": "OK",
+      "comparableStableOperation": false,
+      "unitsPerOperation": 1,
+      "jsonBytes": 93728,
+      "sha256": "5f8afda0d3a8190dd04d7561ef72ec6cd3abe74c45b1ba6a720b8dbfff7ac64e",
+      "outputBytes": 93728,
+      "repetitions": 7,
+      "sampleMs": 35,
+      "medianOpsPerSecond": 8302.789628067803,
+      "medianLatencyUs": 120.441447368421,
+      "madPercent": 1.9497557951509723,
+      "minOpsPerSecond": 7577.232521061023,
+      "maxOpsPerSecond": 9072.352007257883,
+      "outputMiBPerSecond": 742.1530401797667,
+      "cpuMicroseconds": {
+        "user": 219000,
+        "system": 32000
+      },
+      "rssBeforeBytes": 47554560,
+      "rssAfterBytes": 47648768,
+      "processMaxRssBytes": 47882240,
+      "heapUsedBeforeBytes": 8203912,
+      "heapUsedAfterBytes": 8249008,
+      "timerDelayMs": {
+        "median": 36.11750000000001,
+        "max": 38.16630000000001,
+        "samples": [
+          38.16630000000001,
+          35.4212,
+          35.3176,
+          35.763000000000005,
+          36.756,
+          36.11750000000001,
+          36.862300000000005
+        ]
+      },
+      "samples": [
+        {
+          "iterations": 288,
+          "elapsedMs": 38.0086,
+          "opsPerSecond": 7577.232521061023
+        },
+        {
+          "iterations": 288,
+          "elapsedMs": 35.376900000000006,
+          "opsPerSecond": 8140.905506135357
+        },
+        {
+          "iterations": 320,
+          "elapsedMs": 35.27199999999999,
+          "opsPerSecond": 9072.352007257883
+        },
+        {
+          "iterations": 320,
+          "elapsedMs": 35.71770000000001,
+          "opsPerSecond": 8959.143505880835
+        },
+        {
+          "iterations": 304,
+          "elapsedMs": 36.61419999999998,
+          "opsPerSecond": 8302.789628067803
+        },
+        {
+          "iterations": 304,
+          "elapsedMs": 36.06619999999998,
+          "opsPerSecond": 8428.944551962784
+        },
+        {
+          "iterations": 304,
+          "elapsedMs": 36.82679999999999,
+          "opsPerSecond": 8254.857875243031
+        }
+      ],
+      "sink": 255032640
+    },
+    {
+      "dataset": "dependency-lock",
+      "method": "upstream",
+      "status": "OK",
+      "comparableStableOperation": true,
+      "unitsPerOperation": 1,
+      "jsonBytes": 93728,
+      "sha256": "5f8afda0d3a8190dd04d7561ef72ec6cd3abe74c45b1ba6a720b8dbfff7ac64e",
+      "outputBytes": 93728,
+      "repetitions": 7,
+      "sampleMs": 35,
+      "medianOpsPerSecond": 1937.7826437653068,
+      "medianLatencyUs": 516.0537499999996,
+      "madPercent": 0.9229905277076733,
+      "minOpsPerSecond": 1800.5598615819606,
+      "maxOpsPerSecond": 1963.2479974870432,
+      "outputMiBPerSecond": 173.21061290248363,
+      "cpuMicroseconds": {
+        "user": 250000,
+        "system": 32000
+      },
+      "rssBeforeBytes": 61124608,
+      "rssAfterBytes": 78557184,
+      "processMaxRssBytes": 78856192,
+      "heapUsedBeforeBytes": 6864888,
+      "heapUsedAfterBytes": 6916752,
+      "timerDelayMs": {
+        "median": 41.07419999999996,
+        "max": 43.94030000000001,
+        "samples": [
+          43.94030000000001,
+          35.5891,
+          40.983599999999996,
+          40.79170000000002,
+          41.752899999999954,
+          41.07419999999996,
+          41.386799999999994
+        ]
+      },
+      "samples": [
+        {
+          "iterations": 80,
+          "elapsedMs": 43.799499999999995,
+          "opsPerSecond": 1826.504868777041
+        },
+        {
+          "iterations": 64,
+          "elapsedMs": 35.5445,
+          "opsPerSecond": 1800.5598615819606
+        },
+        {
+          "iterations": 80,
+          "elapsedMs": 40.94060000000002,
+          "opsPerSecond": 1954.0505024352346
+        },
+        {
+          "iterations": 80,
+          "elapsedMs": 40.74879999999999,
+          "opsPerSecond": 1963.2479974870432
+        },
+        {
+          "iterations": 80,
+          "elapsedMs": 41.66889999999995,
+          "opsPerSecond": 1919.8970935157897
+        },
+        {
+          "iterations": 80,
+          "elapsedMs": 41.02389999999997,
+          "opsPerSecond": 1950.0827566369862
+        },
+        {
+          "iterations": 80,
+          "elapsedMs": 41.28429999999997,
+          "opsPerSecond": 1937.7826437653068
+        }
+      ],
+      "sink": 64517888
+    },
+    {
+      "dataset": "dependency-lock",
+      "method": "safe-stable-stringify",
+      "status": "UNAVAILABLE",
+      "reason": "Cannot find module 'safe-stable-stringify'\nRequire stack:\n- D:\\misc\\npm\\stable-json-rs\\benches\\run.cjs"
+    },
+    {
+      "dataset": "dependency-lock",
+      "method": "fast-stable-stringify",
+      "status": "UNAVAILABLE",
+      "reason": "Cannot find module 'fast-stable-stringify'\nRequire stack:\n- D:\\misc\\npm\\stable-json-rs\\benches\\run.cjs"
+    },
+    {
+      "dataset": "deep",
+      "method": "JSON.stringify-context",
+      "status": "OK",
+      "comparableStableOperation": false,
+      "unitsPerOperation": 1,
+      "jsonBytes": 1043,
+      "sha256": "550e9cf869cd26fdd3d576825e49b98146532efd358968bf15f1f0a5fc3d1559",
+      "outputBytes": 1043,
+      "repetitions": 7,
+      "sampleMs": 35,
+      "medianOpsPerSecond": 195057.48043158752,
+      "medianLatencyUs": 5.126693925233643,
+      "madPercent": 0.20209166955036809,
+      "minOpsPerSecond": 189642.0563170806,
+      "maxOpsPerSecond": 201241.21566122133,
+      "outputMiBPerSecond": 194.02022561087207,
+      "cpuMicroseconds": {
+        "user": 203000,
+        "system": 0
+      },
+      "rssBeforeBytes": 48111616,
+      "rssAfterBytes": 48189440,
+      "processMaxRssBytes": 48484352,
+      "heapUsedBeforeBytes": 7628072,
+      "heapUsedAfterBytes": 7203176,
+      "timerDelayMs": {
+        "median": 35.156199999999984,
+        "max": 35.22840000000001,
+        "samples": [
+          35.22840000000001,
+          35.163100000000014,
+          35.11580000000001,
+          35.156199999999984,
+          35.20230000000001,
+          35.15390000000002,
+          35.10079999999999
+        ]
+      },
+      "samples": [
+        {
+          "iterations": 6848,
+          "elapsedMs": 35.066900000000004,
+          "opsPerSecond": 195283.87168526446
+        },
+        {
+          "iterations": 6848,
+          "elapsedMs": 35.10759999999999,
+          "opsPerSecond": 195057.48043158752
+        },
+        {
+          "iterations": 6832,
+          "elapsedMs": 35.05799999999999,
+          "opsPerSecond": 194877.0608705574
+        },
+        {
+          "iterations": 6832,
+          "elapsedMs": 35.09649999999999,
+          "opsPerSecond": 194663.28551280044
+        },
+        {
+          "iterations": 6656,
+          "elapsedMs": 35.0977,
+          "opsPerSecond": 189642.0563170806
+        },
+        {
+          "iterations": 6944,
+          "elapsedMs": 35.10300000000001,
+          "opsPerSecond": 197817.8503261829
+        },
+        {
+          "iterations": 7056,
+          "elapsedMs": 35.06239999999997,
+          "opsPerSecond": 201241.21566122133
+        }
+      ],
+      "sink": 67285376
+    },
+    {
+      "dataset": "deep",
+      "method": "upstream",
+      "status": "OK",
+      "comparableStableOperation": true,
+      "unitsPerOperation": 1,
+      "jsonBytes": 1043,
+      "sha256": "550e9cf869cd26fdd3d576825e49b98146532efd358968bf15f1f0a5fc3d1559",
+      "outputBytes": 1043,
+      "repetitions": 7,
+      "sampleMs": 35,
+      "medianOpsPerSecond": 42896.2987681575,
+      "medianLatencyUs": 23.312034574468075,
+      "madPercent": 0.6255314324584762,
+      "minOpsPerSecond": 42150.10877447425,
+      "maxOpsPerSecond": 44255.65543811117,
+      "outputMiBPerSecond": 42.66818963545635,
+      "cpuMicroseconds": {
+        "user": 234000,
+        "system": 16000
+      },
+      "rssBeforeBytes": 48496640,
+      "rssAfterBytes": 53030912,
+      "processMaxRssBytes": 53145600,
+      "heapUsedBeforeBytes": 6173992,
+      "heapUsedAfterBytes": 7048440,
+      "timerDelayMs": {
+        "median": 35.33070000000001,
+        "max": 35.47879999999998,
+        "samples": [
+          35.369900000000015,
+          35.10410000000002,
+          35.345500000000015,
+          35.32830000000001,
+          35.33070000000001,
+          35.47879999999998,
+          35.29669999999999
+        ]
+      },
+      "samples": [
+        {
+          "iterations": 1520,
+          "elapsedMs": 35.172399999999996,
+          "opsPerSecond": 43215.70322184441
+        },
+        {
+          "iterations": 1504,
+          "elapsedMs": 35.06129999999999,
+          "opsPerSecond": 42896.2987681575
+        },
+        {
+          "iterations": 1488,
+          "elapsedMs": 35.302400000000006,
+          "opsPerSecond": 42150.10877447425
+        },
+        {
+          "iterations": 1504,
+          "elapsedMs": 35.28199999999998,
+          "opsPerSecond": 42627.96893600138
+        },
+        {
+          "iterations": 1504,
+          "elapsedMs": 35.253299999999996,
+          "opsPerSecond": 42662.672714327455
+        },
+        {
+          "iterations": 1568,
+          "elapsedMs": 35.43050000000005,
+          "opsPerSecond": 44255.65543811117
+        },
+        {
+          "iterations": 1520,
+          "elapsedMs": 35.262,
+          "opsPerSecond": 43105.89302932335
+        }
+      ],
+      "sink": 14734320
+    },
+    {
+      "dataset": "deep",
+      "method": "safe-stable-stringify",
+      "status": "UNAVAILABLE",
+      "reason": "Cannot find module 'safe-stable-stringify'\nRequire stack:\n- D:\\misc\\npm\\stable-json-rs\\benches\\run.cjs"
+    },
+    {
+      "dataset": "deep",
+      "method": "fast-stable-stringify",
+      "status": "UNAVAILABLE",
+      "reason": "Cannot find module 'fast-stable-stringify'\nRequire stack:\n- D:\\misc\\npm\\stable-json-rs\\benches\\run.cjs"
+    },
+    {
+      "dataset": "wide",
+      "method": "JSON.stringify-context",
+      "status": "OK",
+      "comparableStableOperation": false,
+      "unitsPerOperation": 1,
+      "jsonBytes": 21784,
+      "sha256": "a85e7f6ca036307b47f0c105c26552afeddfbc52befe36500add5d02ace8a686",
+      "outputBytes": 21784,
+      "repetitions": 7,
+      "sampleMs": 35,
+      "medianOpsPerSecond": 7795.3081988778,
+      "medianLatencyUs": 128.28229166666668,
+      "madPercent": 2.2786541240567764,
+      "minOpsPerSecond": 7514.47641780489,
+      "maxOpsPerSecond": 8001.28909657667,
+      "outputMiBPerSecond": 161.94629078326608,
+      "cpuMicroseconds": {
+        "user": 250000,
+        "system": 0
+      },
+      "rssBeforeBytes": 47677440,
+      "rssAfterBytes": 47747072,
+      "processMaxRssBytes": 47833088,
+      "heapUsedBeforeBytes": 7948104,
+      "heapUsedAfterBytes": 7344480,
+      "timerDelayMs": {
+        "median": 36.16390000000001,
+        "max": 36.9965,
+        "samples": [
+          36.13920000000002,
+          35.22630000000001,
+          36.9965,
+          36.24029999999999,
+          36.90189999999998,
+          35.99079999999998,
+          36.16390000000001
+        ]
+      },
+      "samples": [
+        {
+          "iterations": 288,
+          "elapsedMs": 35.994200000000006,
+          "opsPerSecond": 8001.28909657667
+        },
+        {
+          "iterations": 272,
+          "elapsedMs": 35.165099999999995,
+          "opsPerSecond": 7734.941746219974
+        },
+        {
+          "iterations": 288,
+          "elapsedMs": 36.9453,
+          "opsPerSecond": 7795.3081988778
+        },
+        {
+          "iterations": 272,
+          "elapsedMs": 36.196799999999996,
+          "opsPerSecond": 7514.47641780489
+        },
+        {
+          "iterations": 288,
+          "elapsedMs": 36.813500000000005,
+          "opsPerSecond": 7823.21702636261
+        },
+        {
+          "iterations": 272,
+          "elapsedMs": 35.93509999999998,
+          "opsPerSecond": 7569.201143172001
+        },
+        {
+          "iterations": 288,
+          "elapsedMs": 36.122199999999964,
+          "opsPerSecond": 7972.936310634465
+        }
+      ],
+      "sink": 55155904
+    },
+    {
+      "dataset": "wide",
+      "method": "upstream",
+      "status": "OK",
+      "comparableStableOperation": true,
+      "unitsPerOperation": 1,
+      "jsonBytes": 21784,
+      "sha256": "a85e7f6ca036307b47f0c105c26552afeddfbc52befe36500add5d02ace8a686",
+      "outputBytes": 21784,
+      "repetitions": 7,
+      "sampleMs": 35,
+      "medianOpsPerSecond": 4075.429405921257,
+      "medianLatencyUs": 245.3729166666668,
+      "madPercent": 0.9289172629504051,
+      "minOpsPerSecond": 3863.9565304890334,
+      "maxOpsPerSecond": 4113.286773212217,
+      "outputMiBPerSecond": 84.66639917239061,
+      "cpuMicroseconds": {
+        "user": 203000,
+        "system": 47000
+      },
+      "rssBeforeBytes": 52441088,
+      "rssAfterBytes": 61149184,
+      "processMaxRssBytes": 61284352,
+      "heapUsedBeforeBytes": 9309096,
+      "heapUsedAfterBytes": 7905808,
+      "timerDelayMs": {
+        "median": 35.3913,
+        "max": 37.3304,
+        "samples": [
+          36.98379999999999,
+          36.46370000000002,
+          37.3304,
+          35.29820000000001,
+          35.18719999999999,
+          35.3913,
+          35.04880000000003
+        ]
+      },
+      "samples": [
+        {
+          "iterations": 144,
+          "elapsedMs": 36.84169999999999,
+          "opsPerSecond": 3908.6144233300865
+        },
+        {
+          "iterations": 144,
+          "elapsedMs": 36.40779999999998,
+          "opsPerSecond": 3955.196413955254
+        },
+        {
+          "iterations": 144,
+          "elapsedMs": 37.267499999999984,
+          "opsPerSecond": 3863.9565304890334
+        },
+        {
+          "iterations": 144,
+          "elapsedMs": 35.2483,
+          "opsPerSecond": 4085.3034047032056
+        },
+        {
+          "iterations": 144,
+          "elapsedMs": 35.0933,
+          "opsPerSecond": 4103.347362601978
+        },
+        {
+          "iterations": 144,
+          "elapsedMs": 35.33370000000002,
+          "opsPerSecond": 4075.429405921257
+        },
+        {
+          "iterations": 144,
+          "elapsedMs": 35.008500000000026,
+          "opsPerSecond": 4113.286773212217
+        }
+      ],
+      "sink": 28038400
+    },
+    {
+      "dataset": "wide",
+      "method": "safe-stable-stringify",
+      "status": "UNAVAILABLE",
+      "reason": "Cannot find module 'safe-stable-stringify'\nRequire stack:\n- D:\\misc\\npm\\stable-json-rs\\benches\\run.cjs"
+    },
+    {
+      "dataset": "wide",
+      "method": "fast-stable-stringify",
+      "status": "UNAVAILABLE",
+      "reason": "Cannot find module 'fast-stable-stringify'\nRequire stack:\n- D:\\misc\\npm\\stable-json-rs\\benches\\run.cjs"
+    },
+    {
+      "dataset": "unicode",
+      "method": "JSON.stringify-context",
+      "status": "OK",
+      "comparableStableOperation": false,
+      "unitsPerOperation": 1,
+      "jsonBytes": 39491,
+      "sha256": "8eeb93e76b5e3e1c047fa1b1d9580572697b110d05109e9bd26bc5750328c619",
+      "outputBytes": 39491,
+      "repetitions": 7,
+      "sampleMs": 35,
+      "medianOpsPerSecond": 40949.57514815782,
+      "medianLatencyUs": 24.420277777777788,
+      "madPercent": 0.44250668856079167,
+      "minOpsPerSecond": 39819.90542772462,
+      "maxOpsPerSecond": 43373.77975946756,
+      "outputMiBPerSecond": 1542.224571395779,
+      "cpuMicroseconds": {
+        "user": 234000,
+        "system": 16000
+      },
+      "rssBeforeBytes": 52617216,
+      "rssAfterBytes": 52752384,
+      "processMaxRssBytes": 52854784,
+      "heapUsedBeforeBytes": 10041432,
+      "heapUsedAfterBytes": 6752064,
+      "timerDelayMs": {
+        "median": 35.3562,
+        "max": 35.459,
+        "samples": [
+          35.322800000000015,
+          35.291799999999995,
+          35.459,
+          35.40389999999999,
+          35.186800000000005,
+          35.45749999999998,
+          35.3562
+        ]
+      },
+      "samples": [
+        {
+          "iterations": 1440,
+          "elapsedMs": 35.16520000000001,
+          "opsPerSecond": 40949.57514815782
+        },
+        {
+          "iterations": 1488,
+          "elapsedMs": 35.24379999999999,
+          "opsPerSecond": 42220.191920281024
+        },
+        {
+          "iterations": 1536,
+          "elapsedMs": 35.413099999999986,
+          "opsPerSecond": 43373.77975946756
+        },
+        {
+          "iterations": 1408,
+          "elapsedMs": 35.35919999999999,
+          "opsPerSecond": 39819.90542772462
+        },
+        {
+          "iterations": 1440,
+          "elapsedMs": 35.099699999999984,
+          "opsPerSecond": 41025.99167514254
+        },
+        {
+          "iterations": 1440,
+          "elapsedMs": 35.298100000000034,
+          "opsPerSecond": 40795.39691938089
+        },
+        {
+          "iterations": 1440,
+          "elapsedMs": 35.321500000000015,
+          "opsPerSecond": 40768.37053918999
+        }
+      ],
+      "sink": 269882816
+    },
+    {
+      "dataset": "unicode",
+      "method": "upstream",
+      "status": "OK",
+      "comparableStableOperation": true,
+      "unitsPerOperation": 1,
+      "jsonBytes": 39491,
+      "sha256": "8eeb93e76b5e3e1c047fa1b1d9580572697b110d05109e9bd26bc5750328c619",
+      "outputBytes": 39491,
+      "repetitions": 7,
+      "sampleMs": 35,
+      "medianOpsPerSecond": 18627.790619090087,
+      "medianLatencyUs": 53.68323170731705,
+      "madPercent": 0.7006967491618696,
+      "minOpsPerSecond": 18002.96486327592,
+      "maxOpsPerSecond": 19250.840125690083,
+      "outputMiBPerSecond": 701.5515130410067,
+      "cpuMicroseconds": {
+        "user": 235000,
+        "system": 15000
+      },
+      "rssBeforeBytes": 52535296,
+      "rssAfterBytes": 61280256,
+      "processMaxRssBytes": 61468672,
+      "heapUsedBeforeBytes": 10107544,
+      "heapUsedAfterBytes": 14092072,
+      "timerDelayMs": {
+        "median": 35.65609999999998,
+        "max": 35.93729999999999,
+        "samples": [
+          35.41969999999999,
+          35.7842,
+          35.93729999999999,
+          35.684200000000004,
+          35.65609999999998,
+          35.52019999999999,
+          35.36340000000001
+        ]
+      },
+      "samples": [
+        {
+          "iterations": 656,
+          "elapsedMs": 35.216199999999986,
+          "opsPerSecond": 18627.790619090087
+        },
+        {
+          "iterations": 688,
+          "elapsedMs": 35.738699999999994,
+          "opsPerSecond": 19250.840125690083
+        },
+        {
+          "iterations": 672,
+          "elapsedMs": 35.892799999999994,
+          "opsPerSecond": 18722.41786653591
+        },
+        {
+          "iterations": 672,
+          "elapsedMs": 35.6421,
+          "opsPerSecond": 18854.107922933836
+        },
+        {
+          "iterations": 640,
+          "elapsedMs": 35.5497,
+          "opsPerSecond": 18002.96486327592
+        },
+        {
+          "iterations": 656,
+          "elapsedMs": 35.46469999999999,
+          "opsPerSecond": 18497.266295781443
+        },
+        {
+          "iterations": 656,
+          "elapsedMs": 35.32389999999998,
+          "opsPerSecond": 18570.99584134256
+        }
+      ],
+      "sink": 108484000
+    },
+    {
+      "dataset": "unicode",
+      "method": "safe-stable-stringify",
+      "status": "UNAVAILABLE",
+      "reason": "Cannot find module 'safe-stable-stringify'\nRequire stack:\n- D:\\misc\\npm\\stable-json-rs\\benches\\run.cjs"
+    },
+    {
+      "dataset": "unicode",
+      "method": "fast-stable-stringify",
+      "status": "UNAVAILABLE",
+      "reason": "Cannot find module 'fast-stable-stringify'\nRequire stack:\n- D:\\misc\\npm\\stable-json-rs\\benches\\run.cjs"
+    },
+    {
+      "dataset": "large-string",
+      "method": "JSON.stringify-context",
+      "status": "OK",
+      "comparableStableOperation": false,
+      "unitsPerOperation": 1,
+      "jsonBytes": 163015,
+      "sha256": "5df5fb9ff44461550175b0850705350cc0861afbea0d618ed2102f23b2c35804",
+      "outputBytes": 163015,
+      "repetitions": 7,
+      "sampleMs": 35,
+      "medianOpsPerSecond": 9316.605791117461,
+      "medianLatencyUs": 107.3352272727273,
+      "madPercent": 5.7225009613151165,
+      "minOpsPerSecond": 8721.603684877557,
+      "maxOpsPerSecond": 10343.354394801343,
+      "outputMiBPerSecond": 1448.3895235433702,
+      "cpuMicroseconds": {
+        "user": 63000,
+        "system": 188000
+      },
+      "rssBeforeBytes": 51806208,
+      "rssAfterBytes": 61272064,
+      "processMaxRssBytes": 91172864,
+      "heapUsedBeforeBytes": 11420712,
+      "heapUsedAfterBytes": 17942400,
+      "timerDelayMs": {
+        "median": 36.26420000000002,
+        "max": 37.83539999999999,
+        "samples": [
+          36.8856,
+          36.4949,
+          37.83539999999999,
+          35.641699999999986,
+          35.81389999999999,
+          36.26420000000002,
+          35.411
+        ]
+      },
+      "samples": [
+        {
+          "iterations": 320,
+          "elapsedMs": 36.6905,
+          "opsPerSecond": 8721.603684877557
+        },
+        {
+          "iterations": 320,
+          "elapsedMs": 36.43210000000002,
+          "opsPerSecond": 8783.462935158825
+        },
+        {
+          "iterations": 352,
+          "elapsedMs": 37.78200000000001,
+          "opsPerSecond": 9316.605791117461
+        },
+        {
+          "iterations": 368,
+          "elapsedMs": 35.57839999999999,
+          "opsPerSecond": 10343.354394801343
+        },
+        {
+          "iterations": 336,
+          "elapsedMs": 35.70200000000003,
+          "opsPerSecond": 9411.23746568819
+        },
+        {
+          "iterations": 368,
+          "elapsedMs": 36.20100000000002,
+          "opsPerSecond": 10165.465042402138
+        },
+        {
+          "iterations": 320,
+          "elapsedMs": 35.33589999999998,
+          "opsPerSecond": 9055.945936002767
+        }
+      ],
+      "sink": 472438960
+    },
+    {
+      "dataset": "large-string",
+      "method": "upstream",
+      "status": "OK",
+      "comparableStableOperation": true,
+      "unitsPerOperation": 1,
+      "jsonBytes": 163015,
+      "sha256": "5df5fb9ff44461550175b0850705350cc0861afbea0d618ed2102f23b2c35804",
+      "outputBytes": 163015,
+      "repetitions": 7,
+      "sampleMs": 35,
+      "medianOpsPerSecond": 5529.5765886234285,
+      "medianLatencyUs": 180.84567307692305,
+      "madPercent": 2.6847609723874513,
+      "minOpsPerSecond": 5329.957693460805,
+      "maxOpsPerSecond": 5909.853625589669,
+      "outputMiBPerSecond": 859.6457744545443,
+      "cpuMicroseconds": {
+        "user": 63000,
+        "system": 203000
+      },
+      "rssBeforeBytes": 53354496,
+      "rssAfterBytes": 70705152,
+      "processMaxRssBytes": 90001408,
+      "heapUsedBeforeBytes": 12267320,
+      "heapUsedAfterBytes": 26664024,
+      "timerDelayMs": {
+        "median": 36.96030000000002,
+        "max": 39.07130000000001,
+        "samples": [
+          37.754000000000005,
+          35.73349999999999,
+          35.4982,
+          39.07130000000001,
+          37.99180000000001,
+          36.3913,
+          36.96030000000002
+        ]
+      },
+      "samples": [
+        {
+          "iterations": 208,
+          "elapsedMs": 37.615899999999996,
+          "opsPerSecond": 5529.5765886234285
+        },
+        {
+          "iterations": 192,
+          "elapsedMs": 35.68029999999999,
+          "opsPerSecond": 5381.120674433793
+        },
+        {
+          "iterations": 192,
+          "elapsedMs": 35.44930000000002,
+          "opsPerSecond": 5416.185933149593
+        },
+        {
+          "iterations": 208,
+          "elapsedMs": 39.024700000000024,
+          "opsPerSecond": 5329.957693460805
+        },
+        {
+          "iterations": 224,
+          "elapsedMs": 37.902799999999985,
+          "opsPerSecond": 5909.853625589669
+        },
+        {
+          "iterations": 208,
+          "elapsedMs": 36.33160000000004,
+          "opsPerSecond": 5725.043763555686
+        },
+        {
+          "iterations": 208,
+          "elapsedMs": 36.9239,
+          "opsPerSecond": 5633.207759743689
+        }
+      ],
+      "sink": 287117600
+    },
+    {
+      "dataset": "large-string",
+      "method": "safe-stable-stringify",
+      "status": "UNAVAILABLE",
+      "reason": "Cannot find module 'safe-stable-stringify'\nRequire stack:\n- D:\\misc\\npm\\stable-json-rs\\benches\\run.cjs"
+    },
+    {
+      "dataset": "large-string",
+      "method": "fast-stable-stringify",
+      "status": "UNAVAILABLE",
+      "reason": "Cannot find module 'fast-stable-stringify'\nRequire stack:\n- D:\\misc\\npm\\stable-json-rs\\benches\\run.cjs"
+    },
+    {
+      "dataset": "record-array",
+      "method": "JSON.stringify-context",
+      "status": "OK",
+      "comparableStableOperation": false,
+      "unitsPerOperation": 1,
+      "jsonBytes": 59663,
+      "sha256": "7bc37474a38f304b426fdeb3f7eb71ab2b6186970dcdcf439f2e5f16eb53ad48",
+      "outputBytes": 59663,
+      "repetitions": 7,
+      "sampleMs": 35,
+      "medianOpsPerSecond": 7486.492660760042,
+      "medianLatencyUs": 133.57389705882358,
+      "madPercent": 1.2618082203693701,
+      "minOpsPerSecond": 7289.854288342213,
+      "maxOpsPerSecond": 7759.877439582794,
+      "outputMiBPerSecond": 425.9744754971756,
+      "cpuMicroseconds": {
+        "user": 234000,
+        "system": 31000
+      },
+      "rssBeforeBytes": 47730688,
+      "rssAfterBytes": 51744768,
+      "processMaxRssBytes": 51834880,
+      "heapUsedBeforeBytes": 7134400,
+      "heapUsedAfterBytes": 8835352,
+      "timerDelayMs": {
+        "median": 36.26140000000001,
+        "max": 37.0051,
+        "samples": [
+          36.51249999999999,
+          36.26140000000001,
+          36.8434,
+          37.0051,
+          35.20900000000003,
+          36.02520000000004,
+          35.094299999999976
+        ]
+      },
+      "samples": [
+        {
+          "iterations": 272,
+          "elapsedMs": 36.33210000000001,
+          "opsPerSecond": 7486.492660760042
+        },
+        {
+          "iterations": 272,
+          "elapsedMs": 36.21449999999999,
+          "opsPerSecond": 7510.803683607397
+        },
+        {
+          "iterations": 272,
+          "elapsedMs": 36.796400000000006,
+          "opsPerSecond": 7392.027480949222
+        },
+        {
+          "iterations": 272,
+          "elapsedMs": 36.9589,
+          "opsPerSecond": 7359.526392830955
+        },
+        {
+          "iterations": 256,
+          "elapsedMs": 35.1173,
+          "opsPerSecond": 7289.854288342213
+        },
+        {
+          "iterations": 272,
+          "elapsedMs": 35.97120000000001,
+          "opsPerSecond": 7561.604839427095
+        },
+        {
+          "iterations": 272,
+          "elapsedMs": 35.052099999999996,
+          "opsPerSecond": 7759.877439582794
+        }
+      ],
+      "sink": 143272800
+    },
+    {
+      "dataset": "record-array",
+      "method": "upstream",
+      "status": "OK",
+      "comparableStableOperation": true,
+      "unitsPerOperation": 1,
+      "jsonBytes": 59663,
+      "sha256": "7bc37474a38f304b426fdeb3f7eb71ab2b6186970dcdcf439f2e5f16eb53ad48",
+      "outputBytes": 59663,
+      "repetitions": 7,
+      "sampleMs": 35,
+      "medianOpsPerSecond": 1394.7578896441405,
+      "medianLatencyUs": 716.9703125000001,
+      "madPercent": 0.48363555133371755,
+      "minOpsPerSecond": 1074.424008004459,
+      "maxOpsPerSecond": 1469.4942184586841,
+      "outputMiBPerSecond": 79.36042782768092,
+      "cpuMicroseconds": {
+        "user": 297000,
+        "system": 78000
+      },
+      "rssBeforeBytes": 62980096,
+      "rssAfterBytes": 98410496,
+      "processMaxRssBytes": 98574336,
+      "heapUsedBeforeBytes": 13549184,
+      "heapUsedAfterBytes": 24770264,
+      "timerDelayMs": {
+        "median": 45.851699999999994,
+        "max": 46.1558,
+        "samples": [
+          44.86549999999998,
+          43.594899999999996,
+          45.94569999999999,
+          46.1558,
+          45.851699999999994,
+          46.064899999999966,
+          44.715599999999995
+        ]
+      },
+      "samples": [
+        {
+          "iterations": 48,
+          "elapsedMs": 44.6751,
+          "opsPerSecond": 1074.424008004459
+        },
+        {
+          "iterations": 64,
+          "elapsedMs": 43.552400000000006,
+          "opsPerSecond": 1469.4942184586841
+        },
+        {
+          "iterations": 64,
+          "elapsedMs": 45.8861,
+          "opsPerSecond": 1394.7578896441405
+        },
+        {
+          "iterations": 64,
+          "elapsedMs": 46.10910000000001,
+          "opsPerSecond": 1388.0123446347895
+        },
+        {
+          "iterations": 64,
+          "elapsedMs": 45.75369999999998,
+          "opsPerSecond": 1398.793977317682
+        },
+        {
+          "iterations": 64,
+          "elapsedMs": 46.0145,
+          "opsPerSecond": 1390.86592269828
+        },
+        {
+          "iterations": 64,
+          "elapsedMs": 44.67869999999999,
+          "opsPerSecond": 1432.4499146125563
+        }
+      ],
+      "sink": 31525296
+    },
+    {
+      "dataset": "record-array",
+      "method": "safe-stable-stringify",
+      "status": "UNAVAILABLE",
+      "reason": "Cannot find module 'safe-stable-stringify'\nRequire stack:\n- D:\\misc\\npm\\stable-json-rs\\benches\\run.cjs"
+    },
+    {
+      "dataset": "record-array",
+      "method": "fast-stable-stringify",
+      "status": "UNAVAILABLE",
+      "reason": "Cannot find module 'fast-stable-stringify'\nRequire stack:\n- D:\\misc\\npm\\stable-json-rs\\benches\\run.cjs"
+    },
+    {
+      "dataset": "backend-payload",
+      "method": "JSON.stringify-context",
+      "status": "OK",
+      "comparableStableOperation": false,
+      "unitsPerOperation": 1,
+      "jsonBytes": 59774,
+      "sha256": "b635a7b3baa065e15e8e907ee4c17c426fea8f5eb0136e1498ba7d1ee095812d",
+      "outputBytes": 59774,
+      "repetitions": 7,
+      "sampleMs": 35,
+      "medianOpsPerSecond": 7468.834093030918,
+      "medianLatencyUs": 133.88970588235296,
+      "madPercent": 1.0127586937968098,
+      "minOpsPerSecond": 7273.739810371325,
+      "maxOpsPerSecond": 7707.718770278804,
+      "outputMiBPerSecond": 425.7603541153241,
+      "cpuMicroseconds": {
+        "user": 235000,
+        "system": 0
+      },
+      "rssBeforeBytes": 47702016,
+      "rssAfterBytes": 51695616,
+      "processMaxRssBytes": 51785728,
+      "heapUsedBeforeBytes": 8183552,
+      "heapUsedAfterBytes": 6393920,
+      "timerDelayMs": {
+        "median": 36.44900000000001,
+        "max": 36.841199999999986,
+        "samples": [
+          36.8261,
+          36.841199999999986,
+          36.44900000000001,
+          35.33609999999999,
+          35.78969999999998,
+          36.47840000000002,
+          35.23449999999997
+        ]
+      },
+      "samples": [
+        {
+          "iterations": 272,
+          "elapsedMs": 36.6755,
+          "opsPerSecond": 7416.395141170537
+        },
+        {
+          "iterations": 272,
+          "elapsedMs": 36.79060000000001,
+          "opsPerSecond": 7393.192826428487
+        },
+        {
+          "iterations": 272,
+          "elapsedMs": 36.4059,
+          "opsPerSecond": 7471.316462441527
+        },
+        {
+          "iterations": 272,
+          "elapsedMs": 35.289300000000026,
+          "opsPerSecond": 7707.718770278804
+        },
+        {
+          "iterations": 272,
+          "elapsedMs": 35.697700000000026,
+          "opsPerSecond": 7619.53851368575
+        },
+        {
+          "iterations": 272,
+          "elapsedMs": 36.418000000000006,
+          "opsPerSecond": 7468.834093030918
+        },
+        {
+          "iterations": 256,
+          "elapsedMs": 35.195100000000025,
+          "opsPerSecond": 7273.739810371325
+        }
+      ],
+      "sink": 144648336
+    },
+    {
+      "dataset": "backend-payload",
+      "method": "upstream",
+      "status": "OK",
+      "comparableStableOperation": true,
+      "unitsPerOperation": 1,
+      "jsonBytes": 59774,
+      "sha256": "b635a7b3baa065e15e8e907ee4c17c426fea8f5eb0136e1498ba7d1ee095812d",
+      "outputBytes": 59774,
+      "repetitions": 7,
+      "sampleMs": 35,
+      "medianOpsPerSecond": 1445.9126985023508,
+      "medianLatencyUs": 691.6046875,
+      "madPercent": 1.0457805801217246,
+      "minOpsPerSecond": 1049.040455808078,
+      "maxOpsPerSecond": 1461.0337727088024,
+      "outputMiBPerSecond": 82.42415012386276,
+      "cpuMicroseconds": {
+        "user": 282000,
+        "system": 16000
+      },
+      "rssBeforeBytes": 63107072,
+      "rssAfterBytes": 115998720,
+      "processMaxRssBytes": 116146176,
+      "heapUsedBeforeBytes": 9360264,
+      "heapUsedAfterBytes": 16505712,
+      "timerDelayMs": {
+        "median": 43.953100000000006,
+        "max": 45.9436,
+        "samples": [
+          45.9436,
+          44.315,
+          41.60249999999999,
+          35.09,
+          43.953100000000006,
+          44.10449999999997,
+          43.8458
+        ]
+      },
+      "samples": [
+        {
+          "iterations": 48,
+          "elapsedMs": 45.7561,
+          "opsPerSecond": 1049.040455808078
+        },
+        {
+          "iterations": 64,
+          "elapsedMs": 44.262699999999995,
+          "opsPerSecond": 1445.9126985023508
+        },
+        {
+          "iterations": 48,
+          "elapsedMs": 41.546599999999984,
+          "opsPerSecond": 1155.3291966129605
+        },
+        {
+          "iterations": 48,
+          "elapsedMs": 35.04230000000001,
+          "opsPerSecond": 1369.7731027929099
+        },
+        {
+          "iterations": 64,
+          "elapsedMs": 43.85579999999999,
+          "opsPerSecond": 1459.328070631479
+        },
+        {
+          "iterations": 64,
+          "elapsedMs": 44.03630000000004,
+          "opsPerSecond": 1453.3464437293767
+        },
+        {
+          "iterations": 64,
+          "elapsedMs": 43.80459999999999,
+          "opsPerSecond": 1461.0337727088024
+        }
+      ],
+      "sink": 29705440
+    },
+    {
+      "dataset": "backend-payload",
+      "method": "safe-stable-stringify",
+      "status": "UNAVAILABLE",
+      "reason": "Cannot find module 'safe-stable-stringify'\nRequire stack:\n- D:\\misc\\npm\\stable-json-rs\\benches\\run.cjs"
+    },
+    {
+      "dataset": "backend-payload",
+      "method": "fast-stable-stringify",
+      "status": "UNAVAILABLE",
+      "reason": "Cannot find module 'fast-stable-stringify'\nRequire stack:\n- D:\\misc\\npm\\stable-json-rs\\benches\\run.cjs"
+    },
+    {
+      "dataset": "batch-32",
+      "method": "JSON.stringify-context",
+      "status": "OK",
+      "comparableStableOperation": false,
+      "unitsPerOperation": 1,
+      "jsonBytes": 1485,
+      "sha256": "423e7670cd181ac284ead8ceac19286db5a234fbf5e13fccc644fd16b441005e",
+      "outputBytes": 1485,
+      "repetitions": 7,
+      "sampleMs": 35,
+      "medianOpsPerSecond": 365494.7411649287,
+      "medianLatencyUs": 2.7360174781523114,
+      "madPercent": 0.754523093932999,
+      "minOpsPerSecond": 347557.0246424097,
+      "maxOpsPerSecond": 374086.8358773937,
+      "outputMiBPerSecond": 517.6159769343559,
+      "cpuMicroseconds": {
+        "user": 218000,
+        "system": 31000
+      },
+      "rssBeforeBytes": 47902720,
+      "rssAfterBytes": 47968256,
+      "processMaxRssBytes": 48218112,
+      "heapUsedBeforeBytes": 7661152,
+      "heapUsedAfterBytes": 7055656,
+      "timerDelayMs": {
+        "median": 35.13039999999998,
+        "max": 35.21430000000001,
+        "samples": [
+          35.21430000000001,
+          35.132000000000005,
+          35.13039999999998,
+          35.08329999999998,
+          35.15790000000001,
+          35.10039999999998,
+          35.06649999999996
+        ]
+      },
+      "samples": [
+        {
+          "iterations": 12720,
+          "elapsedMs": 35.06450000000001,
+          "opsPerSecond": 362760.05646736716
+        },
+        {
+          "iterations": 12912,
+          "elapsedMs": 35.06290000000001,
+          "opsPerSecond": 368252.48339412874
+        },
+        {
+          "iterations": 12816,
+          "elapsedMs": 35.06480000000002,
+          "opsPerSecond": 365494.7411649287
+        },
+        {
+          "iterations": 12800,
+          "elapsedMs": 35.031199999999984,
+          "opsPerSecond": 365388.56790518184
+        },
+        {
+          "iterations": 12176,
+          "elapsedMs": 35.03309999999999,
+          "opsPerSecond": 347557.0246424097
+        },
+        {
+          "iterations": 13008,
+          "elapsedMs": 35.05189999999999,
+          "opsPerSecond": 371106.84442212846
+        },
+        {
+          "iterations": 13104,
+          "elapsedMs": 35.029300000000035,
+          "opsPerSecond": 374086.8358773937
+        }
+      ],
+      "sink": 180955488
+    },
+    {
+      "dataset": "batch-32",
+      "method": "upstream",
+      "status": "OK",
+      "comparableStableOperation": true,
+      "unitsPerOperation": 1,
+      "jsonBytes": 1485,
+      "sha256": "423e7670cd181ac284ead8ceac19286db5a234fbf5e13fccc644fd16b441005e",
+      "outputBytes": 1485,
+      "repetitions": 7,
+      "sampleMs": 35,
+      "medianOpsPerSecond": 44201.79028642876,
+      "medianLatencyUs": 22.6235180412371,
+      "madPercent": 2.0676695537688072,
+      "minOpsPerSecond": 42150.94457207445,
+      "maxOpsPerSecond": 45676.81392916703,
+      "outputMiBPerSecond": 62.59885652098342,
+      "cpuMicroseconds": {
+        "user": 218000,
+        "system": 31000
+      },
+      "rssBeforeBytes": 48324608,
+      "rssAfterBytes": 52891648,
+      "processMaxRssBytes": 53010432,
+      "heapUsedBeforeBytes": 6360984,
+      "heapUsedAfterBytes": 7670728,
+      "timerDelayMs": {
+        "median": 35.278399999999976,
+        "max": 35.47479999999999,
+        "samples": [
+          35.47479999999999,
+          35.15959999999998,
+          35.156300000000016,
+          35.10160000000002,
+          35.467600000000004,
+          35.278399999999976,
+          35.338300000000004
+        ]
+      },
+      "samples": [
+        {
+          "iterations": 1584,
+          "elapsedMs": 35.334500000000006,
+          "opsPerSecond": 44828.708486040545
+        },
+        {
+          "iterations": 1552,
+          "elapsedMs": 35.111699999999985,
+          "opsPerSecond": 44201.79028642876
+        },
+        {
+          "iterations": 1584,
+          "elapsedMs": 35.109700000000004,
+          "opsPerSecond": 45115.737246401986
+        },
+        {
+          "iterations": 1536,
+          "elapsedMs": 35.05500000000001,
+          "opsPerSecond": 43816.85922122378
+        },
+        {
+          "iterations": 1616,
+          "elapsedMs": 35.37899999999999,
+          "opsPerSecond": 45676.81392916703
+        },
+        {
+          "iterations": 1504,
+          "elapsedMs": 35.209100000000035,
+          "opsPerSecond": 42716.229611094815
+        },
+        {
+          "iterations": 1488,
+          "elapsedMs": 35.30169999999998,
+          "opsPerSecond": 42150.94457207445
+        }
+      ],
+      "sink": 22220800
+    },
+    {
+      "dataset": "batch-32",
+      "method": "safe-stable-stringify",
+      "status": "UNAVAILABLE",
+      "reason": "Cannot find module 'safe-stable-stringify'\nRequire stack:\n- D:\\misc\\npm\\stable-json-rs\\benches\\run.cjs"
+    },
+    {
+      "dataset": "batch-32",
+      "method": "fast-stable-stringify",
+      "status": "UNAVAILABLE",
+      "reason": "Cannot find module 'fast-stable-stringify'\nRequire stack:\n- D:\\misc\\npm\\stable-json-rs\\benches\\run.cjs"
+    }
+  ],
+  "limitations": [
+    "Sampled RSS and process maximum RSS include runtime, fixture preparation, require and warmup; they are not allocation counts or serializer-only peaks.",
+    "Timer probes measure synchronous sample-burst blocking plus timer scheduling, not per-request event-loop delay or asynchronous responsiveness.",
+    "Native text accepts pre-existing JSON; compare separately with parse-and-sort JS and use native-roundtrip for JS object conversion cost.",
+    "JSON.stringify-context is not stable serialization; all stable-compatible candidates must match the oracle exact string before timing.",
+    "Each cell uses a fresh process. Runs are serial and fixed-order; OS scheduling, thermal state and GC influence results. These are local exploratory measurements, not cross-platform claims."
+  ]
+}

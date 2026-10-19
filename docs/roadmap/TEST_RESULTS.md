@@ -2,3 +2,22 @@
 
 2026-10-19 Windows x64, Node 24.20.0, Rust 1.98.1: implementation tests NOT RUN
 at bootstrap. Subsequent milestones append commands and actual results here.
+
+## 2026-10-19 MVP (Windows11 x64, Node24.20.0, rustc1.98.1)
+- `pnpm build:native`: PASS release build, napi3.14.2, CLI3.10.8/MSVC linker.
+- `cargo test --locked`: PASS3 unit tests,0 doc tests (independently repeated).
+- `cargo fmt --all --check`: PASS.
+- `cargo clippy --all-targets --locked -- -D warnings`: PASS.
+- `pnpm build:js`: PASS after adding explicit Node types for TS7.
+- `pnpm test:types`: PASS CJS/ESM strict declarations after fixing ESM default type.
+- `pnpm test`: PASS24 Node tests; includes all16 upstream assertions,6000 generated
+  exact JS oracle cases,3000 native text cases and11 independent review tests.
+- Reviewer `node --test tests/review.test.cjs`: PASS11 adversarial tests including
+  comparator observable events, malformed input, array cycles, Unicode and deep
+  native input (129,10000,100000 levels in child processes).
+- Initial test trace false failure: independent callback objects were compared
+  by identity; replaced log values with observable keys/type markers.
+- Linux/macOS runtime tests: NOT RUN locally; hosted CI required.
+- Packed installation/audit/full benchmarks: NOT RUN at this milestone.
+
+Reproduce: `pnpm check`. Review details: INDEPENDENT_REVIEW.md; tests live in tests/.
