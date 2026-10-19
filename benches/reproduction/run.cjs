@@ -39,6 +39,21 @@ function fixtures() {
     const normalized = JSON.stringify(value);
     return { ...item, value, sourceText, normalized, normalizedBytes: Buffer.byteLength(normalized), normalizedSha256: sha(normalized) };
   });
+  const cldrManifestPath = 'benches/profiling/data/cldr-manifest.json';
+  if (fs.existsSync(path.join(root, cldrManifestPath))) {
+    const cldrManifest = JSON.parse(read(cldrManifestPath));
+    for (const item of cldrManifest) {
+      const bytes = read(`benches/profiling/data/${item.file}`);
+      assert.equal(bytes.length, item.bytes, item.file);
+      assert.equal(sha(bytes), item.sha256, item.file);
+    }
+    const item = cldrManifest.find(item => item.file === 'cldr-bn-languages.json');
+    assert.ok(item, 'Real CLDR Bengali fixture metadata required');
+    const sourceText = read(`benches/profiling/data/${item.file}`).toString('utf8');
+    const value = JSON.parse(sourceText);
+    const normalized = JSON.stringify(value);
+    sources.push({ ...item, fixtureDirectory: 'benches/profiling/data', value, sourceText, normalized, normalizedBytes: Buffer.byteLength(normalized), normalizedSha256: sha(normalized) });
+  }
   const fixture = name => sources.find(item => item.file === name);
   const unicode = Object.fromEntries(Array.from({ length: 100 }, (_, i) => [`বাংলা😀${i}`, '日本語\nالعربية\\বাংলা😀'.repeat(8)]));
   const tinyBatch = Array.from({ length: 32 }, (_, i) => ({ z: i, a: { state: true, message: `row ${i}` } }));
@@ -48,6 +63,11 @@ function fixtures() {
   const records = Array.from({ length: 600 }, (_, i) => ({ id: i, name: `record ${i}`, active: i % 2 === 0, tags: ['api', 'json'], meta: { rank: i / 7 } }));
   return { sources, inputs: {
     'tiny': JSON.stringify({ z: 1, a: true, m: 'hello' }),
+    'latin1-large': JSON.stringify({ value: 'é'.repeat(16000) }),
+    'sparse-unicode': JSON.stringify({ value: 'x'.repeat(50000) + '😀' }),
+    'ascii-string-50k': JSON.stringify({ value: 'x'.repeat(50000) }),
+    'short-unicode': JSON.stringify({ value: 'বাংলা😀漢字é' }),
+    ...(fixture('cldr-bn-languages.json') ? { 'real-cldr-bn': fixture('cldr-bn-languages.json').normalized } : {}),
     'deep': JSON.stringify(deep),
     'wide': JSON.stringify(Object.fromEntries(Array.from({ length: 1500 }, (_, i) => [`key-${1500 - i}`, i]))),
     'application-config': fixture('typescript-package.json').normalized,
@@ -55,6 +75,7 @@ function fixtures() {
     'large-string': JSON.stringify({ z: 'x'.repeat(150000), a: 'line\nquote"'.repeat(1000) }),
     'record-array': JSON.stringify(records),
     'backend-payload': JSON.stringify({ status: 'ok', pagination: { limit: 600, next: null }, data: records, request: { method: 'GET', path: '/api/records' } }),
+    'array-of-32': JSON.stringify(tinyBatch),
     'lock-normalized': fixture('typescript-package-lock.json').normalized,
     'lock-source': fixture('typescript-package-lock.json').sourceText,
     'api-normalized': api.normalized,
@@ -201,18 +222,64 @@ function runFor(fn, milliseconds, checksumState) {
   const elapsedMs = performance.now() - started;
   return { iterations, elapsedMs, opsPerSecond: iterations * 1000 / elapsedMs };
 }
+function runForLength(fn, milliseconds, checksumState) {
+  let iterations = 0;
+  const started = performance.now();
+  do {
+    for (let i = 0; i < 16; i++) {
+      checksumState.value = (checksumState.value + fn().length) >>> 0;
+      iterations++;
+    }
+  } while (performance.now() - started < milliseconds);
+  const elapsedMs = performance.now() - started;
+  return { iterations, elapsedMs, opsPerSecond: iterations * 1000 / elapsedMs };
+}
+function runForArray(fn, milliseconds, checksumState, flatten = true) {
+  let iterations = 0;
+  const started = performance.now();
+  do {
+    for (let i = 0; i < 16; i++) {
+      const output = fn();
+      for (let index = 0; index < output.length; index++) {
+        const result = output[index];
+        checksumState.value = (checksumState.value + result.length + (flatten ? result.charCodeAt(result.length >>> 1) : 0)) >>> 0;
+      }
+      iterations++;
+    }
+  } while (performance.now() - started < milliseconds);
+  const elapsedMs = performance.now() - started;
+  return { iterations, elapsedMs, opsPerSecond: iterations * 1000 / elapsedMs };
+}
+function runForScalar(fn, milliseconds, checksumState) {
+  let iterations = 0;
+  const started = performance.now();
+  do {
+    for (let i = 0; i < 16; i++) {
+      const value = fn();
+      checksumState.value = (checksumState.value + (typeof value === 'string' ? value.length + value.charCodeAt(value.length >>> 1) : typeof value === 'number' ? value + 31 : value ? 23 : 29)) >>> 0;
+      iterations++;
+    }
+  } while (performance.now() - started < milliseconds);
+  const elapsedMs = performance.now() - started;
+  return { iterations, elapsedMs, opsPerSecond: iterations * 1000 / elapsedMs };
+}
 async function cell(dataset, method, config, checkOnly = false) {
   const prepared = prepare(dataset, method);
-  const base = { dataset, method, exactOutputVerified: true, outputSha256: sha(prepared.expected), outputBytes: Buffer.byteLength(prepared.expected), inputBytes: prepared.inputBytes, inputSha256: prepared.inputSha256, unitsPerOperation: prepared.units, nativeArtifacts: prepared.native };
+  const rendered = typeof prepared.expected === 'string' ? prepared.expected : JSON.stringify(prepared.expected);
+  const base = { dataset, method, exactOutputVerified: true, outputSha256: sha(rendered), outputBytes: Buffer.byteLength(rendered), inputBytes: prepared.inputBytes, inputSha256: prepared.inputSha256, unitsPerOperation: prepared.units, nativeArtifacts: prepared.native,
+    scalarOutput: prepared.scalarOutput || false, arrayOutput: prepared.arrayOutput || false, cachePool: prepared.cachePool,
+    comparableStableOperation: prepared.comparableStableOperation ?? true, outputHashContract: prepared.cachePool ? 'first result from independent initial state; entire 400-step trace checked' : 'exact returned string or JSON.stringify of non-string result',
+    inputHashContract: 'actual single JSON-text bytes, or JSON.stringify of batch/object/cache-pool inputs' };
   if (checkOnly) return base;
   const checksum = { value: 0 };
-  const warmup = runFor(prepared.fn, config.warmupMs, checksum);
+  const measure = prepared.scalarOutput ? runForScalar : prepared.arrayOutput ? (fn, milliseconds, state) => runForArray(fn, milliseconds, state, config.consumption !== 'length') : config.consumption === 'length' ? runForLength : runFor;
+  const warmup = measure(prepared.fn, config.warmupMs, checksum);
   const memoryBefore = process.memoryUsage();
   const cpuStart = process.cpuUsage();
   const samples = [];
   for (let i = 0; i < config.samples; i++) {
     await new Promise(resolve => setImmediate(resolve));
-    samples.push(runFor(prepared.fn, config.sampleMs, checksum));
+    samples.push(measure(prepared.fn, config.sampleMs, checksum));
   }
   const cpuMicroseconds = process.cpuUsage(cpuStart);
   const rates = samples.map(sample => sample.opsPerSecond);
@@ -226,6 +293,13 @@ const defaultCells = [
   ...['lock-normalized', 'lock-source', 'api-normalized', 'api-source', 'unicode'].flatMap(dataset => ['oracle', 'native', 'safe-stable', 'fast-stable'].map(method => [dataset, method])),
   ...['batch-tiny-32', 'batch-api-records-32'].flatMap(dataset => ['oracle-loop', 'native-loop', 'native-batch', 'public-loop', 'public-batch'].map(method => [dataset, method])),
   ...['oracle', 'public-stringify', 'cache-hit', 'cache-miss'].map(method => ['cache-api-document', method]),
+];
+const textWorkloads = ['tiny', 'deep', 'wide', 'application-config', 'upstream-api-fixture', 'large-string', 'record-array', 'backend-payload', 'lock-normalized', 'api-normalized', 'unicode', 'array-of-32', 'latin1-large', 'sparse-unicode', 'ascii-string-50k', 'short-unicode', 'real-cldr-bn'];
+const extraCells = [
+  ...textWorkloads.filter(dataset => !dataset.startsWith('batch-')).flatMap(dataset => ['oracle', 'native', 'safe-stable', 'fast-stable', 'object-oracle', 'object-public', 'object-native-roundtrip', 'object-safe-stable', 'object-fast-stable', 'JSON-context'].map(method => [dataset, method])),
+  ...['tiny', 'deep', 'wide', 'lock-normalized', 'api-normalized', 'unicode'].flatMap(dataset => ['select-native-text', 'select-oracle-text', 'select-native-scalar', 'select-oracle-scalar'].map(method => [dataset, method])),
+  ...[1, 8, 32, 128].flatMap(count => ['native-batch-elements', 'native-loop-elements', 'oracle-loop-elements'].map(method => [`batch-api-elements-${count}`, method])),
+  ...[32, 128].flatMap(size => [0, 50, 90, 99].flatMap(hitPercent => ['cache-pool', 'public-pool', 'oracle-pool'].map(method => [`cache-pool-${size}-hit${hitPercent}`, method]))),
 ];
 function shuffled(items, seed) {
   const result = [...items];
@@ -242,7 +316,7 @@ function environment() {
   const target = 'target/x86_64-pc-windows-msvc/release/stable_json_rs.dll';
   return { platform: process.platform, arch: process.arch, osRelease: os.release(), osVersion: os.version(), node: process.version, v8: process.versions.v8, processExecPath: process.execPath,
     cpu: os.cpus()[0]?.model, logicalCpus: os.cpus().length, totalMemoryBytes: os.totalmem(),
-    rust: command('rustc', ['--version']), cargo: command('cargo', ['--version']), pnpm: command('pnpm.cmd', ['--version']),
+    rust: command('rustc', ['--version']), cargo: command('cargo', ['--version']), pnpm: process.platform === 'win32' ? command('cmd.exe', ['/d', '/s', '/c', 'pnpm --version']) : command('pnpm', ['--version']),
     commit: command('git', ['rev-parse', 'HEAD']), dirty: command('git', ['status', '--short']), upstreamCommit: command('git', ['-C', 'upstream/fast-json-stable-stringify', 'rev-parse', 'HEAD']),
     napiOverride: process.env.NAPI_RS_NATIVE_LIBRARY_PATH || null, nodeOptions: process.env.NODE_OPTIONS || null,
     sourceHashes: Object.fromEntries(files.map(file => [file, sha(read(file))])),
@@ -252,10 +326,14 @@ function environment() {
 }
 async function main() {
   const checkOnly = process.argv.includes('--check');
-  const config = { runs: Number(process.env.REPRO_RUNS || 2), samples: Number(process.env.REPRO_SAMPLES || 9), sampleMs: Number(process.env.REPRO_SAMPLE_MS || 100), warmupMs: Number(process.env.REPRO_WARMUP_MS || 300), seed: Number(process.env.REPRO_SEED || 291947) };
+  const config = { runs: Number(process.env.REPRO_RUNS || 2), samples: Number(process.env.REPRO_SAMPLES || 9), sampleMs: Number(process.env.REPRO_SAMPLE_MS || 100), warmupMs: Number(process.env.REPRO_WARMUP_MS || 300), seed: Number(process.env.REPRO_SEED || 291947), consumption: process.env.REPRO_CONSUMPTION || 'flatten' };
   assert.ok(config.runs >= 2 && config.samples >= 9 && config.samples % 2 === 1 && config.sampleMs >= 100 && config.warmupMs >= 200, 'At least 2 runs, 9 odd samples, 100ms samples and 200ms warmup required');
+  assert.ok(['flatten', 'length'].includes(config.consumption), 'REPRO_CONSUMPTION must be flatten or length');
   let cells = defaultCells;
-  if (process.env.REPRO_DATASETS) cells = cells.filter(([dataset]) => process.env.REPRO_DATASETS.split(',').includes(dataset));
+  if (process.env.REPRO_DATASETS) {
+    const unique = new Map([...defaultCells, ...extraCells].map(cell => [cell.join('/'), cell]));
+    cells = [...unique.values()].filter(([dataset]) => process.env.REPRO_DATASETS.split(',').includes(dataset));
+  }
   if (process.env.REPRO_METHODS) cells = cells.filter(([, method]) => process.env.REPRO_METHODS.split(',').includes(method));
   assert.ok(cells.length > 0);
   const timestamp = new Date().toISOString();

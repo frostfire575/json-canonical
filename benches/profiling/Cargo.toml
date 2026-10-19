@@ -1,0 +1,31 @@
+[package]
+name = "stable-json-rs-profiling"
+version = "0.0.0"
+edition = "2024"
+publish = false
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+napi = { version = "=3.14.2", default-features = false, features = ["napi8", "dyn-symbols"] }
+napi-derive = "=3.6.12"
+serde = "=1.0.229"
+serde_json = { version = "=1.0.154", features = ["raw_value"] }
+memchr = "=2.8.3"
+encoding_rs = "=0.8.42"
+stats_alloc = { version = "=0.1.10", optional = true }
+
+[features]
+alloc-profile = ["dep:stats_alloc"]
+
+[[bin]]
+name = "allocations"
+required-features = ["alloc-profile"]
+
+[build-dependencies]
+napi-build = "=2.6.0"
+
+[profile.release]
+lto = "thin"
+codegen-units = 1

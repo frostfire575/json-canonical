@@ -1,0 +1,254 @@
+{
+  "timestamp": "2026-10-19T00:46:46.162Z",
+  "command": "node benches/reproduction/cold-start.cjs",
+  "environment": {
+    "node": "v24.20.0",
+    "v8": "13.6.233.17-node.53",
+    "platform": "win32",
+    "arch": "x64",
+    "osRelease": "10.0.26300",
+    "cpu": "12th Gen Intel(R) Core(TM) i7-12700K",
+    "commit": "6da938bb54f79dafd2ceb5fb5355ea8b3fa2dc89",
+    "dirty": "M .gitignore\n M benches/reproduction/reproduction.test.cjs\n M benches/reproduction/run.cjs\n?? benches/profiling/\n?? benches/reproduction/README.md\n?? benches/reproduction/cold-start.cjs\n?? benches/reproduction/coverage.cjs\n?? benches/reproduction/results/2026-10-19T00-38-53-424Z-coverage-incomplete.json\n?? benches/reproduction/results/2026-10-19T00-38-53-424Z-coverage-summary.md\n?? benches/reproduction/results/2026-10-19T00-38-53-424Z-coverage.json\n?? benches/reproduction/results/2026-10-19T00-38-53-471Z-2976.json\n?? benches/reproduction/results/2026-10-19T00-39-39-676Z-30472.json\n?? benches/reproduction/results/2026-10-19T00-42-51-523Z-12096.json\n?? benches/reproduction/results/2026-10-19T00-43-54-352Z-17664.json\n?? benches/reproduction/results/2026-10-19T00-44-24-953Z-10428.json\n?? benches/reproduction/results/2026-10-19T00-45-26-359Z-25808.json\n?? benches/reproduction/results/2026-10-19T00-46-20-489Z-coverage-incomplete.json\n?? benches/reproduction/results/2026-10-19T00-46-20-489Z-coverage.json\n?? benches/reproduction/results/2026-10-19T00-46-20-529Z-25372.json\n?? benches/reproduction/run-82f314238fd4.cjs\n?? benches/reproduction/run-c6202c807631.cjs\n?? benches/reproduction/summarize.cjs\n?? docs/roadmap/PROFILING_REVIEW.md\n?? tests/native-output.test.cjs",
+    "sourceSha256": "19863cacb7d9f7cefc0415b05b1fbb007c6b0826daed5f1b1ef307638fd86641"
+  },
+  "contract": "Fresh Node process for each require, five samples per method per run, two shuffled serial runs; timer includes require only and excludes Node startup and metadata extraction. Wrapper uses lazy native loading; actual-native separately loads real .node binding. OS filesystem/disk cache may already be warm. No filesystem-cache eviction or cold-machine claim.",
+  "results": [
+    {
+      "run": 1,
+      "method": "upstream",
+      "modulePath": "./upstream/fast-json-stable-stringify",
+      "samples": [
+        {
+          "elapsedMs": 1.8958000000000013,
+          "native": []
+        },
+        {
+          "elapsedMs": 1.7574000000000005,
+          "native": []
+        },
+        {
+          "elapsedMs": 1.8192999999999984,
+          "native": []
+        },
+        {
+          "elapsedMs": 1.6013999999999982,
+          "native": []
+        },
+        {
+          "elapsedMs": 1.6864999999999988,
+          "native": []
+        }
+      ],
+      "medianRequireMs": 1.7574000000000005,
+      "madPercent": 4.034368954136891,
+      "minRequireMs": 1.6013999999999982,
+      "maxRequireMs": 1.8958000000000013
+    },
+    {
+      "run": 1,
+      "method": "wrapper",
+      "modulePath": "./js/index.cjs",
+      "samples": [
+        {
+          "elapsedMs": 1.9457999999999984,
+          "native": []
+        },
+        {
+          "elapsedMs": 2.2071999999999967,
+          "native": []
+        },
+        {
+          "elapsedMs": 1.9267000000000003,
+          "native": []
+        },
+        {
+          "elapsedMs": 2.273600000000002,
+          "native": []
+        },
+        {
+          "elapsedMs": 2.088700000000003,
+          "native": []
+        }
+      ],
+      "medianRequireMs": 2.088700000000003,
+      "madPercent": 6.841576099966691,
+      "minRequireMs": 1.9267000000000003,
+      "maxRequireMs": 2.273600000000002
+    },
+    {
+      "run": 1,
+      "method": "actual-native",
+      "modulePath": "./native/binding.js",
+      "samples": [
+        {
+          "elapsedMs": 3.1732999999999976,
+          "native": [
+            {
+              "file": "D:\\misc\\npm\\stable-json-rs\\native\\stable-json-rs.win32-x64-msvc.node",
+              "sha256": "154d1683ec0db600a2053528c08d776ac123367fb9afee573cb173466c14e0a1"
+            }
+          ]
+        },
+        {
+          "elapsedMs": 3.1973999999999982,
+          "native": [
+            {
+              "file": "D:\\misc\\npm\\stable-json-rs\\native\\stable-json-rs.win32-x64-msvc.node",
+              "sha256": "154d1683ec0db600a2053528c08d776ac123367fb9afee573cb173466c14e0a1"
+            }
+          ]
+        },
+        {
+          "elapsedMs": 3.8901000000000003,
+          "native": [
+            {
+              "file": "D:\\misc\\npm\\stable-json-rs\\native\\stable-json-rs.win32-x64-msvc.node",
+              "sha256": "154d1683ec0db600a2053528c08d776ac123367fb9afee573cb173466c14e0a1"
+            }
+          ]
+        },
+        {
+          "elapsedMs": 3.2270000000000003,
+          "native": [
+            {
+              "file": "D:\\misc\\npm\\stable-json-rs\\native\\stable-json-rs.win32-x64-msvc.node",
+              "sha256": "154d1683ec0db600a2053528c08d776ac123367fb9afee573cb173466c14e0a1"
+            }
+          ]
+        },
+        {
+          "elapsedMs": 3.4339000000000013,
+          "native": [
+            {
+              "file": "D:\\misc\\npm\\stable-json-rs\\native\\stable-json-rs.win32-x64-msvc.node",
+              "sha256": "154d1683ec0db600a2053528c08d776ac123367fb9afee573cb173466c14e0a1"
+            }
+          ]
+        }
+      ],
+      "medianRequireMs": 3.2270000000000003,
+      "madPercent": 1.6640842888132241,
+      "minRequireMs": 3.1732999999999976,
+      "maxRequireMs": 3.8901000000000003
+    },
+    {
+      "run": 2,
+      "method": "upstream",
+      "modulePath": "./upstream/fast-json-stable-stringify",
+      "samples": [
+        {
+          "elapsedMs": 2.049800000000001,
+          "native": []
+        },
+        {
+          "elapsedMs": 1.6409999999999982,
+          "native": []
+        },
+        {
+          "elapsedMs": 1.6917000000000009,
+          "native": []
+        },
+        {
+          "elapsedMs": 1.6288000000000018,
+          "native": []
+        },
+        {
+          "elapsedMs": 1.8124000000000002,
+          "native": []
+        }
+      ],
+      "medianRequireMs": 1.6917000000000009,
+      "madPercent": 3.7181533368800044,
+      "minRequireMs": 1.6288000000000018,
+      "maxRequireMs": 2.049800000000001
+    },
+    {
+      "run": 2,
+      "method": "actual-native",
+      "modulePath": "./native/binding.js",
+      "samples": [
+        {
+          "elapsedMs": 2.9670000000000023,
+          "native": [
+            {
+              "file": "D:\\misc\\npm\\stable-json-rs\\native\\stable-json-rs.win32-x64-msvc.node",
+              "sha256": "154d1683ec0db600a2053528c08d776ac123367fb9afee573cb173466c14e0a1"
+            }
+          ]
+        },
+        {
+          "elapsedMs": 3.2353000000000023,
+          "native": [
+            {
+              "file": "D:\\misc\\npm\\stable-json-rs\\native\\stable-json-rs.win32-x64-msvc.node",
+              "sha256": "154d1683ec0db600a2053528c08d776ac123367fb9afee573cb173466c14e0a1"
+            }
+          ]
+        },
+        {
+          "elapsedMs": 3.206400000000002,
+          "native": [
+            {
+              "file": "D:\\misc\\npm\\stable-json-rs\\native\\stable-json-rs.win32-x64-msvc.node",
+              "sha256": "154d1683ec0db600a2053528c08d776ac123367fb9afee573cb173466c14e0a1"
+            }
+          ]
+        },
+        {
+          "elapsedMs": 3.1553000000000004,
+          "native": [
+            {
+              "file": "D:\\misc\\npm\\stable-json-rs\\native\\stable-json-rs.win32-x64-msvc.node",
+              "sha256": "154d1683ec0db600a2053528c08d776ac123367fb9afee573cb173466c14e0a1"
+            }
+          ]
+        },
+        {
+          "elapsedMs": 3.1823999999999977,
+          "native": [
+            {
+              "file": "D:\\misc\\npm\\stable-json-rs\\native\\stable-json-rs.win32-x64-msvc.node",
+              "sha256": "154d1683ec0db600a2053528c08d776ac123367fb9afee573cb173466c14e0a1"
+            }
+          ]
+        }
+      ],
+      "medianRequireMs": 3.1823999999999977,
+      "madPercent": 0.8515585721467213,
+      "minRequireMs": 2.9670000000000023,
+      "maxRequireMs": 3.2353000000000023
+    },
+    {
+      "run": 2,
+      "method": "wrapper",
+      "modulePath": "./js/index.cjs",
+      "samples": [
+        {
+          "elapsedMs": 1.8021999999999991,
+          "native": []
+        },
+        {
+          "elapsedMs": 1.9171000000000014,
+          "native": []
+        },
+        {
+          "elapsedMs": 1.8613,
+          "native": []
+        },
+        {
+          "elapsedMs": 1.912700000000001,
+          "native": []
+        },
+        {
+          "elapsedMs": 1.9677000000000007,
+          "native": []
+        }
+      ],
+      "medianRequireMs": 1.912700000000001,
+      "madPercent": 2.6873006744393253,
+      "minRequireMs": 1.8021999999999991,
+      "maxRequireMs": 1.9677000000000007
+    }
+  ]
+}

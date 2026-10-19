@@ -6,3 +6,4 @@ upstream/fast-json-stable-stringify/
 .pack-test/
 .verification/
 .tools/
+benches/profiling/native/

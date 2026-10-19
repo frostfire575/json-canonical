@@ -1,0 +1,5172 @@
+{
+  "timestamp": "2026-10-19T00:44:24.953Z",
+  "command": "node benches/reproduction/run.cjs",
+  "config": {
+    "runs": 2,
+    "samples": 9,
+    "sampleMs": 100,
+    "warmupMs": 300,
+    "seed": 291947,
+    "consumption": "flatten"
+  },
+  "selection": {
+    "datasets": "cache-pool-32-hit0,cache-pool-32-hit50,cache-pool-32-hit90,cache-pool-32-hit99,cache-pool-128-hit0,cache-pool-128-hit50,cache-pool-128-hit90,cache-pool-128-hit99",
+    "methods": "cache-pool,public-pool,oracle-pool"
+  },
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "osRelease": "10.0.26300",
+    "osVersion": "Windows 11 Pro",
+    "node": "v24.20.0",
+    "v8": "13.6.233.17-node.53",
+    "processExecPath": "G:\\[Softwares]\\NodeJs\\node.exe",
+    "cpu": "12th Gen Intel(R) Core(TM) i7-12700K",
+    "logicalCpus": 20,
+    "totalMemoryBytes": 34087682048,
+    "rust": "rustc 1.98.1 (48a229cea 2026-09-01)",
+    "cargo": "cargo 1.98.1 (797e8a9bc 2026-08-05)",
+    "pnpm": "12.10.1",
+    "commit": "6da938bb54f79dafd2ceb5fb5355ea8b3fa2dc89",
+    "dirty": "M .gitignore\n M benches/reproduction/reproduction.test.cjs\n M benches/reproduction/run.cjs\n?? benches/profiling/\n?? benches/reproduction/README.md\n?? benches/reproduction/cold-start.cjs\n?? benches/reproduction/coverage.cjs\n?? benches/reproduction/results/2026-10-19T00-38-53-424Z-coverage-incomplete.json\n?? benches/reproduction/results/2026-10-19T00-38-53-471Z-2976.json\n?? benches/reproduction/results/2026-10-19T00-39-39-676Z-30472.json\n?? benches/reproduction/results/2026-10-19T00-42-51-523Z-12096.json\n?? benches/reproduction/results/2026-10-19T00-43-54-352Z-17664.json\n?? benches/reproduction/run-82f314238fd4.cjs\n?? benches/reproduction/summarize.cjs\n?? docs/roadmap/PROFILING_REVIEW.md\n?? tests/native-output.test.cjs",
+    "upstreamCommit": "49e230da2c84247b29ad4de02c9395793caefd15",
+    "napiOverride": null,
+    "nodeOptions": null,
+    "sourceHashes": {
+      "benches/reproduction/run.cjs": "82f314238fd4e69b7edd54960d0d66e0f9c3767edfc3c47eeda083a7aab3ad21",
+      "js/index.ts": "bbb249b604ccaafff68a4974968995568363c101c43392dcfb57650bf2ea7ca1",
+      "js/dist/index.js": "859a2d9ce77ded096d4526b9b799e6dee275137b72db5b12b3317a6fd82760f6",
+      "native/binding.js": "a1df31adec1a2b469c8af3b067545edfc83c7e037435c04ce3ee5d73fb1536d3",
+      "src/lib.rs": "e8dee59b841e22ed90c77b4c145856ce1f5999fecf551a87e27f8729d1350919",
+      "src/tree.rs": "b345e2b5f4e22ae0f15f8132ae3dc8250aadfc4d53687d0f1c8692c03720440a",
+      "src/engine.rs": "1bea768b0d2db85a3e92653bb12b84e30981df44950032d165dee1b91514cdc6",
+      "Cargo.lock": "7fea717ccad5b4b81b64a1dc2d8c727eb849117c9989871db7ecb21b5108001e",
+      "Cargo.toml": "ccd6472ce856d3838ff371b836d07e1288c845461c0be195285a57bb2b26e337",
+      "pnpm-lock.yaml": "268854350104379c6e5698c2504908ef61cc5870655b68fab4c2ce58624b6fab"
+    },
+    "releaseArtifact": {
+      "path": "target/x86_64-pc-windows-msvc/release/stable_json_rs.dll",
+      "sha256": "154d1683ec0db600a2053528c08d776ac123367fb9afee573cb173466c14e0a1"
+    },
+    "cpuPowerPlan": "Power Scheme GUID: 381b4222-f694-41f0-9685-ff5bb260df2e  (Balanced)",
+    "dependencies": {
+      "safe-stable-stringify": "2.5.0",
+      "fast-stable-stringify": "1.0.0",
+      "@napi-rs/cli": "3.10.8"
+    }
+  },
+  "fixtures": [
+    {
+      "file": "typescript-package-lock.json",
+      "source": "https://raw.githubusercontent.com/microsoft/TypeScript/5237fd46890956e4bb8177a1a05dcd69e4166560/package-lock.json",
+      "commit": "5237fd46890956e4bb8177a1a05dcd69e4166560",
+      "license": "Apache-2.0",
+      "licenseFile": "typescript-LICENSE.txt",
+      "purpose": "Real dependency metadata; large nested package graph object.",
+      "retrievedAt": "2026-10-18T23:56:25.261Z",
+      "bytes": 143844,
+      "sha256": "52b6c9bd0a26ef1b0fc27dfbfaa00df6a047cdddd587d07c4f6c1c3345faf5cf",
+      "structure": "object with 5 root properties",
+      "normalizedBytes": 93728,
+      "normalizedSha256": "5f8afda0d3a8190dd04d7561ef72ec6cd3abe74c45b1ba6a720b8dbfff7ac64e"
+    },
+    {
+      "file": "typescript-package.json",
+      "source": "https://raw.githubusercontent.com/microsoft/TypeScript/5237fd46890956e4bb8177a1a05dcd69e4166560/package.json",
+      "commit": "5237fd46890956e4bb8177a1a05dcd69e4166560",
+      "license": "Apache-2.0",
+      "licenseFile": "typescript-LICENSE.txt",
+      "purpose": "Real application/development configuration; medium nested object.",
+      "retrievedAt": "2026-10-18T23:56:25.262Z",
+      "bytes": 1838,
+      "sha256": "2828c1d269bd9c80d634131ec107ac69f1cfc3bf1f98d24c112c825c8acd7902",
+      "structure": "object with 12 root properties",
+      "normalizedBytes": 1370,
+      "normalizedSha256": "6faddd2dbc96b1fd682050a9b79f082dcc0a4289103040ceafbb82573f570d84"
+    },
+    {
+      "file": "upstream-test.json",
+      "source": "https://raw.githubusercontent.com/epoberezkin/fast-json-stable-stringify/49e230da2c84247b29ad4de02c9395793caefd15/benchmark/test.json",
+      "commit": "49e230da2c84247b29ad4de02c9395793caefd15",
+      "license": "MIT",
+      "licenseFile": "upstream-LICENSE",
+      "purpose": "Established upstream benchmark fixture; array of API-shaped records. Mock fixture, not a captured production response.",
+      "retrievedAt": "2026-10-18T23:56:25.262Z",
+      "bytes": 3965,
+      "sha256": "a309a6d29ddefa0dee5628f8f2f9e50adab7f406e05fd465beafda68339739b8",
+      "structure": "array of 3 entries",
+      "normalizedBytes": 2929,
+      "normalizedSha256": "53771b6c7b6dfec175bfd04f0eb65548c71b627048a042a9c893837dd6d34935"
+    },
+    {
+      "file": "jsonplaceholder-data.json",
+      "source": "https://raw.githubusercontent.com/typicode/jsonplaceholder/7ae4432ac3f60e7226a899c25e04826207d07098/data.json",
+      "commit": "7ae4432ac3f60e7226a899c25e04826207d07098",
+      "license": "MIT",
+      "licenseFile": "jsonplaceholder-LICENSE",
+      "purpose": "Actual JSONPlaceholder public API service backing data; fictional posts/comments/albums/photos/todos/users. Large arrays and nested API records, not private user information.",
+      "retrievedAt": "2026-10-19T00:00:05.305Z",
+      "bytes": 1378184,
+      "sha256": "e1feb959cada8c58528e199b1cfe6cf4c43734e47dc8c3b39cbba35916e07479",
+      "structure": {
+        "posts": 100,
+        "comments": 500,
+        "albums": 100,
+        "photos": 5000,
+        "users": 10,
+        "todos": 200
+      },
+      "normalizedBytes": 1085130,
+      "normalizedSha256": "a12b6a68c636a1e7e1d668710cff7b6e490a4f05b84a6262bf702b90b0c50268"
+    }
+  ],
+  "limitations": [
+    "Local serial child processes, randomly shuffled order per run; uncontrolled CPU placement, OS scheduling, thermal state, power mode and GC.",
+    "RSS includes fixture loading/JSON parsing/native require/warmup. No serializer-only peak or allocation count.",
+    "Text cases include full public wrapper validation, napi UTF conversion, native processing and returned JS string. Input text prepared before timing. JS baselines parse and sort each operation.",
+    "Source fixtures preserve formatting and token spelling; exact result comparisons establish fixture-specific equivalence only. General text semantics differ.",
+    "Batch methods include identical JSON.stringify of returned array. Cache hits skip serialization under explicit caller version contract."
+  ],
+  "results": [
+    {
+      "run": 1,
+      "dataset": "cache-pool-128-hit50",
+      "method": "public-pool",
+      "exactOutputVerified": true,
+      "outputSha256": "d4a1c1400a6067b8b56592c36234d1cbb22cfd072b728d03151076c6bda2ff49",
+      "outputBytes": 247,
+      "inputBytes": 35386,
+      "inputSha256": "770e7a1a454e20c263058a3be059084fee4f2af65bb7e744dbe3ec8a0cd1d9c0",
+      "unitsPerOperation": 1,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "154d1683ec0db600a2053528c08d776ac123367fb9afee573cb173466c14e0a1"
+        }
+      ],
+      "scalarOutput": false,
+      "arrayOutput": false,
+      "cachePool": {
+        "size": 128,
+        "plannedHitPercent": 50,
+        "checkedSteps": 400,
+        "trace": "round-robin identity pool; step%100 >= hitPercent mutates body and increments explicit per-record version; both candidates include scheduling/version/mutation cost; cache prefilled outside timing; no automatic detection"
+      },
+      "comparableStableOperation": true,
+      "outputHashContract": "first result from independent initial state; entire 400-step trace checked",
+      "inputHashContract": "actual single JSON-text bytes, or JSON.stringify of batch/object/cache-pool inputs",
+      "warmup": {
+        "iterations": 268000,
+        "elapsedMs": 300.03790000000004,
+        "opsPerSecond": 893220.4898114537
+      },
+      "samples": [
+        {
+          "iterations": 87312,
+          "elapsedMs": 100.03960000000001,
+          "opsPerSecond": 872774.3813449873
+        },
+        {
+          "iterations": 89168,
+          "elapsedMs": 100.02980000000002,
+          "opsPerSecond": 891414.3585211604
+        },
+        {
+          "iterations": 87568,
+          "elapsedMs": 100.02890000000002,
+          "opsPerSecond": 875427.0015965385
+        },
+        {
+          "iterations": 84320,
+          "elapsedMs": 100.04830000000004,
+          "opsPerSecond": 842792.9310143198
+        },
+        {
+          "iterations": 87904,
+          "elapsedMs": 100.03469999999993,
+          "opsPerSecond": 878735.0789276127
+        },
+        {
+          "iterations": 88880,
+          "elapsedMs": 100.03800000000001,
+          "opsPerSecond": 888462.3842939682
+        },
+        {
+          "iterations": 87632,
+          "elapsedMs": 100.043,
+          "opsPerSecond": 875943.3443619243
+        },
+        {
+          "iterations": 88704,
+          "elapsedMs": 100.03120000000013,
+          "opsPerSecond": 886763.3298410885
+        },
+        {
+          "iterations": 87776,
+          "elapsedMs": 100.04210000000012,
+          "opsPerSecond": 877390.6185495895
+        }
+      ],
+      "medianOpsPerSecond": 877390.6185495895,
+      "medianItemsPerSecond": 877390.6185495895,
+      "madPercent": 0.5261325009644281,
+      "minOpsPerSecond": 842792.9310143198,
+      "maxOpsPerSecond": 891414.3585211604,
+      "checksum": 398509608,
+      "cpuMicroseconds": {
+        "user": 859000,
+        "system": 16000
+      },
+      "memoryBefore": {
+        "rss": 72265728,
+        "heapTotal": 30605312,
+        "heapUsed": 17852768,
+        "external": 5135004,
+        "arrayBuffers": 143647
+      },
+      "memoryAfter": {
+        "rss": 83685376,
+        "heapTotal": 43540480,
+        "heapUsed": 22683584,
+        "external": 2378656,
+        "arrayBuffers": 143627
+      },
+      "processMaxRssBytes": 83685376
+    },
+    {
+      "run": 1,
+      "dataset": "cache-pool-32-hit50",
+      "method": "public-pool",
+      "exactOutputVerified": true,
+      "outputSha256": "d4a1c1400a6067b8b56592c36234d1cbb22cfd072b728d03151076c6bda2ff49",
+      "outputBytes": 247,
+      "inputBytes": 8666,
+      "inputSha256": "d813fe4db675c2549a52b38d4be03726fb5eb3cc100df1b0f70f05b862739515",
+      "unitsPerOperation": 1,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "154d1683ec0db600a2053528c08d776ac123367fb9afee573cb173466c14e0a1"
+        }
+      ],
+      "scalarOutput": false,
+      "arrayOutput": false,
+      "cachePool": {
+        "size": 32,
+        "plannedHitPercent": 50,
+        "checkedSteps": 400,
+        "trace": "round-robin identity pool; step%100 >= hitPercent mutates body and increments explicit per-record version; both candidates include scheduling/version/mutation cost; cache prefilled outside timing; no automatic detection"
+      },
+      "comparableStableOperation": true,
+      "outputHashContract": "first result from independent initial state; entire 400-step trace checked",
+      "inputHashContract": "actual single JSON-text bytes, or JSON.stringify of batch/object/cache-pool inputs",
+      "warmup": {
+        "iterations": 270480,
+        "elapsedMs": 300.03860000000003,
+        "opsPerSecond": 901484.0090575012
+      },
+      "samples": [
+        {
+          "iterations": 91040,
+          "elapsedMs": 100.0385,
+          "opsPerSecond": 910049.6308921066
+        },
+        {
+          "iterations": 91904,
+          "elapsedMs": 100.0267,
+          "opsPerSecond": 918794.6818199541
+        },
+        {
+          "iterations": 88256,
+          "elapsedMs": 100.03049999999996,
+          "opsPerSecond": 882290.9012751115
+        },
+        {
+          "iterations": 89008,
+          "elapsedMs": 100.03629999999998,
+          "opsPerSecond": 889757.0182023927
+        },
+        {
+          "iterations": 88592,
+          "elapsedMs": 100.03800000000001,
+          "opsPerSecond": 885583.4782782542
+        },
+        {
+          "iterations": 82304,
+          "elapsedMs": 100.03279999999995,
+          "opsPerSecond": 822770.1313969023
+        },
+        {
+          "iterations": 91824,
+          "elapsedMs": 100.03399999999999,
+          "opsPerSecond": 917927.9045124658
+        },
+        {
+          "iterations": 87680,
+          "elapsedMs": 100.03719999999998,
+          "opsPerSecond": 876473.9516899715
+        },
+        {
+          "iterations": 90016,
+          "elapsedMs": 100.02869999999984,
+          "opsPerSecond": 899901.7282040068
+        }
+      ],
+      "medianOpsPerSecond": 889757.0182023927,
+      "medianItemsPerSecond": 889757.0182023927,
+      "madPercent": 1.492886961347884,
+      "minOpsPerSecond": 822770.1313969023,
+      "maxOpsPerSecond": 918794.6818199541,
+      "checksum": 399610013,
+      "cpuMicroseconds": {
+        "user": 828000,
+        "system": 62000
+      },
+      "memoryBefore": {
+        "rss": 72208384,
+        "heapTotal": 30867456,
+        "heapUsed": 20692816,
+        "external": 5135004,
+        "arrayBuffers": 143647
+      },
+      "memoryAfter": {
+        "rss": 67334144,
+        "heapTotal": 27811840,
+        "heapUsed": 14045272,
+        "external": 2378656,
+        "arrayBuffers": 143627
+      },
+      "processMaxRssBytes": 72957952
+    },
+    {
+      "run": 1,
+      "dataset": "cache-pool-128-hit0",
+      "method": "public-pool",
+      "exactOutputVerified": true,
+      "outputSha256": "2ddb7014e58a9af1f91aea154e5568b03e0ea38380e50234a42b1a96a4e5704e",
+      "outputBytes": 249,
+      "inputBytes": 35386,
+      "inputSha256": "770e7a1a454e20c263058a3be059084fee4f2af65bb7e744dbe3ec8a0cd1d9c0",
+      "unitsPerOperation": 1,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "154d1683ec0db600a2053528c08d776ac123367fb9afee573cb173466c14e0a1"
+        }
+      ],
+      "scalarOutput": false,
+      "arrayOutput": false,
+      "cachePool": {
+        "size": 128,
+        "plannedHitPercent": 0,
+        "checkedSteps": 400,
+        "trace": "round-robin identity pool; step%100 >= hitPercent mutates body and increments explicit per-record version; both candidates include scheduling/version/mutation cost; cache prefilled outside timing; no automatic detection"
+      },
+      "comparableStableOperation": true,
+      "outputHashContract": "first result from independent initial state; entire 400-step trace checked",
+      "inputHashContract": "actual single JSON-text bytes, or JSON.stringify of batch/object/cache-pool inputs",
+      "warmup": {
+        "iterations": 252304,
+        "elapsedMs": 300.0401,
+        "opsPerSecond": 840900.9329086345
+      },
+      "samples": [
+        {
+          "iterations": 84672,
+          "elapsedMs": 100.0564,
+          "opsPerSecond": 846242.719106424
+        },
+        {
+          "iterations": 84880,
+          "elapsedMs": 100.03950000000003,
+          "opsPerSecond": 848464.8563817289
+        },
+        {
+          "iterations": 89072,
+          "elapsedMs": 100.02740000000006,
+          "opsPerSecond": 890476.0095733764
+        },
+        {
+          "iterations": 84480,
+          "elapsedMs": 100.0249,
+          "opsPerSecond": 844589.6971654058
+        },
+        {
+          "iterations": 85936,
+          "elapsedMs": 100.03319999999997,
+          "opsPerSecond": 859074.7871706596
+        },
+        {
+          "iterations": 85312,
+          "elapsedMs": 100.03449999999998,
+          "opsPerSecond": 852825.775107588
+        },
+        {
+          "iterations": 85408,
+          "elapsedMs": 100.04160000000013,
+          "opsPerSecond": 853724.8504622066
+        },
+        {
+          "iterations": 83296,
+          "elapsedMs": 100.05280000000016,
+          "opsPerSecond": 832520.429213374
+        },
+        {
+          "iterations": 85536,
+          "elapsedMs": 100.03210000000013,
+          "opsPerSecond": 855085.5175488658
+        }
+      ],
+      "medianOpsPerSecond": 852825.775107588,
+      "medianItemsPerSecond": 852825.775107588,
+      "madPercent": 0.7327419322291537,
+      "minOpsPerSecond": 832520.429213374,
+      "maxOpsPerSecond": 890476.0095733764,
+      "checksum": 385025075,
+      "cpuMicroseconds": {
+        "user": 797000,
+        "system": 94000
+      },
+      "memoryBefore": {
+        "rss": 72077312,
+        "heapTotal": 30605312,
+        "heapUsed": 15192592,
+        "external": 5135004,
+        "arrayBuffers": 143647
+      },
+      "memoryAfter": {
+        "rss": 84140032,
+        "heapTotal": 44326912,
+        "heapUsed": 9601192,
+        "external": 2378656,
+        "arrayBuffers": 143627
+      },
+      "processMaxRssBytes": 84140032
+    },
+    {
+      "run": 1,
+      "dataset": "cache-pool-32-hit90",
+      "method": "public-pool",
+      "exactOutputVerified": true,
+      "outputSha256": "d4a1c1400a6067b8b56592c36234d1cbb22cfd072b728d03151076c6bda2ff49",
+      "outputBytes": 247,
+      "inputBytes": 8666,
+      "inputSha256": "d813fe4db675c2549a52b38d4be03726fb5eb3cc100df1b0f70f05b862739515",
+      "unitsPerOperation": 1,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "154d1683ec0db600a2053528c08d776ac123367fb9afee573cb173466c14e0a1"
+        }
+      ],
+      "scalarOutput": false,
+      "arrayOutput": false,
+      "cachePool": {
+        "size": 32,
+        "plannedHitPercent": 90,
+        "checkedSteps": 400,
+        "trace": "round-robin identity pool; step%100 >= hitPercent mutates body and increments explicit per-record version; both candidates include scheduling/version/mutation cost; cache prefilled outside timing; no automatic detection"
+      },
+      "comparableStableOperation": true,
+      "outputHashContract": "first result from independent initial state; entire 400-step trace checked",
+      "inputHashContract": "actual single JSON-text bytes, or JSON.stringify of batch/object/cache-pool inputs",
+      "warmup": {
+        "iterations": 275840,
+        "elapsedMs": 300.03729999999996,
+        "opsPerSecond": 919352.3605231751
+      },
+      "samples": [
+        {
+          "iterations": 92608,
+          "elapsedMs": 100.03129999999999,
+          "opsPerSecond": 925790.2276587429
+        },
+        {
+          "iterations": 91376,
+          "elapsedMs": 100.0403,
+          "opsPerSecond": 913391.9030630656
+        },
+        {
+          "iterations": 94016,
+          "elapsedMs": 100.0435,
+          "opsPerSecond": 939751.2082244224
+        },
+        {
+          "iterations": 94752,
+          "elapsedMs": 100.04059999999993,
+          "opsPerSecond": 947135.4630020219
+        },
+        {
+          "iterations": 94272,
+          "elapsedMs": 100.03230000000008,
+          "opsPerSecond": 942415.5997612764
+        },
+        {
+          "iterations": 98480,
+          "elapsedMs": 100.03199999999993,
+          "opsPerSecond": 984484.9648112612
+        },
+        {
+          "iterations": 97104,
+          "elapsedMs": 100.03270000000009,
+          "opsPerSecond": 970722.5737183932
+        },
+        {
+          "iterations": 99040,
+          "elapsedMs": 100.02659999999992,
+          "opsPerSecond": 990136.6236581077
+        },
+        {
+          "iterations": 94944,
+          "elapsedMs": 100.02440000000001,
+          "opsPerSecond": 949208.3931520708
+        }
+      ],
+      "medianOpsPerSecond": 947135.4630020219,
+      "medianItemsPerSecond": 947135.4630020219,
+      "madPercent": 2.253662351066819,
+      "minOpsPerSecond": 913391.9030630656,
+      "maxOpsPerSecond": 990136.6236581077,
+      "checksum": 422872095,
+      "cpuMicroseconds": {
+        "user": 922000,
+        "system": 31000
+      },
+      "memoryBefore": {
+        "rss": 72114176,
+        "heapTotal": 31019008,
+        "heapUsed": 16181168,
+        "external": 5135004,
+        "arrayBuffers": 143647
+      },
+      "memoryAfter": {
+        "rss": 67047424,
+        "heapTotal": 25976832,
+        "heapUsed": 7298344,
+        "external": 2378656,
+        "arrayBuffers": 143627
+      },
+      "processMaxRssBytes": 73420800
+    },
+    {
+      "run": 1,
+      "dataset": "cache-pool-128-hit90",
+      "method": "public-pool",
+      "exactOutputVerified": true,
+      "outputSha256": "d4a1c1400a6067b8b56592c36234d1cbb22cfd072b728d03151076c6bda2ff49",
+      "outputBytes": 247,
+      "inputBytes": 35386,
+      "inputSha256": "770e7a1a454e20c263058a3be059084fee4f2af65bb7e744dbe3ec8a0cd1d9c0",
+      "unitsPerOperation": 1,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "154d1683ec0db600a2053528c08d776ac123367fb9afee573cb173466c14e0a1"
+        }
+      ],
+      "scalarOutput": false,
+      "arrayOutput": false,
+      "cachePool": {
+        "size": 128,
+        "plannedHitPercent": 90,
+        "checkedSteps": 400,
+        "trace": "round-robin identity pool; step%100 >= hitPercent mutates body and increments explicit per-record version; both candidates include scheduling/version/mutation cost; cache prefilled outside timing; no automatic detection"
+      },
+      "comparableStableOperation": true,
+      "outputHashContract": "first result from independent initial state; entire 400-step trace checked",
+      "inputHashContract": "actual single JSON-text bytes, or JSON.stringify of batch/object/cache-pool inputs",
+      "warmup": {
+        "iterations": 271632,
+        "elapsedMs": 300.051,
+        "opsPerSecond": 905286.1013627683
+      },
+      "samples": [
+        {
+          "iterations": 90832,
+          "elapsedMs": 100.03559999999999,
+          "opsPerSecond": 907996.7531558766
+        },
+        {
+          "iterations": 91568,
+          "elapsedMs": 100.029,
+          "opsPerSecond": 915414.529786362
+        },
+        {
+          "iterations": 90608,
+          "elapsedMs": 100.03470000000004,
+          "opsPerSecond": 905765.6993023417
+        },
+        {
+          "iterations": 91536,
+          "elapsedMs": 100.03899999999999,
+          "opsPerSecond": 915003.148771979
+        },
+        {
+          "iterations": 92800,
+          "elapsedMs": 100.03480000000002,
+          "opsPerSecond": 927677.1683454156
+        },
+        {
+          "iterations": 93392,
+          "elapsedMs": 100.03300000000002,
+          "opsPerSecond": 933611.9080703367
+        },
+        {
+          "iterations": 90944,
+          "elapsedMs": 100.02649999999994,
+          "opsPerSecond": 909199.0622485047
+        },
+        {
+          "iterations": 94256,
+          "elapsedMs": 100.03379999999993,
+          "opsPerSecond": 942241.5223654412
+        },
+        {
+          "iterations": 94480,
+          "elapsedMs": 100.03839999999991,
+          "opsPerSecond": 944437.3360629526
+        }
+      ],
+      "medianOpsPerSecond": 915414.529786362,
+      "medianItemsPerSecond": 915414.529786362,
+      "madPercent": 1.05403947283556,
+      "minOpsPerSecond": 905765.6993023417,
+      "maxOpsPerSecond": 944437.3360629526,
+      "checksum": 414040040,
+      "cpuMicroseconds": {
+        "user": 875000,
+        "system": 78000
+      },
+      "memoryBefore": {
+        "rss": 72245248,
+        "heapTotal": 30867456,
+        "heapUsed": 17816288,
+        "external": 5135004,
+        "arrayBuffers": 143647
+      },
+      "memoryAfter": {
+        "rss": 83595264,
+        "heapTotal": 43802624,
+        "heapUsed": 7394304,
+        "external": 2378656,
+        "arrayBuffers": 143627
+      },
+      "processMaxRssBytes": 83595264
+    },
+    {
+      "run": 1,
+      "dataset": "cache-pool-32-hit0",
+      "method": "public-pool",
+      "exactOutputVerified": true,
+      "outputSha256": "2ddb7014e58a9af1f91aea154e5568b03e0ea38380e50234a42b1a96a4e5704e",
+      "outputBytes": 249,
+      "inputBytes": 8666,
+      "inputSha256": "d813fe4db675c2549a52b38d4be03726fb5eb3cc100df1b0f70f05b862739515",
+      "unitsPerOperation": 1,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "154d1683ec0db600a2053528c08d776ac123367fb9afee573cb173466c14e0a1"
+        }
+      ],
+      "scalarOutput": false,
+      "arrayOutput": false,
+      "cachePool": {
+        "size": 32,
+        "plannedHitPercent": 0,
+        "checkedSteps": 400,
+        "trace": "round-robin identity pool; step%100 >= hitPercent mutates body and increments explicit per-record version; both candidates include scheduling/version/mutation cost; cache prefilled outside timing; no automatic detection"
+      },
+      "comparableStableOperation": true,
+      "outputHashContract": "first result from independent initial state; entire 400-step trace checked",
+      "inputHashContract": "actual single JSON-text bytes, or JSON.stringify of batch/object/cache-pool inputs",
+      "warmup": {
+        "iterations": 261328,
+        "elapsedMs": 300.0369,
+        "opsPerSecond": 870986.2020304836
+      },
+      "samples": [
+        {
+          "iterations": 86512,
+          "elapsedMs": 100.03980000000001,
+          "opsPerSecond": 864775.8192239488
+        },
+        {
+          "iterations": 87264,
+          "elapsedMs": 100.02949999999998,
+          "opsPerSecond": 872382.6471191
+        },
+        {
+          "iterations": 86336,
+          "elapsedMs": 100.15559999999994,
+          "opsPerSecond": 862018.6989045051
+        },
+        {
+          "iterations": 85728,
+          "elapsedMs": 100.0385,
+          "opsPerSecond": 856950.0742214248
+        },
+        {
+          "iterations": 86640,
+          "elapsedMs": 100.03359999999998,
+          "opsPerSecond": 866108.9873802405
+        },
+        {
+          "iterations": 87264,
+          "elapsedMs": 100.03300000000002,
+          "opsPerSecond": 872352.1237991462
+        },
+        {
+          "iterations": 86192,
+          "elapsedMs": 100.02700000000004,
+          "opsPerSecond": 861687.344417007
+        },
+        {
+          "iterations": 87616,
+          "elapsedMs": 100.04250000000002,
+          "opsPerSecond": 875787.7901891695
+        },
+        {
+          "iterations": 87456,
+          "elapsedMs": 100.02749999999992,
+          "opsPerSecond": 874319.5621204176
+        }
+      ],
+      "medianOpsPerSecond": 866108.9873802405,
+      "medianItemsPerSecond": 866108.9873802405,
+      "madPercent": 0.7208257286175487,
+      "minOpsPerSecond": 856950.0742214248,
+      "maxOpsPerSecond": 875787.7901891695,
+      "checksum": 388212627,
+      "cpuMicroseconds": {
+        "user": 891000,
+        "system": 78000
+      },
+      "memoryBefore": {
+        "rss": 72126464,
+        "heapTotal": 30605312,
+        "heapUsed": 19564152,
+        "external": 5135004,
+        "arrayBuffers": 143647
+      },
+      "memoryAfter": {
+        "rss": 67252224,
+        "heapTotal": 27025408,
+        "heapUsed": 10329688,
+        "external": 2378656,
+        "arrayBuffers": 143627
+      },
+      "processMaxRssBytes": 73166848
+    },
+    {
+      "run": 1,
+      "dataset": "cache-pool-32-hit0",
+      "method": "oracle-pool",
+      "exactOutputVerified": true,
+      "outputSha256": "2ddb7014e58a9af1f91aea154e5568b03e0ea38380e50234a42b1a96a4e5704e",
+      "outputBytes": 249,
+      "inputBytes": 8666,
+      "inputSha256": "d813fe4db675c2549a52b38d4be03726fb5eb3cc100df1b0f70f05b862739515",
+      "unitsPerOperation": 1,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "154d1683ec0db600a2053528c08d776ac123367fb9afee573cb173466c14e0a1"
+        }
+      ],
+      "scalarOutput": false,
+      "arrayOutput": false,
+      "cachePool": {
+        "size": 32,
+        "plannedHitPercent": 0,
+        "checkedSteps": 400,
+        "trace": "round-robin identity pool; step%100 >= hitPercent mutates body and increments explicit per-record version; both candidates include scheduling/version/mutation cost; cache prefilled outside timing; no automatic detection"
+      },
+      "comparableStableOperation": true,
+      "outputHashContract": "first result from independent initial state; entire 400-step trace checked",
+      "inputHashContract": "actual single JSON-text bytes, or JSON.stringify of batch/object/cache-pool inputs",
+      "warmup": {
+        "iterations": 259408,
+        "elapsedMs": 300.0451,
+        "opsPerSecond": 864563.3606414503
+      },
+      "samples": [
+        {
+          "iterations": 89424,
+          "elapsedMs": 100.03210000000001,
+          "opsPerSecond": 893953.0410738152
+        },
+        {
+          "iterations": 88480,
+          "elapsedMs": 100.03710000000001,
+          "opsPerSecond": 884471.8609395913
+        },
+        {
+          "iterations": 87408,
+          "elapsedMs": 100.0381000000001,
+          "opsPerSecond": 873747.1023540023
+        },
+        {
+          "iterations": 85296,
+          "elapsedMs": 100.04089999999997,
+          "opsPerSecond": 852611.2819856681
+        },
+        {
+          "iterations": 85136,
+          "elapsedMs": 100.03710000000001,
+          "opsPerSecond": 851044.2625785833
+        },
+        {
+          "iterations": 86768,
+          "elapsedMs": 100.04039999999998,
+          "opsPerSecond": 867329.598842068
+        },
+        {
+          "iterations": 85232,
+          "elapsedMs": 100.03250000000003,
+          "opsPerSecond": 852043.0859970507
+        },
+        {
+          "iterations": 87184,
+          "elapsedMs": 100.04459999999995,
+          "opsPerSecond": 871451.3327056138
+        },
+        {
+          "iterations": 86832,
+          "elapsedMs": 100.05140000000006,
+          "opsPerSecond": 867873.9128088157
+        }
+      ],
+      "medianOpsPerSecond": 867873.9128088157,
+      "medianItemsPerSecond": 867873.9128088157,
+      "madPercent": 1.758623067001878,
+      "minOpsPerSecond": 851044.2625785833,
+      "maxOpsPerSecond": 893953.0410738152,
+      "checksum": 387778609,
+      "cpuMicroseconds": {
+        "user": 797000,
+        "system": 94000
+      },
+      "memoryBefore": {
+        "rss": 72286208,
+        "heapTotal": 30343168,
+        "heapUsed": 20131296,
+        "external": 5135004,
+        "arrayBuffers": 143647
+      },
+      "memoryAfter": {
+        "rss": 67387392,
+        "heapTotal": 27549696,
+        "heapUsed": 12104984,
+        "external": 2378656,
+        "arrayBuffers": 143627
+      },
+      "processMaxRssBytes": 74031104
+    },
+    {
+      "run": 1,
+      "dataset": "cache-pool-128-hit50",
+      "method": "oracle-pool",
+      "exactOutputVerified": true,
+      "outputSha256": "d4a1c1400a6067b8b56592c36234d1cbb22cfd072b728d03151076c6bda2ff49",
+      "outputBytes": 247,
+      "inputBytes": 35386,
+      "inputSha256": "770e7a1a454e20c263058a3be059084fee4f2af65bb7e744dbe3ec8a0cd1d9c0",
+      "unitsPerOperation": 1,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "154d1683ec0db600a2053528c08d776ac123367fb9afee573cb173466c14e0a1"
+        }
+      ],
+      "scalarOutput": false,
+      "arrayOutput": false,
+      "cachePool": {
+        "size": 128,
+        "plannedHitPercent": 50,
+        "checkedSteps": 400,
+        "trace": "round-robin identity pool; step%100 >= hitPercent mutates body and increments explicit per-record version; both candidates include scheduling/version/mutation cost; cache prefilled outside timing; no automatic detection"
+      },
+      "comparableStableOperation": true,
+      "outputHashContract": "first result from independent initial state; entire 400-step trace checked",
+      "inputHashContract": "actual single JSON-text bytes, or JSON.stringify of batch/object/cache-pool inputs",
+      "warmup": {
+        "iterations": 262032,
+        "elapsedMs": 300.0315,
+        "opsPerSecond": 873348.298428665
+      },
+      "samples": [
+        {
+          "iterations": 85584,
+          "elapsedMs": 100.04649999999998,
+          "opsPerSecond": 855442.219367994
+        },
+        {
+          "iterations": 89152,
+          "elapsedMs": 100.03940000000006,
+          "opsPerSecond": 891168.8794614917
+        },
+        {
+          "iterations": 91472,
+          "elapsedMs": 100.08860000000004,
+          "opsPerSecond": 913910.2754959102
+        },
+        {
+          "iterations": 86096,
+          "elapsedMs": 100.0267,
+          "opsPerSecond": 860730.1850405941
+        },
+        {
+          "iterations": 90016,
+          "elapsedMs": 100.02560000000005,
+          "opsPerSecond": 899929.618017787
+        },
+        {
+          "iterations": 85056,
+          "elapsedMs": 100.03399999999999,
+          "opsPerSecond": 850270.907891317
+        },
+        {
+          "iterations": 86256,
+          "elapsedMs": 100.03500000000008,
+          "opsPerSecond": 862258.20962663
+        },
+        {
+          "iterations": 87488,
+          "elapsedMs": 100.0634,
+          "opsPerSecond": 874325.6775204521
+        },
+        {
+          "iterations": 87808,
+          "elapsedMs": 100.03449999999998,
+          "opsPerSecond": 877777.1668774275
+        }
+      ],
+      "medianOpsPerSecond": 874325.6775204521,
+      "medianItemsPerSecond": 874325.6775204521,
+      "madPercent": 1.9264219699924863,
+      "minOpsPerSecond": 850270.907891317,
+      "maxOpsPerSecond": 913910.2754959102,
+      "checksum": 396130463,
+      "cpuMicroseconds": {
+        "user": 859000,
+        "system": 94000
+      },
+      "memoryBefore": {
+        "rss": 72314880,
+        "heapTotal": 30605312,
+        "heapUsed": 16673192,
+        "external": 5135004,
+        "arrayBuffers": 143647
+      },
+      "memoryAfter": {
+        "rss": 83447808,
+        "heapTotal": 43278336,
+        "heapUsed": 21417824,
+        "external": 2378656,
+        "arrayBuffers": 143627
+      },
+      "processMaxRssBytes": 83447808
+    },
+    {
+      "run": 1,
+      "dataset": "cache-pool-128-hit90",
+      "method": "oracle-pool",
+      "exactOutputVerified": true,
+      "outputSha256": "d4a1c1400a6067b8b56592c36234d1cbb22cfd072b728d03151076c6bda2ff49",
+      "outputBytes": 247,
+      "inputBytes": 35386,
+      "inputSha256": "770e7a1a454e20c263058a3be059084fee4f2af65bb7e744dbe3ec8a0cd1d9c0",
+      "unitsPerOperation": 1,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "154d1683ec0db600a2053528c08d776ac123367fb9afee573cb173466c14e0a1"
+        }
+      ],
+      "scalarOutput": false,
+      "arrayOutput": false,
+      "cachePool": {
+        "size": 128,
+        "plannedHitPercent": 90,
+        "checkedSteps": 400,
+        "trace": "round-robin identity pool; step%100 >= hitPercent mutates body and increments explicit per-record version; both candidates include scheduling/version/mutation cost; cache prefilled outside timing; no automatic detection"
+      },
+      "comparableStableOperation": true,
+      "outputHashContract": "first result from independent initial state; entire 400-step trace checked",
+      "inputHashContract": "actual single JSON-text bytes, or JSON.stringify of batch/object/cache-pool inputs",
+      "warmup": {
+        "iterations": 273440,
+        "elapsedMs": 300.03950000000003,
+        "opsPerSecond": 911346.672688096
+      },
+      "samples": [
+        {
+          "iterations": 88880,
+          "elapsedMs": 100.03630000000004,
+          "opsPerSecond": 888477.482673789
+        },
+        {
+          "iterations": 93136,
+          "elapsedMs": 100.02679999999998,
+          "opsPerSecond": 931110.462396078
+        },
+        {
+          "iterations": 90336,
+          "elapsedMs": 100.0367,
+          "opsPerSecond": 903028.5885080176
+        },
+        {
+          "iterations": 92096,
+          "elapsedMs": 100.02840000000003,
+          "opsPerSecond": 920698.5216198596
+        },
+        {
+          "iterations": 93888,
+          "elapsedMs": 100.03179999999998,
+          "opsPerSecond": 938581.531073119
+        },
+        {
+          "iterations": 85232,
+          "elapsedMs": 100.02710000000002,
+          "opsPerSecond": 852089.0838582743
+        },
+        {
+          "iterations": 95152,
+          "elapsedMs": 100.02779999999996,
+          "opsPerSecond": 951255.5509568345
+        },
+        {
+          "iterations": 96560,
+          "elapsedMs": 100.03359999999998,
+          "opsPerSecond": 965275.6673757619
+        },
+        {
+          "iterations": 89888,
+          "elapsedMs": 100.03660000000013,
+          "opsPerSecond": 898551.130286314
+        }
+      ],
+      "medianOpsPerSecond": 920698.5216198596,
+      "medianItemsPerSecond": 920698.5216198596,
+      "madPercent": 2.4054987396504095,
+      "minOpsPerSecond": 852089.0838582743,
+      "maxOpsPerSecond": 965275.6673757619,
+      "checksum": 412750318,
+      "cpuMicroseconds": {
+        "user": 812000,
+        "system": 63000
+      },
+      "memoryBefore": {
+        "rss": 72024064,
+        "heapTotal": 30343168,
+        "heapUsed": 20487432,
+        "external": 5135004,
+        "arrayBuffers": 143647
+      },
+      "memoryAfter": {
+        "rss": 83398656,
+        "heapTotal": 43540480,
+        "heapUsed": 21696832,
+        "external": 2378656,
+        "arrayBuffers": 143627
+      },
+      "processMaxRssBytes": 83398656
+    },
+    {
+      "run": 1,
+      "dataset": "cache-pool-128-hit90",
+      "method": "cache-pool",
+      "exactOutputVerified": true,
+      "outputSha256": "d4a1c1400a6067b8b56592c36234d1cbb22cfd072b728d03151076c6bda2ff49",
+      "outputBytes": 247,
+      "inputBytes": 35386,
+      "inputSha256": "770e7a1a454e20c263058a3be059084fee4f2af65bb7e744dbe3ec8a0cd1d9c0",
+      "unitsPerOperation": 1,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "154d1683ec0db600a2053528c08d776ac123367fb9afee573cb173466c14e0a1"
+        }
+      ],
+      "scalarOutput": false,
+      "arrayOutput": false,
+      "cachePool": {
+        "size": 128,
+        "plannedHitPercent": 90,
+        "checkedSteps": 400,
+        "trace": "round-robin identity pool; step%100 >= hitPercent mutates body and increments explicit per-record version; both candidates include scheduling/version/mutation cost; cache prefilled outside timing; no automatic detection"
+      },
+      "comparableStableOperation": true,
+      "outputHashContract": "first result from independent initial state; entire 400-step trace checked",
+      "inputHashContract": "actual single JSON-text bytes, or JSON.stringify of batch/object/cache-pool inputs",
+      "warmup": {
+        "iterations": 2083504,
+        "elapsedMs": 300.0308,
+        "opsPerSecond": 6944300.385160456
+      },
+      "samples": [
+        {
+          "iterations": 684096,
+          "elapsedMs": 100.03340000000003,
+          "opsPerSecond": 6838675.882255325
+        },
+        {
+          "iterations": 702304,
+          "elapsedMs": 100.03519999999997,
+          "opsPerSecond": 7020568.759796553
+        },
+        {
+          "iterations": 700992,
+          "elapsedMs": 100.03269999999998,
+          "opsPerSecond": 7007628.50547871
+        },
+        {
+          "iterations": 715200,
+          "elapsedMs": 100.03500000000008,
+          "opsPerSecond": 7149497.67581346
+        },
+        {
+          "iterations": 683424,
+          "elapsedMs": 100.0308,
+          "opsPerSecond": 6832135.702203722
+        },
+        {
+          "iterations": 673360,
+          "elapsedMs": 100.00040000000001,
+          "opsPerSecond": 6733573.065707737
+        },
+        {
+          "iterations": 656080,
+          "elapsedMs": 100.00029999999992,
+          "opsPerSecond": 6560780.317659052
+        },
+        {
+          "iterations": 663040,
+          "elapsedMs": 100.0027,
+          "opsPerSecond": 6630220.984033431
+        },
+        {
+          "iterations": 676000,
+          "elapsedMs": 100.01200000000017,
+          "opsPerSecond": 6759188.897332309
+        }
+      ],
+      "medianOpsPerSecond": 6832135.702203722,
+      "medianItemsPerSecond": 6832135.702203722,
+      "madPercent": 2.5686375523598364,
+      "minOpsPerSecond": 6560780.317659052,
+      "maxOpsPerSecond": 7149497.67581346,
+      "checksum": 3105583723,
+      "cpuMicroseconds": {
+        "user": 703000,
+        "system": 203000
+      },
+      "memoryBefore": {
+        "rss": 72265728,
+        "heapTotal": 30867456,
+        "heapUsed": 19481256,
+        "external": 5135004,
+        "arrayBuffers": 143647
+      },
+      "memoryAfter": {
+        "rss": 83693568,
+        "heapTotal": 43540480,
+        "heapUsed": 17486680,
+        "external": 2378656,
+        "arrayBuffers": 143627
+      },
+      "processMaxRssBytes": 84283392
+    },
+    {
+      "run": 1,
+      "dataset": "cache-pool-32-hit90",
+      "method": "cache-pool",
+      "exactOutputVerified": true,
+      "outputSha256": "d4a1c1400a6067b8b56592c36234d1cbb22cfd072b728d03151076c6bda2ff49",
+      "outputBytes": 247,
+      "inputBytes": 8666,
+      "inputSha256": "d813fe4db675c2549a52b38d4be03726fb5eb3cc100df1b0f70f05b862739515",
+      "unitsPerOperation": 1,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "154d1683ec0db600a2053528c08d776ac123367fb9afee573cb173466c14e0a1"
+        }
+      ],
+      "scalarOutput": false,
+      "arrayOutput": false,
+      "cachePool": {
+        "size": 32,
+        "plannedHitPercent": 90,
+        "checkedSteps": 400,
+        "trace": "round-robin identity pool; step%100 >= hitPercent mutates body and increments explicit per-record version; both candidates include scheduling/version/mutation cost; cache prefilled outside timing; no automatic detection"
+      },
+      "comparableStableOperation": true,
+      "outputHashContract": "first result from independent initial state; entire 400-step trace checked",
+      "inputHashContract": "actual single JSON-text bytes, or JSON.stringify of batch/object/cache-pool inputs",
+      "warmup": {
+        "iterations": 2220704,
+        "elapsedMs": 300.04060000000004,
+        "opsPerSecond": 7401345.017974233
+      },
+      "samples": [
+        {
+          "iterations": 696208,
+          "elapsedMs": 100.03019999999998,
+          "opsPerSecond": 6959978.086617843
+        },
+        {
+          "iterations": 693888,
+          "elapsedMs": 100.03050000000002,
+          "opsPerSecond": 6936764.286892497
+        },
+        {
+          "iterations": 712608,
+          "elapsedMs": 100.02909999999997,
+          "opsPerSecond": 7124006.913988031
+        },
+        {
+          "iterations": 714896,
+          "elapsedMs": 100.03089999999997,
+          "opsPerSecond": 7146751.653738997
+        },
+        {
+          "iterations": 717104,
+          "elapsedMs": 100.02520000000004,
+          "opsPerSecond": 7169233.353194992
+        },
+        {
+          "iterations": 641184,
+          "elapsedMs": 100.00189999999998,
+          "opsPerSecond": 6411718.177354632
+        },
+        {
+          "iterations": 686912,
+          "elapsedMs": 100.00029999999992,
+          "opsPerSecond": 6869099.392701827
+        },
+        {
+          "iterations": 657888,
+          "elapsedMs": 100.00099999999998,
+          "opsPerSecond": 6578814.211857883
+        },
+        {
+          "iterations": 662000,
+          "elapsedMs": 100.00110000000018,
+          "opsPerSecond": 6619927.1808009995
+        }
+      ],
+      "medianOpsPerSecond": 6936764.286892497,
+      "medianItemsPerSecond": 6936764.286892497,
+      "madPercent": 3.027165954640924,
+      "minOpsPerSecond": 6411718.177354632,
+      "maxOpsPerSecond": 7169233.353194992,
+      "checksum": 3129783717,
+      "cpuMicroseconds": {
+        "user": 829000,
+        "system": 78000
+      },
+      "memoryBefore": {
+        "rss": 72736768,
+        "heapTotal": 30756864,
+        "heapUsed": 19127976,
+        "external": 5135004,
+        "arrayBuffers": 143647
+      },
+      "memoryAfter": {
+        "rss": 67674112,
+        "heapTotal": 27025408,
+        "heapUsed": 7000608,
+        "external": 2378656,
+        "arrayBuffers": 143627
+      },
+      "processMaxRssBytes": 73265152
+    },
+    {
+      "run": 1,
+      "dataset": "cache-pool-32-hit99",
+      "method": "oracle-pool",
+      "exactOutputVerified": true,
+      "outputSha256": "d4a1c1400a6067b8b56592c36234d1cbb22cfd072b728d03151076c6bda2ff49",
+      "outputBytes": 247,
+      "inputBytes": 8666,
+      "inputSha256": "d813fe4db675c2549a52b38d4be03726fb5eb3cc100df1b0f70f05b862739515",
+      "unitsPerOperation": 1,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "154d1683ec0db600a2053528c08d776ac123367fb9afee573cb173466c14e0a1"
+        }
+      ],
+      "scalarOutput": false,
+      "arrayOutput": false,
+      "cachePool": {
+        "size": 32,
+        "plannedHitPercent": 99,
+        "checkedSteps": 400,
+        "trace": "round-robin identity pool; step%100 >= hitPercent mutates body and increments explicit per-record version; both candidates include scheduling/version/mutation cost; cache prefilled outside timing; no automatic detection"
+      },
+      "comparableStableOperation": true,
+      "outputHashContract": "first result from independent initial state; entire 400-step trace checked",
+      "inputHashContract": "actual single JSON-text bytes, or JSON.stringify of batch/object/cache-pool inputs",
+      "warmup": {
+        "iterations": 288672,
+        "elapsedMs": 300.0453,
+        "opsPerSecond": 962094.7236967218
+      },
+      "samples": [
+        {
+          "iterations": 95216,
+          "elapsedMs": 100.02450000000005,
+          "opsPerSecond": 951926.7779394044
+        },
+        {
+          "iterations": 100032,
+          "elapsedMs": 100.05270000000007,
+          "opsPerSecond": 999793.1090315396
+        },
+        {
+          "iterations": 95168,
+          "elapsedMs": 100.03629999999998,
+          "opsPerSecond": 951334.6655164177
+        },
+        {
+          "iterations": 96192,
+          "elapsedMs": 100.0367,
+          "opsPerSecond": 961567.1048725118
+        },
+        {
+          "iterations": 96400,
+          "elapsedMs": 100.04759999999999,
+          "opsPerSecond": 963541.354315346
+        },
+        {
+          "iterations": 94528,
+          "elapsedMs": 100.04070000000002,
+          "opsPerSecond": 944895.4275609825
+        },
+        {
+          "iterations": 95392,
+          "elapsedMs": 100.0388999999999,
+          "opsPerSecond": 953549.0694119997
+        },
+        {
+          "iterations": 94992,
+          "elapsedMs": 100.04089999999997,
+          "opsPerSecond": 949531.6415586029
+        },
+        {
+          "iterations": 89760,
+          "elapsedMs": 100.03980000000001,
+          "opsPerSecond": 897242.8973268638
+        }
+      ],
+      "medianOpsPerSecond": 951926.7779394044,
+      "medianItemsPerSecond": 951926.7779394044,
+      "madPercent": 0.7386440366392781,
+      "minOpsPerSecond": 897242.8973268638,
+      "maxOpsPerSecond": 999793.1090315396,
+      "checksum": 424367444,
+      "cpuMicroseconds": {
+        "user": 860000,
+        "system": 31000
+      },
+      "memoryBefore": {
+        "rss": 71991296,
+        "heapTotal": 30343168,
+        "heapUsed": 13668728,
+        "external": 5135004,
+        "arrayBuffers": 143647
+      },
+      "memoryAfter": {
+        "rss": 67072000,
+        "heapTotal": 26238976,
+        "heapUsed": 9089560,
+        "external": 2378656,
+        "arrayBuffers": 143627
+      },
+      "processMaxRssBytes": 73760768
+    },
+    {
+      "run": 1,
+      "dataset": "cache-pool-128-hit99",
+      "method": "oracle-pool",
+      "exactOutputVerified": true,
+      "outputSha256": "d4a1c1400a6067b8b56592c36234d1cbb22cfd072b728d03151076c6bda2ff49",
+      "outputBytes": 247,
+      "inputBytes": 35386,
+      "inputSha256": "770e7a1a454e20c263058a3be059084fee4f2af65bb7e744dbe3ec8a0cd1d9c0",
+      "unitsPerOperation": 1,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "154d1683ec0db600a2053528c08d776ac123367fb9afee573cb173466c14e0a1"
+        }
+      ],
+      "scalarOutput": false,
+      "arrayOutput": false,
+      "cachePool": {
+        "size": 128,
+        "plannedHitPercent": 99,
+        "checkedSteps": 400,
+        "trace": "round-robin identity pool; step%100 >= hitPercent mutates body and increments explicit per-record version; both candidates include scheduling/version/mutation cost; cache prefilled outside timing; no automatic detection"
+      },
+      "comparableStableOperation": true,
+      "outputHashContract": "first result from independent initial state; entire 400-step trace checked",
+      "inputHashContract": "actual single JSON-text bytes, or JSON.stringify of batch/object/cache-pool inputs",
+      "warmup": {
+        "iterations": 277424,
+        "elapsedMs": 300.0417,
+        "opsPerSecond": 924618.1447445472
+      },
+      "samples": [
+        {
+          "iterations": 89968,
+          "elapsedMs": 100.03630000000004,
+          "opsPerSecond": 899353.5346669155
+        },
+        {
+          "iterations": 89968,
+          "elapsedMs": 100.03029999999995,
+          "opsPerSecond": 899407.4795337017
+        },
+        {
+          "iterations": 96464,
+          "elapsedMs": 100.02380000000005,
+          "opsPerSecond": 964410.4703080662
+        },
+        {
+          "iterations": 97872,
+          "elapsedMs": 100.02890000000002,
+          "opsPerSecond": 978437.2316400558
+        },
+        {
+          "iterations": 97664,
+          "elapsedMs": 100.02959999999996,
+          "opsPerSecond": 976351.0001039696
+        },
+        {
+          "iterations": 96944,
+          "elapsedMs": 100.03680000000008,
+          "opsPerSecond": 969083.3773171465
+        },
+        {
+          "iterations": 93856,
+          "elapsedMs": 100.15599999999995,
+          "opsPerSecond": 937098.1269220022
+        },
+        {
+          "iterations": 93776,
+          "elapsedMs": 100.03379999999993,
+          "opsPerSecond": 937443.1442172553
+        },
+        {
+          "iterations": 93648,
+          "elapsedMs": 100.04099999999994,
+          "opsPerSecond": 936096.2005577718
+        }
+      ],
+      "medianOpsPerSecond": 937443.1442172553,
+      "medianItemsPerSecond": 937443.1442172553,
+      "madPercent": 3.3751628880181457,
+      "minOpsPerSecond": 899353.5346669155,
+      "maxOpsPerSecond": 978437.2316400558,
+      "checksum": 424061145,
+      "cpuMicroseconds": {
+        "user": 781000,
+        "system": 109000
+      },
+      "memoryBefore": {
+        "rss": 71815168,
+        "heapTotal": 30605312,
+        "heapUsed": 12900520,
+        "external": 5135004,
+        "arrayBuffers": 143647
+      },
+      "memoryAfter": {
+        "rss": 66899968,
+        "heapTotal": 26763264,
+        "heapUsed": 7786688,
+        "external": 2378656,
+        "arrayBuffers": 143627
+      },
+      "processMaxRssBytes": 73752576
+    },
+    {
+      "run": 1,
+      "dataset": "cache-pool-32-hit50",
+      "method": "cache-pool",
+      "exactOutputVerified": true,
+      "outputSha256": "d4a1c1400a6067b8b56592c36234d1cbb22cfd072b728d03151076c6bda2ff49",
+      "outputBytes": 247,
+      "inputBytes": 8666,
+      "inputSha256": "d813fe4db675c2549a52b38d4be03726fb5eb3cc100df1b0f70f05b862739515",
+      "unitsPerOperation": 1,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "154d1683ec0db600a2053528c08d776ac123367fb9afee573cb173466c14e0a1"
+        }
+      ],
+      "scalarOutput": false,
+      "arrayOutput": false,
+      "cachePool": {
+        "size": 32,
+        "plannedHitPercent": 50,
+        "checkedSteps": 400,
+        "trace": "round-robin identity pool; step%100 >= hitPercent mutates body and increments explicit per-record version; both candidates include scheduling/version/mutation cost; cache prefilled outside timing; no automatic detection"
+      },
+      "comparableStableOperation": true,
+      "outputHashContract": "first result from independent initial state; entire 400-step trace checked",
+      "inputHashContract": "actual single JSON-text bytes, or JSON.stringify of batch/object/cache-pool inputs",
+      "warmup": {
+        "iterations": 481056,
+        "elapsedMs": 300.03499999999997,
+        "opsPerSecond": 1603332.9444898097
+      },
+      "samples": [
+        {
+          "iterations": 163456,
+          "elapsedMs": 100.03119999999996,
+          "opsPerSecond": 1634050.1763449812
+        },
+        {
+          "iterations": 164272,
+          "elapsedMs": 100.03609999999998,
+          "opsPerSecond": 1642127.1920836582
+        },
+        {
+          "iterations": 159888,
+          "elapsedMs": 100.03460000000007,
+          "opsPerSecond": 1598326.9788653115
+        },
+        {
+          "iterations": 163696,
+          "elapsedMs": 100.04060000000004,
+          "opsPerSecond": 1636295.6639604315
+        },
+        {
+          "iterations": 162304,
+          "elapsedMs": 100.03779999999995,
+          "opsPerSecond": 1622426.7226988208
+        },
+        {
+          "iterations": 168000,
+          "elapsedMs": 100.04599999999994,
+          "opsPerSecond": 1679227.5553245519
+        },
+        {
+          "iterations": 169520,
+          "elapsedMs": 100.0222,
+          "opsPerSecond": 1694823.7491276937
+        },
+        {
+          "iterations": 165776,
+          "elapsedMs": 100.02959999999985,
+          "opsPerSecond": 1657269.4482433225
+        },
+        {
+          "iterations": 165536,
+          "elapsedMs": 100.04110000000014,
+          "opsPerSecond": 1654679.9265501855
+        }
+      ],
+      "medianOpsPerSecond": 1642127.1920836582,
+      "medianItemsPerSecond": 1642127.1920836582,
+      "madPercent": 0.9221122597970439,
+      "minOpsPerSecond": 1598326.9788653115,
+      "maxOpsPerSecond": 1694823.7491276937,
+      "checksum": 731320792,
+      "cpuMicroseconds": {
+        "user": 782000,
+        "system": 110000
+      },
+      "memoryBefore": {
+        "rss": 72183808,
+        "heapTotal": 30867456,
+        "heapUsed": 18203496,
+        "external": 5135004,
+        "arrayBuffers": 143647
+      },
+      "memoryAfter": {
+        "rss": 84148224,
+        "heapTotal": 44064768,
+        "heapUsed": 20908104,
+        "external": 2378656,
+        "arrayBuffers": 143627
+      },
+      "processMaxRssBytes": 84148224
+    },
+    {
+      "run": 1,
+      "dataset": "cache-pool-128-hit0",
+      "method": "cache-pool",
+      "exactOutputVerified": true,
+      "outputSha256": "2ddb7014e58a9af1f91aea154e5568b03e0ea38380e50234a42b1a96a4e5704e",
+      "outputBytes": 249,
+      "inputBytes": 35386,
+      "inputSha256": "770e7a1a454e20c263058a3be059084fee4f2af65bb7e744dbe3ec8a0cd1d9c0",
+      "unitsPerOperation": 1,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "154d1683ec0db600a2053528c08d776ac123367fb9afee573cb173466c14e0a1"
+        }
+      ],
+      "scalarOutput": false,
+      "arrayOutput": false,
+      "cachePool": {
+        "size": 128,
+        "plannedHitPercent": 0,
+        "checkedSteps": 400,
+        "trace": "round-robin identity pool; step%100 >= hitPercent mutates body and increments explicit per-record version; both candidates include scheduling/version/mutation cost; cache prefilled outside timing; no automatic detection"
+      },
+      "comparableStableOperation": true,
+      "outputHashContract": "first result from independent initial state; entire 400-step trace checked",
+      "inputHashContract": "actual single JSON-text bytes, or JSON.stringify of batch/object/cache-pool inputs",
+      "warmup": {
+        "iterations": 239648,
+        "elapsedMs": 300.0313,
+        "opsPerSecond": 798743.331112454
+      },
+      "samples": [
+        {
+          "iterations": 80368,
+          "elapsedMs": 100.0308,
+          "opsPerSecond": 803432.5427768248
+        },
+        {
+          "iterations": 81136,
+          "elapsedMs": 100.03860000000003,
+          "opsPerSecond": 811046.935882749
+        },
+        {
+          "iterations": 82672,
+          "elapsedMs": 100.03179999999998,
+          "opsPerSecond": 826457.1866146567
+        },
+        {
+          "iterations": 81104,
+          "elapsedMs": 100.02850000000001,
+          "opsPerSecond": 810808.9194579545
+        },
+        {
+          "iterations": 83328,
+          "elapsedMs": 100.03409999999997,
+          "opsPerSecond": 832995.9483816022
+        },
+        {
+          "iterations": 81312,
+          "elapsedMs": 100.03680000000008,
+          "opsPerSecond": 812820.8819154544
+        },
+        {
+          "iterations": 81712,
+          "elapsedMs": 100.03789999999992,
+          "opsPerSecond": 816810.4288474674
+        },
+        {
+          "iterations": 80768,
+          "elapsedMs": 100.03610000000003,
+          "opsPerSecond": 807388.5327396807
+        },
+        {
+          "iterations": 76320,
+          "elapsedMs": 100.04150000000004,
+          "opsPerSecond": 762883.4033875938
+        }
+      ],
+      "medianOpsPerSecond": 811046.935882749,
+      "medianItemsPerSecond": 811046.935882749,
+      "madPercent": 0.7106238504489693,
+      "minOpsPerSecond": 762883.4033875938,
+      "maxOpsPerSecond": 832995.9483816022,
+      "checksum": 365203416,
+      "cpuMicroseconds": {
+        "user": 828000,
+        "system": 94000
+      },
+      "memoryBefore": {
+        "rss": 72634368,
+        "heapTotal": 30605312,
+        "heapUsed": 16745752,
+        "external": 5135004,
+        "arrayBuffers": 143647
+      },
+      "memoryAfter": {
+        "rss": 83587072,
+        "heapTotal": 43278336,
+        "heapUsed": 16596496,
+        "external": 2378656,
+        "arrayBuffers": 143627
+      },
+      "processMaxRssBytes": 83587072
+    },
+    {
+      "run": 1,
+      "dataset": "cache-pool-32-hit99",
+      "method": "public-pool",
+      "exactOutputVerified": true,
+      "outputSha256": "d4a1c1400a6067b8b56592c36234d1cbb22cfd072b728d03151076c6bda2ff49",
+      "outputBytes": 247,
+      "inputBytes": 8666,
+      "inputSha256": "d813fe4db675c2549a52b38d4be03726fb5eb3cc100df1b0f70f05b862739515",
+      "unitsPerOperation": 1,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "154d1683ec0db600a2053528c08d776ac123367fb9afee573cb173466c14e0a1"
+        }
+      ],
+      "scalarOutput": false,
+      "arrayOutput": false,
+      "cachePool": {
+        "size": 32,
+        "plannedHitPercent": 99,
+        "checkedSteps": 400,
+        "trace": "round-robin identity pool; step%100 >= hitPercent mutates body and increments explicit per-record version; both candidates include scheduling/version/mutation cost; cache prefilled outside timing; no automatic detection"
+      },
+      "comparableStableOperation": true,
+      "outputHashContract": "first result from independent initial state; entire 400-step trace checked",
+      "inputHashContract": "actual single JSON-text bytes, or JSON.stringify of batch/object/cache-pool inputs",
+      "warmup": {
+        "iterations": 292224,
+        "elapsedMs": 300.0358,
+        "opsPerSecond": 973963.7736563437
+      },
+      "samples": [
+        {
+          "iterations": 96080,
+          "elapsedMs": 100.0401,
+          "opsPerSecond": 960414.8736356721
+        },
+        {
+          "iterations": 91520,
+          "elapsedMs": 100.04470000000003,
+          "opsPerSecond": 914791.0883834923
+        },
+        {
+          "iterations": 98496,
+          "elapsedMs": 100.0426,
+          "opsPerSecond": 984540.5857104874
+        },
+        {
+          "iterations": 95776,
+          "elapsedMs": 100.03380000000004,
+          "opsPerSecond": 957436.3865013621
+        },
+        {
+          "iterations": 92528,
+          "elapsedMs": 100.0408000000001,
+          "opsPerSecond": 924902.6397229921
+        },
+        {
+          "iterations": 94864,
+          "elapsedMs": 100.03549999999996,
+          "opsPerSecond": 948303.3523099304
+        },
+        {
+          "iterations": 94144,
+          "elapsedMs": 100.03499999999997,
+          "opsPerSecond": 941110.6112860502
+        },
+        {
+          "iterations": 93552,
+          "elapsedMs": 100.04019999999991,
+          "opsPerSecond": 935144.0720830234
+        },
+        {
+          "iterations": 91776,
+          "elapsedMs": 100.03059999999982,
+          "opsPerSecond": 917479.2513490889
+        }
+      ],
+      "medianOpsPerSecond": 941110.6112860502,
+      "medianItemsPerSecond": 941110.6112860502,
+      "madPercent": 1.7347350055911435,
+      "minOpsPerSecond": 914791.0883834923,
+      "maxOpsPerSecond": 984540.5857104874,
+      "checksum": 422379745,
+      "cpuMicroseconds": {
+        "user": 875000,
+        "system": 32000
+      },
+      "memoryBefore": {
+        "rss": 72499200,
+        "heapTotal": 30605312,
+        "heapUsed": 16688240,
+        "external": 5135004,
+        "arrayBuffers": 143647
+      },
+      "memoryAfter": {
+        "rss": 67633152,
+        "heapTotal": 26763264,
+        "heapUsed": 11832960,
+        "external": 2378656,
+        "arrayBuffers": 143627
+      },
+      "processMaxRssBytes": 73576448
+    },
+    {
+      "run": 1,
+      "dataset": "cache-pool-32-hit99",
+      "method": "cache-pool",
+      "exactOutputVerified": true,
+      "outputSha256": "d4a1c1400a6067b8b56592c36234d1cbb22cfd072b728d03151076c6bda2ff49",
+      "outputBytes": 247,
+      "inputBytes": 8666,
+      "inputSha256": "d813fe4db675c2549a52b38d4be03726fb5eb3cc100df1b0f70f05b862739515",
+      "unitsPerOperation": 1,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "154d1683ec0db600a2053528c08d776ac123367fb9afee573cb173466c14e0a1"
+        }
+      ],
+      "scalarOutput": false,
+      "arrayOutput": false,
+      "cachePool": {
+        "size": 32,
+        "plannedHitPercent": 99,
+        "checkedSteps": 400,
+        "trace": "round-robin identity pool; step%100 >= hitPercent mutates body and increments explicit per-record version; both candidates include scheduling/version/mutation cost; cache prefilled outside timing; no automatic detection"
+      },
+      "comparableStableOperation": true,
+      "outputHashContract": "first result from independent initial state; entire 400-step trace checked",
+      "inputHashContract": "actual single JSON-text bytes, or JSON.stringify of batch/object/cache-pool inputs",
+      "warmup": {
+        "iterations": 9205600,
+        "elapsedMs": 300.02139999999997,
+        "opsPerSecond": 30683144.602351703
+      },
+      "samples": [
+        {
+          "iterations": 2669664,
+          "elapsedMs": 100.02370000000002,
+          "opsPerSecond": 26690314.395488266
+        },
+        {
+          "iterations": 2999136,
+          "elapsedMs": 100.02289999999999,
+          "opsPerSecond": 29984493.550976828
+        },
+        {
+          "iterations": 2896304,
+          "elapsedMs": 100.02380000000005,
+          "opsPerSecond": 28956148.436672058
+        },
+        {
+          "iterations": 2453744,
+          "elapsedMs": 100.02840000000003,
+          "opsPerSecond": 24530473.34556985
+        },
+        {
+          "iterations": 2692352,
+          "elapsedMs": 100.02589999999998,
+          "opsPerSecond": 26916548.613909002
+        },
+        {
+          "iterations": 2822032,
+          "elapsedMs": 100.02470000000005,
+          "opsPerSecond": 28213351.302228335
+        },
+        {
+          "iterations": 2876768,
+          "elapsedMs": 100.02469999999994,
+          "opsPerSecond": 28760576.13769401
+        },
+        {
+          "iterations": 2627008,
+          "elapsedMs": 100.03109999999992,
+          "opsPerSecond": 26261912.545198463
+        },
+        {
+          "iterations": 2607648,
+          "elapsedMs": 100.02389999999991,
+          "opsPerSecond": 26070249.21043873
+        }
+      ],
+      "medianOpsPerSecond": 26916548.613909002,
+      "medianItemsPerSecond": 26916548.613909002,
+      "madPercent": 4.81786393538292,
+      "minOpsPerSecond": 24530473.34556985,
+      "maxOpsPerSecond": 29984493.550976828,
+      "checksum": 3813163512,
+      "cpuMicroseconds": {
+        "user": 843000,
+        "system": 31000
+      },
+      "memoryBefore": {
+        "rss": 72409088,
+        "heapTotal": 30867456,
+        "heapUsed": 13876584,
+        "external": 5135004,
+        "arrayBuffers": 143647
+      },
+      "memoryAfter": {
+        "rss": 67629056,
+        "heapTotal": 27287552,
+        "heapUsed": 7724856,
+        "external": 2378656,
+        "arrayBuffers": 143627
+      },
+      "processMaxRssBytes": 73428992
+    },
+    {
+      "run": 1,
+      "dataset": "cache-pool-128-hit99",
+      "method": "public-pool",
+      "exactOutputVerified": true,
+      "outputSha256": "d4a1c1400a6067b8b56592c36234d1cbb22cfd072b728d03151076c6bda2ff49",
+      "outputBytes": 247,
+      "inputBytes": 35386,
+      "inputSha256": "770e7a1a454e20c263058a3be059084fee4f2af65bb7e744dbe3ec8a0cd1d9c0",
+      "unitsPerOperation": 1,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "154d1683ec0db600a2053528c08d776ac123367fb9afee573cb173466c14e0a1"
+        }
+      ],
+      "scalarOutput": false,
+      "arrayOutput": false,
+      "cachePool": {
+        "size": 128,
+        "plannedHitPercent": 99,
+        "checkedSteps": 400,
+        "trace": "round-robin identity pool; step%100 >= hitPercent mutates body and increments explicit per-record version; both candidates include scheduling/version/mutation cost; cache prefilled outside timing; no automatic detection"
+      },
+      "comparableStableOperation": true,
+      "outputHashContract": "first result from independent initial state; entire 400-step trace checked",
+      "inputHashContract": "actual single JSON-text bytes, or JSON.stringify of batch/object/cache-pool inputs",
+      "warmup": {
+        "iterations": 282928,
+        "elapsedMs": 300.0343,
+        "opsPerSecond": 942985.5186557005
+      },
+      "samples": [
+        {
+          "iterations": 94784,
+          "elapsedMs": 100.03390000000002,
+          "opsPerSecond": 947518.7911298068
+        },
+        {
+          "iterations": 95392,
+          "elapsedMs": 100.03869999999995,
+          "opsPerSecond": 953550.9757723765
+        },
+        {
+          "iterations": 94256,
+          "elapsedMs": 100.03500000000008,
+          "opsPerSecond": 942230.219423201
+        },
+        {
+          "iterations": 100656,
+          "elapsedMs": 100.03649999999993,
+          "opsPerSecond": 1006192.7396500284
+        },
+        {
+          "iterations": 97936,
+          "elapsedMs": 100.06119999999999,
+          "opsPerSecond": 978760.9982690595
+        },
+        {
+          "iterations": 95904,
+          "elapsedMs": 100.03319999999997,
+          "opsPerSecond": 958721.7043941414
+        },
+        {
+          "iterations": 95600,
+          "elapsedMs": 100.02979999999991,
+          "opsPerSecond": 955715.1968713332
+        },
+        {
+          "iterations": 95408,
+          "elapsedMs": 100.03230000000008,
+          "opsPerSecond": 953771.9316660712
+        },
+        {
+          "iterations": 94544,
+          "elapsedMs": 100.05679999999984,
+          "opsPerSecond": 944903.2949284822
+        }
+      ],
+      "medianOpsPerSecond": 953771.9316660712,
+      "medianItemsPerSecond": 953771.9316660712,
+      "madPercent": 0.6556222015614642,
+      "minOpsPerSecond": 942230.219423201,
+      "maxOpsPerSecond": 1006192.7396500284,
+      "checksum": 431521202,
+      "cpuMicroseconds": {
+        "user": 875000,
+        "system": 63000
+      },
+      "memoryBefore": {
+        "rss": 72208384,
+        "heapTotal": 30605312,
+        "heapUsed": 13008144,
+        "external": 5135004,
+        "arrayBuffers": 143647
+      },
+      "memoryAfter": {
+        "rss": 67317760,
+        "heapTotal": 26763264,
+        "heapUsed": 10814184,
+        "external": 2378656,
+        "arrayBuffers": 143627
+      },
+      "processMaxRssBytes": 73367552
+    },
+    {
+      "run": 1,
+      "dataset": "cache-pool-32-hit50",
+      "method": "oracle-pool",
+      "exactOutputVerified": true,
+      "outputSha256": "d4a1c1400a6067b8b56592c36234d1cbb22cfd072b728d03151076c6bda2ff49",
+      "outputBytes": 247,
+      "inputBytes": 8666,
+      "inputSha256": "d813fe4db675c2549a52b38d4be03726fb5eb3cc100df1b0f70f05b862739515",
+      "unitsPerOperation": 1,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "154d1683ec0db600a2053528c08d776ac123367fb9afee573cb173466c14e0a1"
+        }
+      ],
+      "scalarOutput": false,
+      "arrayOutput": false,
+      "cachePool": {
+        "size": 32,
+        "plannedHitPercent": 50,
+        "checkedSteps": 400,
+        "trace": "round-robin identity pool; step%100 >= hitPercent mutates body and increments explicit per-record version; both candidates include scheduling/version/mutation cost; cache prefilled outside timing; no automatic detection"
+      },
+      "comparableStableOperation": true,
+      "outputHashContract": "first result from independent initial state; entire 400-step trace checked",
+      "inputHashContract": "actual single JSON-text bytes, or JSON.stringify of batch/object/cache-pool inputs",
+      "warmup": {
+        "iterations": 263152,
+        "elapsedMs": 300.0286,
+        "opsPerSecond": 877089.7174469368
+      },
+      "samples": [
+        {
+          "iterations": 88896,
+          "elapsedMs": 100.03370000000001,
+          "opsPerSecond": 888660.5214042866
+        },
+        {
+          "iterations": 88656,
+          "elapsedMs": 100.02990000000005,
+          "opsPerSecond": 886294.9977956587
+        },
+        {
+          "iterations": 86816,
+          "elapsedMs": 100.02829999999994,
+          "opsPerSecond": 867914.3802303952
+        },
+        {
+          "iterations": 90592,
+          "elapsedMs": 100.03800000000001,
+          "opsPerSecond": 905575.8811651572
+        },
+        {
+          "iterations": 85520,
+          "elapsedMs": 100.04489999999998,
+          "opsPerSecond": 854816.1875317984
+        },
+        {
+          "iterations": 91600,
+          "elapsedMs": 100.04200000000003,
+          "opsPerSecond": 915615.4415145636
+        },
+        {
+          "iterations": 92256,
+          "elapsedMs": 100.02979999999991,
+          "opsPerSecond": 922285.1590226121
+        },
+        {
+          "iterations": 91104,
+          "elapsedMs": 100.02800000000002,
+          "opsPerSecond": 910784.9802055423
+        },
+        {
+          "iterations": 89184,
+          "elapsedMs": 100.04610000000002,
+          "opsPerSecond": 891429.0512073932
+        }
+      ],
+      "medianOpsPerSecond": 891429.0512073932,
+      "medianItemsPerSecond": 891429.0512073932,
+      "madPercent": 2.1713370202522055,
+      "minOpsPerSecond": 854816.1875317984,
+      "maxOpsPerSecond": 922285.1590226121,
+      "checksum": 398372976,
+      "cpuMicroseconds": {
+        "user": 891000,
+        "system": 31000
+      },
+      "memoryBefore": {
+        "rss": 72052736,
+        "heapTotal": 30605312,
+        "heapUsed": 15466368,
+        "external": 5135004,
+        "arrayBuffers": 143647
+      },
+      "memoryAfter": {
+        "rss": 67203072,
+        "heapTotal": 28073984,
+        "heapUsed": 7435992,
+        "external": 2378656,
+        "arrayBuffers": 143627
+      },
+      "processMaxRssBytes": 73834496
+    },
+    {
+      "run": 1,
+      "dataset": "cache-pool-128-hit99",
+      "method": "cache-pool",
+      "exactOutputVerified": true,
+      "outputSha256": "d4a1c1400a6067b8b56592c36234d1cbb22cfd072b728d03151076c6bda2ff49",
+      "outputBytes": 247,
+      "inputBytes": 35386,
+      "inputSha256": "770e7a1a454e20c263058a3be059084fee4f2af65bb7e744dbe3ec8a0cd1d9c0",
+      "unitsPerOperation": 1,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "154d1683ec0db600a2053528c08d776ac123367fb9afee573cb173466c14e0a1"
+        }
+      ],
+      "scalarOutput": false,
+      "arrayOutput": false,
+      "cachePool": {
+        "size": 128,
+        "plannedHitPercent": 99,
+        "checkedSteps": 400,
+        "trace": "round-robin identity pool; step%100 >= hitPercent mutates body and increments explicit per-record version; both candidates include scheduling/version/mutation cost; cache prefilled outside timing; no automatic detection"
+      },
+      "comparableStableOperation": true,
+      "outputHashContract": "first result from independent initial state; entire 400-step trace checked",
+      "inputHashContract": "actual single JSON-text bytes, or JSON.stringify of batch/object/cache-pool inputs",
+      "warmup": {
+        "iterations": 8746736,
+        "elapsedMs": 300.0266,
+        "opsPerSecond": 29153201.749444883
+      },
+      "samples": [
+        {
+          "iterations": 2401264,
+          "elapsedMs": 100.03300000000002,
+          "opsPerSecond": 24004718.442913834
+        },
+        {
+          "iterations": 2806144,
+          "elapsedMs": 100.02970000000005,
+          "opsPerSecond": 28053108.22685661
+        },
+        {
+          "iterations": 2804320,
+          "elapsedMs": 100.02530000000002,
+          "opsPerSecond": 28036106.86496316
+        },
+        {
+          "iterations": 2584064,
+          "elapsedMs": 100.02549999999997,
+          "opsPerSecond": 25834052.31665926
+        },
+        {
+          "iterations": 2541376,
+          "elapsedMs": 100.02659999999992,
+          "opsPerSecond": 25407001.737537835
+        },
+        {
+          "iterations": 2718400,
+          "elapsedMs": 100.02559999999994,
+          "opsPerSecond": 27177042.677074686
+        },
+        {
+          "iterations": 2851568,
+          "elapsedMs": 100.02299999999991,
+          "opsPerSecond": 28509122.901732627
+        },
+        {
+          "iterations": 2589536,
+          "elapsedMs": 100.02530000000002,
+          "opsPerSecond": 25888810.131036844
+        },
+        {
+          "iterations": 2538896,
+          "elapsedMs": 100.02430000000004,
+          "opsPerSecond": 25382791.981548473
+        }
+      ],
+      "medianOpsPerSecond": 25888810.131036844,
+      "medianItemsPerSecond": 25888810.131036844,
+      "madPercent": 4.9760206804307385,
+      "minOpsPerSecond": 24004718.442913834,
+      "maxOpsPerSecond": 28509122.901732627,
+      "checksum": 3682321581,
+      "cpuMicroseconds": {
+        "user": 843000,
+        "system": 47000
+      },
+      "memoryBefore": {
+        "rss": 72282112,
+        "heapTotal": 31391744,
+        "heapUsed": 15606904,
+        "external": 5135004,
+        "arrayBuffers": 143647
+      },
+      "memoryAfter": {
+        "rss": 67633152,
+        "heapTotal": 26501120,
+        "heapUsed": 14712144,
+        "external": 2378656,
+        "arrayBuffers": 143627
+      },
+      "processMaxRssBytes": 73428992
+    },
+    {
+      "run": 1,
+      "dataset": "cache-pool-128-hit0",
+      "method": "oracle-pool",
+      "exactOutputVerified": true,
+      "outputSha256": "2ddb7014e58a9af1f91aea154e5568b03e0ea38380e50234a42b1a96a4e5704e",
+      "outputBytes": 249,
+      "inputBytes": 35386,
+      "inputSha256": "770e7a1a454e20c263058a3be059084fee4f2af65bb7e744dbe3ec8a0cd1d9c0",
+      "unitsPerOperation": 1,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "154d1683ec0db600a2053528c08d776ac123367fb9afee573cb173466c14e0a1"
+        }
+      ],
+      "scalarOutput": false,
+      "arrayOutput": false,
+      "cachePool": {
+        "size": 128,
+        "plannedHitPercent": 0,
+        "checkedSteps": 400,
+        "trace": "round-robin identity pool; step%100 >= hitPercent mutates body and increments explicit per-record version; both candidates include scheduling/version/mutation cost; cache prefilled outside timing; no automatic detection"
+      },
+      "comparableStableOperation": true,
+      "outputHashContract": "first result from independent initial state; entire 400-step trace checked",
+      "inputHashContract": "actual single JSON-text bytes, or JSON.stringify of batch/object/cache-pool inputs",
+      "warmup": {
+        "iterations": 258544,
+        "elapsedMs": 300.0402,
+        "opsPerSecond": 861697.8658193134
+      },
+      "samples": [
+        {
+          "iterations": 84400,
+          "elapsedMs": 100.0326,
+          "opsPerSecond": 843724.9456677123
+        },
+        {
+          "iterations": 85760,
+          "elapsedMs": 100.03640000000001,
+          "opsPerSecond": 857287.9471872237
+        },
+        {
+          "iterations": 85232,
+          "elapsedMs": 100.03899999999999,
+          "opsPerSecond": 851987.724787333
+        },
+        {
+          "iterations": 86016,
+          "elapsedMs": 100.03219999999999,
+          "opsPerSecond": 859883.1176361212
+        },
+        {
+          "iterations": 84432,
+          "elapsedMs": 100.06099999999992,
+          "opsPerSecond": 843805.2787799449
+        },
+        {
+          "iterations": 81856,
+          "elapsedMs": 100.03899999999999,
+          "opsPerSecond": 818240.8860544389
+        },
+        {
+          "iterations": 84768,
+          "elapsedMs": 100.04789999999991,
+          "opsPerSecond": 847274.1556794302
+        },
+        {
+          "iterations": 85168,
+          "elapsedMs": 100.0353,
+          "opsPerSecond": 851379.4630495434
+        },
+        {
+          "iterations": 84112,
+          "elapsedMs": 100.03129999999987,
+          "opsPerSecond": 840856.811817902
+        }
+      ],
+      "medianOpsPerSecond": 847274.1556794302,
+      "medianItemsPerSecond": 847274.1556794302,
+      "madPercent": 0.5563215962987802,
+      "minOpsPerSecond": 818240.8860544389,
+      "maxOpsPerSecond": 859883.1176361212,
+      "checksum": 384795886,
+      "cpuMicroseconds": {
+        "user": 875000,
+        "system": 31000
+      },
+      "memoryBefore": {
+        "rss": 72015872,
+        "heapTotal": 30605312,
+        "heapUsed": 14660960,
+        "external": 5135004,
+        "arrayBuffers": 143647
+      },
+      "memoryAfter": {
+        "rss": 83673088,
+        "heapTotal": 44064768,
+        "heapUsed": 8478712,
+        "external": 2378656,
+        "arrayBuffers": 143627
+      },
+      "processMaxRssBytes": 83673088
+    },
+    {
+      "run": 1,
+      "dataset": "cache-pool-128-hit50",
+      "method": "cache-pool",
+      "exactOutputVerified": true,
+      "outputSha256": "d4a1c1400a6067b8b56592c36234d1cbb22cfd072b728d03151076c6bda2ff49",
+      "outputBytes": 247,
+      "inputBytes": 35386,
+      "inputSha256": "770e7a1a454e20c263058a3be059084fee4f2af65bb7e744dbe3ec8a0cd1d9c0",
+      "unitsPerOperation": 1,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "154d1683ec0db600a2053528c08d776ac123367fb9afee573cb173466c14e0a1"
+        }
+      ],
+      "scalarOutput": false,
+      "arrayOutput": false,
+      "cachePool": {
+        "size": 128,
+        "plannedHitPercent": 50,
+        "checkedSteps": 400,
+        "trace": "round-robin identity pool; step%100 >= hitPercent mutates body and increments explicit per-record version; both candidates include scheduling/version/mutation cost; cache prefilled outside timing; no automatic detection"
+      },
+      "comparableStableOperation": true,
+      "outputHashContract": "first result from independent initial state; entire 400-step trace checked",
+      "inputHashContract": "actual single JSON-text bytes, or JSON.stringify of batch/object/cache-pool inputs",
+      "warmup": {
+        "iterations": 461504,
+        "elapsedMs": 300.0366,
+        "opsPerSecond": 1538159.0112672918
+      },
+      "samples": [
+        {
+          "iterations": 154688,
+          "elapsedMs": 100.03879999999998,
+          "opsPerSecond": 1546280.0433431831
+        },
+        {
+          "iterations": 160320,
+          "elapsedMs": 100.03359999999992,
+          "opsPerSecond": 1602661.5057340746
+        },
+        {
+          "iterations": 168192,
+          "elapsedMs": 100.05380000000002,
+          "opsPerSecond": 1681015.613599883
+        },
+        {
+          "iterations": 159856,
+          "elapsedMs": 100.03370000000007,
+          "opsPerSecond": 1598021.466765699
+        },
+        {
+          "iterations": 160304,
+          "elapsedMs": 100.03459999999995,
+          "opsPerSecond": 1602485.5400031595
+        },
+        {
+          "iterations": 164240,
+          "elapsedMs": 100.03880000000004,
+          "opsPerSecond": 1641762.9959575678
+        },
+        {
+          "iterations": 158896,
+          "elapsedMs": 100.03370000000007,
+          "opsPerSecond": 1588424.7008758038
+        },
+        {
+          "iterations": 157184,
+          "elapsedMs": 100.03949999999986,
+          "opsPerSecond": 1571219.3683495042
+        },
+        {
+          "iterations": 165184,
+          "elapsedMs": 100.03849999999989,
+          "opsPerSecond": 1651204.2863497573
+        }
+      ],
+      "medianOpsPerSecond": 1602485.5400031595,
+      "medianItemsPerSecond": 1602485.5400031595,
+      "madPercent": 1.9511047602709546,
+      "minOpsPerSecond": 1546280.0433431831,
+      "maxOpsPerSecond": 1681015.613599883,
+      "checksum": 720426926,
+      "cpuMicroseconds": {
+        "user": 859000,
+        "system": 31000
+      },
+      "memoryBefore": {
+        "rss": 72478720,
+        "heapTotal": 30867456,
+        "heapUsed": 15731664,
+        "external": 5135004,
+        "arrayBuffers": 143647
+      },
+      "memoryAfter": {
+        "rss": 83939328,
+        "heapTotal": 43540480,
+        "heapUsed": 22246560,
+        "external": 2378656,
+        "arrayBuffers": 143627
+      },
+      "processMaxRssBytes": 83939328
+    },
+    {
+      "run": 1,
+      "dataset": "cache-pool-32-hit90",
+      "method": "oracle-pool",
+      "exactOutputVerified": true,
+      "outputSha256": "d4a1c1400a6067b8b56592c36234d1cbb22cfd072b728d03151076c6bda2ff49",
+      "outputBytes": 247,
+      "inputBytes": 8666,
+      "inputSha256": "d813fe4db675c2549a52b38d4be03726fb5eb3cc100df1b0f70f05b862739515",
+      "unitsPerOperation": 1,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "154d1683ec0db600a2053528c08d776ac123367fb9afee573cb173466c14e0a1"
+        }
+      ],
+      "scalarOutput": false,
+      "arrayOutput": false,
+      "cachePool": {
+        "size": 32,
+        "plannedHitPercent": 90,
+        "checkedSteps": 400,
+        "trace": "round-robin identity pool; step%100 >= hitPercent mutates body and increments explicit per-record version; both candidates include scheduling/version/mutation cost; cache prefilled outside timing; no automatic detection"
+      },
+      "comparableStableOperation": true,
+      "outputHashContract": "first result from independent initial state; entire 400-step trace checked",
+      "inputHashContract": "actual single JSON-text bytes, or JSON.stringify of batch/object/cache-pool inputs",
+      "warmup": {
+        "iterations": 276240,
+        "elapsedMs": 300.0328,
+        "opsPerSecond": 920699.3368725019
+      },
+      "samples": [
+        {
+          "iterations": 92944,
+          "elapsedMs": 100.03660000000002,
+          "opsPerSecond": 929099.9494185126
+        },
+        {
+          "iterations": 94464,
+          "elapsedMs": 100.03609999999998,
+          "opsPerSecond": 944299.1080220042
+        },
+        {
+          "iterations": 93296,
+          "elapsedMs": 100.0335,
+          "opsPerSecond": 932647.5630663728
+        },
+        {
+          "iterations": 94624,
+          "elapsedMs": 100.03700000000003,
+          "opsPerSecond": 945890.0206923435
+        },
+        {
+          "iterations": 93680,
+          "elapsedMs": 100.03089999999997,
+          "opsPerSecond": 936510.6182189706
+        },
+        {
+          "iterations": 96720,
+          "elapsedMs": 100.03609999999992,
+          "opsPerSecond": 966850.9668009856
+        },
+        {
+          "iterations": 94416,
+          "elapsedMs": 100.03250000000003,
+          "opsPerSecond": 943853.247694499
+        },
+        {
+          "iterations": 90912,
+          "elapsedMs": 100.03160000000003,
+          "opsPerSecond": 908832.8088324087
+        },
+        {
+          "iterations": 93952,
+          "elapsedMs": 100.03600000000006,
+          "opsPerSecond": 939181.894517973
+        }
+      ],
+      "medianOpsPerSecond": 939181.894517973,
+      "medianItemsPerSecond": 939181.894517973,
+      "madPercent": 0.6957471699296199,
+      "minOpsPerSecond": 908832.8088324087,
+      "maxOpsPerSecond": 966850.9668009856,
+      "checksum": 418685657,
+      "cpuMicroseconds": {
+        "user": 828000,
+        "system": 0
+      },
+      "memoryBefore": {
+        "rss": 71991296,
+        "heapTotal": 30605312,
+        "heapUsed": 14775256,
+        "external": 5135004,
+        "arrayBuffers": 143647
+      },
+      "memoryAfter": {
+        "rss": 67121152,
+        "heapTotal": 26763264,
+        "heapUsed": 13034600,
+        "external": 2378656,
+        "arrayBuffers": 143627
+      },
+      "processMaxRssBytes": 73809920
+    },
+    {
+      "run": 1,
+      "dataset": "cache-pool-32-hit0",
+      "method": "cache-pool",
+      "exactOutputVerified": true,
+      "outputSha256": "2ddb7014e58a9af1f91aea154e5568b03e0ea38380e50234a42b1a96a4e5704e",
+      "outputBytes": 249,
+      "inputBytes": 8666,
+      "inputSha256": "d813fe4db675c2549a52b38d4be03726fb5eb3cc100df1b0f70f05b862739515",
+      "unitsPerOperation": 1,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "154d1683ec0db600a2053528c08d776ac123367fb9afee573cb173466c14e0a1"
+        }
+      ],
+      "scalarOutput": false,
+      "arrayOutput": false,
+      "cachePool": {
+        "size": 32,
+        "plannedHitPercent": 0,
+        "checkedSteps": 400,
+        "trace": "round-robin identity pool; step%100 >= hitPercent mutates body and increments explicit per-record version; both candidates include scheduling/version/mutation cost; cache prefilled outside timing; no automatic detection"
+      },
+      "comparableStableOperation": true,
+      "outputHashContract": "first result from independent initial state; entire 400-step trace checked",
+      "inputHashContract": "actual single JSON-text bytes, or JSON.stringify of batch/object/cache-pool inputs",
+      "warmup": {
+        "iterations": 244816,
+        "elapsedMs": 300.0458,
+        "opsPerSecond": 815928.7682080537
+      },
+      "samples": [
+        {
+          "iterations": 83664,
+          "elapsedMs": 100.0403,
+          "opsPerSecond": 836302.969903129
+        },
+        {
+          "iterations": 81904,
+          "elapsedMs": 100.03620000000006,
+          "opsPerSecond": 818743.6148114378
+        },
+        {
+          "iterations": 83120,
+          "elapsedMs": 100.04160000000002,
+          "opsPerSecond": 830854.3645843328
+        },
+        {
+          "iterations": 82992,
+          "elapsedMs": 100.0345000000001,
+          "opsPerSecond": 829633.7763471594
+        },
+        {
+          "iterations": 83520,
+          "elapsedMs": 100.1536000000001,
+          "opsPerSecond": 833919.1002619967
+        },
+        {
+          "iterations": 82176,
+          "elapsedMs": 100.04079999999999,
+          "opsPerSecond": 821424.8586576678
+        },
+        {
+          "iterations": 84592,
+          "elapsedMs": 100.02459999999996,
+          "opsPerSecond": 845711.9548591049
+        },
+        {
+          "iterations": 83168,
+          "elapsedMs": 100.0422000000001,
+          "opsPerSecond": 831329.1790864248
+        },
+        {
+          "iterations": 86128,
+          "elapsedMs": 100.04230000000007,
+          "opsPerSecond": 860915.8326028084
+        }
+      ],
+      "medianOpsPerSecond": 831329.1790864248,
+      "medianItemsPerSecond": 831329.1790864248,
+      "madPercent": 0.5982937856421858,
+      "minOpsPerSecond": 818743.6148114378,
+      "maxOpsPerSecond": 860915.8326028084,
+      "checksum": 371019262,
+      "cpuMicroseconds": {
+        "user": 766000,
+        "system": 125000
+      },
+      "memoryBefore": {
+        "rss": 72343552,
+        "heapTotal": 30867456,
+        "heapUsed": 14335448,
+        "external": 5135004,
+        "arrayBuffers": 143647
+      },
+      "memoryAfter": {
+        "rss": 83832832,
+        "heapTotal": 44589056,
+        "heapUsed": 15169136,
+        "external": 2378656,
+        "arrayBuffers": 143627
+      },
+      "processMaxRssBytes": 83832832
+    },
+    {
+      "run": 2,
+      "dataset": "cache-pool-32-hit90",
+      "method": "public-pool",
+      "exactOutputVerified": true,
+      "outputSha256": "d4a1c1400a6067b8b56592c36234d1cbb22cfd072b728d03151076c6bda2ff49",
+      "outputBytes": 247,
+      "inputBytes": 8666,
+      "inputSha256": "d813fe4db675c2549a52b38d4be03726fb5eb3cc100df1b0f70f05b862739515",
+      "unitsPerOperation": 1,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "154d1683ec0db600a2053528c08d776ac123367fb9afee573cb173466c14e0a1"
+        }
+      ],
+      "scalarOutput": false,
+      "arrayOutput": false,
+      "cachePool": {
+        "size": 32,
+        "plannedHitPercent": 90,
+        "checkedSteps": 400,
+        "trace": "round-robin identity pool; step%100 >= hitPercent mutates body and increments explicit per-record version; both candidates include scheduling/version/mutation cost; cache prefilled outside timing; no automatic detection"
+      },
+      "comparableStableOperation": true,
+      "outputHashContract": "first result from independent initial state; entire 400-step trace checked",
+      "inputHashContract": "actual single JSON-text bytes, or JSON.stringify of batch/object/cache-pool inputs",
+      "warmup": {
+        "iterations": 282704,
+        "elapsedMs": 300.034,
+        "opsPerSecond": 942239.8794803256
+      },
+      "samples": [
+        {
+          "iterations": 90672,
+          "elapsedMs": 100.03920000000005,
+          "opsPerSecond": 906364.7050356256
+        },
+        {
+          "iterations": 92864,
+          "elapsedMs": 100.04629999999997,
+          "opsPerSecond": 928210.2386595008
+        },
+        {
+          "iterations": 95104,
+          "elapsedMs": 100.04129999999998,
+          "opsPerSecond": 950647.3826309736
+        },
+        {
+          "iterations": 93584,
+          "elapsedMs": 100.02819999999997,
+          "opsPerSecond": 935576.1675207594
+        },
+        {
+          "iterations": 94656,
+          "elapsedMs": 100.03970000000004,
+          "opsPerSecond": 946184.3648071712
+        },
+        {
+          "iterations": 93712,
+          "elapsedMs": 100.05520000000001,
+          "opsPerSecond": 936602.9951466789
+        },
+        {
+          "iterations": 93008,
+          "elapsedMs": 100.04539999999997,
+          "opsPerSecond": 929657.9352973752
+        },
+        {
+          "iterations": 94000,
+          "elapsedMs": 100.03160000000003,
+          "opsPerSecond": 939703.0538349879
+        },
+        {
+          "iterations": 94816,
+          "elapsedMs": 100.03620000000001,
+          "opsPerSecond": 947816.8902857165
+        }
+      ],
+      "medianOpsPerSecond": 936602.9951466789,
+      "medianItemsPerSecond": 936602.9951466789,
+      "madPercent": 0.8960847371477461,
+      "minOpsPerSecond": 906364.7050356256,
+      "maxOpsPerSecond": 950647.3826309736,
+      "checksum": 420134988,
+      "cpuMicroseconds": {
+        "user": 859000,
+        "system": 78000
+      },
+      "memoryBefore": {
+        "rss": 72036352,
+        "heapTotal": 30605312,
+        "heapUsed": 17233144,
+        "external": 5135004,
+        "arrayBuffers": 143647
+      },
+      "memoryAfter": {
+        "rss": 67129344,
+        "heapTotal": 27549696,
+        "heapUsed": 11852576,
+        "external": 2378656,
+        "arrayBuffers": 143627
+      },
+      "processMaxRssBytes": 73375744
+    },
+    {
+      "run": 2,
+      "dataset": "cache-pool-32-hit50",
+      "method": "oracle-pool",
+      "exactOutputVerified": true,
+      "outputSha256": "d4a1c1400a6067b8b56592c36234d1cbb22cfd072b728d03151076c6bda2ff49",
+      "outputBytes": 247,
+      "inputBytes": 8666,
+      "inputSha256": "d813fe4db675c2549a52b38d4be03726fb5eb3cc100df1b0f70f05b862739515",
+      "unitsPerOperation": 1,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "154d1683ec0db600a2053528c08d776ac123367fb9afee573cb173466c14e0a1"
+        }
+      ],
+      "scalarOutput": false,
+      "arrayOutput": false,
+      "cachePool": {
+        "size": 32,
+        "plannedHitPercent": 50,
+        "checkedSteps": 400,
+        "trace": "round-robin identity pool; step%100 >= hitPercent mutates body and increments explicit per-record version; both candidates include scheduling/version/mutation cost; cache prefilled outside timing; no automatic detection"
+      },
+      "comparableStableOperation": true,
+      "outputHashContract": "first result from independent initial state; entire 400-step trace checked",
+      "inputHashContract": "actual single JSON-text bytes, or JSON.stringify of batch/object/cache-pool inputs",
+      "warmup": {
+        "iterations": 271680,
+        "elapsedMs": 300.0383,
+        "opsPerSecond": 905484.3998249557
+      },
+      "samples": [
+        {
+          "iterations": 88128,
+          "elapsedMs": 100.04050000000001,
+          "opsPerSecond": 880923.226093432
+        },
+        {
+          "iterations": 88992,
+          "elapsedMs": 100.0276,
+          "opsPerSecond": 889674.4498518409
+        },
+        {
+          "iterations": 90144,
+          "elapsedMs": 100.03679999999997,
+          "opsPerSecond": 901108.3921117032
+        },
+        {
+          "iterations": 89216,
+          "elapsedMs": 100.02800000000002,
+          "opsPerSecond": 891910.2651257647
+        },
+        {
+          "iterations": 87072,
+          "elapsedMs": 100.04500000000007,
+          "opsPerSecond": 870328.3522414907
+        },
+        {
+          "iterations": 89088,
+          "elapsedMs": 100.03300000000002,
+          "opsPerSecond": 890586.1065848268
+        },
+        {
+          "iterations": 88064,
+          "elapsedMs": 100.04129999999998,
+          "opsPerSecond": 880276.4458278733
+        },
+        {
+          "iterations": 86992,
+          "elapsedMs": 100.04169999999999,
+          "opsPerSecond": 869557.3945664659
+        },
+        {
+          "iterations": 88752,
+          "elapsedMs": 100.03999999999996,
+          "opsPerSecond": 887165.1339464218
+        }
+      ],
+      "medianOpsPerSecond": 887165.1339464218,
+      "medianItemsPerSecond": 887165.1339464218,
+      "madPercent": 0.7035790310225044,
+      "minOpsPerSecond": 869557.3945664659,
+      "maxOpsPerSecond": 901108.3921117032,
+      "checksum": 398503816,
+      "cpuMicroseconds": {
+        "user": 797000,
+        "system": 78000
+      },
+      "memoryBefore": {
+        "rss": 71933952,
+        "heapTotal": 30343168,
+        "heapUsed": 13439304,
+        "external": 5135004,
+        "arrayBuffers": 143647
+      },
+      "memoryAfter": {
+        "rss": 67010560,
+        "heapTotal": 26501120,
+        "heapUsed": 6413056,
+        "external": 2378656,
+        "arrayBuffers": 143627
+      },
+      "processMaxRssBytes": 73547776
+    },
+    {
+      "run": 2,
+      "dataset": "cache-pool-32-hit99",
+      "method": "oracle-pool",
+      "exactOutputVerified": true,
+      "outputSha256": "d4a1c1400a6067b8b56592c36234d1cbb22cfd072b728d03151076c6bda2ff49",
+      "outputBytes": 247,
+      "inputBytes": 8666,
+      "inputSha256": "d813fe4db675c2549a52b38d4be03726fb5eb3cc100df1b0f70f05b862739515",
+      "unitsPerOperation": 1,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "154d1683ec0db600a2053528c08d776ac123367fb9afee573cb173466c14e0a1"
+        }
+      ],
+      "scalarOutput": false,
+      "arrayOutput": false,
+      "cachePool": {
+        "size": 32,
+        "plannedHitPercent": 99,
+        "checkedSteps": 400,
+        "trace": "round-robin identity pool; step%100 >= hitPercent mutates body and increments explicit per-record version; both candidates include scheduling/version/mutation cost; cache prefilled outside timing; no automatic detection"
+      },
+      "comparableStableOperation": true,
+      "outputHashContract": "first result from independent initial state; entire 400-step trace checked",
+      "inputHashContract": "actual single JSON-text bytes, or JSON.stringify of batch/object/cache-pool inputs",
+      "warmup": {
+        "iterations": 286816,
+        "elapsedMs": 300.06850000000003,
+        "opsPerSecond": 955835.084322413
+      },
+      "samples": [
+        {
+          "iterations": 98208,
+          "elapsedMs": 100.04320000000001,
+          "opsPerSecond": 981655.9246405552
+        },
+        {
+          "iterations": 100112,
+          "elapsedMs": 100.0376,
+          "opsPerSecond": 1000743.7203611443
+        },
+        {
+          "iterations": 98368,
+          "elapsedMs": 100.02689999999996,
+          "opsPerSecond": 983415.4612409266
+        },
+        {
+          "iterations": 94544,
+          "elapsedMs": 100.03970000000004,
+          "opsPerSecond": 945064.8092707192
+        },
+        {
+          "iterations": 96016,
+          "elapsedMs": 100.0367,
+          "opsPerSecond": 959807.7505555461
+        },
+        {
+          "iterations": 96096,
+          "elapsedMs": 100.04070000000002,
+          "opsPerSecond": 960569.0483973022
+        },
+        {
+          "iterations": 92000,
+          "elapsedMs": 100.0335,
+          "opsPerSecond": 919691.9032124238
+        },
+        {
+          "iterations": 97488,
+          "elapsedMs": 100.03199999999993,
+          "opsPerSecond": 974568.1381957781
+        },
+        {
+          "iterations": 94864,
+          "elapsedMs": 100.04149999999981,
+          "opsPerSecond": 948246.4777117514
+        }
+      ],
+      "medianOpsPerSecond": 960569.0483973022,
+      "medianItemsPerSecond": 960569.0483973022,
+      "madPercent": 1.6140681560010304,
+      "minOpsPerSecond": 919691.9032124238,
+      "maxOpsPerSecond": 1000743.7203611443,
+      "checksum": 427375424,
+      "cpuMicroseconds": {
+        "user": 797000,
+        "system": 125000
+      },
+      "memoryBefore": {
+        "rss": 71872512,
+        "heapTotal": 30343168,
+        "heapUsed": 17230760,
+        "external": 5135004,
+        "arrayBuffers": 143647
+      },
+      "memoryAfter": {
+        "rss": 66822144,
+        "heapTotal": 26501120,
+        "heapUsed": 9559720,
+        "external": 2378656,
+        "arrayBuffers": 143627
+      },
+      "processMaxRssBytes": 73744384
+    },
+    {
+      "run": 2,
+      "dataset": "cache-pool-128-hit90",
+      "method": "oracle-pool",
+      "exactOutputVerified": true,
+      "outputSha256": "d4a1c1400a6067b8b56592c36234d1cbb22cfd072b728d03151076c6bda2ff49",
+      "outputBytes": 247,
+      "inputBytes": 35386,
+      "inputSha256": "770e7a1a454e20c263058a3be059084fee4f2af65bb7e744dbe3ec8a0cd1d9c0",
+      "unitsPerOperation": 1,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "154d1683ec0db600a2053528c08d776ac123367fb9afee573cb173466c14e0a1"
+        }
+      ],
+      "scalarOutput": false,
+      "arrayOutput": false,
+      "cachePool": {
+        "size": 128,
+        "plannedHitPercent": 90,
+        "checkedSteps": 400,
+        "trace": "round-robin identity pool; step%100 >= hitPercent mutates body and increments explicit per-record version; both candidates include scheduling/version/mutation cost; cache prefilled outside timing; no automatic detection"
+      },
+      "comparableStableOperation": true,
+      "outputHashContract": "first result from independent initial state; entire 400-step trace checked",
+      "inputHashContract": "actual single JSON-text bytes, or JSON.stringify of batch/object/cache-pool inputs",
+      "warmup": {
+        "iterations": 276832,
+        "elapsedMs": 300.0638,
+        "opsPerSecond": 922577.1319299429
+      },
+      "samples": [
+        {
+          "iterations": 91712,
+          "elapsedMs": 100.0496,
+          "opsPerSecond": 916665.3339943389
+        },
+        {
+          "iterations": 96048,
+          "elapsedMs": 100.03749999999997,
+          "opsPerSecond": 960119.955016869
+        },
+        {
+          "iterations": 90768,
+          "elapsedMs": 100.03629999999998,
+          "opsPerSecond": 907350.6317206855
+        },
+        {
+          "iterations": 95056,
+          "elapsedMs": 100.02620000000002,
+          "opsPerSecond": 950311.0185131493
+        },
+        {
+          "iterations": 95568,
+          "elapsedMs": 100.04000000000008,
+          "opsPerSecond": 955297.8808476602
+        },
+        {
+          "iterations": 92592,
+          "elapsedMs": 100.03230000000008,
+          "opsPerSecond": 925621.0244091151
+        },
+        {
+          "iterations": 92560,
+          "elapsedMs": 100.13420000000008,
+          "opsPerSecond": 924359.509538199
+        },
+        {
+          "iterations": 91664,
+          "elapsedMs": 100.0299,
+          "opsPerSecond": 916366.0065640374
+        },
+        {
+          "iterations": 89872,
+          "elapsedMs": 100.04229999999984,
+          "opsPerSecond": 898340.0021790797
+        }
+      ],
+      "medianOpsPerSecond": 924359.509538199,
+      "medianItemsPerSecond": 924359.509538199,
+      "madPercent": 1.840071708248126,
+      "minOpsPerSecond": 898340.0021790797,
+      "maxOpsPerSecond": 960119.955016869,
+      "checksum": 418023708,
+      "cpuMicroseconds": {
+        "user": 875000,
+        "system": 16000
+      },
+      "memoryBefore": {
+        "rss": 72216576,
+        "heapTotal": 30343168,
+        "heapUsed": 21004944,
+        "external": 5135004,
+        "arrayBuffers": 143647
+      },
+      "memoryAfter": {
+        "rss": 83591168,
+        "heapTotal": 43540480,
+        "heapUsed": 16986000,
+        "external": 2378656,
+        "arrayBuffers": 143627
+      },
+      "processMaxRssBytes": 83591168
+    },
+    {
+      "run": 2,
+      "dataset": "cache-pool-128-hit99",
+      "method": "public-pool",
+      "exactOutputVerified": true,
+      "outputSha256": "d4a1c1400a6067b8b56592c36234d1cbb22cfd072b728d03151076c6bda2ff49",
+      "outputBytes": 247,
+      "inputBytes": 35386,
+      "inputSha256": "770e7a1a454e20c263058a3be059084fee4f2af65bb7e744dbe3ec8a0cd1d9c0",
+      "unitsPerOperation": 1,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "154d1683ec0db600a2053528c08d776ac123367fb9afee573cb173466c14e0a1"
+        }
+      ],
+      "scalarOutput": false,
+      "arrayOutput": false,
+      "cachePool": {
+        "size": 128,
+        "plannedHitPercent": 99,
+        "checkedSteps": 400,
+        "trace": "round-robin identity pool; step%100 >= hitPercent mutates body and increments explicit per-record version; both candidates include scheduling/version/mutation cost; cache prefilled outside timing; no automatic detection"
+      },
+      "comparableStableOperation": true,
+      "outputHashContract": "first result from independent initial state; entire 400-step trace checked",
+      "inputHashContract": "actual single JSON-text bytes, or JSON.stringify of batch/object/cache-pool inputs",
+      "warmup": {
+        "iterations": 284960,
+        "elapsedMs": 300.0391,
+        "opsPerSecond": 949742.883510849
+      },
+      "samples": [
+        {
+          "iterations": 93104,
+          "elapsedMs": 100.03399999999999,
+          "opsPerSecond": 930723.5539916429
+        },
+        {
+          "iterations": 96816,
+          "elapsedMs": 100.03159999999997,
+          "opsPerSecond": 967854.1580860451
+        },
+        {
+          "iterations": 94288,
+          "elapsedMs": 100.04279999999994,
+          "opsPerSecond": 942476.6200066376
+        },
+        {
+          "iterations": 93888,
+          "elapsedMs": 100.02919999999995,
+          "opsPerSecond": 938605.9270692962
+        },
+        {
+          "iterations": 93984,
+          "elapsedMs": 100.03099999999995,
+          "opsPerSecond": 939548.7398906344
+        },
+        {
+          "iterations": 95536,
+          "elapsedMs": 100.02729999999997,
+          "opsPerSecond": 955099.2579025929
+        },
+        {
+          "iterations": 98976,
+          "elapsedMs": 100.03219999999988,
+          "opsPerSecond": 989441.3998692434
+        },
+        {
+          "iterations": 99456,
+          "elapsedMs": 100.03240000000005,
+          "opsPerSecond": 994237.8669311138
+        },
+        {
+          "iterations": 99088,
+          "elapsedMs": 100.02679999999987,
+          "opsPerSecond": 990614.5153098983
+        }
+      ],
+      "medianOpsPerSecond": 955099.2579025929,
+      "medianItemsPerSecond": 955099.2579025929,
+      "madPercent": 1.7268708667532788,
+      "minOpsPerSecond": 930723.5539916429,
+      "maxOpsPerSecond": 994237.8669311138,
+      "checksum": 432532709,
+      "cpuMicroseconds": {
+        "user": 907000,
+        "system": 0
+      },
+      "memoryBefore": {
+        "rss": 71974912,
+        "heapTotal": 30605312,
+        "heapUsed": 18347480,
+        "external": 5135004,
+        "arrayBuffers": 143647
+      },
+      "memoryAfter": {
+        "rss": 66965504,
+        "heapTotal": 27025408,
+        "heapUsed": 9958664,
+        "external": 2378656,
+        "arrayBuffers": 143627
+      },
+      "processMaxRssBytes": 73203712
+    },
+    {
+      "run": 2,
+      "dataset": "cache-pool-128-hit0",
+      "method": "oracle-pool",
+      "exactOutputVerified": true,
+      "outputSha256": "2ddb7014e58a9af1f91aea154e5568b03e0ea38380e50234a42b1a96a4e5704e",
+      "outputBytes": 249,
+      "inputBytes": 35386,
+      "inputSha256": "770e7a1a454e20c263058a3be059084fee4f2af65bb7e744dbe3ec8a0cd1d9c0",
+      "unitsPerOperation": 1,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "154d1683ec0db600a2053528c08d776ac123367fb9afee573cb173466c14e0a1"
+        }
+      ],
+      "scalarOutput": false,
+      "arrayOutput": false,
+      "cachePool": {
+        "size": 128,
+        "plannedHitPercent": 0,
+        "checkedSteps": 400,
+        "trace": "round-robin identity pool; step%100 >= hitPercent mutates body and increments explicit per-record version; both candidates include scheduling/version/mutation cost; cache prefilled outside timing; no automatic detection"
+      },
+      "comparableStableOperation": true,
+      "outputHashContract": "first result from independent initial state; entire 400-step trace checked",
+      "inputHashContract": "actual single JSON-text bytes, or JSON.stringify of batch/object/cache-pool inputs",
+      "warmup": {
+        "iterations": 252192,
+        "elapsedMs": 300.0286,
+        "opsPerSecond": 840559.8666260483
+      },
+      "samples": [
+        {
+          "iterations": 81984,
+          "elapsedMs": 100.04390000000001,
+          "opsPerSecond": 819480.2481710529
+        },
+        {
+          "iterations": 83328,
+          "elapsedMs": 100.04829999999998,
+          "opsPerSecond": 832877.7200612106
+        },
+        {
+          "iterations": 85280,
+          "elapsedMs": 100.03620000000001,
+          "opsPerSecond": 852491.3981138828
+        },
+        {
+          "iterations": 85216,
+          "elapsedMs": 100.0358,
+          "opsPerSecond": 851855.0358971489
+        },
+        {
+          "iterations": 84496,
+          "elapsedMs": 100.04340000000002,
+          "opsPerSecond": 844593.4464442431
+        },
+        {
+          "iterations": 84688,
+          "elapsedMs": 100.0385,
+          "opsPerSecond": 846554.076680478
+        },
+        {
+          "iterations": 85424,
+          "elapsedMs": 100.03199999999993,
+          "opsPerSecond": 853966.7306461938
+        },
+        {
+          "iterations": 86416,
+          "elapsedMs": 100.03729999999996,
+          "opsPerSecond": 863837.7885048881
+        },
+        {
+          "iterations": 85872,
+          "elapsedMs": 100.0476000000001,
+          "opsPerSecond": 858311.4437527728
+        }
+      ],
+      "medianOpsPerSecond": 851855.0358971489,
+      "medianItemsPerSecond": 851855.0358971489,
+      "madPercent": 0.7579233066133332,
+      "minOpsPerSecond": 819480.2481710529,
+      "maxOpsPerSecond": 863837.7885048881,
+      "checksum": 382761135,
+      "cpuMicroseconds": {
+        "user": 922000,
+        "system": 63000
+      },
+      "memoryBefore": {
+        "rss": 72044544,
+        "heapTotal": 30343168,
+        "heapUsed": 12942728,
+        "external": 5135004,
+        "arrayBuffers": 143647
+      },
+      "memoryAfter": {
+        "rss": 83795968,
+        "heapTotal": 44064768,
+        "heapUsed": 20846480,
+        "external": 2378656,
+        "arrayBuffers": 143627
+      },
+      "processMaxRssBytes": 83795968
+    },
+    {
+      "run": 2,
+      "dataset": "cache-pool-32-hit0",
+      "method": "public-pool",
+      "exactOutputVerified": true,
+      "outputSha256": "2ddb7014e58a9af1f91aea154e5568b03e0ea38380e50234a42b1a96a4e5704e",
+      "outputBytes": 249,
+      "inputBytes": 8666,
+      "inputSha256": "d813fe4db675c2549a52b38d4be03726fb5eb3cc100df1b0f70f05b862739515",
+      "unitsPerOperation": 1,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "154d1683ec0db600a2053528c08d776ac123367fb9afee573cb173466c14e0a1"
+        }
+      ],
+      "scalarOutput": false,
+      "arrayOutput": false,
+      "cachePool": {
+        "size": 32,
+        "plannedHitPercent": 0,
+        "checkedSteps": 400,
+        "trace": "round-robin identity pool; step%100 >= hitPercent mutates body and increments explicit per-record version; both candidates include scheduling/version/mutation cost; cache prefilled outside timing; no automatic detection"
+      },
+      "comparableStableOperation": true,
+      "outputHashContract": "first result from independent initial state; entire 400-step trace checked",
+      "inputHashContract": "actual single JSON-text bytes, or JSON.stringify of batch/object/cache-pool inputs",
+      "warmup": {
+        "iterations": 264016,
+        "elapsedMs": 300.0304,
+        "opsPerSecond": 879964.1636314187
+      },
+      "samples": [
+        {
+          "iterations": 86560,
+          "elapsedMs": 100.03390000000002,
+          "opsPerSecond": 865306.6610419067
+        },
+        {
+          "iterations": 87136,
+          "elapsedMs": 100.04510000000005,
+          "opsPerSecond": 870967.1937955978
+        },
+        {
+          "iterations": 87968,
+          "elapsedMs": 100.04629999999997,
+          "opsPerSecond": 879272.8966488518
+        },
+        {
+          "iterations": 86032,
+          "elapsedMs": 100.03049999999996,
+          "opsPerSecond": 860057.6824068662
+        },
+        {
+          "iterations": 88896,
+          "elapsedMs": 100.02940000000001,
+          "opsPerSecond": 888698.7225755627
+        },
+        {
+          "iterations": 85632,
+          "elapsedMs": 100.02940000000001,
+          "opsPerSecond": 856068.3159151209
+        },
+        {
+          "iterations": 83744,
+          "elapsedMs": 100.04309999999998,
+          "opsPerSecond": 837079.2188566729
+        },
+        {
+          "iterations": 87744,
+          "elapsedMs": 100.04340000000002,
+          "opsPerSecond": 877059.356239392
+        },
+        {
+          "iterations": 87632,
+          "elapsedMs": 100.03510000000006,
+          "opsPerSecond": 876012.519605618
+        }
+      ],
+      "medianOpsPerSecond": 870967.1937955978,
+      "medianItemsPerSecond": 870967.1937955978,
+      "madPercent": 0.9536183351589314,
+      "minOpsPerSecond": 837079.2188566729,
+      "maxOpsPerSecond": 888698.7225755627,
+      "checksum": 389336792,
+      "cpuMicroseconds": {
+        "user": 875000,
+        "system": 16000
+      },
+      "memoryBefore": {
+        "rss": 72384512,
+        "heapTotal": 30867456,
+        "heapUsed": 18712760,
+        "external": 5135004,
+        "arrayBuffers": 143647
+      },
+      "memoryAfter": {
+        "rss": 67559424,
+        "heapTotal": 27549696,
+        "heapUsed": 10920248,
+        "external": 2378656,
+        "arrayBuffers": 143627
+      },
+      "processMaxRssBytes": 73408512
+    },
+    {
+      "run": 2,
+      "dataset": "cache-pool-128-hit90",
+      "method": "cache-pool",
+      "exactOutputVerified": true,
+      "outputSha256": "d4a1c1400a6067b8b56592c36234d1cbb22cfd072b728d03151076c6bda2ff49",
+      "outputBytes": 247,
+      "inputBytes": 35386,
+      "inputSha256": "770e7a1a454e20c263058a3be059084fee4f2af65bb7e744dbe3ec8a0cd1d9c0",
+      "unitsPerOperation": 1,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "154d1683ec0db600a2053528c08d776ac123367fb9afee573cb173466c14e0a1"
+        }
+      ],
+      "scalarOutput": false,
+      "arrayOutput": false,
+      "cachePool": {
+        "size": 128,
+        "plannedHitPercent": 90,
+        "checkedSteps": 400,
+        "trace": "round-robin identity pool; step%100 >= hitPercent mutates body and increments explicit per-record version; both candidates include scheduling/version/mutation cost; cache prefilled outside timing; no automatic detection"
+      },
+      "comparableStableOperation": true,
+      "outputHashContract": "first result from independent initial state; entire 400-step trace checked",
+      "inputHashContract": "actual single JSON-text bytes, or JSON.stringify of batch/object/cache-pool inputs",
+      "warmup": {
+        "iterations": 2093696,
+        "elapsedMs": 300.0276,
+        "opsPerSecond": 6978344.658958042
+      },
+      "samples": [
+        {
+          "iterations": 689712,
+          "elapsedMs": 100.031,
+          "opsPerSecond": 6894982.555407823
+        },
+        {
+          "iterations": 738992,
+          "elapsedMs": 100.03340000000003,
+          "opsPerSecond": 7387452.5908346595
+        },
+        {
+          "iterations": 721904,
+          "elapsedMs": 100.0299,
+          "opsPerSecond": 7216882.152236481
+        },
+        {
+          "iterations": 700496,
+          "elapsedMs": 100.03060000000005,
+          "opsPerSecond": 7002817.137955782
+        },
+        {
+          "iterations": 713296,
+          "elapsedMs": 100.03730000000007,
+          "opsPerSecond": 7130300.397951559
+        },
+        {
+          "iterations": 666512,
+          "elapsedMs": 100.00930000000005,
+          "opsPerSecond": 6664500.2014812585
+        },
+        {
+          "iterations": 649792,
+          "elapsedMs": 100.01160000000004,
+          "opsPerSecond": 6497166.328705867
+        },
+        {
+          "iterations": 657904,
+          "elapsedMs": 100.07549999999992,
+          "opsPerSecond": 6574076.572188003
+        },
+        {
+          "iterations": 645904,
+          "elapsedMs": 100.00569999999993,
+          "opsPerSecond": 6458671.855704229
+        }
+      ],
+      "medianOpsPerSecond": 6894982.555407823,
+      "medianItemsPerSecond": 6894982.555407823,
+      "madPercent": 4.65419572335436,
+      "minOpsPerSecond": 6458671.855704229,
+      "maxOpsPerSecond": 7387452.5908346595,
+      "checksum": 3120755902,
+      "cpuMicroseconds": {
+        "user": 843000,
+        "system": 63000
+      },
+      "memoryBefore": {
+        "rss": 72261632,
+        "heapTotal": 30867456,
+        "heapUsed": 13246016,
+        "external": 5135004,
+        "arrayBuffers": 143647
+      },
+      "memoryAfter": {
+        "rss": 84340736,
+        "heapTotal": 44589056,
+        "heapUsed": 8501320,
+        "external": 2378656,
+        "arrayBuffers": 143627
+      },
+      "processMaxRssBytes": 84942848
+    },
+    {
+      "run": 2,
+      "dataset": "cache-pool-32-hit50",
+      "method": "cache-pool",
+      "exactOutputVerified": true,
+      "outputSha256": "d4a1c1400a6067b8b56592c36234d1cbb22cfd072b728d03151076c6bda2ff49",
+      "outputBytes": 247,
+      "inputBytes": 8666,
+      "inputSha256": "d813fe4db675c2549a52b38d4be03726fb5eb3cc100df1b0f70f05b862739515",
+      "unitsPerOperation": 1,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "154d1683ec0db600a2053528c08d776ac123367fb9afee573cb173466c14e0a1"
+        }
+      ],
+      "scalarOutput": false,
+      "arrayOutput": false,
+      "cachePool": {
+        "size": 32,
+        "plannedHitPercent": 50,
+        "checkedSteps": 400,
+        "trace": "round-robin identity pool; step%100 >= hitPercent mutates body and increments explicit per-record version; both candidates include scheduling/version/mutation cost; cache prefilled outside timing; no automatic detection"
+      },
+      "comparableStableOperation": true,
+      "outputHashContract": "first result from independent initial state; entire 400-step trace checked",
+      "inputHashContract": "actual single JSON-text bytes, or JSON.stringify of batch/object/cache-pool inputs",
+      "warmup": {
+        "iterations": 482752,
+        "elapsedMs": 300.03380000000004,
+        "opsPerSecond": 1608992.0535619652
+      },
+      "samples": [
+        {
+          "iterations": 161520,
+          "elapsedMs": 100.03790000000004,
+          "opsPerSecond": 1614588.0711210445
+        },
+        {
+          "iterations": 159504,
+          "elapsedMs": 100.03039999999999,
+          "opsPerSecond": 1594555.2552024187
+        },
+        {
+          "iterations": 162400,
+          "elapsedMs": 100.0335,
+          "opsPerSecond": 1623456.1421923656
+        },
+        {
+          "iterations": 169488,
+          "elapsedMs": 100.02369999999996,
+          "opsPerSecond": 1694478.4086171584
+        },
+        {
+          "iterations": 168992,
+          "elapsedMs": 100.02370000000008,
+          "opsPerSecond": 1689519.5838586243
+        },
+        {
+          "iterations": 170032,
+          "elapsedMs": 100.02890000000002,
+          "opsPerSecond": 1699828.7494913966
+        },
+        {
+          "iterations": 168208,
+          "elapsedMs": 100.02629999999999,
+          "opsPerSecond": 1681637.7292772003
+        },
+        {
+          "iterations": 162128,
+          "elapsedMs": 100.02340000000004,
+          "opsPerSecond": 1620900.7092340386
+        },
+        {
+          "iterations": 167856,
+          "elapsedMs": 100.05409999999983,
+          "opsPerSecond": 1677652.390056982
+        }
+      ],
+      "medianOpsPerSecond": 1677652.390056982,
+      "medianItemsPerSecond": 1677652.390056982,
+      "madPercent": 1.321868556671709,
+      "minOpsPerSecond": 1594555.2552024187,
+      "maxOpsPerSecond": 1699828.7494913966,
+      "checksum": 734805933,
+      "cpuMicroseconds": {
+        "user": 875000,
+        "system": 47000
+      },
+      "memoryBefore": {
+        "rss": 72613888,
+        "heapTotal": 30605312,
+        "heapUsed": 20785376,
+        "external": 5135004,
+        "arrayBuffers": 143647
+      },
+      "memoryAfter": {
+        "rss": 83972096,
+        "heapTotal": 43802624,
+        "heapUsed": 22022656,
+        "external": 2378656,
+        "arrayBuffers": 143627
+      },
+      "processMaxRssBytes": 83972096
+    },
+    {
+      "run": 2,
+      "dataset": "cache-pool-128-hit90",
+      "method": "public-pool",
+      "exactOutputVerified": true,
+      "outputSha256": "d4a1c1400a6067b8b56592c36234d1cbb22cfd072b728d03151076c6bda2ff49",
+      "outputBytes": 247,
+      "inputBytes": 35386,
+      "inputSha256": "770e7a1a454e20c263058a3be059084fee4f2af65bb7e744dbe3ec8a0cd1d9c0",
+      "unitsPerOperation": 1,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "154d1683ec0db600a2053528c08d776ac123367fb9afee573cb173466c14e0a1"
+        }
+      ],
+      "scalarOutput": false,
+      "arrayOutput": false,
+      "cachePool": {
+        "size": 128,
+        "plannedHitPercent": 90,
+        "checkedSteps": 400,
+        "trace": "round-robin identity pool; step%100 >= hitPercent mutates body and increments explicit per-record version; both candidates include scheduling/version/mutation cost; cache prefilled outside timing; no automatic detection"
+      },
+      "comparableStableOperation": true,
+      "outputHashContract": "first result from independent initial state; entire 400-step trace checked",
+      "inputHashContract": "actual single JSON-text bytes, or JSON.stringify of batch/object/cache-pool inputs",
+      "warmup": {
+        "iterations": 275648,
+        "elapsedMs": 300.0319,
+        "opsPerSecond": 918728.9751523088
+      },
+      "samples": [
+        {
+          "iterations": 91792,
+          "elapsedMs": 100.03789999999998,
+          "opsPerSecond": 917572.2401209943
+        },
+        {
+          "iterations": 89600,
+          "elapsedMs": 100.03319999999997,
+          "opsPerSecond": 895702.6267279267
+        },
+        {
+          "iterations": 92944,
+          "elapsedMs": 100.03960000000006,
+          "opsPerSecond": 929072.0874533679
+        },
+        {
+          "iterations": 87344,
+          "elapsedMs": 100.03589999999997,
+          "opsPerSecond": 873126.5475694229
+        },
+        {
+          "iterations": 93552,
+          "elapsedMs": 100.0353,
+          "opsPerSecond": 935189.8779730755
+        },
+        {
+          "iterations": 92000,
+          "elapsedMs": 100.0349,
+          "opsPerSecond": 919679.0320178259
+        },
+        {
+          "iterations": 89664,
+          "elapsedMs": 100.07890000000009,
+          "opsPerSecond": 895933.108777174
+        },
+        {
+          "iterations": 96208,
+          "elapsedMs": 100.03700000000003,
+          "opsPerSecond": 961724.1620600375
+        },
+        {
+          "iterations": 96624,
+          "elapsedMs": 100.03600000000006,
+          "opsPerSecond": 965892.2787796388
+        }
+      ],
+      "medianOpsPerSecond": 919679.0320178259,
+      "medianItemsPerSecond": 919679.0320178259,
+      "madPercent": 2.5819794095503075,
+      "minOpsPerSecond": 873126.5475694229,
+      "maxOpsPerSecond": 965892.2787796388,
+      "checksum": 415287936,
+      "cpuMicroseconds": {
+        "user": 891000,
+        "system": 15000
+      },
+      "memoryBefore": {
+        "rss": 72097792,
+        "heapTotal": 30867456,
+        "heapUsed": 20080280,
+        "external": 5135004,
+        "arrayBuffers": 143647
+      },
+      "memoryAfter": {
+        "rss": 82427904,
+        "heapTotal": 42754048,
+        "heapUsed": 14389048,
+        "external": 2378656,
+        "arrayBuffers": 143627
+      },
+      "processMaxRssBytes": 82427904
+    },
+    {
+      "run": 2,
+      "dataset": "cache-pool-128-hit0",
+      "method": "public-pool",
+      "exactOutputVerified": true,
+      "outputSha256": "2ddb7014e58a9af1f91aea154e5568b03e0ea38380e50234a42b1a96a4e5704e",
+      "outputBytes": 249,
+      "inputBytes": 35386,
+      "inputSha256": "770e7a1a454e20c263058a3be059084fee4f2af65bb7e744dbe3ec8a0cd1d9c0",
+      "unitsPerOperation": 1,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "154d1683ec0db600a2053528c08d776ac123367fb9afee573cb173466c14e0a1"
+        }
+      ],
+      "scalarOutput": false,
+      "arrayOutput": false,
+      "cachePool": {
+        "size": 128,
+        "plannedHitPercent": 0,
+        "checkedSteps": 400,
+        "trace": "round-robin identity pool; step%100 >= hitPercent mutates body and increments explicit per-record version; both candidates include scheduling/version/mutation cost; cache prefilled outside timing; no automatic detection"
+      },
+      "comparableStableOperation": true,
+      "outputHashContract": "first result from independent initial state; entire 400-step trace checked",
+      "inputHashContract": "actual single JSON-text bytes, or JSON.stringify of batch/object/cache-pool inputs",
+      "warmup": {
+        "iterations": 255952,
+        "elapsedMs": 300.0412,
+        "opsPerSecond": 853056.1802845743
+      },
+      "samples": [
+        {
+          "iterations": 84400,
+          "elapsedMs": 100.029,
+          "opsPerSecond": 843755.3109598217
+        },
+        {
+          "iterations": 83920,
+          "elapsedMs": 100.031,
+          "opsPerSecond": 838939.928622127
+        },
+        {
+          "iterations": 86128,
+          "elapsedMs": 100.04660000000001,
+          "opsPerSecond": 860878.8304650031
+        },
+        {
+          "iterations": 87328,
+          "elapsedMs": 100.06110000000001,
+          "opsPerSecond": 872746.75173469
+        },
+        {
+          "iterations": 86128,
+          "elapsedMs": 100.05110000000002,
+          "opsPerSecond": 860840.1107034304
+        },
+        {
+          "iterations": 81872,
+          "elapsedMs": 100.05110000000002,
+          "opsPerSecond": 818301.8477557966
+        },
+        {
+          "iterations": 87360,
+          "elapsedMs": 100.02999999999997,
+          "opsPerSecond": 873337.9986004201
+        },
+        {
+          "iterations": 87472,
+          "elapsedMs": 100.0281,
+          "opsPerSecond": 874474.2727293631
+        },
+        {
+          "iterations": 87408,
+          "elapsedMs": 100.02729999999997,
+          "opsPerSecond": 873841.4412865291
+        }
+      ],
+      "medianOpsPerSecond": 860878.8304650031,
+      "medianItemsPerSecond": 860878.8304650031,
+      "madPercent": 1.505741616915376,
+      "minOpsPerSecond": 818301.8477557966,
+      "maxOpsPerSecond": 874474.2727293631,
+      "checksum": 387693916,
+      "cpuMicroseconds": {
+        "user": 906000,
+        "system": 32000
+      },
+      "memoryBefore": {
+        "rss": 72343552,
+        "heapTotal": 30867456,
+        "heapUsed": 17509224,
+        "external": 5135004,
+        "arrayBuffers": 143647
+      },
+      "memoryAfter": {
+        "rss": 83193856,
+        "heapTotal": 43016192,
+        "heapUsed": 6835024,
+        "external": 2378656,
+        "arrayBuffers": 143627
+      },
+      "processMaxRssBytes": 83193856
+    },
+    {
+      "run": 2,
+      "dataset": "cache-pool-128-hit50",
+      "method": "public-pool",
+      "exactOutputVerified": true,
+      "outputSha256": "d4a1c1400a6067b8b56592c36234d1cbb22cfd072b728d03151076c6bda2ff49",
+      "outputBytes": 247,
+      "inputBytes": 35386,
+      "inputSha256": "770e7a1a454e20c263058a3be059084fee4f2af65bb7e744dbe3ec8a0cd1d9c0",
+      "unitsPerOperation": 1,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "154d1683ec0db600a2053528c08d776ac123367fb9afee573cb173466c14e0a1"
+        }
+      ],
+      "scalarOutput": false,
+      "arrayOutput": false,
+      "cachePool": {
+        "size": 128,
+        "plannedHitPercent": 50,
+        "checkedSteps": 400,
+        "trace": "round-robin identity pool; step%100 >= hitPercent mutates body and increments explicit per-record version; both candidates include scheduling/version/mutation cost; cache prefilled outside timing; no automatic detection"
+      },
+      "comparableStableOperation": true,
+      "outputHashContract": "first result from independent initial state; entire 400-step trace checked",
+      "inputHashContract": "actual single JSON-text bytes, or JSON.stringify of batch/object/cache-pool inputs",
+      "warmup": {
+        "iterations": 274064,
+        "elapsedMs": 300.0351,
+        "opsPerSecond": 913439.794210744
+      },
+      "samples": [
+        {
+          "iterations": 88416,
+          "elapsedMs": 100.04649999999998,
+          "opsPerSecond": 883749.0566886399
+        },
+        {
+          "iterations": 87792,
+          "elapsedMs": 100.0342,
+          "opsPerSecond": 877619.8540099286
+        },
+        {
+          "iterations": 88912,
+          "elapsedMs": 100.04409999999996,
+          "opsPerSecond": 888728.0709207243
+        },
+        {
+          "iterations": 89008,
+          "elapsedMs": 100.02779999999996,
+          "opsPerSecond": 889832.6265298252
+        },
+        {
+          "iterations": 87680,
+          "elapsedMs": 100.05819999999994,
+          "opsPerSecond": 876289.9992204543
+        },
+        {
+          "iterations": 88672,
+          "elapsedMs": 100.03419999999994,
+          "opsPerSecond": 886416.8454388605
+        },
+        {
+          "iterations": 88864,
+          "elapsedMs": 100.03769999999997,
+          "opsPerSecond": 888305.1089739171
+        },
+        {
+          "iterations": 86272,
+          "elapsedMs": 100.029,
+          "opsPerSecond": 862469.8837337173
+        },
+        {
+          "iterations": 92864,
+          "elapsedMs": 100.03019999999992,
+          "opsPerSecond": 928359.6353901129
+        }
+      ],
+      "medianOpsPerSecond": 886416.8454388605,
+      "medianItemsPerSecond": 886416.8454388605,
+      "madPercent": 0.3853470416927313,
+      "minOpsPerSecond": 862469.8837337173,
+      "maxOpsPerSecond": 928359.6353901129,
+      "checksum": 404275491,
+      "cpuMicroseconds": {
+        "user": 890000,
+        "system": 16000
+      },
+      "memoryBefore": {
+        "rss": 72269824,
+        "heapTotal": 31129600,
+        "heapUsed": 18034416,
+        "external": 5135004,
+        "arrayBuffers": 143647
+      },
+      "memoryAfter": {
+        "rss": 82710528,
+        "heapTotal": 42754048,
+        "heapUsed": 13525744,
+        "external": 2378656,
+        "arrayBuffers": 143627
+      },
+      "processMaxRssBytes": 82710528
+    },
+    {
+      "run": 2,
+      "dataset": "cache-pool-128-hit99",
+      "method": "oracle-pool",
+      "exactOutputVerified": true,
+      "outputSha256": "d4a1c1400a6067b8b56592c36234d1cbb22cfd072b728d03151076c6bda2ff49",
+      "outputBytes": 247,
+      "inputBytes": 35386,
+      "inputSha256": "770e7a1a454e20c263058a3be059084fee4f2af65bb7e744dbe3ec8a0cd1d9c0",
+      "unitsPerOperation": 1,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "154d1683ec0db600a2053528c08d776ac123367fb9afee573cb173466c14e0a1"
+        }
+      ],
+      "scalarOutput": false,
+      "arrayOutput": false,
+      "cachePool": {
+        "size": 128,
+        "plannedHitPercent": 99,
+        "checkedSteps": 400,
+        "trace": "round-robin identity pool; step%100 >= hitPercent mutates body and increments explicit per-record version; both candidates include scheduling/version/mutation cost; cache prefilled outside timing; no automatic detection"
+      },
+      "comparableStableOperation": true,
+      "outputHashContract": "first result from independent initial state; entire 400-step trace checked",
+      "inputHashContract": "actual single JSON-text bytes, or JSON.stringify of batch/object/cache-pool inputs",
+      "warmup": {
+        "iterations": 279616,
+        "elapsedMs": 300.0381,
+        "opsPerSecond": 931934.9775911793
+      },
+      "samples": [
+        {
+          "iterations": 96512,
+          "elapsedMs": 100.02949999999998,
+          "opsPerSecond": 964835.3735647985
+        },
+        {
+          "iterations": 97424,
+          "elapsedMs": 100.03660000000002,
+          "opsPerSecond": 973883.5586175458
+        },
+        {
+          "iterations": 97200,
+          "elapsedMs": 100.03739999999993,
+          "opsPerSecond": 971636.6079086429
+        },
+        {
+          "iterations": 96320,
+          "elapsedMs": 100.02929999999992,
+          "opsPerSecond": 962917.8650655366
+        },
+        {
+          "iterations": 94512,
+          "elapsedMs": 100.03210000000001,
+          "opsPerSecond": 944816.7138348588
+        },
+        {
+          "iterations": 95168,
+          "elapsedMs": 100.02829999999994,
+          "opsPerSecond": 951410.7507575362
+        },
+        {
+          "iterations": 94544,
+          "elapsedMs": 100.0421,
+          "opsPerSecond": 945042.1372602134
+        },
+        {
+          "iterations": 95552,
+          "elapsedMs": 100.03150000000005,
+          "opsPerSecond": 955219.1059816153
+        },
+        {
+          "iterations": 94592,
+          "elapsedMs": 100.03689999999983,
+          "opsPerSecond": 945571.084269906
+        }
+      ],
+      "medianOpsPerSecond": 955219.1059816153,
+      "medianItemsPerSecond": 955219.1059816153,
+      "madPercent": 1.0100323215158662,
+      "minOpsPerSecond": 944816.7138348588,
+      "maxOpsPerSecond": 973883.5586175458,
+      "checksum": 429274953,
+      "cpuMicroseconds": {
+        "user": 891000,
+        "system": 0
+      },
+      "memoryBefore": {
+        "rss": 72134656,
+        "heapTotal": 30867456,
+        "heapUsed": 18720928,
+        "external": 5135004,
+        "arrayBuffers": 143647
+      },
+      "memoryAfter": {
+        "rss": 67211264,
+        "heapTotal": 27025408,
+        "heapUsed": 13520992,
+        "external": 2378656,
+        "arrayBuffers": 143627
+      },
+      "processMaxRssBytes": 73912320
+    },
+    {
+      "run": 2,
+      "dataset": "cache-pool-32-hit90",
+      "method": "oracle-pool",
+      "exactOutputVerified": true,
+      "outputSha256": "d4a1c1400a6067b8b56592c36234d1cbb22cfd072b728d03151076c6bda2ff49",
+      "outputBytes": 247,
+      "inputBytes": 8666,
+      "inputSha256": "d813fe4db675c2549a52b38d4be03726fb5eb3cc100df1b0f70f05b862739515",
+      "unitsPerOperation": 1,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "154d1683ec0db600a2053528c08d776ac123367fb9afee573cb173466c14e0a1"
+        }
+      ],
+      "scalarOutput": false,
+      "arrayOutput": false,
+      "cachePool": {
+        "size": 32,
+        "plannedHitPercent": 90,
+        "checkedSteps": 400,
+        "trace": "round-robin identity pool; step%100 >= hitPercent mutates body and increments explicit per-record version; both candidates include scheduling/version/mutation cost; cache prefilled outside timing; no automatic detection"
+      },
+      "comparableStableOperation": true,
+      "outputHashContract": "first result from independent initial state; entire 400-step trace checked",
+      "inputHashContract": "actual single JSON-text bytes, or JSON.stringify of batch/object/cache-pool inputs",
+      "warmup": {
+        "iterations": 279392,
+        "elapsedMs": 300.02939999999995,
+        "opsPerSecond": 931215.4075567262
+      },
+      "samples": [
+        {
+          "iterations": 91616,
+          "elapsedMs": 100.03950000000003,
+          "opsPerSecond": 915798.2596874231
+        },
+        {
+          "iterations": 93616,
+          "elapsedMs": 100.02519999999998,
+          "opsPerSecond": 935924.1471149272
+        },
+        {
+          "iterations": 94240,
+          "elapsedMs": 100.03330000000005,
+          "opsPerSecond": 942086.2852670056
+        },
+        {
+          "iterations": 95088,
+          "elapsedMs": 100.02609999999993,
+          "opsPerSecond": 950631.8850779954
+        },
+        {
+          "iterations": 97376,
+          "elapsedMs": 100.02509999999995,
+          "opsPerSecond": 973515.6475724598
+        },
+        {
+          "iterations": 98032,
+          "elapsedMs": 100.04139999999995,
+          "opsPerSecond": 979914.3154733945
+        },
+        {
+          "iterations": 94752,
+          "elapsedMs": 100.0281,
+          "opsPerSecond": 947253.8216761091
+        },
+        {
+          "iterations": 95008,
+          "elapsedMs": 100.04199999999992,
+          "opsPerSecond": 949681.1339237528
+        },
+        {
+          "iterations": 94320,
+          "elapsedMs": 100.03290000000015,
+          "opsPerSecond": 942889.7892593322
+        }
+      ],
+      "medianOpsPerSecond": 947253.8216761091,
+      "medianItemsPerSecond": 947253.8216761091,
+      "madPercent": 0.5455281668813853,
+      "minOpsPerSecond": 915798.2596874231,
+      "maxOpsPerSecond": 979914.3154733945,
+      "checksum": 423249218,
+      "cpuMicroseconds": {
+        "user": 875000,
+        "system": 0
+      },
+      "memoryBefore": {
+        "rss": 71925760,
+        "heapTotal": 30343168,
+        "heapUsed": 14710400,
+        "external": 5135004,
+        "arrayBuffers": 143647
+      },
+      "memoryAfter": {
+        "rss": 67047424,
+        "heapTotal": 26501120,
+        "heapUsed": 11633224,
+        "external": 2378656,
+        "arrayBuffers": 143627
+      },
+      "processMaxRssBytes": 73764864
+    },
+    {
+      "run": 2,
+      "dataset": "cache-pool-32-hit50",
+      "method": "public-pool",
+      "exactOutputVerified": true,
+      "outputSha256": "d4a1c1400a6067b8b56592c36234d1cbb22cfd072b728d03151076c6bda2ff49",
+      "outputBytes": 247,
+      "inputBytes": 8666,
+      "inputSha256": "d813fe4db675c2549a52b38d4be03726fb5eb3cc100df1b0f70f05b862739515",
+      "unitsPerOperation": 1,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "154d1683ec0db600a2053528c08d776ac123367fb9afee573cb173466c14e0a1"
+        }
+      ],
+      "scalarOutput": false,
+      "arrayOutput": false,
+      "cachePool": {
+        "size": 32,
+        "plannedHitPercent": 50,
+        "checkedSteps": 400,
+        "trace": "round-robin identity pool; step%100 >= hitPercent mutates body and increments explicit per-record version; both candidates include scheduling/version/mutation cost; cache prefilled outside timing; no automatic detection"
+      },
+      "comparableStableOperation": true,
+      "outputHashContract": "first result from independent initial state; entire 400-step trace checked",
+      "inputHashContract": "actual single JSON-text bytes, or JSON.stringify of batch/object/cache-pool inputs",
+      "warmup": {
+        "iterations": 263568,
+        "elapsedMs": 300.05179999999996,
+        "opsPerSecond": 878408.3281620041
+      },
+      "samples": [
+        {
+          "iterations": 90640,
+          "elapsedMs": 100.04110000000003,
+          "opsPerSecond": 906027.6226470917
+        },
+        {
+          "iterations": 89184,
+          "elapsedMs": 100.04910000000007,
+          "opsPerSecond": 891402.3214601625
+        },
+        {
+          "iterations": 90432,
+          "elapsedMs": 100.03229999999996,
+          "opsPerSecond": 904027.9989563375
+        },
+        {
+          "iterations": 90896,
+          "elapsedMs": 100.02819999999997,
+          "opsPerSecond": 908703.745543757
+        },
+        {
+          "iterations": 88464,
+          "elapsedMs": 100.02850000000001,
+          "opsPerSecond": 884387.9494344111
+        },
+        {
+          "iterations": 90224,
+          "elapsedMs": 100.0295000000001,
+          "opsPerSecond": 901973.9176942793
+        },
+        {
+          "iterations": 92256,
+          "elapsedMs": 100.03600000000006,
+          "opsPerSecond": 922227.997920748
+        },
+        {
+          "iterations": 93904,
+          "elapsedMs": 100.03289999999993,
+          "opsPerSecond": 938731.1574491999
+        },
+        {
+          "iterations": 92176,
+          "elapsedMs": 100.03729999999996,
+          "opsPerSecond": 921416.3117157305
+        }
+      ],
+      "medianOpsPerSecond": 906027.6226470917,
+      "medianItemsPerSecond": 906027.6226470917,
+      "madPercent": 1.6142224388478659,
+      "minOpsPerSecond": 884387.9494344111,
+      "maxOpsPerSecond": 938731.1574491999,
+      "checksum": 403565121,
+      "cpuMicroseconds": {
+        "user": 907000,
+        "system": 15000
+      },
+      "memoryBefore": {
+        "rss": 72040448,
+        "heapTotal": 30605312,
+        "heapUsed": 18745224,
+        "external": 5135004,
+        "arrayBuffers": 143647
+      },
+      "memoryAfter": {
+        "rss": 67198976,
+        "heapTotal": 26763264,
+        "heapUsed": 12018480,
+        "external": 2378656,
+        "arrayBuffers": 143627
+      },
+      "processMaxRssBytes": 73375744
+    },
+    {
+      "run": 2,
+      "dataset": "cache-pool-128-hit50",
+      "method": "cache-pool",
+      "exactOutputVerified": true,
+      "outputSha256": "d4a1c1400a6067b8b56592c36234d1cbb22cfd072b728d03151076c6bda2ff49",
+      "outputBytes": 247,
+      "inputBytes": 35386,
+      "inputSha256": "770e7a1a454e20c263058a3be059084fee4f2af65bb7e744dbe3ec8a0cd1d9c0",
+      "unitsPerOperation": 1,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "154d1683ec0db600a2053528c08d776ac123367fb9afee573cb173466c14e0a1"
+        }
+      ],
+      "scalarOutput": false,
+      "arrayOutput": false,
+      "cachePool": {
+        "size": 128,
+        "plannedHitPercent": 50,
+        "checkedSteps": 400,
+        "trace": "round-robin identity pool; step%100 >= hitPercent mutates body and increments explicit per-record version; both candidates include scheduling/version/mutation cost; cache prefilled outside timing; no automatic detection"
+      },
+      "comparableStableOperation": true,
+      "outputHashContract": "first result from independent initial state; entire 400-step trace checked",
+      "inputHashContract": "actual single JSON-text bytes, or JSON.stringify of batch/object/cache-pool inputs",
+      "warmup": {
+        "iterations": 480256,
+        "elapsedMs": 300.02570000000003,
+        "opsPerSecond": 1600716.2053117447
+      },
+      "samples": [
+        {
+          "iterations": 156320,
+          "elapsedMs": 100.04090000000002,
+          "opsPerSecond": 1562560.9125867516
+        },
+        {
+          "iterations": 156000,
+          "elapsedMs": 100.04650000000004,
+          "opsPerSecond": 1559274.9371542227
+        },
+        {
+          "iterations": 156608,
+          "elapsedMs": 100.03600000000006,
+          "opsPerSecond": 1565516.4140909263
+        },
+        {
+          "iterations": 161200,
+          "elapsedMs": 100.03240000000005,
+          "opsPerSecond": 1611477.8811665012
+        },
+        {
+          "iterations": 161600,
+          "elapsedMs": 100.02839999999992,
+          "opsPerSecond": 1615541.1863030912
+        },
+        {
+          "iterations": 162400,
+          "elapsedMs": 100.05009999999993,
+          "opsPerSecond": 1623186.7834215069
+        },
+        {
+          "iterations": 160704,
+          "elapsedMs": 100.03390000000013,
+          "opsPerSecond": 1606495.3980600554
+        },
+        {
+          "iterations": 162192,
+          "elapsedMs": 100.04719999999998,
+          "opsPerSecond": 1621154.8149273547
+        },
+        {
+          "iterations": 161824,
+          "elapsedMs": 100.04070000000002,
+          "opsPerSecond": 1617581.6442707817
+        }
+      ],
+      "medianOpsPerSecond": 1611477.8811665012,
+      "medianItemsPerSecond": 1611477.8811665012,
+      "madPercent": 0.6005005637339954,
+      "minOpsPerSecond": 1559274.9371542227,
+      "maxOpsPerSecond": 1623186.7834215069,
+      "checksum": 723723682,
+      "cpuMicroseconds": {
+        "user": 875000,
+        "system": 0
+      },
+      "memoryBefore": {
+        "rss": 72200192,
+        "heapTotal": 31129600,
+        "heapUsed": 18472344,
+        "external": 5135004,
+        "arrayBuffers": 143647
+      },
+      "memoryAfter": {
+        "rss": 83869696,
+        "heapTotal": 44064768,
+        "heapUsed": 21578456,
+        "external": 2378656,
+        "arrayBuffers": 143627
+      },
+      "processMaxRssBytes": 83869696
+    },
+    {
+      "run": 2,
+      "dataset": "cache-pool-128-hit0",
+      "method": "cache-pool",
+      "exactOutputVerified": true,
+      "outputSha256": "2ddb7014e58a9af1f91aea154e5568b03e0ea38380e50234a42b1a96a4e5704e",
+      "outputBytes": 249,
+      "inputBytes": 35386,
+      "inputSha256": "770e7a1a454e20c263058a3be059084fee4f2af65bb7e744dbe3ec8a0cd1d9c0",
+      "unitsPerOperation": 1,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "154d1683ec0db600a2053528c08d776ac123367fb9afee573cb173466c14e0a1"
+        }
+      ],
+      "scalarOutput": false,
+      "arrayOutput": false,
+      "cachePool": {
+        "size": 128,
+        "plannedHitPercent": 0,
+        "checkedSteps": 400,
+        "trace": "round-robin identity pool; step%100 >= hitPercent mutates body and increments explicit per-record version; both candidates include scheduling/version/mutation cost; cache prefilled outside timing; no automatic detection"
+      },
+      "comparableStableOperation": true,
+      "outputHashContract": "first result from independent initial state; entire 400-step trace checked",
+      "inputHashContract": "actual single JSON-text bytes, or JSON.stringify of batch/object/cache-pool inputs",
+      "warmup": {
+        "iterations": 251472,
+        "elapsedMs": 300.0353,
+        "opsPerSecond": 838141.3786977732
+      },
+      "samples": [
+        {
+          "iterations": 79984,
+          "elapsedMs": 100.04839999999996,
+          "opsPerSecond": 799453.0647166774
+        },
+        {
+          "iterations": 83888,
+          "elapsedMs": 100.03649999999993,
+          "opsPerSecond": 838573.9205190111
+        },
+        {
+          "iterations": 80576,
+          "elapsedMs": 100.03359999999998,
+          "opsPerSecond": 805489.3555765265
+        },
+        {
+          "iterations": 83872,
+          "elapsedMs": 100.20050000000003,
+          "opsPerSecond": 837041.7313286857
+        },
+        {
+          "iterations": 82608,
+          "elapsedMs": 100.0353,
+          "opsPerSecond": 825788.4966606788
+        },
+        {
+          "iterations": 82544,
+          "elapsedMs": 100.04520000000002,
+          "opsPerSecond": 825067.0696845024
+        },
+        {
+          "iterations": 82240,
+          "elapsedMs": 100.03539999999987,
+          "opsPerSecond": 822108.9734234092
+        },
+        {
+          "iterations": 82096,
+          "elapsedMs": 100.04009999999994,
+          "opsPerSecond": 820630.9269982742
+        },
+        {
+          "iterations": 83136,
+          "elapsedMs": 100.04359999999997,
+          "opsPerSecond": 830997.6850093362
+        }
+      ],
+      "medianOpsPerSecond": 825067.0696845024,
+      "medianItemsPerSecond": 825067.0696845024,
+      "madPercent": 0.7188040273018761,
+      "minOpsPerSecond": 799453.0647166774,
+      "maxOpsPerSecond": 838573.9205190111,
+      "checksum": 374278353,
+      "cpuMicroseconds": {
+        "user": 859000,
+        "system": 16000
+      },
+      "memoryBefore": {
+        "rss": 72253440,
+        "heapTotal": 31391744,
+        "heapUsed": 18245808,
+        "external": 5135004,
+        "arrayBuffers": 143647
+      },
+      "memoryAfter": {
+        "rss": 84103168,
+        "heapTotal": 44064768,
+        "heapUsed": 15747408,
+        "external": 2378656,
+        "arrayBuffers": 143627
+      },
+      "processMaxRssBytes": 84103168
+    },
+    {
+      "run": 2,
+      "dataset": "cache-pool-32-hit0",
+      "method": "cache-pool",
+      "exactOutputVerified": true,
+      "outputSha256": "2ddb7014e58a9af1f91aea154e5568b03e0ea38380e50234a42b1a96a4e5704e",
+      "outputBytes": 249,
+      "inputBytes": 8666,
+      "inputSha256": "d813fe4db675c2549a52b38d4be03726fb5eb3cc100df1b0f70f05b862739515",
+      "unitsPerOperation": 1,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "154d1683ec0db600a2053528c08d776ac123367fb9afee573cb173466c14e0a1"
+        }
+      ],
+      "scalarOutput": false,
+      "arrayOutput": false,
+      "cachePool": {
+        "size": 32,
+        "plannedHitPercent": 0,
+        "checkedSteps": 400,
+        "trace": "round-robin identity pool; step%100 >= hitPercent mutates body and increments explicit per-record version; both candidates include scheduling/version/mutation cost; cache prefilled outside timing; no automatic detection"
+      },
+      "comparableStableOperation": true,
+      "outputHashContract": "first result from independent initial state; entire 400-step trace checked",
+      "inputHashContract": "actual single JSON-text bytes, or JSON.stringify of batch/object/cache-pool inputs",
+      "warmup": {
+        "iterations": 248064,
+        "elapsedMs": 300.1028,
+        "opsPerSecond": 826596.7528460248
+      },
+      "samples": [
+        {
+          "iterations": 84048,
+          "elapsedMs": 100.02510000000001,
+          "opsPerSecond": 840269.0924577931
+        },
+        {
+          "iterations": 86624,
+          "elapsedMs": 100.02980000000002,
+          "opsPerSecond": 865981.9373826598
+        },
+        {
+          "iterations": 88048,
+          "elapsedMs": 100.0281,
+          "opsPerSecond": 880232.6546240507
+        },
+        {
+          "iterations": 87168,
+          "elapsedMs": 100.02949999999998,
+          "opsPerSecond": 871422.9302355807
+        },
+        {
+          "iterations": 85760,
+          "elapsedMs": 100.0376,
+          "opsPerSecond": 857277.663598487
+        },
+        {
+          "iterations": 84432,
+          "elapsedMs": 100.03609999999992,
+          "opsPerSecond": 844015.31047292
+        },
+        {
+          "iterations": 83856,
+          "elapsedMs": 100.03970000000004,
+          "opsPerSecond": 838227.2237921542
+        },
+        {
+          "iterations": 81216,
+          "elapsedMs": 100.04309999999987,
+          "opsPerSecond": 811810.1098426589
+        },
+        {
+          "iterations": 84192,
+          "elapsedMs": 100.03500000000008,
+          "opsPerSecond": 841625.4310991146
+        }
+      ],
+      "medianOpsPerSecond": 844015.31047292,
+      "medianItemsPerSecond": 844015.31047292,
+      "madPercent": 1.5713403490436566,
+      "minOpsPerSecond": 811810.1098426589,
+      "maxOpsPerSecond": 880232.6546240507,
+      "checksum": 377460007,
+      "cpuMicroseconds": {
+        "user": 891000,
+        "system": 0
+      },
+      "memoryBefore": {
+        "rss": 72400896,
+        "heapTotal": 30867456,
+        "heapUsed": 15446216,
+        "external": 5135004,
+        "arrayBuffers": 143647
+      },
+      "memoryAfter": {
+        "rss": 83890176,
+        "heapTotal": 44064768,
+        "heapUsed": 8736168,
+        "external": 2378656,
+        "arrayBuffers": 143627
+      },
+      "processMaxRssBytes": 83890176
+    },
+    {
+      "run": 2,
+      "dataset": "cache-pool-128-hit50",
+      "method": "oracle-pool",
+      "exactOutputVerified": true,
+      "outputSha256": "d4a1c1400a6067b8b56592c36234d1cbb22cfd072b728d03151076c6bda2ff49",
+      "outputBytes": 247,
+      "inputBytes": 35386,
+      "inputSha256": "770e7a1a454e20c263058a3be059084fee4f2af65bb7e744dbe3ec8a0cd1d9c0",
+      "unitsPerOperation": 1,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "154d1683ec0db600a2053528c08d776ac123367fb9afee573cb173466c14e0a1"
+        }
+      ],
+      "scalarOutput": false,
+      "arrayOutput": false,
+      "cachePool": {
+        "size": 128,
+        "plannedHitPercent": 50,
+        "checkedSteps": 400,
+        "trace": "round-robin identity pool; step%100 >= hitPercent mutates body and increments explicit per-record version; both candidates include scheduling/version/mutation cost; cache prefilled outside timing; no automatic detection"
+      },
+      "comparableStableOperation": true,
+      "outputHashContract": "first result from independent initial state; entire 400-step trace checked",
+      "inputHashContract": "actual single JSON-text bytes, or JSON.stringify of batch/object/cache-pool inputs",
+      "warmup": {
+        "iterations": 262608,
+        "elapsedMs": 300.0447,
+        "opsPerSecond": 875229.5907909722
+      },
+      "samples": [
+        {
+          "iterations": 88736,
+          "elapsedMs": 100.05210000000005,
+          "opsPerSecond": 886897.9261804596
+        },
+        {
+          "iterations": 88208,
+          "elapsedMs": 100.02799999999996,
+          "opsPerSecond": 881833.0867357143
+        },
+        {
+          "iterations": 89648,
+          "elapsedMs": 100.03499999999997,
+          "opsPerSecond": 896166.3417803772
+        },
+        {
+          "iterations": 87824,
+          "elapsedMs": 100.02829999999994,
+          "opsPerSecond": 877991.528397464
+        },
+        {
+          "iterations": 91696,
+          "elapsedMs": 100.05180000000007,
+          "opsPerSecond": 916485.2606349904
+        },
+        {
+          "iterations": 91888,
+          "elapsedMs": 100.02440000000001,
+          "opsPerSecond": 918655.8479730944
+        },
+        {
+          "iterations": 89520,
+          "elapsedMs": 100.05330000000004,
+          "opsPerSecond": 894723.112580994
+        },
+        {
+          "iterations": 88752,
+          "elapsedMs": 100.02880000000005,
+          "opsPerSecond": 887264.4678332636
+        },
+        {
+          "iterations": 86672,
+          "elapsedMs": 100.03140000000008,
+          "opsPerSecond": 866447.9353483
+        }
+      ],
+      "medianOpsPerSecond": 887264.4678332636,
+      "medianItemsPerSecond": 887264.4678332636,
+      "madPercent": 1.0032943130082037,
+      "minOpsPerSecond": 866447.9353483,
+      "maxOpsPerSecond": 918655.8479730944,
+      "checksum": 401636733,
+      "cpuMicroseconds": {
+        "user": 891000,
+        "system": 0
+      },
+      "memoryBefore": {
+        "rss": 72192000,
+        "heapTotal": 30756864,
+        "heapUsed": 18203032,
+        "external": 5135004,
+        "arrayBuffers": 143647
+      },
+      "memoryAfter": {
+        "rss": 83562496,
+        "heapTotal": 43802624,
+        "heapUsed": 18560608,
+        "external": 2378656,
+        "arrayBuffers": 143627
+      },
+      "processMaxRssBytes": 83562496
+    },
+    {
+      "run": 2,
+      "dataset": "cache-pool-128-hit99",
+      "method": "cache-pool",
+      "exactOutputVerified": true,
+      "outputSha256": "d4a1c1400a6067b8b56592c36234d1cbb22cfd072b728d03151076c6bda2ff49",
+      "outputBytes": 247,
+      "inputBytes": 35386,
+      "inputSha256": "770e7a1a454e20c263058a3be059084fee4f2af65bb7e744dbe3ec8a0cd1d9c0",
+      "unitsPerOperation": 1,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "154d1683ec0db600a2053528c08d776ac123367fb9afee573cb173466c14e0a1"
+        }
+      ],
+      "scalarOutput": false,
+      "arrayOutput": false,
+      "cachePool": {
+        "size": 128,
+        "plannedHitPercent": 99,
+        "checkedSteps": 400,
+        "trace": "round-robin identity pool; step%100 >= hitPercent mutates body and increments explicit per-record version; both candidates include scheduling/version/mutation cost; cache prefilled outside timing; no automatic detection"
+      },
+      "comparableStableOperation": true,
+      "outputHashContract": "first result from independent initial state; entire 400-step trace checked",
+      "inputHashContract": "actual single JSON-text bytes, or JSON.stringify of batch/object/cache-pool inputs",
+      "warmup": {
+        "iterations": 8399776,
+        "elapsedMs": 300.05440000000004,
+        "opsPerSecond": 27994177.05589386
+      },
+      "samples": [
+        {
+          "iterations": 2532144,
+          "elapsedMs": 100.0301,
+          "opsPerSecond": 25313820.540017452
+        },
+        {
+          "iterations": 2713984,
+          "elapsedMs": 100.03239999999994,
+          "opsPerSecond": 27131049.539949074
+        },
+        {
+          "iterations": 2751504,
+          "elapsedMs": 100.03370000000007,
+          "opsPerSecond": 27505770.555322837
+        },
+        {
+          "iterations": 2554400,
+          "elapsedMs": 100.02980000000002,
+          "opsPerSecond": 25536390.155733585
+        },
+        {
+          "iterations": 2473600,
+          "elapsedMs": 100.02819999999997,
+          "opsPerSecond": 24729026.414551105
+        },
+        {
+          "iterations": 2588000,
+          "elapsedMs": 100.02879999999993,
+          "opsPerSecond": 25872548.705972698
+        },
+        {
+          "iterations": 2792384,
+          "elapsedMs": 100.029,
+          "opsPerSecond": 27915744.43411411
+        },
+        {
+          "iterations": 2708288,
+          "elapsedMs": 100.02590000000009,
+          "opsPerSecond": 27075867.350356232
+        },
+        {
+          "iterations": 2564032,
+          "elapsedMs": 100.02330000000006,
+          "opsPerSecond": 25634347.197103057
+        }
+      ],
+      "medianOpsPerSecond": 25872548.705972698,
+      "medianItemsPerSecond": 25872548.705972698,
+      "madPercent": 4.419828538800313,
+      "minOpsPerSecond": 24729026.414551105,
+      "maxOpsPerSecond": 27915744.43411411,
+      "checksum": 3492839925,
+      "cpuMicroseconds": {
+        "user": 843000,
+        "system": 94000
+      },
+      "memoryBefore": {
+        "rss": 72867840,
+        "heapTotal": 31281152,
+        "heapUsed": 16432072,
+        "external": 5135004,
+        "arrayBuffers": 143647
+      },
+      "memoryAfter": {
+        "rss": 67309568,
+        "heapTotal": 27025408,
+        "heapUsed": 10277200,
+        "external": 2378656,
+        "arrayBuffers": 143627
+      },
+      "processMaxRssBytes": 73719808
+    },
+    {
+      "run": 2,
+      "dataset": "cache-pool-32-hit99",
+      "method": "public-pool",
+      "exactOutputVerified": true,
+      "outputSha256": "d4a1c1400a6067b8b56592c36234d1cbb22cfd072b728d03151076c6bda2ff49",
+      "outputBytes": 247,
+      "inputBytes": 8666,
+      "inputSha256": "d813fe4db675c2549a52b38d4be03726fb5eb3cc100df1b0f70f05b862739515",
+      "unitsPerOperation": 1,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "154d1683ec0db600a2053528c08d776ac123367fb9afee573cb173466c14e0a1"
+        }
+      ],
+      "scalarOutput": false,
+      "arrayOutput": false,
+      "cachePool": {
+        "size": 32,
+        "plannedHitPercent": 99,
+        "checkedSteps": 400,
+        "trace": "round-robin identity pool; step%100 >= hitPercent mutates body and increments explicit per-record version; both candidates include scheduling/version/mutation cost; cache prefilled outside timing; no automatic detection"
+      },
+      "comparableStableOperation": true,
+      "outputHashContract": "first result from independent initial state; entire 400-step trace checked",
+      "inputHashContract": "actual single JSON-text bytes, or JSON.stringify of batch/object/cache-pool inputs",
+      "warmup": {
+        "iterations": 290624,
+        "elapsedMs": 300.1192,
+        "opsPerSecond": 968361.9042033966
+      },
+      "samples": [
+        {
+          "iterations": 95184,
+          "elapsedMs": 100.02499999999998,
+          "opsPerSecond": 951602.0994751315
+        },
+        {
+          "iterations": 95808,
+          "elapsedMs": 100.03769999999997,
+          "opsPerSecond": 957718.9399596355
+        },
+        {
+          "iterations": 96928,
+          "elapsedMs": 100.03179999999998,
+          "opsPerSecond": 968971.8669463113
+        },
+        {
+          "iterations": 95264,
+          "elapsedMs": 100.02599999999995,
+          "opsPerSecond": 952392.3779817251
+        },
+        {
+          "iterations": 94288,
+          "elapsedMs": 100.03980000000001,
+          "opsPerSecond": 942504.8830565434
+        },
+        {
+          "iterations": 96848,
+          "elapsedMs": 100.04279999999994,
+          "opsPerSecond": 968065.6678941419
+        },
+        {
+          "iterations": 96320,
+          "elapsedMs": 100.03890000000001,
+          "opsPerSecond": 962825.4608957114
+        },
+        {
+          "iterations": 94976,
+          "elapsedMs": 100.02859999999987,
+          "opsPerSecond": 949488.4463043582
+        },
+        {
+          "iterations": 97472,
+          "elapsedMs": 100.06969999999978,
+          "opsPerSecond": 974041.0933579316
+        }
+      ],
+      "medianOpsPerSecond": 957718.9399596355,
+      "medianItemsPerSecond": 957718.9399596355,
+      "madPercent": 0.8593850775911549,
+      "minOpsPerSecond": 942504.8830565434,
+      "maxOpsPerSecond": 974041.0933579316,
+      "checksum": 427080524,
+      "cpuMicroseconds": {
+        "user": 859000,
+        "system": 31000
+      },
+      "memoryBefore": {
+        "rss": 72159232,
+        "heapTotal": 31019008,
+        "heapUsed": 12756512,
+        "external": 5135004,
+        "arrayBuffers": 143647
+      },
+      "memoryAfter": {
+        "rss": 67125248,
+        "heapTotal": 26238976,
+        "heapUsed": 10053128,
+        "external": 2378656,
+        "arrayBuffers": 143627
+      },
+      "processMaxRssBytes": 73424896
+    },
+    {
+      "run": 2,
+      "dataset": "cache-pool-32-hit90",
+      "method": "cache-pool",
+      "exactOutputVerified": true,
+      "outputSha256": "d4a1c1400a6067b8b56592c36234d1cbb22cfd072b728d03151076c6bda2ff49",
+      "outputBytes": 247,
+      "inputBytes": 8666,
+      "inputSha256": "d813fe4db675c2549a52b38d4be03726fb5eb3cc100df1b0f70f05b862739515",
+      "unitsPerOperation": 1,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "154d1683ec0db600a2053528c08d776ac123367fb9afee573cb173466c14e0a1"
+        }
+      ],
+      "scalarOutput": false,
+      "arrayOutput": false,
+      "cachePool": {
+        "size": 32,
+        "plannedHitPercent": 90,
+        "checkedSteps": 400,
+        "trace": "round-robin identity pool; step%100 >= hitPercent mutates body and increments explicit per-record version; both candidates include scheduling/version/mutation cost; cache prefilled outside timing; no automatic detection"
+      },
+      "comparableStableOperation": true,
+      "outputHashContract": "first result from independent initial state; entire 400-step trace checked",
+      "inputHashContract": "actual single JSON-text bytes, or JSON.stringify of batch/object/cache-pool inputs",
+      "warmup": {
+        "iterations": 2256112,
+        "elapsedMs": 300.0364,
+        "opsPerSecond": 7519460.972068722
+      },
+      "samples": [
+        {
+          "iterations": 747296,
+          "elapsedMs": 100.0292,
+          "opsPerSecond": 7470778.53266846
+        },
+        {
+          "iterations": 724400,
+          "elapsedMs": 100.03369999999995,
+          "opsPerSecond": 7241559.594416685
+        },
+        {
+          "iterations": 734800,
+          "elapsedMs": 100.03139999999996,
+          "opsPerSecond": 7345693.452255994
+        },
+        {
+          "iterations": 742192,
+          "elapsedMs": 100.03399999999999,
+          "opsPerSecond": 7419397.404882341
+        },
+        {
+          "iterations": 717968,
+          "elapsedMs": 100.00030000000004,
+          "opsPerSecond": 7179658.461024614
+        },
+        {
+          "iterations": 678944,
+          "elapsedMs": 100.00339999999994,
+          "opsPerSecond": 6789209.16688833
+        },
+        {
+          "iterations": 674384,
+          "elapsedMs": 100.0021999999999,
+          "opsPerSecond": 6743691.638783953
+        },
+        {
+          "iterations": 673104,
+          "elapsedMs": 100.0036,
+          "opsPerSecond": 6730797.691283113
+        },
+        {
+          "iterations": 670912,
+          "elapsedMs": 100.00430000000006,
+          "opsPerSecond": 6708831.520244625
+        }
+      ],
+      "medianOpsPerSecond": 7179658.461024614,
+      "medianItemsPerSecond": 7179658.461024614,
+      "madPercent": 4.054789976768618,
+      "minOpsPerSecond": 6708831.520244625,
+      "maxOpsPerSecond": 7470778.53266846,
+      "checksum": 3210341950,
+      "cpuMicroseconds": {
+        "user": 938000,
+        "system": 0
+      },
+      "memoryBefore": {
+        "rss": 72388608,
+        "heapTotal": 30605312,
+        "heapUsed": 20874640,
+        "external": 5135004,
+        "arrayBuffers": 143647
+      },
+      "memoryAfter": {
+        "rss": 84148224,
+        "heapTotal": 44064768,
+        "heapUsed": 21985792,
+        "external": 2378656,
+        "arrayBuffers": 143627
+      },
+      "processMaxRssBytes": 84148224
+    },
+    {
+      "run": 2,
+      "dataset": "cache-pool-32-hit0",
+      "method": "oracle-pool",
+      "exactOutputVerified": true,
+      "outputSha256": "2ddb7014e58a9af1f91aea154e5568b03e0ea38380e50234a42b1a96a4e5704e",
+      "outputBytes": 249,
+      "inputBytes": 8666,
+      "inputSha256": "d813fe4db675c2549a52b38d4be03726fb5eb3cc100df1b0f70f05b862739515",
+      "unitsPerOperation": 1,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "154d1683ec0db600a2053528c08d776ac123367fb9afee573cb173466c14e0a1"
+        }
+      ],
+      "scalarOutput": false,
+      "arrayOutput": false,
+      "cachePool": {
+        "size": 32,
+        "plannedHitPercent": 0,
+        "checkedSteps": 400,
+        "trace": "round-robin identity pool; step%100 >= hitPercent mutates body and increments explicit per-record version; both candidates include scheduling/version/mutation cost; cache prefilled outside timing; no automatic detection"
+      },
+      "comparableStableOperation": true,
+      "outputHashContract": "first result from independent initial state; entire 400-step trace checked",
+      "inputHashContract": "actual single JSON-text bytes, or JSON.stringify of batch/object/cache-pool inputs",
+      "warmup": {
+        "iterations": 254416,
+        "elapsedMs": 300.0266,
+        "opsPerSecond": 847978.145937727
+      },
+      "samples": [
+        {
+          "iterations": 85712,
+          "elapsedMs": 100.0901,
+          "opsPerSecond": 856348.4300645118
+        },
+        {
+          "iterations": 89632,
+          "elapsedMs": 100.03300000000002,
+          "opsPerSecond": 896024.3119770475
+        },
+        {
+          "iterations": 87744,
+          "elapsedMs": 100.03800000000001,
+          "opsPerSecond": 877106.6994542073
+        },
+        {
+          "iterations": 89280,
+          "elapsedMs": 100.03959999999995,
+          "opsPerSecond": 892446.5911499051
+        },
+        {
+          "iterations": 87536,
+          "elapsedMs": 100.03769999999997,
+          "opsPerSecond": 875030.1136471552
+        },
+        {
+          "iterations": 87264,
+          "elapsedMs": 100.02729999999997,
+          "opsPerSecond": 872401.8342992365
+        },
+        {
+          "iterations": 85488,
+          "elapsedMs": 100.0438999999999,
+          "opsPerSecond": 854504.8723610344
+        },
+        {
+          "iterations": 86560,
+          "elapsedMs": 100.04039999999986,
+          "opsPerSecond": 865250.4388227168
+        },
+        {
+          "iterations": 85936,
+          "elapsedMs": 100.03679999999986,
+          "opsPerSecond": 859043.8718551585
+        }
+      ],
+      "medianOpsPerSecond": 872401.8342992365,
+      "medianItemsPerSecond": 872401.8342992365,
+      "madPercent": 1.531170834230071,
+      "minOpsPerSecond": 854504.8723610344,
+      "maxOpsPerSecond": 896024.3119770475,
+      "checksum": 387183884,
+      "cpuMicroseconds": {
+        "user": 875000,
+        "system": 15000
+      },
+      "memoryBefore": {
+        "rss": 72097792,
+        "heapTotal": 30605312,
+        "heapUsed": 14441960,
+        "external": 5135004,
+        "arrayBuffers": 143647
+      },
+      "memoryAfter": {
+        "rss": 66777088,
+        "heapTotal": 27025408,
+        "heapUsed": 14031976,
+        "external": 2378656,
+        "arrayBuffers": 143627
+      },
+      "processMaxRssBytes": 73826304
+    },
+    {
+      "run": 2,
+      "dataset": "cache-pool-32-hit99",
+      "method": "cache-pool",
+      "exactOutputVerified": true,
+      "outputSha256": "d4a1c1400a6067b8b56592c36234d1cbb22cfd072b728d03151076c6bda2ff49",
+      "outputBytes": 247,
+      "inputBytes": 8666,
+      "inputSha256": "d813fe4db675c2549a52b38d4be03726fb5eb3cc100df1b0f70f05b862739515",
+      "unitsPerOperation": 1,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "154d1683ec0db600a2053528c08d776ac123367fb9afee573cb173466c14e0a1"
+        }
+      ],
+      "scalarOutput": false,
+      "arrayOutput": false,
+      "cachePool": {
+        "size": 32,
+        "plannedHitPercent": 99,
+        "checkedSteps": 400,
+        "trace": "round-robin identity pool; step%100 >= hitPercent mutates body and increments explicit per-record version; both candidates include scheduling/version/mutation cost; cache prefilled outside timing; no automatic detection"
+      },
+      "comparableStableOperation": true,
+      "outputHashContract": "first result from independent initial state; entire 400-step trace checked",
+      "inputHashContract": "actual single JSON-text bytes, or JSON.stringify of batch/object/cache-pool inputs",
+      "warmup": {
+        "iterations": 9282608,
+        "elapsedMs": 300.0259,
+        "opsPerSecond": 30939355.568969216
+      },
+      "samples": [
+        {
+          "iterations": 2612608,
+          "elapsedMs": 100.02620000000002,
+          "opsPerSecond": 26119236.759968884
+        },
+        {
+          "iterations": 3030288,
+          "elapsedMs": 100.02409999999998,
+          "opsPerSecond": 30295578.765517518
+        },
+        {
+          "iterations": 2963520,
+          "elapsedMs": 100.02139999999997,
+          "opsPerSecond": 29628859.424083255
+        },
+        {
+          "iterations": 2721136,
+          "elapsedMs": 100.02409999999998,
+          "opsPerSecond": 27204803.64232221
+        },
+        {
+          "iterations": 2710048,
+          "elapsedMs": 100.02229999999997,
+          "opsPerSecond": 27094437.940339312
+        },
+        {
+          "iterations": 3061968,
+          "elapsedMs": 100.02049999999997,
+          "opsPerSecond": 30613404.25212832
+        },
+        {
+          "iterations": 3035056,
+          "elapsedMs": 100.02020000000005,
+          "opsPerSecond": 30344430.425054125
+        },
+        {
+          "iterations": 2697984,
+          "elapsedMs": 100.02510000000007,
+          "opsPerSecond": 26973069.75949035
+        },
+        {
+          "iterations": 2684608,
+          "elapsedMs": 100.02649999999994,
+          "opsPerSecond": 26838967.67356652
+        }
+      ],
+      "medianOpsPerSecond": 27204803.64232221,
+      "medianItemsPerSecond": 27204803.64232221,
+      "madPercent": 3.9903500007789807,
+      "minOpsPerSecond": 26119236.759968884,
+      "maxOpsPerSecond": 30613404.25212832,
+      "checksum": 4160378986,
+      "cpuMicroseconds": {
+        "user": 844000,
+        "system": 47000
+      },
+      "memoryBefore": {
+        "rss": 72949760,
+        "heapTotal": 31805440,
+        "heapUsed": 17566304,
+        "external": 5135004,
+        "arrayBuffers": 143647
+      },
+      "memoryAfter": {
+        "rss": 67788800,
+        "heapTotal": 27025408,
+        "heapUsed": 11095512,
+        "external": 2378656,
+        "arrayBuffers": 143627
+      },
+      "processMaxRssBytes": 73678848
+    }
+  ]
+}

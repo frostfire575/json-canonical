@@ -1,0 +1,835 @@
+{
+  "date": "2026-10-19T00:48:54.632Z",
+  "command": "node benches/profiling/batch.cjs",
+  "node": "v24.20.0",
+  "cpu": "12th Gen Intel(R) Core(TM) i7-12700K",
+  "commit": "6da938bb54f79dafd2ceb5fb5355ea8b3fa2dc89",
+  "sources": {
+    "benches/profiling/src/lib.rs": "//! Development-only probes. No probe is shipped in the npm package.\n//! Probes isolate combined allocation/conversion stages, not pure memcpy costs.\n#[path = \"../../../src/engine.rs\"]\nmod engine;\n#[path = \"../../../src/tree.rs\"]\n#[allow(dead_code)]\nmod tree;\nuse napi::{\n    Error, Result, Status,\n    bindgen_prelude::{Either, Utf16String},\n};\nuse napi_derive::napi;\n\nfn invalid(error: String) -> Error {\n    Error::new(Status::InvalidArg, error)\n}\nfn limits() -> engine::Limits {\n    engine::Limits::new(None, None).expect(\"fixed valid limits\")\n}\n\n#[napi]\npub struct Probe {\n    input: String,\n    output: String,\n    utf16: Vec<u16>,\n}\n\n#[napi]\npub struct BatchProbe {\n    inputs: Vec<String>,\n    outputs: Vec<String>,\n}\n#[napi]\nimpl BatchProbe {\n    #[napi(constructor)]\n    pub fn new(inputs: Vec<String>) -> Result<Self> {\n        let outputs = inputs\n            .iter()\n            .map(|input| engine::stringify(input, limits()).map_err(invalid))\n            .collect::<Result<Vec<_>>>()?;\n        Ok(Self { inputs, outputs })\n    }\n    #[napi]\n    pub fn boundary(&self) -> u32 {\n        self.inputs.len() as u32\n    }\n    #[napi]\n    pub fn accept_inputs(&self, inputs: Vec<String>) -> u32 {\n        inputs.iter().map(|text| text.len() as u32).sum()\n    }\n    #[napi]\n    pub fn stored_outputs(&self) -> Vec<String> {\n        self.outputs.clone()\n    }\n    #[napi]\n    pub fn stored_engine(&self) -> Result<u32> {\n        self.inputs\n            .iter()\n            .map(|input| {\n                engine::stringify(input, limits())\n                    .map(|s| s.len() as u32)\n                    .map_err(invalid)\n            })\n            .sum()\n    }\n    #[napi]\n    pub fn sort_collected(&self, inputs: Vec<String>) -> Result<Vec<String>> {\n        inputs\n            .iter()\n            .map(|input| engine::stringify(input, limits()).map_err(invalid))\n            .collect()\n    }\n    #[napi]\n    pub fn sort_preallocated(&self, inputs: Vec<String>) -> Result<Vec<String>> {\n        let mut outputs = Vec::with_capacity(inputs.len());\n        for input in inputs {\n            outputs.push(engine::stringify(&input, limits()).map_err(invalid)?);\n        }\n        Ok(outputs)\n    }\n}\n\n#[napi]\nimpl Probe {\n    #[napi(constructor)]\n    pub fn new(input: String) -> Result<Self> {\n        let output = engine::stringify(&input, limits()).map_err(invalid)?;\n        let utf16 = output.encode_utf16().collect();\n        Ok(Self {\n            input,\n            output,\n            utf16,\n        })\n    }\n    #[napi]\n    pub fn boundary(&self) -> u32 {\n        self.input.len() as u32\n    }\n    #[napi]\n    pub fn accept_utf8(&self, input: String) -> u32 {\n        input.len() as u32\n    }\n    #[napi]\n    pub fn accept_utf16(&self, input: Utf16String) -> u32 {\n        input.len() as u32\n    }\n    #[napi]\n    pub fn roundtrip_utf8(&self, input: String) -> String {\n        input\n    }\n    #[napi]\n    pub fn roundtrip_utf16(&self, input: Utf16String) -> Utf16String {\n        input\n    }\n    #[napi]\n    pub fn output_utf8(&self) -> &str {\n        &self.output\n    }\n    #[napi]\n    pub fn output_utf16(&self) -> Utf16String {\n        self.utf16.clone().into()\n    }\n    #[napi]\n    pub fn stored_engine(&self) -> Result<u32> {\n        engine::stringify(&self.input, limits())\n            .map(|output| output.len() as u32)\n            .map_err(invalid)\n    }\n    #[napi]\n    pub fn engine_without_output_conversion(&self, input: String) -> Result<u32> {\n        engine::stringify(&input, limits())\n            .map(|output| output.len() as u32)\n            .map_err(invalid)\n    }\n    #[napi]\n    pub fn sort_utf16_output(&self, input: String) -> Result<Utf16String> {\n        engine::stringify(&input, limits())\n            .map(Utf16String::from)\n            .map_err(invalid)\n    }\n    #[napi]\n    pub fn sort_adaptive_output(&self, input: String) -> Result<Either<String, Utf16String>> {\n        let output = engine::stringify(&input, limits()).map_err(invalid)?;\n        let wide = output.len() >= 1024\n            && !output.is_ascii()\n            && output.bytes().filter(|byte| !byte.is_ascii()).count() >= output.len() / 8;\n        Ok(if wide {\n            Either::B(output.into())\n        } else {\n            Either::A(output)\n        })\n    }\n    #[napi]\n    pub fn sort_utf16_input_output(&self, input: Utf16String) -> Result<Utf16String> {\n        let input = String::from_utf16(&input).map_err(|e| invalid(e.to_string()))?;\n        engine::stringify(&input, limits())\n            .map(Utf16String::from)\n            .map_err(invalid)\n    }\n    #[napi]\n    pub fn accept_utf16_transcoded(&self, input: Utf16String) -> Result<u32> {\n        String::from_utf16(&input)\n            .map(|text| text.len() as u32)\n            .map_err(|e| invalid(e.to_string()))\n    }\n    #[napi]\n    pub fn output_utf16_transcoded(&self) -> Utf16String {\n        self.output.clone().into()\n    }\n    #[napi]\n    pub fn sort_bulk_transcoded(&self, input: Utf16String) -> Result<Utf16String> {\n        if encoding_rs::mem::utf16_valid_up_to(&input) != input.len() {\n            return Err(invalid(\"Invalid UTF16\".into()));\n        }\n        let mut buffer = vec![0; input.len() * 3];\n        let written = encoding_rs::mem::convert_utf16_to_utf8(&input, &mut buffer);\n        buffer.truncate(written);\n        let text = String::from_utf8(buffer).map_err(|e| invalid(e.to_string()))?;\n        let output = engine::stringify(&text, limits()).map_err(invalid)?;\n        let mut units = vec![0; output.len()];\n        let written = encoding_rs::mem::convert_str_to_utf16(&output, &mut units);\n        units.truncate(written);\n        Ok(units.into())\n    }\n    #[napi]\n    pub fn validate_stored(&self) -> Result<u32> {\n        engine::validate(&self.input, limits())\n            .map(|raw| raw.get().len() as u32)\n            .map_err(invalid)\n    }\n    #[napi]\n    pub fn scan_sort_stored(&self) -> Result<u32> {\n        // Constructor already validated this exact immutable string.\n        let tree = tree::parse(&self.input, 128).map_err(invalid)?;\n        std::hint::black_box(tree);\n        Ok(self.input.len() as u32)\n    }\n    #[napi]\n    pub fn emit_stored(&self) -> Result<u32> {\n        // Tree construction excluded from the Rust timer, but included in the\n        // method's JS duration. Return the internal measured nanoseconds only.\n        let tree = tree::parse(&self.input, 128).map_err(invalid)?;\n        let start = std::time::Instant::now();\n        let mut output = String::with_capacity(self.input.len());\n        engine::write(&tree, &mut output, limits()).map_err(invalid)?;\n        std::hint::black_box(&output);\n        Ok(start.elapsed().as_nanos().min(u32::MAX as u128) as u32)\n    }\n    #[napi]\n    pub fn key_sort_clock(&self) -> Result<u32> {\n        fn groups<'a>(node: &'a tree::Node<'_>, output: &mut Vec<Vec<&'a str>>) {\n            match node {\n                tree::Node::Object(members) => {\n                    // Restore textual order before timing the exact UTF16 key\n                    // comparator. Pointer addresses refer to one input buffer.\n                    let mut keys: Vec<_> = members\n                        .iter()\n                        .map(|m| (m.token.as_ptr() as usize, m.key.as_ref()))\n                        .collect();\n                    keys.sort_unstable_by_key(|entry| entry.0);\n                    output.push(keys.into_iter().map(|entry| entry.1).collect());\n                    for member in members {\n                        groups(&member.value, output);\n                    }\n                }\n                tree::Node::Array(members) => {\n                    for member in members {\n                        groups(member, output);\n                    }\n                }\n                tree::Node::Scalar(_) => {}\n            }\n        }\n        let tree = tree::parse(&self.input, 128).map_err(invalid)?;\n        let mut keys = Vec::new();\n        groups(&tree, &mut keys);\n        let start = std::time::Instant::now();\n        for keys in &mut keys {\n            keys.sort_unstable_by(|a, b| a.encode_utf16().cmp(b.encode_utf16()));\n        }\n        std::hint::black_box(&keys);\n        Ok(start.elapsed().as_nanos().min(u32::MAX as u128) as u32)\n    }\n}\n",
+    "benches/profiling/batch.cjs": "'use strict';\nconst fs = require('node:fs');\nconst path = require('node:path');\nconst crypto = require('node:crypto');\nconst os = require('node:os');\nconst assert = require('node:assert/strict');\nconst { performance } = require('node:perf_hooks');\nconst { execFileSync } = require('node:child_process');\nconst { BatchProbe } = require('./native/binding');\nconst api = require('../../js/index.cjs');\nconst oracle = require('../../upstream/fast-json-stable-stringify');\nconst root = path.resolve(__dirname, '../..');\nlet sink = 0;\nfunction consume(result) {\n  if (typeof result === 'number') { sink = (sink + result) >>> 0; return; }\n  for (const text of result) sink = (sink + text.length + text.charCodeAt(text.length >>> 1)) >>> 0;\n}\nfunction burst(fn, ms) {\n  let count = 0;\n  const start = performance.now();\n  do { for (let i = 0; i < 16; i++) { consume(fn()); count++; } } while (performance.now() - start < ms);\n  return { count, elapsedMs: performance.now() - start };\n}\nconst median = xs => [...xs].sort((a,b) => a-b)[xs.length >>> 1];\nconst rows = [];\nconst comments = JSON.parse(fs.readFileSync(path.join(root, 'benches/data/jsonplaceholder-data.json'))).comments;\nfor (const [dataset, values] of [\n  ['tiny', Array.from({length:32}, (_,i) => ({z:i,a:{state:true,message:`row ${i}`}}))],\n  ['real-comments', comments.slice(0,32)],\n]) {\n  const inputs = values.map(value => JSON.stringify(value));\n  const expected = values.map(value => oracle(value));\n  const probe = new BatchProbe(inputs);\n  const guard = () => {\n    if (!Array.isArray(inputs) || inputs.some(input => typeof input !== 'string')) throw new Error('type');\n    let total = 0;\n    for (const input of inputs) { if (!input.isWellFormed()) throw new Error('UTF16'); total += Buffer.byteLength(input); }\n    return total;\n  };\n  const methods = {\n    boundary: [()=>probe.boundary(), 32],\n    'wrapper-validation-only': [guard, inputs.reduce((n,s)=>n+Buffer.byteLength(s),0)],\n    'input-conversion-only': [()=>probe.acceptInputs(inputs), inputs.reduce((n,s)=>n+Buffer.byteLength(s),0)],\n    'output-clone-and-conversion-only': [()=>probe.storedOutputs(), expected],\n    'stored-engine-return-length': [()=>probe.storedEngine(), expected.reduce((n,s)=>n+Buffer.byteLength(s),0)],\n    'probe-sort-collected': [()=>probe.sortCollected(inputs), expected],\n    'probe-sort-preallocated': [()=>probe.sortPreallocated(inputs), expected],\n    'public-native-batch': [()=>api.stringifyJsonBatch(inputs), expected],\n    'public-native-loop': [()=>inputs.map(s=>api.stringifyJson(s)), expected],\n  };\n  for (const [name,[fn,expectedValue]] of Object.entries(methods)) {\n    assert.deepEqual(fn(), expectedValue);\n    burst(fn,300);\n    const samples = Array.from({length:9},()=>burst(fn,100));\n    const durations = samples.map(s=>s.elapsedMs*1000/s.count);\n    const us = median(durations);\n    const result = {dataset,name,medianUs:us,madPercent:median(durations.map(n=>Math.abs(n-us)))*100/us,samples,sink};\n    rows.push(result); console.log(`${dataset} ${name}: ${us.toFixed(3)} us MAD${result.madPercent.toFixed(1)}%`);\n  }\n}\nconst now = new Date().toISOString();\nconst files = ['benches/profiling/src/lib.rs','benches/profiling/batch.cjs','js/dist/index.js','src/lib.rs'];\nconst report = {date:now,command:'node benches/profiling/batch.cjs',node:process.version,cpu:os.cpus()[0].model,\n  commit:execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim(),sources:Object.fromEntries(files.map(file=>[file,fs.readFileSync(path.join(root,file),'utf8')])),\n  artifact:fs.readdirSync(path.join(__dirname,'native')).filter(f=>f.endsWith('.node')).map(f=>({file:f,sha256:crypto.createHash('sha256').update(fs.readFileSync(path.join(__dirname,'native',f))).digest('hex')})),\n  results:rows,limitations:['Probe class overhead differs from public free functions. Stage durations include combined allocation/copy/encoding and cannot be naively added/subtracted.','Array outputs consumed identically per item without extra JSON.stringify. No V8 allocation counts.']};\nconst filename = path.join(__dirname,'results',`${now.replace(/[:.]/g,'-')}-${process.pid}-batch.json`);\nfs.mkdirSync(path.dirname(filename),{recursive:true});\nfs.writeFileSync(filename,JSON.stringify(report,null,2),{flag:'wx'});\nconsole.log(`Raw batch profiling: ${filename}`);\n",
+    "js/dist/index.js": "\"use strict\";\nObject.defineProperty(exports, \"__esModule\", { value: true });\nexports.stableStringify = void 0;\nexports.stringify = stringify;\nexports.stringifyBatch = stringifyBatch;\nexports.createSerializerCache = createSerializerCache;\nexports.stringifyJson = stringifyJson;\nexports.stringifyJsonBatch = stringifyJsonBatch;\nexports.selectJson = selectJson;\n/** Upstream-compatible traversal, deliberately using JavaScript semantics. */\nfunction stringify(data, options) {\n    const opts = typeof options === 'function' ? { cmp: options } : options || {};\n    const cycles = typeof opts.cycles === 'boolean' ? opts.cycles : false;\n    const cmp = opts.cmp && ((f) => (node) => (a, b) => f({ key: a, value: node[a] }, { key: b, value: node[b] }))(opts.cmp);\n    const seen = [];\n    // `any` is intentional here: access, coercion, exceptions and reentrancy are\n    // observable upstream behavior; preprocessing values changes that behavior.\n    function visit(node) {\n        if (node && node.toJSON && typeof node.toJSON === 'function')\n            node = node.toJSON();\n        if (node === undefined)\n            return;\n        if (typeof node === 'number')\n            return isFinite(node) ? '' + node : 'null';\n        if (typeof node !== 'object')\n            return JSON.stringify(node);\n        if (Array.isArray(node)) {\n            let out = '[';\n            for (let i = 0; i < node.length; i++) {\n                if (i)\n                    out += ',';\n                out += visit(node[i]) || 'null';\n            }\n            return out + ']';\n        }\n        if (node === null)\n            return 'null';\n        if (seen.indexOf(node) !== -1) {\n            if (cycles)\n                return JSON.stringify('__cycle__');\n            throw new TypeError('Converting circular structure to JSON');\n        }\n        const seenIndex = seen.push(node) - 1;\n        const keys = Object.keys(node).sort(cmp && cmp(node));\n        let out = '';\n        for (let i = 0; i < keys.length; i++) {\n            const key = keys[i];\n            const value = visit(node[key]);\n            if (!value)\n                continue;\n            if (out)\n                out += ',';\n            out += JSON.stringify(key) + ':' + value;\n        }\n        seen.splice(seenIndex, 1);\n        return '{' + out + '}';\n    }\n    return visit(data);\n}\nexports.stableStringify = stringify;\n/** Ordered JS compatibility batch; this API does not cross the native boundary. */\nfunction stringifyBatch(values, options) {\n    if (!Array.isArray(values))\n        throw new TypeError('values must be an array');\n    return Array.from(values, value => stringify(value, options));\n}\n/** Caller MUST change version whenever serialization-visible state changes. */\nfunction createSerializerCache(options) {\n    let entries = new WeakMap();\n    return {\n        stringify(value, version) {\n            if (arguments.length < 2)\n                throw new TypeError('An explicit version is required');\n            if ((typeof value !== 'object' || value === null) && typeof value !== 'function')\n                throw new TypeError('Cache keys must be objects');\n            const hit = entries.get(value);\n            if (hit && Object.is(hit.version, version))\n                return hit.output;\n            const output = stringify(value, options);\n            entries.set(value, { version, output });\n            return output;\n        },\n        delete(value) { return entries.delete(value); },\n        clear() { entries = new WeakMap(); }\n    };\n}\nlet binding;\nfunction native() {\n    return binding ??= require('../../native/binding.js');\n}\nfunction limits(options) {\n    for (const [name, max] of [['maxDepth', 128], ['maxBytes', 67108864]]) {\n        const value = options?.[name];\n        if (value !== undefined && (!Number.isInteger(value) || value < 1 || value > max))\n            throw new RangeError(`${name} must be an integer from 1 to ${max}`);\n    }\n    return [options?.maxDepth, options?.maxBytes];\n}\n/** Rust JSON-text sorter; preserves scalar token spelling, not JS normalization. */\nfunction stringifyJson(input, options) {\n    if (typeof input !== 'string')\n        throw new TypeError('input must be a JSON string');\n    if (!input.isWellFormed())\n        throw new TypeError('JSON text must contain well-formed UTF-16; escape lone surrogates');\n    return native().stringifyJson(input, ...limits(options));\n}\n/** Single native call. Maximum 1024 documents and 64 MiB combined UTF-8 input. */\nfunction stringifyJsonBatch(inputs, options) {\n    if (!Array.isArray(inputs) || inputs.some(input => typeof input !== 'string'))\n        throw new TypeError('inputs must be an array of JSON strings');\n    if (inputs.length > 1024)\n        throw new RangeError('Batch limit is 1024 documents');\n    let total = 0;\n    for (const input of inputs) {\n        if (typeof input !== 'string' || !input.isWellFormed())\n            throw new TypeError('JSON text must contain well-formed UTF-16; escape lone surrogates');\n        total += Buffer.byteLength(input);\n    }\n    if (total > 67108864)\n        throw new RangeError('Batch input limit is 64 MiB');\n    return native().stringifyJsonBatch(inputs, ...limits(options));\n}\n/** Extract raw JSON text using a JSON Pointer subset; missing paths yield undefined. */\nfunction selectJson(input, path, options) {\n    if (typeof input !== 'string' || !input.isWellFormed())\n        throw new TypeError('input must be well-formed JSON text');\n    if (typeof path !== 'string' || !path.isWellFormed())\n        throw new TypeError('path must be a well-formed string');\n    if (path !== '' && !path.startsWith('/'))\n        throw new RangeError('path must be empty or start with /');\n    if (Buffer.byteLength(path) > 65536)\n        throw new RangeError('Path limit is 64 KiB');\n    const segments = path === '' ? [] : path.slice(1).split('/').map(segment => {\n        if (/~(?![01])/u.test(segment))\n            throw new RangeError('Invalid JSON pointer escape');\n        return segment.replace(/~1/g, '/').replace(/~0/g, '~');\n    });\n    if (segments.length > 128)\n        throw new RangeError('Path limit is 128 segments');\n    return native().selectJson(input, segments, ...limits(options)) ?? undefined;\n}\nexports.default = stringify;\n",
+    "src/lib.rs": "mod engine;\nmod selection;\nmod tree;\n\nuse napi::{Error, Result, Status};\nuse napi_derive::napi;\n\nfn options(depth: Option<u32>, bytes: Option<u32>) -> Result<engine::Limits> {\n    engine::Limits::new(depth, bytes).map_err(invalid)\n}\nfn invalid(message: String) -> Error {\n    Error::new(Status::InvalidArg, message)\n}\n\n#[napi]\npub fn select_json(\n    input: String,\n    path: Vec<String>,\n    max_depth: Option<u32>,\n    max_bytes: Option<u32>,\n) -> Result<Option<String>> {\n    if path.len() > 128 {\n        return Err(invalid(\"Path limit is 128 segments\".into()));\n    }\n    selection::select(&input, &path, options(max_depth, max_bytes)?).map_err(invalid)\n}\n\n#[napi]\npub fn stringify_json(\n    input: String,\n    max_depth: Option<u32>,\n    max_bytes: Option<u32>,\n) -> Result<String> {\n    engine::stringify(&input, options(max_depth, max_bytes)?).map_err(invalid)\n}\n\n#[napi]\npub fn stringify_json_batch(\n    inputs: Vec<String>,\n    max_depth: Option<u32>,\n    max_bytes: Option<u32>,\n) -> Result<Vec<String>> {\n    let limits = options(max_depth, max_bytes)?;\n    if inputs.len() > 1024 || inputs.iter().map(String::len).sum::<usize>() > 64 * 1024 * 1024 {\n        return Err(invalid(\"Batch exceeds 1024 documents or 64 MiB\".into()));\n    }\n    inputs\n        .iter()\n        .enumerate()\n        .map(|(index, input)| {\n            engine::stringify(input, limits)\n                .map_err(|error| invalid(format!(\"Batch item {index}: {error}\")))\n        })\n        .collect()\n}\n"
+  },
+  "artifact": [
+    {
+      "file": "probe.win32-x64-msvc.node",
+      "sha256": "c7529054cced6b7399b07010fa696a90adaaa457ed5a9a2195c3bf72287c5e58"
+    }
+  ],
+  "results": [
+    {
+      "dataset": "tiny",
+      "name": "boundary",
+      "medianUs": 0.23999237102717652,
+      "madPercent": 0.6338326744175853,
+      "samples": [
+        {
+          "count": 416944,
+          "elapsedMs": 100.0453
+        },
+        {
+          "count": 418336,
+          "elapsedMs": 100.0292
+        },
+        {
+          "count": 410544,
+          "elapsedMs": 100.03150000000005
+        },
+        {
+          "count": 416832,
+          "elapsedMs": 100.03650000000005
+        },
+        {
+          "count": 406192,
+          "elapsedMs": 100.03240000000005
+        },
+        {
+          "count": 419472,
+          "elapsedMs": 100.03199999999993
+        },
+        {
+          "count": 414896,
+          "elapsedMs": 100.04359999999997
+        },
+        {
+          "count": 411504,
+          "elapsedMs": 100.03510000000006
+        },
+        {
+          "count": 422496,
+          "elapsedMs": 100.03739999999993
+        }
+      ],
+      "sink": 161382912
+    },
+    {
+      "dataset": "tiny",
+      "name": "wrapper-validation-only",
+      "medianUs": 0.9694828990228024,
+      "madPercent": 1.2424876609473399,
+      "samples": [
+        {
+          "count": 102048,
+          "elapsedMs": 100.0154
+        },
+        {
+          "count": 103152,
+          "elapsedMs": 100.00410000000011
+        },
+        {
+          "count": 104864,
+          "elapsedMs": 100.00409999999988
+        },
+        {
+          "count": 104864,
+          "elapsedMs": 100.00119999999993
+        },
+        {
+          "count": 103072,
+          "elapsedMs": 100.00299999999993
+        },
+        {
+          "count": 101472,
+          "elapsedMs": 100.00860000000011
+        },
+        {
+          "count": 100384,
+          "elapsedMs": 100.0006000000003
+        },
+        {
+          "count": 104448,
+          "elapsedMs": 100.00239999999985
+        },
+        {
+          "count": 103792,
+          "elapsedMs": 100.0002999999997
+        }
+      ],
+      "sink": 1951083264
+    },
+    {
+      "dataset": "tiny",
+      "name": "input-conversion-only",
+      "medianUs": 3.375550080993522,
+      "madPercent": 1.0381616764720423,
+      "samples": [
+        {
+          "count": 29744,
+          "elapsedMs": 100.01530000000002
+        },
+        {
+          "count": 29632,
+          "elapsedMs": 100.02430000000004
+        },
+        {
+          "count": 29248,
+          "elapsedMs": 100.01099999999997
+        },
+        {
+          "count": 29536,
+          "elapsedMs": 100.0293999999999
+        },
+        {
+          "count": 28608,
+          "elapsedMs": 100.00999999999976
+        },
+        {
+          "count": 29936,
+          "elapsedMs": 100.0014000000001
+        },
+        {
+          "count": 30512,
+          "elapsedMs": 100.00379999999996
+        },
+        {
+          "count": 28800,
+          "elapsedMs": 100.02710000000025
+        },
+        {
+          "count": 29856,
+          "elapsedMs": 100.02430000000004
+        }
+      ],
+      "sink": 2464882176
+    },
+    {
+      "dataset": "tiny",
+      "name": "output-clone-and-conversion-only",
+      "medianUs": 4.32626297577857,
+      "madPercent": 0.9175061329899826,
+      "samples": [
+        {
+          "count": 23680,
+          "elapsedMs": 100.01600000000008
+        },
+        {
+          "count": 23056,
+          "elapsedMs": 100.05719999999974
+        },
+        {
+          "count": 22400,
+          "elapsedMs": 100.0616
+        },
+        {
+          "count": 22688,
+          "elapsedMs": 100.03900000000067
+        },
+        {
+          "count": 23968,
+          "elapsedMs": 100.01710000000003
+        },
+        {
+          "count": 23120,
+          "elapsedMs": 100.02320000000054
+        },
+        {
+          "count": 23184,
+          "elapsedMs": 100.01309999999921
+        },
+        {
+          "count": 22912,
+          "elapsedMs": 100.03279999999995
+        },
+        {
+          "count": 23216,
+          "elapsedMs": 100.03920000000016
+        }
+      ],
+      "sink": 3171693056
+    },
+    {
+      "dataset": "tiny",
+      "name": "stored-engine-return-length",
+      "medianUs": 9.988338658146972,
+      "madPercent": 1.416337433567078,
+      "samples": [
+        {
+          "count": 10224,
+          "elapsedMs": 100.15769999999975
+        },
+        {
+          "count": 9808,
+          "elapsedMs": 100.10260000000017
+        },
+        {
+          "count": 9872,
+          "elapsedMs": 100.08269999999993
+        },
+        {
+          "count": 9680,
+          "elapsedMs": 100.10840000000007
+        },
+        {
+          "count": 10016,
+          "elapsedMs": 100.04320000000007
+        },
+        {
+          "count": 10160,
+          "elapsedMs": 100.04420000000027
+        },
+        {
+          "count": 10032,
+          "elapsedMs": 100.11349999999948
+        },
+        {
+          "count": 10112,
+          "elapsedMs": 100.08359999999993
+        },
+        {
+          "count": 10000,
+          "elapsedMs": 100.08759999999984
+        }
+      ],
+      "sink": 3346955264
+    },
+    {
+      "dataset": "tiny",
+      "name": "probe-sort-collected",
+      "medianUs": 17.34290166205,
+      "madPercent": 0.14425102273512422,
+      "samples": [
+        {
+          "count": 5552,
+          "elapsedMs": 100.18369999999959
+        },
+        {
+          "count": 5776,
+          "elapsedMs": 100.02810000000045
+        },
+        {
+          "count": 5776,
+          "elapsedMs": 100.17260000000078
+        },
+        {
+          "count": 5920,
+          "elapsedMs": 100.25910000000022
+        },
+        {
+          "count": 5744,
+          "elapsedMs": 100.02689999999984
+        },
+        {
+          "count": 5776,
+          "elapsedMs": 100.14580000000024
+        },
+        {
+          "count": 5680,
+          "elapsedMs": 100.21299999999974
+        },
+        {
+          "count": 5776,
+          "elapsedMs": 100.07710000000043
+        },
+        {
+          "count": 5776,
+          "elapsedMs": 100.23019999999997
+        }
+      ],
+      "sink": 3521666624
+    },
+    {
+      "dataset": "tiny",
+      "name": "probe-sort-preallocated",
+      "medianUs": 17.113097677595565,
+      "madPercent": 3.5166135014876976,
+      "samples": [
+        {
+          "count": 5584,
+          "elapsedMs": 100.14139999999952
+        },
+        {
+          "count": 5552,
+          "elapsedMs": 100.04790000000048
+        },
+        {
+          "count": 5760,
+          "elapsedMs": 100.29129999999986
+        },
+        {
+          "count": 5856,
+          "elapsedMs": 100.21429999999964
+        },
+        {
+          "count": 5856,
+          "elapsedMs": 100.2519000000002
+        },
+        {
+          "count": 6016,
+          "elapsedMs": 100.09050000000025
+        },
+        {
+          "count": 6160,
+          "elapsedMs": 100.36400000000049
+        },
+        {
+          "count": 6144,
+          "elapsedMs": 100.20629999999983
+        },
+        {
+          "count": 6064,
+          "elapsedMs": 100.1244999999999
+        }
+      ],
+      "sink": 3700807744
+    },
+    {
+      "dataset": "tiny",
+      "name": "public-native-batch",
+      "medianUs": 19.376451238390235,
+      "madPercent": 1.2646708634948969,
+      "samples": [
+        {
+          "count": 5152,
+          "elapsedMs": 100.08699999999953
+        },
+        {
+          "count": 5184,
+          "elapsedMs": 100.26720000000023
+        },
+        {
+          "count": 4992,
+          "elapsedMs": 100.19650000000001
+        },
+        {
+          "count": 5008,
+          "elapsedMs": 100.23509999999987
+        },
+        {
+          "count": 5232,
+          "elapsedMs": 100.09550000000127
+        },
+        {
+          "count": 5104,
+          "elapsedMs": 100.22019999999975
+        },
+        {
+          "count": 5168,
+          "elapsedMs": 100.13750000000073
+        },
+        {
+          "count": 5344,
+          "elapsedMs": 100.27460000000065
+        },
+        {
+          "count": 5184,
+          "elapsedMs": 100.02059999999983
+        }
+      ],
+      "sink": 3858247104
+    },
+    {
+      "dataset": "tiny",
+      "name": "public-native-loop",
+      "medianUs": 18.760310628742573,
+      "madPercent": 1.3256614329507497,
+      "samples": [
+        {
+          "count": 5360,
+          "elapsedMs": 100.17619999999988
+        },
+        {
+          "count": 5344,
+          "elapsedMs": 100.25510000000031
+        },
+        {
+          "count": 5408,
+          "elapsedMs": 100.11080000000038
+        },
+        {
+          "count": 4944,
+          "elapsedMs": 100.00580000000082
+        },
+        {
+          "count": 5344,
+          "elapsedMs": 100.24989999999889
+        },
+        {
+          "count": 5072,
+          "elapsedMs": 100.05279999999948
+        },
+        {
+          "count": 5424,
+          "elapsedMs": 100.00900000000001
+        },
+        {
+          "count": 5312,
+          "elapsedMs": 100.1804000000011
+        },
+        {
+          "count": 5232,
+          "elapsedMs": 100.11249999999927
+        }
+      ],
+      "sink": 4019384704
+    },
+    {
+      "dataset": "real-comments",
+      "name": "boundary",
+      "medianUs": 0.24337084339225673,
+      "madPercent": 1.4462332314121416,
+      "samples": [
+        {
+          "count": 407696,
+          "elapsedMs": 100.00410000000011
+        },
+        {
+          "count": 420096,
+          "elapsedMs": 100.00430000000051
+        },
+        {
+          "count": 421440,
+          "elapsedMs": 100.00400000000081
+        },
+        {
+          "count": 423504,
+          "elapsedMs": 100.00250000000051
+        },
+        {
+          "count": 408464,
+          "elapsedMs": 100.00560000000041
+        },
+        {
+          "count": 405056,
+          "elapsedMs": 100.00450000000092
+        },
+        {
+          "count": 410912,
+          "elapsedMs": 100.003999999999
+        },
+        {
+          "count": 411568,
+          "elapsedMs": 100.00540000000001
+        },
+        {
+          "count": 395040,
+          "elapsedMs": 100.00480000000061
+        }
+      ],
+      "sink": 4177738112
+    },
+    {
+      "dataset": "real-comments",
+      "name": "wrapper-validation-only",
+      "medianUs": 3.07020812868371,
+      "madPercent": 1.096087089197221,
+      "samples": [
+        {
+          "count": 32368,
+          "elapsedMs": 100.02249999999913
+        },
+        {
+          "count": 32208,
+          "elapsedMs": 100.05609999999979
+        },
+        {
+          "count": 32496,
+          "elapsedMs": 100.04230000000098
+        },
+        {
+          "count": 32496,
+          "elapsedMs": 100.08339999999953
+        },
+        {
+          "count": 32576,
+          "elapsedMs": 100.01510000000053
+        },
+        {
+          "count": 33648,
+          "elapsedMs": 100.02849999999853
+        },
+        {
+          "count": 33568,
+          "elapsedMs": 100.23439999999937
+        },
+        {
+          "count": 33232,
+          "elapsedMs": 100.03219999999965
+        },
+        {
+          "count": 32944,
+          "elapsedMs": 100.03630000000157
+        }
+      ],
+      "sink": 3276023264
+    },
+    {
+      "dataset": "real-comments",
+      "name": "input-conversion-only",
+      "medianUs": 5.59139646690524,
+      "madPercent": 0.9855986360404562,
+      "samples": [
+        {
+          "count": 17888,
+          "elapsedMs": 100.07630000000063
+        },
+        {
+          "count": 18112,
+          "elapsedMs": 100.02310000000034
+        },
+        {
+          "count": 17888,
+          "elapsedMs": 100.01890000000094
+        },
+        {
+          "count": 17712,
+          "elapsedMs": 100.01090000000113
+        },
+        {
+          "count": 17552,
+          "elapsedMs": 100.04759999999987
+        },
+        {
+          "count": 17760,
+          "elapsedMs": 100.01339999999982
+        },
+        {
+          "count": 18016,
+          "elapsedMs": 100.0030999999999
+        },
+        {
+          "count": 18112,
+          "elapsedMs": 100.05629999999837
+        },
+        {
+          "count": 18224,
+          "elapsedMs": 100.05999999999949
+        }
+      ],
+      "sink": 838739440
+    },
+    {
+      "dataset": "real-comments",
+      "name": "output-clone-and-conversion-only",
+      "medianUs": 5.563689946619301,
+      "madPercent": 0.7976231881226782,
+      "samples": [
+        {
+          "count": 16736,
+          "elapsedMs": 100.12960000000021
+        },
+        {
+          "count": 17952,
+          "elapsedMs": 100.11620000000039
+        },
+        {
+          "count": 18592,
+          "elapsedMs": 100.07330000000002
+        },
+        {
+          "count": 17808,
+          "elapsedMs": 100.0589
+        },
+        {
+          "count": 17984,
+          "elapsedMs": 100.05740000000151
+        },
+        {
+          "count": 18128,
+          "elapsedMs": 100.05409999999938
+        },
+        {
+          "count": 18064,
+          "elapsedMs": 100.00840000000062
+        },
+        {
+          "count": 17296,
+          "elapsedMs": 100.01519999999982
+        },
+        {
+          "count": 18032,
+          "elapsedMs": 100.07110000000102
+        }
+      ],
+      "sink": 3372156976
+    },
+    {
+      "dataset": "real-comments",
+      "name": "stored-engine-return-length",
+      "medianUs": 14.891478622327416,
+      "madPercent": 0.7666054209255969,
+      "samples": [
+        {
+          "count": 6624,
+          "elapsedMs": 100.16490000000158
+        },
+        {
+          "count": 6960,
+          "elapsedMs": 100.1869000000006
+        },
+        {
+          "count": 6768,
+          "elapsedMs": 100.01289999999972
+        },
+        {
+          "count": 6864,
+          "elapsedMs": 100.04470000000038
+        },
+        {
+          "count": 6736,
+          "elapsedMs": 100.30899999999747
+        },
+        {
+          "count": 6624,
+          "elapsedMs": 100.21399999999994
+        },
+        {
+          "count": 6688,
+          "elapsedMs": 100.18150000000242
+        },
+        {
+          "count": 6672,
+          "elapsedMs": 100.11119999999937
+        },
+        {
+          "count": 6736,
+          "elapsedMs": 100.02089999999953
+        }
+      ],
+      "sink": 4068183968
+    },
+    {
+      "dataset": "real-comments",
+      "name": "probe-sort-collected",
+      "medianUs": 25.41026422764249,
+      "madPercent": 1.6911919346722613,
+      "samples": [
+        {
+          "count": 3856,
+          "elapsedMs": 100.16010000000097
+        },
+        {
+          "count": 3792,
+          "elapsedMs": 100.16690000000017
+        },
+        {
+          "count": 3728,
+          "elapsedMs": 100.54599999999846
+        },
+        {
+          "count": 3968,
+          "elapsedMs": 100.24079999999958
+        },
+        {
+          "count": 3872,
+          "elapsedMs": 100.24239999999918
+        },
+        {
+          "count": 3984,
+          "elapsedMs": 100.08799999999974
+        },
+        {
+          "count": 3984,
+          "elapsedMs": 100.05910000000222
+        },
+        {
+          "count": 4016,
+          "elapsedMs": 100.32179999999789
+        },
+        {
+          "count": 3936,
+          "elapsedMs": 100.01480000000083
+        }
+      ],
+      "sink": 319551712
+    },
+    {
+      "dataset": "real-comments",
+      "name": "probe-sort-preallocated",
+      "medianUs": 25.96522302904614,
+      "madPercent": 0.9222255977881558,
+      "samples": [
+        {
+          "count": 3856,
+          "elapsedMs": 100.12190000000192
+        },
+        {
+          "count": 3904,
+          "elapsedMs": 100.31499999999869
+        },
+        {
+          "count": 3824,
+          "elapsedMs": 100.16640000000189
+        },
+        {
+          "count": 3888,
+          "elapsedMs": 100.11569999999847
+        },
+        {
+          "count": 3712,
+          "elapsedMs": 100.40610000000015
+        },
+        {
+          "count": 3968,
+          "elapsedMs": 100.35310000000027
+        },
+        {
+          "count": 3824,
+          "elapsedMs": 100.20669999999882
+        },
+        {
+          "count": 4000,
+          "elapsedMs": 100.28139999999985
+        },
+        {
+          "count": 3856,
+          "elapsedMs": 100.91589999999997
+        }
+      ],
+      "sink": 865699008
+    },
+    {
+      "dataset": "real-comments",
+      "name": "public-native-batch",
+      "medianUs": 30.15952524038513,
+      "madPercent": 0.6796432807390321,
+      "samples": [
+        {
+          "count": 3312,
+          "elapsedMs": 100.0447000000022
+        },
+        {
+          "count": 3408,
+          "elapsedMs": 100.06940000000031
+        },
+        {
+          "count": 3296,
+          "elapsedMs": 100.22429999999804
+        },
+        {
+          "count": 3392,
+          "elapsedMs": 100.44000000000233
+        },
+        {
+          "count": 3344,
+          "elapsedMs": 100.38379999999961
+        },
+        {
+          "count": 3296,
+          "elapsedMs": 100.08139999999912
+        },
+        {
+          "count": 3296,
+          "elapsedMs": 100.36390000000029
+        },
+        {
+          "count": 3328,
+          "elapsedMs": 100.05030000000261
+        },
+        {
+          "count": 3328,
+          "elapsedMs": 100.37090000000171
+        }
+      ],
+      "sink": 1335622240
+    },
+    {
+      "dataset": "real-comments",
+      "name": "public-native-loop",
+      "medianUs": 28.314649321266508,
+      "madPercent": 0.9038683822217571,
+      "samples": [
+        {
+          "count": 3504,
+          "elapsedMs": 100.11130000000048
+        },
+        {
+          "count": 3680,
+          "elapsedMs": 100.31400000000212
+        },
+        {
+          "count": 3648,
+          "elapsedMs": 100.14940000000206
+        },
+        {
+          "count": 3680,
+          "elapsedMs": 100.34809999999925
+        },
+        {
+          "count": 3552,
+          "elapsedMs": 100.03350000000137
+        },
+        {
+          "count": 3520,
+          "elapsedMs": 100.3201999999983
+        },
+        {
+          "count": 3520,
+          "elapsedMs": 100.03659999999945
+        },
+        {
+          "count": 3536,
+          "elapsedMs": 100.12059999999838
+        },
+        {
+          "count": 3456,
+          "elapsedMs": 100.29769999999917
+        }
+      ],
+      "sink": 1835584512
+    }
+  ],
+  "limitations": [
+    "Probe class overhead differs from public free functions. Stage durations include combined allocation/copy/encoding and cannot be naively added/subtracted.",
+    "Array outputs consumed identically per item without extra JSON.stringify. No V8 allocation counts."
+  ]
+}

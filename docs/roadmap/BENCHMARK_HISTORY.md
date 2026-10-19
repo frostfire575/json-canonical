@@ -23,3 +23,23 @@ is contextual. Each raw JSON stores actual configuration,environment,commit,hash
 every sample,MAD,CPU,RSS and blocking probes. Earlier contaminated runs are retained
 and explicitly excluded in NOTES.md/INDEPENDENT_REVIEW.md. Allocation counts are
 NOT MEASURED. Rust stage profile is separate Rust-only evidence, not npm throughput.
+
+## Expanded independent reproduction and profiling, 2026-10-19
+404 independently measured cells across real fixtures and synthetic controls;
+commands, source snapshots, samples and identity in REPRODUCTION_REVIEW.md.
+Warmup sensitivity corroborates normalized-lock native3268/3318 vs1373/1358ops/s.
+Latin1 native7438/7491 vs92245/90744; real CLDR native6750/6780 vs4835/4824.
+Real batch sizes1/8/32/128 lose3–33% versus same native repeated calls.
+Real versioned-cache pools: misses3–5%slower,50%hits~1.8x,90%hits~7.3–7.7x.
+These conditional cache results include the same mutation/version schedule.
+
+Private profiling raw files in benches/profiling/results, not production claims:
+00-48-54-632Z-7208-batch: real32-record batch30.160us vs loop28.315us;
+input conversion5.591us, output clone/conversion5.564us, stored engine14.891us.
+Collect25.410us vs preallocated25.965us: no demonstrated benefit from preallocation.
+00-49-29-827Z-10412-allocations: batch32 preallocation saves exactly3 reallocations
+on every tested input; still256/11296 core reallocations for CLDR/lock respectively.
+00-49-30-013Z-24432: validation10.644us and scan/sort/drop24.171us for Unicode.
+No V8 allocation counts or internal call-stack profile. No production optimization
+accepted at this checkpoint. Prior reports saying allocations NOT MEASURED apply
+only to their original public-API benchmark evidence, not this isolated Rust run.

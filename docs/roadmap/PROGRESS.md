@@ -101,3 +101,14 @@ Remaining production gate: Linux/macOS jobs and multi-platform artifact installa
 Docker client exists but daemon is unavailable, WSL has only docker-desktop. Rust
 minimum1.88 has not been executed (local1.98.1 verified). No critical correctness
 issue remains in reviewed scope. Production readiness is not claimed.
+
+## 2026-10-19 expanded audit checkpoint
+Independent baseline404 measured cells and seven harness tests now complete.
+Real-world CLDR data/license retained; no production changes. Private release
+probes isolate Unicode boundary costs and batch array/validation/copy categories.
+Preallocation saves3 Rust reallocations/batch32 but does not improve real-record
+throughput; reject as a stand-alone optimization. Cache pools establish conditional
+usefulness at realistic hit ratios, with miss overhead disclosed. Detailed evidence:
+REPRODUCTION_REVIEW.md,PROFILING_REVIEW.md and append-only raw JSON directories.
+Next: independently validate adaptive output encoding through the public addon,
+then separately simplify batch execution if its before/after evidence supports it.

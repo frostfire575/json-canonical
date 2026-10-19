@@ -157,7 +157,7 @@ hashes JSON.stringify(input), including quoting of single input strings; actual
 fixture/normalized byte hashes are separate in `fixtures`. Raw reports are not
 rewritten. The frozen v1 snapshot is evidence, not the maintained entry point.
 
-## Coverage remaining
+## Coverage remaining at the initial milestone
 
 This milestone reproduces normalized lock/API, source-byte variants, Unicode,
 tiny/real batches, single-identity real-document cache, and text competitors.
@@ -167,3 +167,137 @@ selective extraction, cold startup, Rust-only stage timings or the historical
 pre-scanner baseline. Their old evidence is preserved but not newly verified by
 this agent. CPU/RSS are present in new raw files, not allocator counts or isolated
 peaks. Further timing windows must be coordinated with tests/profiling/builds.
+
+## Expanded independent baseline milestone
+
+Executed `node benches/reproduction/coverage.cjs` serially after the lead's
+profiling completed. Core sources/addon were unchanged throughout. Snapshot
+`benches/reproduction/run-82f314238fd4.cjs` preserves measured runner SHA-256
+`82f314238fd4e69b7edd54960d0d66e0f9c3767edfc3c47eeda083a7aab3ad21`.
+All **308 measured cells passed exact-output prechecks**, using two shuffled run
+orders and nine 100 ms samples each. Coverage manifest:
+`benches/reproduction/results/2026-10-19T00-38-53-424Z-coverage.json`.
+Every table/rate/MAD is preserved in the generated append-only summary:
+`benches/reproduction/results/2026-10-19T00-38-53-424Z-coverage-summary.md`.
+
+The six groups cover all 12 historical ordinary-object shapes, their upstream,
+public, native-roundtrip, safe-stable, fast-stable and contextual JSON.stringify
+paths; missing tiny/deep/wide and other text shapes; all six selection paths with
+both raw-text and JS-scalar outcomes; real array-element batches; realistic cache
+mutation pools; and output-consumption sensitivity. Contextual JSON.stringify
+has its own expected output and is explicitly marked non-equivalent to stable
+serialization. Historical pre-scanner performance is not newly reproduced.
+
+Additional text results support the old findings: tiny native 2.224M/2.228M vs JS
+parse+upstream 1.182M/1.165M ops/s; deep 74,219/72,096 vs 31,555/31,336; wide
+4306/4287 vs 2498/2462. Individual historical short-run numbers are not exact
+constants; some shapes differ materially with longer warmup and measurement.
+
+Object-to-native roundtrip is still workload dependent. Normalized lock measured
+2192/2161 vs upstream 2016/2012 ops/s (below the 10% improvement gate); API
+166.3/166.6 vs 167.4/164.3 (no useful win); Unicode 3995/4009 vs 18610/18775
+(~79% loss); wide 2582/2569 vs 4179/4169 (~38% loss). No automatic object routing
+is justified. Public JS serialization stays close to upstream; competitors win
+many object shapes. No universal fastest-serializer claim is supported.
+
+Selection reproduces the narrower scope: lock native 6776/6742 vs JS 4740/4688
+ops/s (~43–44% gain, smaller than historical ~49%); API 508/512 vs 700/683
+(~25–27% loss), deep 10.8k/10.7k vs 123.9k/122.8k (~91% loss), Unicode
+11.1k/10.8k vs 45.6k/45.5k (~76% loss). Scalar outcomes have the same broad
+conclusions; raw files retain exact figures and path contracts.
+
+Direct consumption of every returned array element removes JSON.stringify of
+the result list from both native batch candidates. This exposes batch overhead:
+
+| Real comment count | Native batch relative to same-native loop, run 1 / 2 |
+|---|---:|
+| 1 | -31.8% / -32.6% |
+| 8 | -11.1% / -12.5% |
+| 32 | -8.8% / -8.3% |
+| 128 | -3.2% / -7.0% |
+
+These results further reject a blanket boundary-amortization speed claim. They
+are public API comparisons including wrapper validation, input conversion and
+returned array/strings. No speculative batch optimization was introduced.
+
+Cache usefulness now has mixed workloads rather than only a repeated single
+identity. Pools contain 32 or 128 real JSONPlaceholder comments. Every candidate
+includes round-robin scheduling, explicit per-record versions and scheduled body
+mutations. The cache is prefilled before timing; every scheduled mutation changes
+the version, and an independent 400-step replay checks all results before each
+measured cell. Planned hit ratios are 0%, 50%, 90% and 99%:
+
+| Planned hit fraction | Cache versus repeated public serialization |
+|---|---|
+| 0% | 3–5% slower |
+| 50% | approximately 1.8x throughput |
+| 90% | approximately 7.3–7.7x throughput |
+| 99% | approximately 27–29x throughput |
+
+These conditional gains come from skipping work on known unchanged versions;
+they do not provide mutation detection. High-hit results include scheduling,
+version and checksum costs, while cache population remains outside timing.
+Pools, payload size, hit ratios and invalidation contract matter in applications.
+
+Length-only output consumption sensitivity uses one-second warmup: lock native
+3421/3398 vs JS 1470/1474, Unicode native 4505/4487 vs JS 13644/13794 ops/s.
+Compared with earlier flattening runs, JS lock benefits from avoiding output rope
+flattening; native results also drift between runs. This is a sensitivity test,
+not a causal decomposition or a reason to omit full output consumption from the
+primary benchmark. Unicode's large loss remains.
+
+The expanded six self-tests passed before these runs. A seventh later verifies
+the newly retained CLDR fixture and density controls; final seven-test command
+`node --test benches/reproduction/reproduction.test.cjs` passed on Windows
+Node24.20.0 (seven tests, no failures). Those additional timing results are
+recorded separately below when complete. New production changes have not yet
+been measured by this agent at this baseline milestone.
+
+## Encoding controls, real Unicode data and cold loading
+
+Before production changes, added separately pinned CLDR Bengali localization
+data and four isolated negative controls. `node --test
+benches/reproduction/reproduction.test.cjs` passed seven tests, then
+`node benches/reproduction/coverage.cjs encoding-controls` executed twenty exact
+oracle comparisons/timing cells. Raw results:
+`benches/reproduction/results/2026-10-19T00-46-20-529Z-25372.json`;
+manifest/summary prefix `2026-10-19T00-46-20-489Z-coverage`.
+Exact runner source is `run-c6202c807631.cjs`, SHA-256
+`c6202c8076311a30e34722c236731d54af54ccab46a9f59903a598ff13db6f08`.
+The loaded release addon remains the same `154d1683...` baseline.
+
+CLDR source/Unicode-3.0 license, fixed commit and both exact file hashes are
+verified from `benches/profiling/data/cldr-manifest.json` and copied into the raw
+metadata. Original source is 25,897 bytes; normalized input is 19,086 bytes,
+SHA-256 `36d0a6a25bef368aeaedf0d0422f4ab20132caabf37b7500b569dbcf9c0063a7`.
+Fixture construction, normalization and checks happen before timing.
+
+| Existing normalized JSON text | Native run 1 / 2 ops/s | JS parse + oracle run 1 / 2 ops/s |
+|---|---:|---:|
+| Real CLDR Bengali language names | 6750 / 6780 | 4835 / 4824 |
+| `{value: 'é'.repeat(16000)}` | 7438 / 7491 | 92245 / 90744 |
+| `{value: 'x'.repeat(50000) + '😀'}` | 11849 / 11913 | 12413 / 12204 |
+| `{value: 'x'.repeat(50000)}` | 37096 / 37558 | 29857 / 29171 |
+| `{value: 'বাংলা😀漢字é'}` | 1.840M / 1.815M | 1.970M / 1.968M |
+
+The initial Unicode finding is workload dependent: the real localization fixture
+already favors native, while Latin-1 and dense synthetic Unicode reveal large
+native conversion losses. These controls are saved before implementation changes
+for matched measurements, not as evidence of an optimization yet.
+
+Executed `node benches/reproduction/cold-start.cjs`: five fresh processes per
+module per round, two shuffled serial rounds, 30 successful require samples.
+Raw: `benches/reproduction/results/2026-10-19T00-46-46-162Z-31476-cold-start.json`.
+
+| Require target | Round 1 / 2 median ms |
+|---|---:|
+| Pinned upstream | 1.757 / 1.692 |
+| Public wrapper (lazy native) | 2.089 / 1.913 |
+| Actual native loader/addon | 3.227 / 3.182 |
+
+These timers include require only, exclude Node process startup, and record
+actual loaded native paths/hashes. OS disk cache may already be warm. They do
+not establish cold-machine startup or per-request latency. Historical slower
+require numbers are not reproduced exactly; environment/cache/run variation is
+preserved rather than hidden. All baseline timing has now stopped; the lead may
+build and test a candidate before a separately coordinated after window.

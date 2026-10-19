@@ -1,0 +1,24 @@
+[
+  {
+    "file": "cldr-bn-languages.json",
+    "source": "https://raw.githubusercontent.com/unicode-org/cldr-json/91c267402229a59e3ef2774544f001bf959e8809/cldr-json/cldr-localenames-full/main/bn/languages.json",
+    "commit": "91c267402229a59e3ef2774544f001bf959e8809",
+    "retrievedAt": "2026-10-19T00:42:47.022945+00:00",
+    "bytes": 25897,
+    "sha256": "2485a776d5e2bdc5eba15a446706fad90cd06950cebfb176f204db17ce83bf00",
+    "license": "Unicode-3.0",
+    "licenseFile": "cldr-LICENSE",
+    "purpose": "Real CLDR Bengali application localization language names; dense Unicode JSON values"
+  },
+  {
+    "file": "cldr-LICENSE",
+    "source": "https://raw.githubusercontent.com/unicode-org/cldr-json/91c267402229a59e3ef2774544f001bf959e8809/LICENSE",
+    "commit": "91c267402229a59e3ef2774544f001bf959e8809",
+    "retrievedAt": "2026-10-19T00:42:47.363424+00:00",
+    "bytes": 2033,
+    "sha256": "220ba0e1c43b99530d2d5bdb892a99dca0989414f51ab695ecd90163eaa1ec3b",
+    "license": "Unicode-3.0",
+    "licenseFile": "cldr-LICENSE",
+    "purpose": "Real CLDR Bengali application localization language names; dense Unicode JSON values"
+  }
+]

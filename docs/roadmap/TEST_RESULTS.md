@@ -107,3 +107,22 @@ Environment reconfirmed: Windows x64,i7-12700K,Node24.20.0,pnpm12.10.1,Rust1.98.
   missing all-target binary negative test fails as intended. See CI_REVIEW_2.md.
 - Updated CI `actionlint` and new verifier `node --check`: PASS. Hosted matrix and
   actual Linux/macOS installs remain NOT RUN.
+
+## 2026-10-19 expanded reproduction and diagnostic checkpoint
+- Independent historical coverage: 404 measured cells with candidate-specific
+  exact checks (JSON.stringify rows are contextual, not stable-equivalent),
+  seven runner tests, two randomized runs, raw manifests and frozen sources in
+  benches/reproduction/results; detailed table in REPRODUCTION_REVIEW.md.
+- `cargo fmt --manifest-path benches/profiling/Cargo.toml --all`: PASS.
+- Private release addon build and `cargo clippy --manifest-path
+  benches/profiling/Cargo.toml --all-targets --all-features -- -D warnings`: PASS.
+- `node benches/profiling/batch.cjs`: PASS18 exact stage checks,9x100ms samples.
+- Allocation binary release build + `node benches/profiling/allocations.cjs`: PASS
+  four inputs. Rust allocation counts only; Node/V8 allocations excluded.
+- Filtered stage rerun `PROFILE_DATASETS=unicode,dependency-lock,tiny
+  PROFILE_METHODS=serde-validation-stored,scan-sort-drop-stored node
+  benches/profiling/run.cjs`: PASS. Raw source snapshots and observations retained.
+- New native-output tests not yet executed at this checkpoint; production unchanged.
+- New output-density/token-preservation2 groups and7 reproduction harness tests:
+  `node --test benches/reproduction/reproduction.test.cjs tests/native-output.test.cjs`
+  PASS9 on unchanged production baseline before candidate changes.

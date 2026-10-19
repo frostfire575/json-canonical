@@ -1,0 +1,1942 @@
+{
+  "date": "2026-10-19T00:33:45.177Z",
+  "command": "node benches/profiling/run.cjs",
+  "environment": {
+    "node": "v24.20.0",
+    "v8": "13.6.233.17-node.53",
+    "rust": "rustc 1.98.1 (48a229cea 2026-09-01)",
+    "os": "10.0.26300",
+    "cpu": "12th Gen Intel(R) Core(TM) i7-12700K",
+    "commit": "6da938bb54f79dafd2ceb5fb5355ea8b3fa2dc89",
+    "dirty": "M .gitignore\n M benches/reproduction/reproduction.test.cjs\n M benches/reproduction/run.cjs\n?? benches/profiling/"
+  },
+  "hashes": {
+    "src/lib.rs": "e8dee59b841e22ed90c77b4c145856ce1f5999fecf551a87e27f8729d1350919",
+    "src/engine.rs": "1bea768b0d2db85a3e92653bb12b84e30981df44950032d165dee1b91514cdc6",
+    "src/tree.rs": "b345e2b5f4e22ae0f15f8132ae3dc8250aadfc4d53687d0f1c8692c03720440a",
+    "js/dist/index.js": "859a2d9ce77ded096d4526b9b799e6dee275137b72db5b12b3317a6fd82760f6",
+    "benches/profiling/src/lib.rs": "368ca0e4552d5645f71eee15d909509153197151643aa86d61a8bb62e7363cef"
+  },
+  "probeArtifacts": [
+    {
+      "file": "probe.win32-x64-msvc.node",
+      "hash": "a399378d941690185bc1fec7445217e690c806b1a952f331543563ab4c777027"
+    }
+  ],
+  "results": [
+    {
+      "dataset": "unicode",
+      "inputBytes": 39491,
+      "inputCodeUnits": 18291,
+      "name": "boundary",
+      "medianUs": 0.23154559090404078,
+      "madPercent": 0.24553032921926055,
+      "samples": [
+        {
+          "count": 433072,
+          "elapsedMs": 100.082
+        },
+        {
+          "count": 433472,
+          "elapsedMs": 100.02869999999996
+        },
+        {
+          "count": 432640,
+          "elapsedMs": 100.03050000000007
+        },
+        {
+          "count": 432016,
+          "elapsedMs": 100.03140000000008
+        },
+        {
+          "count": 433088,
+          "elapsedMs": 100.03340000000003
+        },
+        {
+          "count": 430400,
+          "elapsedMs": 100.03229999999996
+        },
+        {
+          "count": 428992,
+          "elapsedMs": 100.12150000000008
+        },
+        {
+          "count": 399024,
+          "elapsedMs": 100.02150000000006
+        },
+        {
+          "count": 431920,
+          "elapsedMs": 100.03179999999998
+        }
+      ],
+      "sink": 13897232
+    },
+    {
+      "dataset": "unicode",
+      "inputBytes": 39491,
+      "inputCodeUnits": 18291,
+      "name": "input-utf8-allocation-copy",
+      "medianUs": 46.2763786764706,
+      "madPercent": 0.3897897544012496,
+      "samples": [
+        {
+          "count": 2192,
+          "elapsedMs": 100.39699999999993
+        },
+        {
+          "count": 2160,
+          "elapsedMs": 100.21859999999992
+        },
+        {
+          "count": 2160,
+          "elapsedMs": 100.52009999999996
+        },
+        {
+          "count": 2176,
+          "elapsedMs": 100.35609999999997
+        },
+        {
+          "count": 2144,
+          "elapsedMs": 100.60450000000014
+        },
+        {
+          "count": 2160,
+          "elapsedMs": 100.34660000000031
+        },
+        {
+          "count": 2192,
+          "elapsedMs": 100.58809999999994
+        },
+        {
+          "count": 2176,
+          "elapsedMs": 100.69740000000002
+        },
+        {
+          "count": 2176,
+          "elapsedMs": 100.31880000000001
+        }
+      ],
+      "sink": 1043190656
+    },
+    {
+      "dataset": "unicode",
+      "inputBytes": 39491,
+      "inputCodeUnits": 18291,
+      "name": "input-utf16-allocation-copy",
+      "medianUs": 1.2609365543675606,
+      "madPercent": 0.19923315286135038,
+      "samples": [
+        {
+          "count": 78656,
+          "elapsedMs": 100.01119999999992
+        },
+        {
+          "count": 80128,
+          "elapsedMs": 100.01830000000018
+        },
+        {
+          "count": 76672,
+          "elapsedMs": 100.01879999999983
+        },
+        {
+          "count": 79328,
+          "elapsedMs": 100.00550000000021
+        },
+        {
+          "count": 79312,
+          "elapsedMs": 100.00739999999996
+        },
+        {
+          "count": 79472,
+          "elapsedMs": 100.00949999999966
+        },
+        {
+          "count": 79168,
+          "elapsedMs": 100.01409999999987
+        },
+        {
+          "count": 77568,
+          "elapsedMs": 100.01070000000027
+        },
+        {
+          "count": 79392,
+          "elapsedMs": 100.01189999999997
+        }
+      ],
+      "sink": 1177728400
+    },
+    {
+      "dataset": "unicode",
+      "inputBytes": 39491,
+      "inputCodeUnits": 18291,
+      "name": "roundtrip-utf8",
+      "medianUs": 180.28571428571433,
+      "madPercent": 2.60261214562375,
+      "samples": [
+        {
+          "count": 496,
+          "elapsedMs": 101.63270000000011
+        },
+        {
+          "count": 544,
+          "elapsedMs": 100.80230000000029
+        },
+        {
+          "count": 560,
+          "elapsedMs": 100.11639999999989
+        },
+        {
+          "count": 576,
+          "elapsedMs": 102.04739999999947
+        },
+        {
+          "count": 544,
+          "elapsedMs": 101.79179999999997
+        },
+        {
+          "count": 512,
+          "elapsedMs": 100.15999999999985
+        },
+        {
+          "count": 576,
+          "elapsedMs": 101.14190000000053
+        },
+        {
+          "count": 576,
+          "elapsedMs": 101.72850000000017
+        },
+        {
+          "count": 560,
+          "elapsedMs": 100.96000000000004
+        }
+      ],
+      "sink": 1314664016
+    },
+    {
+      "dataset": "unicode",
+      "inputBytes": 39491,
+      "inputCodeUnits": 18291,
+      "name": "roundtrip-utf16",
+      "medianUs": 3.843208358942846,
+      "madPercent": 1.901394068941125,
+      "samples": [
+        {
+          "count": 24704,
+          "elapsedMs": 100.05580000000009
+        },
+        {
+          "count": 25520,
+          "elapsedMs": 100.00619999999981
+        },
+        {
+          "count": 26272,
+          "elapsedMs": 100.01710000000003
+        },
+        {
+          "count": 26016,
+          "elapsedMs": 100.10739999999987
+        },
+        {
+          "count": 26480,
+          "elapsedMs": 100.00959999999941
+        },
+        {
+          "count": 26032,
+          "elapsedMs": 100.04640000000018
+        },
+        {
+          "count": 25536,
+          "elapsedMs": 100.00619999999981
+        },
+        {
+          "count": 26544,
+          "elapsedMs": 100.00939999999991
+        },
+        {
+          "count": 27072,
+          "elapsedMs": 100.01260000000002
+        }
+      ],
+      "sink": 3573661312
+    },
+    {
+      "dataset": "unicode",
+      "inputBytes": 39491,
+      "inputCodeUnits": 18291,
+      "name": "output-utf8-borrowed",
+      "medianUs": 131.6494791666661,
+      "madPercent": 0.48869116617359165,
+      "samples": [
+        {
+          "count": 784,
+          "elapsedMs": 101.55330000000049
+        },
+        {
+          "count": 768,
+          "elapsedMs": 100.84070000000065
+        },
+        {
+          "count": 768,
+          "elapsedMs": 101.87750000000051
+        },
+        {
+          "count": 768,
+          "elapsedMs": 101.44890000000032
+        },
+        {
+          "count": 768,
+          "elapsedMs": 101.60090000000037
+        },
+        {
+          "count": 768,
+          "elapsedMs": 100.70539999999983
+        },
+        {
+          "count": 752,
+          "elapsedMs": 100.55050000000028
+        },
+        {
+          "count": 768,
+          "elapsedMs": 101.10679999999957
+        },
+        {
+          "count": 784,
+          "elapsedMs": 101.92669999999998
+        }
+      ],
+      "sink": 3741664912
+    },
+    {
+      "dataset": "unicode",
+      "inputBytes": 39491,
+      "inputCodeUnits": 18291,
+      "name": "output-utf16-clone",
+      "medianUs": 3.4910609654017803,
+      "madPercent": 5.766183062276607,
+      "samples": [
+        {
+          "count": 30112,
+          "elapsedMs": 100.0047999999997
+        },
+        {
+          "count": 30544,
+          "elapsedMs": 100.0006999999996
+        },
+        {
+          "count": 23296,
+          "elapsedMs": 100.01620000000003
+        },
+        {
+          "count": 28560,
+          "elapsedMs": 100.03169999999955
+        },
+        {
+          "count": 33568,
+          "elapsedMs": 100.01209999999992
+        },
+        {
+          "count": 27088,
+          "elapsedMs": 100.01869999999872
+        },
+        {
+          "count": 29056,
+          "elapsedMs": 100.05559999999969
+        },
+        {
+          "count": 28672,
+          "elapsedMs": 100.09569999999985
+        },
+        {
+          "count": 26864,
+          "elapsedMs": 100.02369999999974
+        }
+      ],
+      "sink": 1445268320
+    },
+    {
+      "dataset": "unicode",
+      "inputBytes": 39491,
+      "inputCodeUnits": 18291,
+      "name": "stored-engine-no-transfer",
+      "medianUs": 35.487535310734,
+      "madPercent": 0.3238783411431016,
+      "samples": [
+        {
+          "count": 2832,
+          "elapsedMs": 100.47729999999865
+        },
+        {
+          "count": 2832,
+          "elapsedMs": 100.3805999999986
+        },
+        {
+          "count": 2832,
+          "elapsedMs": 100.1752000000015
+        },
+        {
+          "count": 2832,
+          "elapsedMs": 100.43419999999969
+        },
+        {
+          "count": 2832,
+          "elapsedMs": 100.50069999999869
+        },
+        {
+          "count": 2800,
+          "elapsedMs": 100.14490000000114
+        },
+        {
+          "count": 2400,
+          "elapsedMs": 100.38570000000072
+        },
+        {
+          "count": 2144,
+          "elapsedMs": 100.304900000001
+        },
+        {
+          "count": 2320,
+          "elapsedMs": 100.3211999999985
+        }
+      ],
+      "sink": 2716562592
+    },
+    {
+      "dataset": "unicode",
+      "inputBytes": 39491,
+      "inputCodeUnits": 18291,
+      "name": "input-and-engine-no-output",
+      "medianUs": 81.29456168831132,
+      "madPercent": 0.8162318107703141,
+      "samples": [
+        {
+          "count": 1216,
+          "elapsedMs": 101.00890000000072
+        },
+        {
+          "count": 1248,
+          "elapsedMs": 100.89860000000044
+        },
+        {
+          "count": 1216,
+          "elapsedMs": 100.42109999999957
+        },
+        {
+          "count": 1248,
+          "elapsedMs": 100.62750000000051
+        },
+        {
+          "count": 1232,
+          "elapsedMs": 100.08690000000024
+        },
+        {
+          "count": 1200,
+          "elapsedMs": 100.84410000000025
+        },
+        {
+          "count": 1168,
+          "elapsedMs": 100.14389999999912
+        },
+        {
+          "count": 1248,
+          "elapsedMs": 101.3192999999992
+        },
+        {
+          "count": 1232,
+          "elapsedMs": 100.15489999999954
+        }
+      ],
+      "sink": 3294710832
+    },
+    {
+      "dataset": "unicode",
+      "inputBytes": 39491,
+      "inputCodeUnits": 18291,
+      "name": "sort-utf16-output",
+      "medianUs": 108.00528017241386,
+      "madPercent": 1.7591580330257084,
+      "samples": [
+        {
+          "count": 960,
+          "elapsedMs": 101.01310000000012
+        },
+        {
+          "count": 944,
+          "elapsedMs": 100.16339999999946
+        },
+        {
+          "count": 912,
+          "elapsedMs": 100.96899999999914
+        },
+        {
+          "count": 896,
+          "elapsedMs": 101.3109000000004
+        },
+        {
+          "count": 944,
+          "elapsedMs": 101.31869999999981
+        },
+        {
+          "count": 928,
+          "elapsedMs": 100.22890000000007
+        },
+        {
+          "count": 928,
+          "elapsedMs": 100.16899999999987
+        },
+        {
+          "count": 912,
+          "elapsedMs": 100.14090000000033
+        },
+        {
+          "count": 896,
+          "elapsedMs": 101.58550000000105
+        }
+      ],
+      "sink": 3499657632
+    },
+    {
+      "dataset": "unicode",
+      "inputBytes": 39491,
+      "inputCodeUnits": 18291,
+      "name": "sort-utf16-input-output",
+      "medianUs": 90.61032608695749,
+      "madPercent": 3.3548493942392996,
+      "samples": [
+        {
+          "count": 1104,
+          "elapsedMs": 100.03380000000107
+        },
+        {
+          "count": 1072,
+          "elapsedMs": 100.55199999999968
+        },
+        {
+          "count": 880,
+          "elapsedMs": 100.41229999999996
+        },
+        {
+          "count": 1152,
+          "elapsedMs": 100.73260000000118
+        },
+        {
+          "count": 1152,
+          "elapsedMs": 100.88119999999981
+        },
+        {
+          "count": 1136,
+          "elapsedMs": 100.97890000000007
+        },
+        {
+          "count": 1072,
+          "elapsedMs": 100.22630000000026
+        },
+        {
+          "count": 1072,
+          "elapsedMs": 101.04540000000088
+        },
+        {
+          "count": 1120,
+          "elapsedMs": 100.0648999999994
+        }
+      ],
+      "sink": 3738908832
+    },
+    {
+      "dataset": "unicode",
+      "inputBytes": 39491,
+      "inputCodeUnits": 18291,
+      "name": "input-utf16-standard-transcode",
+      "medianUs": 28.21677927927944,
+      "madPercent": 1.0549784759164715,
+      "samples": [
+        {
+          "count": 3568,
+          "elapsedMs": 100.07330000000002
+        },
+        {
+          "count": 3520,
+          "elapsedMs": 100.37089999999989
+        },
+        {
+          "count": 3552,
+          "elapsedMs": 100.22600000000057
+        },
+        {
+          "count": 3552,
+          "elapsedMs": 100.22649999999885
+        },
+        {
+          "count": 3504,
+          "elapsedMs": 100.179900000001
+        },
+        {
+          "count": 3488,
+          "elapsedMs": 100.03139999999985
+        },
+        {
+          "count": 3616,
+          "elapsedMs": 100.21500000000015
+        },
+        {
+          "count": 3600,
+          "elapsedMs": 100.15990000000056
+        },
+        {
+          "count": 3552,
+          "elapsedMs": 100.04739999999947
+        }
+      ],
+      "sink": 1120255504
+    },
+    {
+      "dataset": "unicode",
+      "inputBytes": 39491,
+      "inputCodeUnits": 18291,
+      "name": "output-utf16-standard-transcode",
+      "medianUs": 26.042265625000027,
+      "madPercent": 1.6069794951680576,
+      "samples": [
+        {
+          "count": 3616,
+          "elapsedMs": 100.07480000000032
+        },
+        {
+          "count": 3840,
+          "elapsedMs": 100.0023000000001
+        },
+        {
+          "count": 3856,
+          "elapsedMs": 100.21510000000126
+        },
+        {
+          "count": 3920,
+          "elapsedMs": 100.14600000000064
+        },
+        {
+          "count": 3728,
+          "elapsedMs": 100.30239999999867
+        },
+        {
+          "count": 3920,
+          "elapsedMs": 100.2437000000009
+        },
+        {
+          "count": 3792,
+          "elapsedMs": 100.33920000000035
+        },
+        {
+          "count": 3824,
+          "elapsedMs": 100.48979999999938
+        },
+        {
+          "count": 3888,
+          "elapsedMs": 100.41669999999976
+        }
+      ],
+      "sink": 1957927904
+    },
+    {
+      "dataset": "unicode",
+      "inputBytes": 39491,
+      "inputCodeUnits": 18291,
+      "name": "sort-bulk-transcoded",
+      "medianUs": 111.48640350877247,
+      "madPercent": 0.8049128797846282,
+      "samples": [
+        {
+          "count": 896,
+          "elapsedMs": 100.97440000000097
+        },
+        {
+          "count": 912,
+          "elapsedMs": 101.5539000000008
+        },
+        {
+          "count": 912,
+          "elapsedMs": 101.67560000000049
+        },
+        {
+          "count": 912,
+          "elapsedMs": 101.42530000000261
+        },
+        {
+          "count": 848,
+          "elapsedMs": 101.42280000000028
+        },
+        {
+          "count": 784,
+          "elapsedMs": 100.1375999999982
+        },
+        {
+          "count": 864,
+          "elapsedMs": 100.46570000000065
+        },
+        {
+          "count": 912,
+          "elapsedMs": 101.11160000000018
+        },
+        {
+          "count": 912,
+          "elapsedMs": 100.8572000000022
+        }
+      ],
+      "sink": 2153492304
+    },
+    {
+      "dataset": "unicode",
+      "inputBytes": 39491,
+      "inputCodeUnits": 18291,
+      "name": "serde-validation-stored",
+      "medianUs": 10.638084608843519,
+      "madPercent": 0.891023303313351,
+      "samples": [
+        {
+          "count": 9408,
+          "elapsedMs": 100.10159999999814
+        },
+        {
+          "count": 9472,
+          "elapsedMs": 100.03369999999995
+        },
+        {
+          "count": 9408,
+          "elapsedMs": 100.08309999999983
+        },
+        {
+          "count": 9488,
+          "elapsedMs": 100.03479999999763
+        },
+        {
+          "count": 9600,
+          "elapsedMs": 100.08320000000094
+        },
+        {
+          "count": 9200,
+          "elapsedMs": 100.1131000000023
+        },
+        {
+          "count": 9408,
+          "elapsedMs": 100.03080000000045
+        },
+        {
+          "count": 9120,
+          "elapsedMs": 100.14249999999811
+        },
+        {
+          "count": 8400,
+          "elapsedMs": 100.09559999999692
+        }
+      ],
+      "sink": 2233495952
+    },
+    {
+      "dataset": "unicode",
+      "inputBytes": 39491,
+      "inputCodeUnits": 18291,
+      "name": "scan-sort-drop-stored",
+      "medianUs": 23.39202425373141,
+      "madPercent": 0.5074957469923115,
+      "samples": [
+        {
+          "count": 4304,
+          "elapsedMs": 100.14640000000145
+        },
+        {
+          "count": 4288,
+          "elapsedMs": 100.30500000000029
+        },
+        {
+          "count": 4288,
+          "elapsedMs": 100.02750000000015
+        },
+        {
+          "count": 4224,
+          "elapsedMs": 100.29100000000108
+        },
+        {
+          "count": 4256,
+          "elapsedMs": 100.05229999999938
+        },
+        {
+          "count": 4176,
+          "elapsedMs": 100.10800000000017
+        },
+        {
+          "count": 4288,
+          "elapsedMs": 100.18860000000132
+        },
+        {
+          "count": 4368,
+          "elapsedMs": 100.33779999999751
+        },
+        {
+          "count": 4256,
+          "elapsedMs": 100.06169999999838
+        }
+      ],
+      "sink": 4256067008
+    },
+    {
+      "dataset": "unicode",
+      "inputBytes": 39491,
+      "inputCodeUnits": 18291,
+      "name": "public-native",
+      "medianUs": 226.72946428571908,
+      "madPercent": 1.4723139991387912,
+      "samples": [
+        {
+          "count": 448,
+          "elapsedMs": 103.0702999999994
+        },
+        {
+          "count": 464,
+          "elapsedMs": 101.39630000000034
+        },
+        {
+          "count": 448,
+          "elapsedMs": 100.03919999999925
+        },
+        {
+          "count": 464,
+          "elapsedMs": 102.20390000000043
+        },
+        {
+          "count": 448,
+          "elapsedMs": 102.03320000000167
+        },
+        {
+          "count": 448,
+          "elapsedMs": 101.67729999999938
+        },
+        {
+          "count": 448,
+          "elapsedMs": 102.547300000002
+        },
+        {
+          "count": 448,
+          "elapsedMs": 101.57480000000214
+        },
+        {
+          "count": 464,
+          "elapsedMs": 102.14459999999963
+        }
+      ],
+      "sink": 60201312
+    },
+    {
+      "dataset": "unicode",
+      "inputBytes": 39491,
+      "inputCodeUnits": 18291,
+      "name": "js-parse-upstream",
+      "medianUs": 76.23163109756261,
+      "madPercent": 1.0198053208357027,
+      "samples": [
+        {
+          "count": 1328,
+          "elapsedMs": 100.32389999999941
+        },
+        {
+          "count": 1328,
+          "elapsedMs": 100.20319999999992
+        },
+        {
+          "count": 1296,
+          "elapsedMs": 100.55500000000029
+        },
+        {
+          "count": 1296,
+          "elapsedMs": 100.54739999999947
+        },
+        {
+          "count": 1328,
+          "elapsedMs": 101.27779999999984
+        },
+        {
+          "count": 1328,
+          "elapsedMs": 100.05520000000251
+        },
+        {
+          "count": 1328,
+          "elapsedMs": 100.22079999999914
+        },
+        {
+          "count": 1312,
+          "elapsedMs": 100.01590000000215
+        },
+        {
+          "count": 1264,
+          "elapsedMs": 100.27509999999893
+        }
+      ],
+      "sink": 350469312
+    },
+    {
+      "dataset": "unicode",
+      "name": "emit-prebuilt-Rust-clock",
+      "medianUs": 1.4,
+      "emissionNs": [
+        21500,
+        1500,
+        1500,
+        1400,
+        1400,
+        1400,
+        1400,
+        1400,
+        1500,
+        1300,
+        1400,
+        1400,
+        1400,
+        1300,
+        1300,
+        1400,
+        1400,
+        1400,
+        1400,
+        1400,
+        1400,
+        1300,
+        1400,
+        1400,
+        1300,
+        1400,
+        1300,
+        1400,
+        1400,
+        1400,
+        1400,
+        1400,
+        1300,
+        1300,
+        1300,
+        1400,
+        1400,
+        1400,
+        1300,
+        1400,
+        1300,
+        1300,
+        1400,
+        1400,
+        1300,
+        1400,
+        1400,
+        1300,
+        1400,
+        1400,
+        1400,
+        1400,
+        1400,
+        1300,
+        1400,
+        1400,
+        1300,
+        1400,
+        1400,
+        1400,
+        1400,
+        1300,
+        1400,
+        1400,
+        1300,
+        1300,
+        1400,
+        1300,
+        1300,
+        1400,
+        1300,
+        1400,
+        1400,
+        1400,
+        1400,
+        1400,
+        1300,
+        1400,
+        1400,
+        1400,
+        1300,
+        1300,
+        1300,
+        1300,
+        1400,
+        1400,
+        1300,
+        1400,
+        1400,
+        1400,
+        1400,
+        1300,
+        1400,
+        1400,
+        1400,
+        1300,
+        1300,
+        1400,
+        1400,
+        1400,
+        1400
+      ]
+    },
+    {
+      "dataset": "dependency-lock",
+      "inputBytes": 93728,
+      "inputCodeUnits": 93728,
+      "name": "boundary",
+      "medianUs": 0.2326304380186777,
+      "madPercent": 0.7075308107032413,
+      "samples": [
+        {
+          "count": 424432,
+          "elapsedMs": 100.0036
+        },
+        {
+          "count": 436080,
+          "elapsedMs": 100.00089999999909
+        },
+        {
+          "count": 431392,
+          "elapsedMs": 100.00209999999788
+        },
+        {
+          "count": 431472,
+          "elapsedMs": 100.00079999999798
+        },
+        {
+          "count": 426848,
+          "elapsedMs": 100.00040000000081
+        },
+        {
+          "count": 429936,
+          "elapsedMs": 100.01619999999821
+        },
+        {
+          "count": 421776,
+          "elapsedMs": 100.04049999999916
+        },
+        {
+          "count": 422224,
+          "elapsedMs": 100.0023000000001
+        },
+        {
+          "count": 430448,
+          "elapsedMs": 100.00089999999909
+        }
+      ],
+      "sink": 909566656
+    },
+    {
+      "dataset": "dependency-lock",
+      "inputBytes": 93728,
+      "inputCodeUnits": 93728,
+      "name": "input-utf8-allocation-copy",
+      "medianUs": 30.870474137930888,
+      "madPercent": 2.058439337540616,
+      "samples": [
+        {
+          "count": 3152,
+          "elapsedMs": 100.2536
+        },
+        {
+          "count": 3328,
+          "elapsedMs": 100.26460000000225
+        },
+        {
+          "count": 3280,
+          "elapsedMs": 100.4532999999974
+        },
+        {
+          "count": 3248,
+          "elapsedMs": 100.26729999999952
+        },
+        {
+          "count": 3184,
+          "elapsedMs": 100.42470000000321
+        },
+        {
+          "count": 3280,
+          "elapsedMs": 100.23760000000038
+        },
+        {
+          "count": 3312,
+          "elapsedMs": 100.13840000000346
+        },
+        {
+          "count": 2848,
+          "elapsedMs": 100.05620000000272
+        },
+        {
+          "count": 3200,
+          "elapsedMs": 100.08759999999893
+        }
+      ],
+      "sink": 222752448
+    },
+    {
+      "dataset": "dependency-lock",
+      "inputBytes": 93728,
+      "inputCodeUnits": 93728,
+      "name": "input-utf16-allocation-copy",
+      "medianUs": 5.814354651162809,
+      "madPercent": 0.7573876278925593,
+      "samples": [
+        {
+          "count": 16832,
+          "elapsedMs": 100.01160000000164
+        },
+        {
+          "count": 17152,
+          "elapsedMs": 100.03820000000269
+        },
+        {
+          "count": 17200,
+          "elapsedMs": 100.00690000000031
+        },
+        {
+          "count": 17184,
+          "elapsedMs": 100.08510000000024
+        },
+        {
+          "count": 17376,
+          "elapsedMs": 100.02759999999762
+        },
+        {
+          "count": 17376,
+          "elapsedMs": 100.07310000000143
+        },
+        {
+          "count": 17088,
+          "elapsedMs": 100.10819999999876
+        },
+        {
+          "count": 17392,
+          "elapsedMs": 100.02160000000003
+        },
+        {
+          "count": 17296,
+          "elapsedMs": 100.02649999999994
+        }
+      ],
+      "sink": 2383843520
+    },
+    {
+      "dataset": "dependency-lock",
+      "inputBytes": 93728,
+      "inputCodeUnits": 93728,
+      "name": "roundtrip-utf8",
+      "medianUs": 40.04685509554223,
+      "madPercent": 0.86958036625655,
+      "samples": [
+        {
+          "count": 2608,
+          "elapsedMs": 100.10519999999815
+        },
+        {
+          "count": 2528,
+          "elapsedMs": 100.35809999999765
+        },
+        {
+          "count": 2480,
+          "elapsedMs": 100.13009999999849
+        },
+        {
+          "count": 2544,
+          "elapsedMs": 100.54939999999988
+        },
+        {
+          "count": 2512,
+          "elapsedMs": 100.59770000000208
+        },
+        {
+          "count": 2496,
+          "elapsedMs": 100.35570000000007
+        },
+        {
+          "count": 2512,
+          "elapsedMs": 100.06260000000111
+        },
+        {
+          "count": 2432,
+          "elapsedMs": 100.03900000000067
+        },
+        {
+          "count": 2336,
+          "elapsedMs": 100.52460000000065
+        }
+      ],
+      "sink": 924239104
+    },
+    {
+      "dataset": "dependency-lock",
+      "inputBytes": 93728,
+      "inputCodeUnits": 93728,
+      "name": "roundtrip-utf16",
+      "medianUs": 17.333569944598807,
+      "madPercent": 1.1120651327477293,
+      "samples": [
+        {
+          "count": 5744,
+          "elapsedMs": 100.0470000000023
+        },
+        {
+          "count": 5904,
+          "elapsedMs": 100.24499999999898
+        },
+        {
+          "count": 5776,
+          "elapsedMs": 100.02520000000004
+        },
+        {
+          "count": 6080,
+          "elapsedMs": 100.09339999999793
+        },
+        {
+          "count": 5776,
+          "elapsedMs": 100.11100000000079
+        },
+        {
+          "count": 5776,
+          "elapsedMs": 100.11870000000272
+        },
+        {
+          "count": 5712,
+          "elapsedMs": 100.11040000000139
+        },
+        {
+          "count": 5536,
+          "elapsedMs": 100.09470000000147
+        },
+        {
+          "count": 5648,
+          "elapsedMs": 100.11939999999959
+        }
+      ],
+      "sink": 3084597984
+    },
+    {
+      "dataset": "dependency-lock",
+      "inputBytes": 93728,
+      "inputCodeUnits": 93728,
+      "name": "output-utf8-borrowed",
+      "medianUs": 9.408449248120174,
+      "madPercent": 6.976341683788808,
+      "samples": [
+        {
+          "count": 8048,
+          "elapsedMs": 100.15129999999772
+        },
+        {
+          "count": 9936,
+          "elapsedMs": 100.00400000000081
+        },
+        {
+          "count": 9984,
+          "elapsedMs": 100.01009999999951
+        },
+        {
+          "count": 10592,
+          "elapsedMs": 100.10280000000057
+        },
+        {
+          "count": 10640,
+          "elapsedMs": 100.10589999999866
+        },
+        {
+          "count": 11520,
+          "elapsedMs": 100.02040000000125
+        },
+        {
+          "count": 11616,
+          "elapsedMs": 100.1118000000024
+        },
+        {
+          "count": 11456,
+          "elapsedMs": 100.10069999999905
+        },
+        {
+          "count": 11296,
+          "elapsedMs": 100.02219999999943
+        }
+      ],
+      "sink": 2099495392
+    },
+    {
+      "dataset": "dependency-lock",
+      "inputBytes": 93728,
+      "inputCodeUnits": 93728,
+      "name": "output-utf16-clone",
+      "medianUs": 15.34344362745102,
+      "madPercent": 0.8719059589487859,
+      "samples": [
+        {
+          "count": 6352,
+          "elapsedMs": 100.22850000000108
+        },
+        {
+          "count": 6608,
+          "elapsedMs": 100.15369999999893
+        },
+        {
+          "count": 6512,
+          "elapsedMs": 100.09580000000278
+        },
+        {
+          "count": 6416,
+          "elapsedMs": 100.2528999999995
+        },
+        {
+          "count": 6544,
+          "elapsedMs": 100.23010000000068
+        },
+        {
+          "count": 5936,
+          "elapsedMs": 100.0541000000012
+        },
+        {
+          "count": 6576,
+          "elapsedMs": 100.20219999999972
+        },
+        {
+          "count": 6592,
+          "elapsedMs": 100.26209999999992
+        },
+        {
+          "count": 6528,
+          "elapsedMs": 100.16200000000026
+        }
+      ],
+      "sink": 767072992
+    },
+    {
+      "dataset": "dependency-lock",
+      "inputBytes": 93728,
+      "inputCodeUnits": 93728,
+      "name": "stored-engine-no-transfer",
+      "medianUs": 240.1203703703703,
+      "madPercent": 1.4224154552119481,
+      "samples": [
+        {
+          "count": 432,
+          "elapsedMs": 103.06789999999819
+        },
+        {
+          "count": 416,
+          "elapsedMs": 100.75169999999707
+        },
+        {
+          "count": 432,
+          "elapsedMs": 102.31040000000212
+        },
+        {
+          "count": 416,
+          "elapsedMs": 102.94729999999981
+        },
+        {
+          "count": 432,
+          "elapsedMs": 103.73199999999997
+        },
+        {
+          "count": 416,
+          "elapsedMs": 101.39869999999792
+        },
+        {
+          "count": 416,
+          "elapsedMs": 102.34339999999793
+        },
+        {
+          "count": 432,
+          "elapsedMs": 102.2564999999995
+        },
+        {
+          "count": 432,
+          "elapsedMs": 101.88539999999921
+        }
+      ],
+      "sink": 1246960352
+    },
+    {
+      "dataset": "dependency-lock",
+      "inputBytes": 93728,
+      "inputCodeUnits": 93728,
+      "name": "input-and-engine-no-output",
+      "medianUs": 273.3062500000039,
+      "madPercent": 1.1746259322463932,
+      "samples": [
+        {
+          "count": 384,
+          "elapsedMs": 103.72170000000187
+        },
+        {
+          "count": 384,
+          "elapsedMs": 102.60159999999814
+        },
+        {
+          "count": 352,
+          "elapsedMs": 100.9893000000011
+        },
+        {
+          "count": 384,
+          "elapsedMs": 101.81840000000011
+        },
+        {
+          "count": 368,
+          "elapsedMs": 100.55810000000201
+        },
+        {
+          "count": 368,
+          "elapsedMs": 101.7580999999991
+        },
+        {
+          "count": 368,
+          "elapsedMs": 100.57670000000144
+        },
+        {
+          "count": 368,
+          "elapsedMs": 100.9989999999998
+        },
+        {
+          "count": 368,
+          "elapsedMs": 102.61620000000039
+        }
+      ],
+      "sink": 1663862496
+    },
+    {
+      "dataset": "dependency-lock",
+      "inputBytes": 93728,
+      "inputCodeUnits": 93728,
+      "name": "sort-utf16-output",
+      "medianUs": 357.157291666681,
+      "madPercent": 2.128886179746209,
+      "samples": [
+        {
+          "count": 288,
+          "elapsedMs": 103.16519999999582
+        },
+        {
+          "count": 272,
+          "elapsedMs": 100.78949999999895
+        },
+        {
+          "count": 240,
+          "elapsedMs": 100.81369999999879
+        },
+        {
+          "count": 288,
+          "elapsedMs": 104.53929999999673
+        },
+        {
+          "count": 304,
+          "elapsedMs": 104.48109999999724
+        },
+        {
+          "count": 304,
+          "elapsedMs": 104.64549999999872
+        },
+        {
+          "count": 288,
+          "elapsedMs": 102.00050000000192
+        },
+        {
+          "count": 288,
+          "elapsedMs": 102.86130000000412
+        },
+        {
+          "count": 288,
+          "elapsedMs": 100.67149999999674
+        }
+      ],
+      "sink": 1975949024
+    },
+    {
+      "dataset": "dependency-lock",
+      "inputBytes": 93728,
+      "inputCodeUnits": 93728,
+      "name": "sort-utf16-input-output",
+      "medianUs": 403.0535156249755,
+      "madPercent": 1.0897281203870433,
+      "samples": [
+        {
+          "count": 256,
+          "elapsedMs": 103.90159999999742
+        },
+        {
+          "count": 256,
+          "elapsedMs": 102.0573000000004
+        },
+        {
+          "count": 256,
+          "elapsedMs": 103.18169999999373
+        },
+        {
+          "count": 256,
+          "elapsedMs": 102.1356999999989
+        },
+        {
+          "count": 256,
+          "elapsedMs": 101.76200000000244
+        },
+        {
+          "count": 256,
+          "elapsedMs": 103.92369999999937
+        },
+        {
+          "count": 256,
+          "elapsedMs": 107.37709999999788
+        },
+        {
+          "count": 256,
+          "elapsedMs": 105.63379999999597
+        },
+        {
+          "count": 272,
+          "elapsedMs": 106.40759999999864
+        }
+      ],
+      "sink": 2253525984
+    },
+    {
+      "dataset": "dependency-lock",
+      "inputBytes": 93728,
+      "inputCodeUnits": 93728,
+      "name": "input-utf16-standard-transcode",
+      "medianUs": 78.11766975308633,
+      "madPercent": 1.8404414753937888,
+      "samples": [
+        {
+          "count": 1296,
+          "elapsedMs": 100.91010000000097
+        },
+        {
+          "count": 1232,
+          "elapsedMs": 101.7638999999981
+        },
+        {
+          "count": 1296,
+          "elapsedMs": 101.24049999999988
+        },
+        {
+          "count": 1312,
+          "elapsedMs": 100.54320000000007
+        },
+        {
+          "count": 1328,
+          "elapsedMs": 101.12460000000283
+        },
+        {
+          "count": 1264,
+          "elapsedMs": 100.55799999999726
+        },
+        {
+          "count": 1264,
+          "elapsedMs": 100.76310000000376
+        },
+        {
+          "count": 1296,
+          "elapsedMs": 100.18480000000272
+        },
+        {
+          "count": 1280,
+          "elapsedMs": 101.09990000000107
+        }
+      ],
+      "sink": 3696187360
+    },
+    {
+      "dataset": "dependency-lock",
+      "inputBytes": 93728,
+      "inputCodeUnits": 93728,
+      "name": "output-utf16-standard-transcode",
+      "medianUs": 66.04401315789322,
+      "madPercent": 1.0284573568163926,
+      "samples": [
+        {
+          "count": 1520,
+          "elapsedMs": 100.3868999999977
+        },
+        {
+          "count": 1536,
+          "elapsedMs": 100.61429999999382
+        },
+        {
+          "count": 1536,
+          "elapsedMs": 100.40030000000115
+        },
+        {
+          "count": 1552,
+          "elapsedMs": 101.13550000000396
+        },
+        {
+          "count": 1520,
+          "elapsedMs": 100.6397999999972
+        },
+        {
+          "count": 1520,
+          "elapsedMs": 100.00739999999496
+        },
+        {
+          "count": 1488,
+          "elapsedMs": 100.20299999999406
+        },
+        {
+          "count": 1472,
+          "elapsedMs": 100.39360000000306
+        },
+        {
+          "count": 1504,
+          "elapsedMs": 100.7751999999964
+        }
+      ],
+      "sink": 1096690144
+    },
+    {
+      "dataset": "dependency-lock",
+      "inputBytes": 93728,
+      "inputCodeUnits": 93728,
+      "name": "sort-bulk-transcoded",
+      "medianUs": 319.9178125000117,
+      "madPercent": 1.3094183369274566,
+      "samples": [
+        {
+          "count": 320,
+          "elapsedMs": 102.37370000000374
+        },
+        {
+          "count": 320,
+          "elapsedMs": 103.6198000000004
+        },
+        {
+          "count": 336,
+          "elapsedMs": 104.97850000000471
+        },
+        {
+          "count": 320,
+          "elapsedMs": 104.36230000000069
+        },
+        {
+          "count": 320,
+          "elapsedMs": 101.41000000000349
+        },
+        {
+          "count": 336,
+          "elapsedMs": 103.95319999999629
+        },
+        {
+          "count": 320,
+          "elapsedMs": 103.76910000000498
+        },
+        {
+          "count": 320,
+          "elapsedMs": 103.71419999999489
+        },
+        {
+          "count": 320,
+          "elapsedMs": 102.10080000000016
+        }
+      ],
+      "sink": 1458290400
+    },
+    {
+      "dataset": "dependency-lock",
+      "inputBytes": 93728,
+      "inputCodeUnits": 93728,
+      "name": "serde-validation-stored",
+      "medianUs": 38.20853658536601,
+      "madPercent": 2.2831962410616353,
+      "samples": [
+        {
+          "count": 2560,
+          "elapsedMs": 100.06449999999313
+        },
+        {
+          "count": 2624,
+          "elapsedMs": 100.25920000000042
+        },
+        {
+          "count": 2688,
+          "elapsedMs": 100.33610000000044
+        },
+        {
+          "count": 2640,
+          "elapsedMs": 100.2534999999989
+        },
+        {
+          "count": 2592,
+          "elapsedMs": 100.05320000000211
+        },
+        {
+          "count": 2544,
+          "elapsedMs": 100.44150000000081
+        },
+        {
+          "count": 2336,
+          "elapsedMs": 100.14299999999639
+        },
+        {
+          "count": 2640,
+          "elapsedMs": 100.18299999999726
+        },
+        {
+          "count": 2688,
+          "elapsedMs": 100.35959999999614
+        }
+      ],
+      "sink": 78638816
+    },
+    {
+      "dataset": "dependency-lock",
+      "inputBytes": 93728,
+      "inputCodeUnits": 93728,
+      "name": "scan-sort-drop-stored",
+      "medianUs": 148.61511627906683,
+      "madPercent": 0.9485834330951952,
+      "samples": [
+        {
+          "count": 560,
+          "elapsedMs": 101.77960000000166
+        },
+        {
+          "count": 656,
+          "elapsedMs": 100.32040000000416
+        },
+        {
+          "count": 688,
+          "elapsedMs": 102.26989999999932
+        },
+        {
+          "count": 688,
+          "elapsedMs": 102.07080000000133
+        },
+        {
+          "count": 688,
+          "elapsedMs": 101.27729999999428
+        },
+        {
+          "count": 688,
+          "elapsedMs": 102.24719999999797
+        },
+        {
+          "count": 688,
+          "elapsedMs": 101.05550000000221
+        },
+        {
+          "count": 704,
+          "elapsedMs": 103.03500000000349
+        },
+        {
+          "count": 688,
+          "elapsedMs": 102.26559999999881
+        }
+      ],
+      "sink": 813466336
+    },
+    {
+      "dataset": "dependency-lock",
+      "inputBytes": 93728,
+      "inputCodeUnits": 93728,
+      "name": "public-native",
+      "medianUs": 292.78039772725606,
+      "madPercent": 0.3224376010900578,
+      "samples": [
+        {
+          "count": 352,
+          "elapsedMs": 103.05869999999413
+        },
+        {
+          "count": 352,
+          "elapsedMs": 100.86500000000524
+        },
+        {
+          "count": 352,
+          "elapsedMs": 102.95599999999831
+        },
+        {
+          "count": 352,
+          "elapsedMs": 102.72639999999956
+        },
+        {
+          "count": 304,
+          "elapsedMs": 100.4004999999961
+        },
+        {
+          "count": 336,
+          "elapsedMs": 102.24460000000545
+        },
+        {
+          "count": 352,
+          "elapsedMs": 104.00740000000224
+        },
+        {
+          "count": 352,
+          "elapsedMs": 102.8868999999977
+        },
+        {
+          "count": 352,
+          "elapsedMs": 103.2534999999989
+        }
+      ],
+      "sink": 1199073248
+    },
+    {
+      "dataset": "dependency-lock",
+      "inputBytes": 93728,
+      "inputCodeUnits": 93728,
+      "name": "js-parse-upstream",
+      "medianUs": 747.6840277778239,
+      "madPercent": 1.7247704717841599,
+      "samples": [
+        {
+          "count": 128,
+          "elapsedMs": 102.39280000000144
+        },
+        {
+          "count": 144,
+          "elapsedMs": 106.70029999999679
+        },
+        {
+          "count": 144,
+          "elapsedMs": 107.66650000000664
+        },
+        {
+          "count": 144,
+          "elapsedMs": 105.80950000000303
+        },
+        {
+          "count": 144,
+          "elapsedMs": 106.81369999999879
+        },
+        {
+          "count": 144,
+          "elapsedMs": 105.67119999999704
+        },
+        {
+          "count": 144,
+          "elapsedMs": 109.3012000000017
+        },
+        {
+          "count": 144,
+          "elapsedMs": 110.824099999998
+        },
+        {
+          "count": 128,
+          "elapsedMs": 102.84599999999773
+        }
+      ],
+      "sink": 1355116512
+    },
+    {
+      "dataset": "dependency-lock",
+      "name": "emit-prebuilt-Rust-clock",
+      "medianUs": 35.7,
+      "emissionNs": [
+        61900,
+        42500,
+        40700,
+        38200,
+        36500,
+        35600,
+        34800,
+        34100,
+        35300,
+        34100,
+        33900,
+        34800,
+        34900,
+        35000,
+        35700,
+        34000,
+        33200,
+        35200,
+        33300,
+        34200,
+        34000,
+        33300,
+        34500,
+        36300,
+        36200,
+        34100,
+        34200,
+        33300,
+        93700,
+        48000,
+        41800,
+        38800,
+        37600,
+        39000,
+        36900,
+        35800,
+        36000,
+        35500,
+        40800,
+        37400,
+        35800,
+        35200,
+        34500,
+        34400,
+        34400,
+        36000,
+        35800,
+        83300,
+        74300,
+        71400,
+        67800,
+        91500,
+        68900,
+        68300,
+        69500,
+        38900,
+        34300,
+        33700,
+        35600,
+        35400,
+        34500,
+        34000,
+        34100,
+        33300,
+        42700,
+        34800,
+        33700,
+        39900,
+        37600,
+        40300,
+        42100,
+        34500,
+        34000,
+        35500,
+        78200,
+        70000,
+        70500,
+        77700,
+        69800,
+        92100,
+        85300,
+        43000,
+        39500,
+        38000,
+        37500,
+        36400,
+        35600,
+        34800,
+        34300,
+        34800,
+        34600,
+        35100,
+        35700,
+        35500,
+        35200,
+        36700,
+        34100,
+        36400,
+        34500,
+        35200,
+        38300
+      ]
+    }
+  ],
+  "limitations": [
+    "Probe class call overhead differs from production free functions.",
+    "OutputUTF16 clones a precomputed vector: includes Rust allocation/copy plus Node output creation.",
+    "Isolated stage durations are not additive; use public-API validation before adopting any route.",
+    "Allocator counts and V8 internal callstack attribution NOT MEASURED."
+  ]
+}

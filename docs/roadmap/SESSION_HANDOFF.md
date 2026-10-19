@@ -1,7 +1,7 @@
 # Session handoff
 
 - Current phase: independent reproduction complete; native encoding and batch profiling active.
-- Last completed task: fresh Git worktree rebuild; npm/pnpm packed runtime and TS
+- Prior baseline completed task: fresh Git worktree rebuild; npm/pnpm packed runtime and TS
   consumer verification; minimum Node22.13.0 checks; local integration merge.
 - Currently active task: private dev-only napi encoding/stage probes. No production
   serializer optimization adopted yet. See R1..R5 continuation tasks.
@@ -39,6 +39,23 @@
   `pnpm test:pack --npm`; `pnpm test:pack`; `pnpm audit:deps` when refreshing audits.
   `pnpm bench` reproduces full matrix; use raw configuration overrides for longer
   confirmations. Optional `scripts/verify-node22.ps1` repeats minimum runtime tests.
-- Relevant Git commit reference: fresh source37a969c;select991e97c;scanner28326e7;
+- Prior baseline Git commit reference: fresh source37a969c;select991e97c;scanner28326e7;
   baseline9c4a1fe. Final evidence commit follows37a969c. Local branch master contains
   feat/native-mvp after fast-forward; feature branch retained. No remote actions.
+
+## Latest continuation checkpoint, 2026-10-19
+- Branch: perf/independent-reproduction, verified source6da938b; next commit records
+  full independent reproduction and private stage/allocation probes.
+- Last completed:404 measured cells,7 independent harness tests; private release
+  probes/clippy; Rust allocation counts on4 inputs. New native-output2 groups PASS
+  on unchanged production release; combined reproduction+output9 tests PASS.
+- Current: output-only adaptive UTF16 candidate, not implemented at checkpoint.
+- Next: release build/all tests, independent matched2run controls/core comparisons;
+  then evaluate batch fallback separately, final pack/lint/minimumNode checks.
+- Latest results: lock corroborated; dense Unicode output conversion dominates;
+  real batch slower3–33%; cache50%hits~1.8x,90%~7.3–7.7x,misses3–5%slower.
+- Files: benches/reproduction expanded runner/snapshots/raw/manifests; profiling
+  dev-only crate/data/raw/source snapshots; tests/native-output; evidence docs.
+- Commands: node --test benches/reproduction/reproduction.test.cjs tests/native-output.test.cjs;
+  node benches/reproduction/coverage.cjs encoding-controls; private profiler README.
+- No test failures outstanding. Linux/macOS actual hosted jobs still NOT RUN.
