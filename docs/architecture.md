@@ -1,10 +1,15 @@
 # Architecture
 
+Existing JSON-text sorting and selective raw extraction are the performance
+surface; compatible live-object serialization is retained for convenience and
+observable semantics. This positioning does not change exports, execution paths
+or token rules. Performance must be evaluated for each input and requested output.
+
 The compatibility API traverses JavaScript values in TypeScript and delegates
 primitive escaping/number formatting to V8. It is adapted from the pinned MIT
 upstream. This preserves property access, comparator, toJSON, UTF-16 and number
 semantics without crossing Node-API for each property. It is an explicit JS
-fallback, not a claim of Rust acceleration for arbitrary objects.
+compatibility path; there is no automatic native dispatch for arbitrary objects.
 
 The separate Rust engine consumes JSON text. Serde validates the whole input
 once; a structural scanner builds a borrowed token tree, sorts decoded object

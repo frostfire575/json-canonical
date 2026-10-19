@@ -197,3 +197,33 @@ All locally executable readiness tasks complete. R4-PACKAGE/P7-TARGETS/P7 remain
 blocked; next required work is genuine three-target CI/combined installation.
 No runtime code changed after source757bc26 and its tests/measurements. Local
 feature branch retained for review; no remote operation or release performed.
+
+## Native text continuation started
+Resumed clean f7b1f73; branchdocs/native-text-positioning. Read AGENTS/handoff/
+master/tasks/progress/architecture/compatibility/decisions and actual runtime.
+Retain compatible stringify/batch implementation; no blind optimization planned.
+Delegated disjoint independent native-text measurements, distribution/optional
+packaging feasibility and adversarial native API review. Lead owns positioning,
+examples, integration/fullchecks, final package identities and roadmap evidence.
+Current prebuilt Windows candidate remains available; foreign runtimes unverified.
+
+## Native text source and distribution milestone
+Independent native review adds12permanent groups; no new runtime defect. Lead
+freshrelease5Rust74JS/TS and minNode74JS PASS;12legacy/6public harness tests,
+fmt/clippy and freshaudit PASS. Native-first CJS/ESM/typed examples execute/type-
+check. Metadata now describes text sorting/extraction, default stringify unchanged.
+Real Windows optional-package prototype proves names/metadata/loader behavior,
+absentoptional and opt-inversion checks; keep combined root for simpler3target
+release and do not add nonexistent registry dependencies. New native benchmark
+running3passes on original real files plus normalized/small controls; no CPU
+builds/tests overlap timing. Updated performance report/final pack pending.
+
+## Measured positioning and tooling resolution
+All162independent installed cells PASS, raw/corpora/frozensource integrity checked
+by lead. Sorting wins repeatedly on all5original files; extractionrepeatable gain
+onlynormalizeddependencytext, otherdirectcontrols lose/inconclusive. Native-first
+README/API/examples retain compatibledefault and precise lexical rules. Mixed
+Node24metadata/Node22optionalconsumer7controlsPASS; discoveredNode22WindowsCLI
+stat-identity retry is documented, bounded and avoided with Node24buildhosts.
+No serializer optimization/runtime code changes. Finalsource5Rust74JS/TS PASS;
+nextpackoncefreshcandidate, verifyfourinstalledconsumerchecks plusshippedexamples.

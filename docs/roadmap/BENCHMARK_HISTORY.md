@@ -91,3 +91,34 @@ Evidence: docs/roadmap/evidence/readiness-final-01/runtime-equivalence.json and
 independent-review-*.json. Four final installed consumer checks PASS on Windows.
 Actual combined/foreign-platform execution NOTRUN; output/cache historical reports
 retain their original source/environment boundaries.
+
+## Independent native JSON-text positioning evidence, 2026-10-19
+162completed exact-checked cells on actual installed readiness-final-01 candidate,
+SHA256b424ebbc68d01fe6031ed40d8d17ecc9e1f459cce5bd84f5296cba042956957a;
+loadedrelease96ba87... unchangedruntime. Windows11/i7-12700K/Node24.20/Rust1.98.1.
+Three shuffled serial passes,1s warmup,9x>=100ms per cell, full public API conversion
+and returned string consumption included; setup/archive/fixture work outside timing.
+- Main108: benches/native-text-verification/results/2026-10-19T09-56-55-718Z-33544.json.
+- Paired direct-field54: results/2026-10-19T10-01-50-243Z-33224.json in samefolder.
+Both retain rawsamples, medians/MAD, CPU/RSS/heap/maxRSS and machine/source/runtime
+identities, frozenrunner and compressed complete input/output corpus. Lead reran
+verify-evidence.cjs on each:108PASS/54PASS. Seven harness selftests PASS22/24
+(independentreviewer), leadNode24sevenPASS including45untimed operationchecks.
+
+Original source sorting native vsparse+upstream, run1/2/3ops/s:
+lock2392/2397/2339 vs1017/774/1090; config175804/172713/177697 vs66546/69824/74401;
+API178/172/178 vs115/106/112; CLDR6698/6422/5975 vs3988/3937/3972;
+upstreammock83997/84469/84312 vs33452/33233/35475. All5original files win repeatedly;
+normalizedcontrols remain separately labeled, never replaceoriginal bytes.
+JSlockpass2has16.54%MAD; retained, no best-run ratio universalclaim.
+API native5.61-5.80ms/op,226.6-234.2inputMiB/s. WholeworkerpeakRSS134.0-136.3MiB
+vsJS252.5-258.7 includes setup/oracle/archive/warmup/GC; NOT isolatedallocation
+counts or a general lower-memory guarantee.
+
+Direct-field selection normalizedlock5581/5602/5912 vs3671/3599/3804ops/s
+(~52-56%throughput gain); originallock3741/3717/3698 vs3436/3278/3499
+(~6-13%, not repeated>=10%). All other direct controls native slower, including
+API323/324/349 vs512/549/529 andCLDR4993/5022/5532 vs11809/11634/12740.
+Generic pointer interpreter baseline preserved separately, not mislabeled direct
+lookup. No general extraction, liveobject, Node22 or foreignplatform speedclaim.
+NATIVE_TEXT_REVIEW_2.md has all9variants, latency/throughput/memory and exactcommands.

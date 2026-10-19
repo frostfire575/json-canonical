@@ -1,0 +1,280 @@
+{
+  "date": "2026-10-19T09:54:01.710Z",
+  "platform": "win32",
+  "arch": "x64",
+  "versions": {
+    "node": "24.20.0",
+    "acorn": "8.18.0",
+    "ada": "4.0.0",
+    "amaro": "1.1.11",
+    "ares": "1.34.8",
+    "brotli": "1.2.0",
+    "cldr": "48.0",
+    "icu": "78.3",
+    "llhttp": "9.4.3",
+    "merve": "1.2.2",
+    "modules": "137",
+    "napi": "10",
+    "nbytes": "0.1.4",
+    "ncrypto": "0.0.1",
+    "nghttp2": "1.70.0",
+    "nghttp3": "",
+    "ngtcp2": "",
+    "openssl": "3.5.7",
+    "simdjson": "4.6.6",
+    "simdutf": "6.4.0",
+    "sqlite": "3.53.4",
+    "tz": "2026c",
+    "undici": "7.29.0",
+    "unicode": "17.0",
+    "uv": "1.52.1",
+    "uvwasi": "0.0.23",
+    "v8": "13.6.233.17-node.53",
+    "zlib": "1.3.2.1-motley-42c2f19",
+    "zstd": "1.5.7"
+  },
+  "sourceCommit": "f7b1f73a0057e582f73068b5500dbb9ad82eafa3",
+  "commands": [
+    {
+      "binary": "G:\\[Softwares]\\NodeJs\\node.exe",
+      "args": [
+        "D:\\misc\\npm\\stable-json-rs\\node_modules\\.pnpm\\@napi-rs+cli@3.10.8_@emnapi_1a1a9d8aae84e2c9f9ba5aab1722ac8c\\node_modules\\@napi-rs\\cli\\dist\\cli.js",
+        "create-npm-dirs",
+        "--cwd",
+        "D:\\misc\\npm\\stable-json-rs\\.verification\\distribution-2026-10-19T09-54-01-709Z-31688\\generated"
+      ],
+      "cwd": "",
+      "status": 0,
+      "output": ""
+    },
+    {
+      "binary": "G:\\[Softwares]\\NodeJs\\node.exe",
+      "args": [
+        "G:\\[Softwares]\\NodeJs\\node_modules\\npm\\bin\\npm-cli.js",
+        "pack",
+        "--ignore-scripts",
+        "--json",
+        "--pack-destination",
+        "D:\\misc\\npm\\stable-json-rs\\.verification\\distribution-2026-10-19T09-54-01-709Z-31688\\platform-tar"
+      ],
+      "cwd": ".verification\\distribution-2026-10-19T09-54-01-709Z-31688\\generated\\npm\\win32-x64-msvc",
+      "status": 0,
+      "output": "[\n  {\n    \"id\": \"stable-json-rs-win32-x64-msvc@0.1.0\",\n    \"name\": \"stable-json-rs-win32-x64-msvc\",\n    \"version\": \"0.1.0\",\n    \"size\": 204832,\n    \"unpackedSize\": 761348,\n    \"shasum\": \"339c7bfc7d1dbe3732db8e4bcda72d0ad1886909\",\n    \"integrity\": \"sha512-xcfuKXDAqX11/r2dDg/0PIir+sMI1UgfpgxBLCnCqukTYVmHIQeUbvWNnv7mvPLEbteKZOmNeMnvy5yf0b3nGA==\",\n    \"filename\": \"stable-json-rs-win32-x64-msvc-0.1.0.tgz\",\n    \"files\": [\n      {\n        \"path\": \"LICENSE\",\n        \"size\": 1145,\n        \"mode\": 420\n      },\n      {\n        \"path\": \"NOTICE\",\n        \"size\": 377,\n        \"mode\": 420\n      },\n      {\n        \"path\": \"README.md\",\n        \"size\": 102,\n        \"mode\": 420\n      },\n      {\n        \"path\": \"THIRD_PARTY_NOTICES.txt\",\n        \"size\": 346626,\n        \"mode\": 420\n      },\n      {\n        \"path\": \"package.json\",\n        \"size\": 426,\n        \"mode\": 420\n      },\n      {\n        \"path\": \"stable-json-rs.win32-x64-msvc.node\",\n        \"size\": 412672,\n        \"mode\": 420\n      }\n    ],\n    \"entryCount\": 6,\n    \"bundled\": []\n  }\n]\n"
+    },
+    {
+      "binary": "G:\\[Softwares]\\NodeJs\\node.exe",
+      "args": [
+        "G:\\[Softwares]\\NodeJs\\node_modules\\npm\\bin\\npm-cli.js",
+        "pack",
+        "--ignore-scripts",
+        "--json",
+        "--pack-destination",
+        "D:\\misc\\npm\\stable-json-rs\\.verification\\distribution-2026-10-19T09-54-01-709Z-31688\\wrapper-tar"
+      ],
+      "cwd": ".verification\\distribution-2026-10-19T09-54-01-709Z-31688\\wrapper",
+      "status": 0,
+      "output": "[\n  {\n    \"id\": \"stable-json-rs@0.1.0\",\n    \"name\": \"stable-json-rs\",\n    \"version\": \"0.1.0\",\n    \"size\": 22013,\n    \"unpackedSize\": 392489,\n    \"shasum\": \"727e16f2c52607e92c8998f99ffdf165d04be603\",\n    \"integrity\": \"sha512-M8R+jO2noU/md9bCgORy4RTyFYrMZ44+qxiE2JH/N2tVpRrEgBo28jNveJ0zyJFV+JgZKgKe8O7pNwBNcTIJpw==\",\n    \"filename\": \"stable-json-rs-0.1.0.tgz\",\n    \"files\": [\n      {\n        \"path\": \"LICENSE\",\n        \"size\": 1145,\n        \"mode\": 420\n      },\n      {\n        \"path\": \"NOTICE\",\n        \"size\": 377,\n        \"mode\": 420\n      },\n      {\n        \"path\": \"THIRD_PARTY_NOTICES.txt\",\n        \"size\": 346626,\n        \"mode\": 420\n      },\n      {\n        \"path\": \"js/dist/index.d.ts\",\n        \"size\": 1837,\n        \"mode\": 420\n      },\n      {\n        \"path\": \"js/dist/index.js\",\n        \"size\": 6713,\n        \"mode\": 420\n      },\n      {\n        \"path\": \"js/index.cjs\",\n        \"size\": 59,\n        \"mode\": 420\n      },\n      {\n        \"path\": \"js/index.d.mts\",\n        \"size\": 104,\n        \"mode\": 420\n      },\n      {\n        \"path\": \"js/index.mjs\",\n        \"size\": 200,\n        \"mode\": 420\n      },\n      {\n        \"path\": \"native/binding.d.ts\",\n        \"size\": 913,\n        \"mode\": 420\n      },\n      {\n        \"path\": \"native/binding.js\",\n        \"size\": 33427,\n        \"mode\": 420\n      },\n      {\n        \"path\": \"package.json\",\n        \"size\": 1088,\n        \"mode\": 420\n      }\n    ],\n    \"entryCount\": 11,\n    \"bundled\": []\n  }\n]\n"
+    },
+    {
+      "binary": "G:\\[Softwares]\\NodeJs\\node.exe",
+      "args": [
+        "G:\\[Softwares]\\NodeJs\\node_modules\\npm\\bin\\npm-cli.js",
+        "install",
+        "--offline",
+        "--ignore-scripts",
+        "--no-audit",
+        "--no-fund",
+        "D:\\misc\\npm\\stable-json-rs\\.verification\\distribution-2026-10-19T09-54-01-709Z-31688\\wrapper-tar\\stable-json-rs-0.1.0.tgz"
+      ],
+      "cwd": ".verification\\distribution-2026-10-19T09-54-01-709Z-31688\\npm-present",
+      "status": 0,
+      "output": "\nadded 2 packages in 780ms\n"
+    },
+    {
+      "binary": "G:\\[Softwares]\\NodeJs\\node.exe",
+      "args": [
+        "verify.cjs",
+        "present",
+        "96ba87bcc9a76f9c2cce21cede7ef74ea10e69b147a69b5435536f1ce81c5f86"
+      ],
+      "cwd": ".verification\\distribution-2026-10-19T09-54-01-709Z-31688\\npm-present",
+      "status": 0,
+      "output": "{\"status\":\"PASS\",\"mode\":\"present\",\"loadedNative\":\"D:\\\\misc\\\\npm\\\\stable-json-rs\\\\.verification\\\\distribution-2026-10-19T09-54-01-709Z-31688\\\\npm-present\\\\node_modules\\\\stable-json-rs-win32-x64-msvc\\\\stable-json-rs.win32-x64-msvc.node\",\"sha256\":\"96ba87bcc9a76f9c2cce21cede7ef74ea10e69b147a69b5435536f1ce81c5f86\"}\n"
+    },
+    {
+      "binary": "G:\\[Softwares]\\NodeJs\\node.exe",
+      "args": [
+        "D:\\misc\\npm\\stable-json-rs\\node_modules\\.pnpm\\typescript@7.0.2\\node_modules\\typescript\\bin\\tsc",
+        "-p",
+        "D:\\misc\\npm\\stable-json-rs\\.verification\\distribution-2026-10-19T09-54-01-709Z-31688\\npm-present"
+      ],
+      "cwd": ".verification\\distribution-2026-10-19T09-54-01-709Z-31688\\npm-present",
+      "status": 0,
+      "output": ""
+    },
+    {
+      "binary": "G:\\[Softwares]\\NodeJs\\node.exe",
+      "args": [
+        "G:\\[Softwares]\\NodeJs\\node_modules\\npm\\bin\\npm-cli.js",
+        "install",
+        "--offline",
+        "--ignore-scripts",
+        "--no-audit",
+        "--no-fund",
+        "--omit=optional",
+        "D:\\misc\\npm\\stable-json-rs\\.verification\\distribution-2026-10-19T09-54-01-709Z-31688\\wrapper-tar\\stable-json-rs-0.1.0.tgz"
+      ],
+      "cwd": ".verification\\distribution-2026-10-19T09-54-01-709Z-31688\\npm-missing",
+      "status": 0,
+      "output": "\nadded 1 package in 624ms\n"
+    },
+    {
+      "binary": "G:\\[Softwares]\\NodeJs\\node.exe",
+      "args": [
+        "verify.cjs",
+        "missing",
+        "96ba87bcc9a76f9c2cce21cede7ef74ea10e69b147a69b5435536f1ce81c5f86"
+      ],
+      "cwd": ".verification\\distribution-2026-10-19T09-54-01-709Z-31688\\npm-missing",
+      "status": 0,
+      "output": "{\"status\":\"PASS\",\"mode\":\"missing\",\"compatibilityAvailable\":true}\n"
+    },
+    {
+      "binary": "C:\\Users\\frost\\AppData\\Roaming\\npm\\node_modules\\pnpm\\pnpm.exe",
+      "args": [
+        "add",
+        "--offline",
+        "--ignore-scripts",
+        "--store-dir",
+        "D:\\misc\\npm\\stable-json-rs\\.verification\\distribution-2026-10-19T09-54-01-709Z-31688\\pnpm-store",
+        "D:\\misc\\npm\\stable-json-rs\\.verification\\distribution-2026-10-19T09-54-01-709Z-31688\\wrapper-tar\\stable-json-rs-0.1.0.tgz"
+      ],
+      "cwd": ".verification\\distribution-2026-10-19T09-54-01-709Z-31688\\pnpm-present",
+      "status": 0,
+      "output": "Progress: resolved 1, reused 0, downloaded 0, added 0\nPackages are hard linked from the content-addressable store to the virtual store.\n  Content-addressable store is at: D:\\misc\\npm\\stable-json-rs\\.verification\\distribution-2026-10-19T09-54-01-709Z-31688\\pnpm-store\\v11\n  Virtual store is at:             node_modules/.pnpm\nPackages: +2\n++\nProgress: resolved 2, reused 0, downloaded 2, added 2, done\n\ndependencies:\n+ stable-json-rs 0.1.0\n\nDone in 156ms using pnpm v12.10.1\n"
+    },
+    {
+      "binary": "G:\\[Softwares]\\NodeJs\\node.exe",
+      "args": [
+        "verify.cjs",
+        "present",
+        "96ba87bcc9a76f9c2cce21cede7ef74ea10e69b147a69b5435536f1ce81c5f86"
+      ],
+      "cwd": ".verification\\distribution-2026-10-19T09-54-01-709Z-31688\\pnpm-present",
+      "status": 1,
+      "stdout": "",
+      "stderr": "Error: Cannot find module 'stable-json-rs-win32-x64-msvc/package.json'\nRequire stack:\n- D:\\misc\\npm\\stable-json-rs\\.verification\\distribution-2026-10-19T09-54-01-709Z-31688\\pnpm-present\\verify.cjs\n    at Module._resolveFilename (node:internal/modules/cjs/loader:1564:15)\n    at wrapResolveFilename (node:internal/modules/cjs/loader:1118:27)\n    at defaultResolveImplForCJSLoading (node:internal/modules/cjs/loader:1142:10)\n    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1169:12)\n    at Module._load (node:internal/modules/cjs/loader:1341:5)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:261:19)\n    at Module.require (node:internal/modules/cjs/loader:1674:12)\n    at require (node:internal/modules/helpers:157:16)\n    at D:\\misc\\npm\\stable-json-rs\\.verification\\distribution-2026-10-19T09-54-01-709Z-31688\\pnpm-present\\verify.cjs:20:20 {\n  code: 'MODULE_NOT_FOUND',\n  requireStack: [\n    'D:\\\\misc\\\\npm\\\\stable-json-rs\\\\.verification\\\\distribution-2026-10-19T09-54-01-709Z-31688\\\\pnpm-present\\\\verify.cjs'\n  ]\n}\n"
+    }
+  ],
+  "generated": [
+    {
+      "name": "stable-json-rs-win32-x64-msvc",
+      "version": "0.1.0",
+      "cpu": [
+        "x64"
+      ],
+      "main": "stable-json-rs.win32-x64-msvc.node",
+      "files": [
+        "stable-json-rs.win32-x64-msvc.node"
+      ],
+      "description": "Compatibility-first stable JSON with a bounded Rust JSON-text engine",
+      "license": "MIT",
+      "engines": {
+        "node": ">=22.13.0"
+      },
+      "os": [
+        "win32"
+      ]
+    },
+    {
+      "name": "stable-json-rs-linux-x64-gnu",
+      "version": "0.1.0",
+      "cpu": [
+        "x64"
+      ],
+      "main": "stable-json-rs.linux-x64-gnu.node",
+      "files": [
+        "stable-json-rs.linux-x64-gnu.node"
+      ],
+      "description": "Compatibility-first stable JSON with a bounded Rust JSON-text engine",
+      "license": "MIT",
+      "engines": {
+        "node": ">=22.13.0"
+      },
+      "os": [
+        "linux"
+      ],
+      "libc": [
+        "glibc"
+      ]
+    },
+    {
+      "name": "stable-json-rs-darwin-arm64",
+      "version": "0.1.0",
+      "cpu": [
+        "arm64"
+      ],
+      "main": "stable-json-rs.darwin-arm64.node",
+      "files": [
+        "stable-json-rs.darwin-arm64.node"
+      ],
+      "description": "Compatibility-first stable JSON with a bounded Rust JSON-text engine",
+      "license": "MIT",
+      "engines": {
+        "node": ">=22.13.0"
+      },
+      "os": [
+        "darwin"
+      ]
+    }
+  ],
+  "consumers": [
+    {
+      "manager": "npm",
+      "status": "PASS",
+      "mode": "present",
+      "loadedNative": "D:\\misc\\npm\\stable-json-rs\\.verification\\distribution-2026-10-19T09-54-01-709Z-31688\\npm-present\\node_modules\\stable-json-rs-win32-x64-msvc\\stable-json-rs.win32-x64-msvc.node",
+      "sha256": "96ba87bcc9a76f9c2cce21cede7ef74ea10e69b147a69b5435536f1ce81c5f86"
+    },
+    {
+      "manager": "npm",
+      "status": "PASS",
+      "mode": "missing",
+      "compatibilityAvailable": true
+    }
+  ],
+  "status": "FAIL",
+  "platformArtifact": {
+    "file": "D:\\misc\\npm\\stable-json-rs\\.verification\\distribution-2026-10-19T09-54-01-709Z-31688\\platform-tar\\stable-json-rs-win32-x64-msvc-0.1.0.tgz",
+    "bytes": 204832,
+    "sha256": "7f10bbe7c4db0f21fe7672a5d55ba8491af3ebfc548b65a4b313011ce2d2ac98",
+    "files": [
+      "LICENSE",
+      "NOTICE",
+      "README.md",
+      "THIRD_PARTY_NOTICES.txt",
+      "package.json",
+      "stable-json-rs.win32-x64-msvc.node"
+    ]
+  },
+  "nativeSha256": "96ba87bcc9a76f9c2cce21cede7ef74ea10e69b147a69b5435536f1ce81c5f86",
+  "wrapperArtifact": {
+    "file": "D:\\misc\\npm\\stable-json-rs\\.verification\\distribution-2026-10-19T09-54-01-709Z-31688\\wrapper-tar\\stable-json-rs-0.1.0.tgz",
+    "bytes": 22013,
+    "sha256": "d08c2dc6f34f921fe30e4c4a8b671f80a47ac14c309edbad79e76cf2ad1849b5",
+    "files": [
+      "LICENSE",
+      "NOTICE",
+      "THIRD_PARTY_NOTICES.txt",
+      "js/dist/index.d.ts",
+      "js/dist/index.js",
+      "js/index.cjs",
+      "js/index.d.mts",
+      "js/index.mjs",
+      "native/binding.d.ts",
+      "native/binding.js",
+      "package.json"
+    ]
+  },
+  "error": "Error: Command failed: G:\\[Softwares]\\NodeJs\\node.exe verify.cjs present 96ba87bcc9a76f9c2cce21cede7ef74ea10e69b147a69b5435536f1ce81c5f86\nError: Cannot find module 'stable-json-rs-win32-x64-msvc/package.json'\nRequire stack:\n- D:\\misc\\npm\\stable-json-rs\\.verification\\distribution-2026-10-19T09-54-01-709Z-31688\\pnpm-present\\verify.cjs\n    at Module._resolveFilename (node:internal/modules/cjs/loader:1564:15)\n    at wrapResolveFilename (node:internal/modules/cjs/loader:1118:27)\n    at defaultResolveImplForCJSLoading (node:internal/modules/cjs/loader:1142:10)\n    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1169:12)\n    at Module._load (node:internal/modules/cjs/loader:1341:5)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:261:19)\n    at Module.require (node:internal/modules/cjs/loader:1674:12)\n    at require (node:internal/modules/helpers:157:16)\n    at D:\\misc\\npm\\stable-json-rs\\.verification\\distribution-2026-10-19T09-54-01-709Z-31688\\pnpm-present\\verify.cjs:20:20 {\n  code: 'MODULE_NOT_FOUND',\n  requireStack: [\n    'D:\\\\misc\\\\npm\\\\stable-json-rs\\\\.verification\\\\distribution-2026-10-19T09-54-01-709Z-31688\\\\pnpm-present\\\\verify.cjs'\n  ]\n}\n\n    at genericNodeError (node:internal/errors:986:15)\n    at wrappedFn (node:internal/errors:540:14)\n    at checkExecSyncError (node:child_process:942:11)\n    at execFileSync (node:child_process:978:15)\n    at run (D:\\misc\\npm\\stable-json-rs\\scripts\\distribution-review\\run.cjs:26:20)\n    at Object.<anonymous> (D:\\misc\\npm\\stable-json-rs\\scripts\\distribution-review\\run.cjs:108:33)\n    at Module._compile (node:internal/modules/cjs/loader:1929:14)\n    at Object..js (node:internal/modules/cjs/loader:2060:10)\n    at Module.load (node:internal/modules/cjs/loader:1651:32)\n    at Module._load (node:internal/modules/cjs/loader:1443:12)"
+}

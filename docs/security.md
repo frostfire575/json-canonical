@@ -19,8 +19,10 @@ validation for all native APIs. These rules do not sandbox arbitrary JavaScript
 callbacks or hostile global intrinsic monkeypatching.
 
 Public wrappers reject literal malformed UTF-16 to avoid Node-API replacement.
-Escaped surrogate values retain their text. Keys are decoded Unicode scalars;
-duplicates are rejected. Errors propagate rather than returning partial results.
+Escaped surrogate values retain their text. Sorting requires Unicode scalar keys
+and rejects decoded duplicates. Extraction uses the last traversed duplicate;
+only traversed object keys must decode as Unicode scalars, while unvisited raw
+subtrees can retain escaped surrogate keys. Errors propagate without partial results.
 OOM can still terminate a process; Rust does not eliminate resource exhaustion.
 
 Compatibility API intentionally follows upstream recursion and executes arbitrary

@@ -3,5 +3,5 @@
     "target": "ES2022", "module": "NodeNext", "moduleResolution": "NodeNext",
     "strict": true, "noEmit": true, "skipLibCheck": true
   },
-  "include": ["types.cts", "types.mts"]
+  "include": ["types.cts", "types.mts", "../examples/json-text.mts"]
 }

@@ -124,3 +124,21 @@ aggregate limits/indexed errors; measured native batching is4-7% slower than the
 same-native loop. Keep explicit-version cache for skipped known-unchanged work,
 with historical miss costs disclosed; no fresh cache timing claimed. No new API
 or automatic native/fallback routing is justified by these measurements.
+
+## ADR 014 — Native JSON-text positioning and distribution boundary
+Keep named native text sorting/extraction as the performance-oriented surface,
+with upstream-compatible live-object stringify retained and default export
+unchanged. Positioning does not imply every native operation wins: scalar tokens,
+raw output, duplicate/Unicode scope and synchronous conversion costs remain
+explicit. Evaluate original real-world text as well as normalized controls; no
+semantic mismatch can be counted as an equivalent speedup.
+
+Keep one combined root tarball for the initial three-target distribution. Current
+loader supports bundled target files without optional dependencies. A real
+Windows-only split prototype passes offline npm/pnpm native/exports/types and
+missing optional/version controls. This proves feasibility, not registry readiness
+or foreign runtime support. Do not add unavailable optional packages to root;
+metadata generation cannot produce missing native builds. Split distribution
+requires exact package names/versions, notice inventory, controlled registry names
+and independent real target execution. No publishing tool invoked. See distribution.md
+and DISTRIBUTION_REVIEW_2.md. No measured need justifies added release coordination.

@@ -277,3 +277,84 @@ remains ignored locally. This host-only package is NOT a verified combined relea
 Hosted jobs, Linux/macOS native execution and Rust1.88 remain NOTRUN/UNVERIFIED.
 No push, publication or release performed. Later changes are roadmap/evidence only;
 final candidate docs preserve the preverification checkpoint, not recursive reports.
+
+## Native text continuation source checks, 2026-10-19
+Starting sourcef7b1f73; branchdocs/native-text-positioning. Runtime engine/wrapper
+unchanged. Windows x64,Node24.20/22.13,pnpm12.10.1,Rust1.98.1.
+- Initial pnpm check:5Rust62JS/strictTS PASS before new adversarial file.
+- After integration pnpm check: release addon build,5Rust74JS and strictTS PASS.
+  Full output .verification/native-text-session/pnpm-check.log.
+- ./scripts/verify-node22.ps1:74JS PASS,0fail/skip; local Node22.13.0 actual binding.
+  Full output .verification/native-text-session/node22-tests.log.
+- Independent native security reviewer12groups PASS on EACH22/24;2,400lexical
+  documents/19,200selections plus isolated malformed/extreme-depth probes.
+  No new runtime defect; NATIVE_SECURITY_REVIEW_3.md records exactcommands/evidence.
+- cargo fmt --all --check and cargo clippy --all-targets --locked -- -D warnings:
+  PASS. No runtime dependencies changed, unsafe introduced or optimization added.
+- node --test benches/harness.test.cjs benches/reproduction/reproduction.test.cjs:
+  12PASS. PUBLIC_API_CANDIDATE=.verification/readiness-final-01 node --test
+  benches/public-api/run.test.cjs:6PASS (historical public comparison harness).
+- node examples/json-text.cjs and node examples/json-text.mjs:PASS actualrelease
+  native sorting/extraction and exact assertions. pnpm test:types:PASS including
+  new examples/json-text.mts. node examples/json-text.mts:PASS onNode24;
+  .tools/node-v22.13.0-win-x64/node.exe --experimental-strip-types
+  examples/json-text.mts:PASS (expected experimental warning on22).
+- pnpm audit:deps:PASS; npm audit0,licenseinventoryexit0,38OSVcratequeries.
+  Fresh raw docs/audits/2026-10-19T09-53-11-521Z/. Public claims remain database-
+  scoped, not a certification. Prior raw audits unchanged.
+- Distribution reviewer real Windows optional-package prototype7controls PASS
+  onNode24; npm/pnpm CJS/ESM/native/strictTS, omittedoptional, metadatafilter and
+  opt-inversionmismatch; rootdependenciesunchanged. Node22split prototype NOTRUN
+  by reviewer. See DISTRIBUTION_REVIEW_2.md and reproducible script/rawreports.
+Native text timing is isolated from all builds/tests; final timing results and
+new packed installation checks are separate forthcoming evidence, not inferred.
+
+## Native evidence integrity and metadata installation checks
+After the isolated timing window ended, lead commands executed:
+- NATIVE_TEXT_CANDIDATE=.verification/readiness-final-01 node --test
+  benches/native-text-verification/run.test.cjs:7PASS,0fail/skip (~14s).
+- node benches/native-text-verification/verify-evidence.cjs
+  benches/native-text-verification/results/2026-10-19T09-56-55-718Z-33544.json:
+  PASS108unique completed cells/fullcorpus/frozensource/nativeidentity/minsamples.
+  Same command secondraw2026-10-19T10-01-50-243Z-33224.json:PASS54.
+- pnpm install --frozen-lockfile --ignore-scripts:PASS, unchangedlockfile.
+- Lead pnpm exec node scripts/distribution-review/run.cjs:PASS7Node24controls;
+  actualraw.verification/distribution-2026-10-19T10-04-17-762Z-25104/report.json.
+- Additional pnpm exec ./.tools/node-v22.13.0-win-x64/node.exe
+  scripts/distribution-review/run.cjs:FAILED/STALLED in napi3.10.8 create-npm-dirs
+  with filesystemreconciliation cleanup warnings. Verified and terminated only
+  ownstalledchild; preservedFAILreport in unique10-04-54-207Z-31936directory.
+  No addon or installed-runtime defect inferred. Timed Node22/24 CLI --help both
+  PASS (~330ms): this is command/filesystem handling, not blanketCLIstartup.
+  Compact diagnostics .verification/native-text-session/napi-cli-help-diagnostics.json.
+  Follow-up bounded prototype/toolhost separation in progress; not countedPASS.
+- actionlint currentworkflow and distribution script syntax PASS before toolhost
+  change; finalstaticcheck afterNode24allbuildhost adjustment is still pending.
+
+## Toolhost diagnosis closure and final source validation
+Independent bounded diagnosis confirms WindowsNode22.13 fstat/lstat disagree on
+the same file's BigIntdevice id, while Node24agrees; napi3.10.8 lockownership
+comparison retries. CLIhelp22/24PASS; freshmetadata22 ETIMEDOUT5s,24PASS. This
+explains observed Windowsgenerationfailure, not an addon failure or provenLinuxbug.
+Compact raw scripts/distribution-review/evidence/2026-10-19-node22-cli-diagnostic.json.
+Reproducer scripts/distribution-review/diagnose-cli.cjs; source/commands/hashes
+retained. Original4.9MBfailedreport remains ignored and unchanged. Prototype now
+bounds subprocesses30s/256KiB and preserves failurelogs separately.
+
+Actual Node22 split consumers PASS7controls with Node24metadata only:
+NAPI_METADATA_NODE=(Get-Command node).Source then pnpm exec
+./.tools/node-v22.13.0-win-x64/node.exe scripts/distribution-review/run.cjs.
+Report scripts/distribution-review/evidence/2026-10-19-node22-runtime-pass.json;
+Node22.13/npm10.9.2 execute consumer APIs/types; pnpm's own host is separate.
+Bounded final Node24prototype rerun7PASS, evidence2026-10-19-node24-bounded-pass.json.
+No root optionalDependencies added; generated foreign metadata never packed.
+AllCIbuildhosts nowNode24; same6target/Node22/24consumer jobs remain unexecuted.
+Actionlint after finalbuildhost/examples changes:PASS. Actual examples loop will
+be run from the fresh installed candidate before final closure.
+
+Final lead pnpm check after integrated metadata/examples/tests:PASS5Rust74JS/TS;
+output .verification/native-text-session/final-pnpm-check.log. Newcompileddense
+native artifact remains96ba87...; no runtime source changes or optimizations.
+Both new benchmark evidence verifications and7Node24selftestsPASS (Node22reviewer
+7PASS). Current script syntaxchecksPASS; gitdiffwhitespacePASS. Finalpacked
+consumer installs and example execution remain a separate next gate.

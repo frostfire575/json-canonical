@@ -81,3 +81,15 @@ fixed without compatibility traversal changes. RD-PACK/RD-DOCS final evidence
 closure does not satisfy R4-PACKAGE/P7-TARGETS: actual three-target combined
 artifact installation is blocked by unavailable runners. Keep advanced features
 deferred and prioritize those runtime/release gates over new APIs.
+
+## Native text follow-up priorities
+No speculative tuning of compatibility stringify or batches. Independently time
+original pinned JSON texts, normalized sensitivity controls and a small real
+record; native sort and raw scalar selection have separate equivalent baselines.
+Track latency/throughput and process memory with honest setup/peak limitations.
+Retain semantic negative controls instead of normalizing inconvenient differences.
+Native-first docs/examples must keep live-object compatibility and default export
+unchanged. Combined target packaging remains preferred; optional split feasibility
+is a local experiment, never a substitute for actual Linux/macOS execution.
+Additional independent native API/security coverage and all available packed/runtime
+checks precede verified milestone commits. Advanced features remain deferred.

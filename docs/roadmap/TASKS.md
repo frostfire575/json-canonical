@@ -49,3 +49,13 @@
 | RD-PUBLIC | P1 | DONE | RD-PACK | Measure actual installed CJS/ESM stringify/alias vs pinned upstream on equivalent real objects, conversion included for separate roundtrip; 2fresh runs/multiple samples/raw identities and no unsupported speed claim |
 | RD-REVIEW | P0 | DONE | RD-BATCH | Independent security/correctness/package review, dependency/advisory/license evidence; resolve findings or record release blockers |
 | RD-DOCS | P1 | DONE | RD-PUBLIC,RD-PACK,RD-REVIEW | Separate per-API performance report, current roadmap/handoff/test/regression evidence, reviewed verified local commits |
+
+## Native JSON-text positioning and distribution evaluation
+
+| ID | Priority | Status | Dependencies | Acceptance criteria |
+|---|---|---|---|---|
+| NT-REPRO | P0 | DONE | none | Independent installed native sort/extract measurements on >=5real licensed fixtures, >=2fresh runs/9samples, exact pre/post outputs, complete public boundary, latency/throughput/process memory and append-only raw identities |
+| NT-SEC | P0 | DONE | none | Independent native text/security/API review with adversarial tests on Node22/24; preserve/fix every found bug and rerun fullchecks |
+| NT-DIST | P1 | DONE | none | Verify combined and optional-package release layouts against official napi/npm docs and actual local prototype; real host binaries only; inspect/lint3platform CI; foreign runtime remains UNVERIFIED |
+| NT-DOCS | P1 | DONE | NT-REPRO | Native text APIs positioned as workload-specific performance surface; compatible stringify retained without acceleration claim; runnable CJS/ESM/TS examples and precise token/extraction limitations |
+| NT-VERIFY | P0 | IN_PROGRESS | NT-SEC,NT-DIST,NT-DOCS | Release build/Rust/JS/differential/TS checks, available runtime packaged installs/examples, lint/audit, updated evidence/handoff and verified local commits |

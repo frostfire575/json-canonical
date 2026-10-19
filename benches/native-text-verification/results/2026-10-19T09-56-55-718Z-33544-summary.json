@@ -1,0 +1,1675 @@
+{
+  "sourceReport": "D:\\misc\\npm\\stable-json-rs\\benches\\native-text-verification\\results\\2026-10-19T09-56-55-718Z-33544.json",
+  "sourceReportSha256": "ee10472c78ca83c0b0ca4bdf53b1e9ffa12872786df64b5092acaaee4df67ef1",
+  "schemaVersion": 1,
+  "startedAt": "2026-10-19T09:56:55.718Z",
+  "finishedAt": "2026-10-19T10:00:53.693Z",
+  "environment": {
+    "node": "v24.20.0",
+    "v8": "13.6.233.17-node.53",
+    "executable": "G:\\[Softwares]\\NodeJs\\node.exe",
+    "nodeOptions": null,
+    "execArgv": [],
+    "os": "Windows 11 Pro",
+    "release": "10.0.26300",
+    "platform": "win32",
+    "arch": "x64",
+    "cpu": {
+      "model": "12th Gen Intel(R) Core(TM) i7-12700K",
+      "speed": 3610,
+      "times": {
+        "user": 97656,
+        "nice": 0,
+        "sys": 121343,
+        "idle": 1377562,
+        "irq": 28343
+      }
+    },
+    "logicalCpus": 20,
+    "totalMemory": 34087682048,
+    "rust": "rustc 1.98.1 (48a229cea 2026-09-01)",
+    "cargo": "cargo 1.98.1 (797e8a9bc 2026-08-05)",
+    "pnpm": "12.10.1",
+    "git": "git version 2.55.0.windows.5",
+    "gitCommit": "f7b1f73a0057e582f73068b5500dbb9ad82eafa3",
+    "gitStatus": "M README.md\n M docs/api.md\n M docs/architecture.md\n M docs/roadmap/PROGRESS.md\n M docs/roadmap/TASKS.md\n M docs/security.md\n M package.json\n M tests/tsconfig.json\n?? benches/native-text-verification/\n?? docs/audits/2026-10-19T09-53-11-521Z/\n?? docs/roadmap/NATIVE_SECURITY_REVIEW_3.md\n?? examples/json-text.cjs\n?? examples/json-text.mjs\n?? examples/json-text.mts\n?? scripts/distribution-review/\n?? tests/native-text-security-review.test.cjs"
+  },
+  "configuration": {
+    "selected": [
+      "lock-original",
+      "config-original",
+      "api-original",
+      "upstream-original",
+      "cldr-original",
+      "lock-normalized",
+      "api-normalized",
+      "cldr-normalized",
+      "api-user-small"
+    ],
+    "methods": [
+      "sort-native",
+      "sort-js",
+      "select-native",
+      "select-js"
+    ],
+    "repetitions": 3,
+    "serialFreshProcesses": true
+  },
+  "candidate": {
+    "candidate": ".verification\\readiness-final-01",
+    "tarball": ".verification\\readiness-final-01\\stable-json-rs-0.1.0.tgz",
+    "tarballSha256": "b424ebbc68d01fe6031ed40d8d17ecc9e1f459cce5bd84f5296cba042956957a",
+    "manifestSha256": "211b063eae096502855bc9a80f36b6b28eb88250cdb4ecd39dae30de149cf52f",
+    "manifestGitCommit": "fc006f9efa8516bcb43ca29d5228decf11d9691a",
+    "packedInstalledFiles": {
+      "package.json": {
+        "bytes": 1827,
+        "sha256": "91633fcc50ca614e88363d3cd68b106726df2257cccd3b9ef5f86068375ab2d3"
+      },
+      "js/dist/index.js": {
+        "bytes": 6713,
+        "sha256": "b6245abfad41dfbedfb3c4870fa17c398353d8ef7a9432f903c25d0d3533893a"
+      },
+      "js/dist/index.d.ts": {
+        "bytes": 1837,
+        "sha256": "e9ba420fd011039ecd68b0254fa9eec8cf99293fd59d05b78ba39c1d69d59bd5"
+      },
+      "js/index.cjs": {
+        "bytes": 59,
+        "sha256": "f725264677360136f8151ec72515ce19f7f61814df9f4c779baca304ad3f850a"
+      },
+      "js/index.mjs": {
+        "bytes": 200,
+        "sha256": "8b07c342282dfb402ad7166bbb1e23f3ab8460254330f3760c616ae6b706b95f"
+      },
+      "js/index.d.mts": {
+        "bytes": 104,
+        "sha256": "ebe3fc72c98258b4fab6dc3802ccf5bfba8086818db27f70b9e6552b33d13acf"
+      },
+      "native/binding.js": {
+        "bytes": 33427,
+        "sha256": "a1df31adec1a2b469c8af3b067545edfc83c7e037435c04ce3ee5d73fb1536d3"
+      },
+      "native/binding.d.ts": {
+        "bytes": 913,
+        "sha256": "839513876a6251830f3bd1f40520725432837ce788a3ed893ba5cff3fc478eab"
+      },
+      "LICENSE": {
+        "bytes": 1145,
+        "sha256": "a833d366242c298cf1b10263516572fb8dcbe68eb5072cdcac2b4546e2b4eb36"
+      },
+      "NOTICE": {
+        "bytes": 377,
+        "sha256": "d9bb5e6f0e89950e927b76629d4cf03a1ea0f5ff9bb9aa2bf75ab243ac25e3d8"
+      },
+      "THIRD_PARTY_NOTICES.txt": {
+        "bytes": 346626,
+        "sha256": "954eb547ec8abe02e00ac64d0842ab5b3139bf94fdacb4bf80f4c4292d9c4c7a"
+      },
+      "README.md": {
+        "bytes": 4829,
+        "sha256": "755f40837fd4efc4189442c1f08af5b5376dc2d20da0d2a916c39cdfd954d298"
+      },
+      "docs/performance.md": {
+        "bytes": 8828,
+        "sha256": "11f91bc05b07b7e4cf9098081b924813a31261269bfb094caeee32cd2b7a3bab"
+      },
+      "native/stable-json-rs.win32-x64-msvc.node": {
+        "bytes": 412672,
+        "sha256": "96ba87bcc9a76f9c2cce21cede7ef74ea10e69b147a69b5435536f1ce81c5f86"
+      }
+    }
+  },
+  "cells": 108,
+  "groups": [
+    {
+      "id": "lock-original",
+      "inputBytes": 143844,
+      "source": "typescript-package-lock.json",
+      "transform": "none; original pinned bytes",
+      "methods": {
+        "sort-native": {
+          "opsPerSecondByRun": [
+            2392.0106843143885,
+            2396.8242079245015,
+            2339.0620361235106
+          ],
+          "madPercentByRun": [
+            0.9595930819533469,
+            2.375165329072136,
+            2.8326402461836295
+          ],
+          "medianOpsPerSecondAcrossRuns": 2392.0106843143885,
+          "microsecondsPerOperationByRun": [
+            418.05833333333356,
+            417.2187499999998,
+            427.5217948717956
+          ],
+          "inputMiBPerSecondByRun": [
+            328.1368111367406,
+            328.7971318861885,
+            320.87329819121385
+          ],
+          "outputMiBPerSecondByRun": [
+            213.81223432485487,
+            214.24249588045853,
+            209.07936718157234
+          ],
+          "processPeakRssMiBByRun": [
+            71.52734375,
+            71.3671875,
+            71.30859375
+          ],
+          "cpuMicrosecondsPerOperationByRun": [
+            367.28110599078343,
+            394.9425287356322,
+            430.26565464895634
+          ]
+        },
+        "sort-js": {
+          "opsPerSecondByRun": [
+            1017.0338356295576,
+            773.5915674551986,
+            1090.056504565355
+          ],
+          "madPercentByRun": [
+            2.478043963140119,
+            16.536291354634884,
+            1.9474950168054208
+          ],
+          "medianOpsPerSecondAcrossRuns": 1017.0338356295576,
+          "microsecondsPerOperationByRun": [
+            983.2514563106807,
+            1292.671794871799,
+            917.3836363636362
+          ],
+          "inputMiBPerSecondByRun": [
+            139.51703553418932,
+            106.12154524710235,
+            149.53430923719304
+          ],
+          "outputMiBPerSecondByRun": [
+            90.90857252682417,
+            69.14824527210317,
+            97.43577581396255
+          ],
+          "processPeakRssMiBByRun": [
+            127.2109375,
+            127.3359375,
+            127.30078125
+          ],
+          "cpuMicrosecondsPerOperationByRun": [
+            972.2222222222222,
+            1058.1867388362652,
+            902.0618556701031
+          ]
+        },
+        "select-native": {
+          "opsPerSecondByRun": [
+            3751.4354728155627,
+            3417.8091843128536,
+            3753.3190920162156
+          ],
+          "madPercentByRun": [
+            1.7125474324734646,
+            5.028465937272607,
+            1.0503965523235248
+          ],
+          "medianOpsPerSecondAcrossRuns": 3751.4354728155627,
+          "microsecondsPerOperationByRun": [
+            266.5646276595744,
+            292.58508771929843,
+            266.4308510638295
+          ],
+          "inputMiBPerSecondByRun": [
+            514.6231500164812,
+            468.8561862071019,
+            514.8815455169491
+          ],
+          "outputMiBPerSecondByRun": [
+            0.0643976578814317,
+            0.058670583074218144,
+            0.06442999234799564
+          ],
+          "processPeakRssMiBByRun": [
+            69.28125,
+            71.9375,
+            71.8046875
+          ],
+          "cpuMicrosecondsPerOperationByRun": [
+            256.3049853372434,
+            264.04676843130886,
+            269.9404761904762
+          ]
+        },
+        "select-js": {
+          "opsPerSecondByRun": [
+            3574.9628773058726,
+            3341.6225522614786,
+            3522.5357467526305
+          ],
+          "madPercentByRun": [
+            1.9084854905110822,
+            3.765709585620288,
+            1.1537596565846056
+          ],
+          "medianOpsPerSecondAcrossRuns": 3522.5357467526305,
+          "microsecondsPerOperationByRun": [
+            279.72318435754215,
+            299.25582089552256,
+            283.886402266289
+          ],
+          "inputMiBPerSecondByRun": [
+            490.4145814163074,
+            458.40487900495543,
+            483.22261043156186
+          ],
+          "outputMiBPerSecondByRun": [
+            0.061368305007463174,
+            0.05736275285788213,
+            0.060468333665416096
+          ],
+          "processPeakRssMiBByRun": [
+            78.3359375,
+            78.39453125,
+            78.3515625
+          ],
+          "cpuMicrosecondsPerOperationByRun": [
+            277.3449672795263,
+            290.794283815221,
+            278.39643652561244
+          ]
+        }
+      },
+      "nativeVsJsRatioByRun": {
+        "sort": [
+          2.3519479888628303,
+          3.0983070508499435,
+          2.1458172363791173
+        ],
+        "select": [
+          1.049363476367811,
+          1.0227992931157994,
+          1.065516253589858
+        ]
+      }
+    },
+    {
+      "id": "config-original",
+      "inputBytes": 1838,
+      "source": "typescript-package.json",
+      "transform": "none; original pinned bytes",
+      "methods": {
+        "sort-native": {
+          "opsPerSecondByRun": [
+            175803.70119368192,
+            172712.74538511568,
+            177697.4015691354
+          ],
+          "madPercentByRun": [
+            2.3740493823274615,
+            1.126345216213751,
+            2.157204343604366
+          ],
+          "medianOpsPerSecondAcrossRuns": 175803.70119368192,
+          "microsecondsPerOperationByRun": [
+            5.688162383443258,
+            5.78996065270224,
+            5.627544303797473
+          ],
+          "inputMiBPerSecondByRun": [
+            308.15811423681964,
+            302.7401218584467,
+            311.47749336630903
+          ],
+          "outputMiBPerSecondByRun": [
+            229.69348014387535,
+            225.65504186402174,
+            232.16766371699856
+          ],
+          "processPeakRssMiBByRun": [
+            71.375,
+            71.33203125,
+            70.73828125
+          ],
+          "cpuMicrosecondsPerOperationByRun": [
+            5.495138178096213,
+            5.742570428662581,
+            5.6170566875126084
+          ]
+        },
+        "sort-js": {
+          "opsPerSecondByRun": [
+            66546.09766089474,
+            69824.16505892802,
+            74401.28110549338
+          ],
+          "madPercentByRun": [
+            2.663702437594978,
+            2.346858373803455,
+            1.098371342262402
+          ],
+          "medianOpsPerSecondAcrossRuns": 69824.16505892802,
+          "microsecondsPerOperationByRun": [
+            15.027177177177164,
+            14.321689334287797,
+            13.44062877871824
+          ],
+          "inputMiBPerSecondByRun": [
+            116.64555311272099,
+            122.39152467566461,
+            130.41453807058033
+          ],
+          "outputMiBPerSecondByRun": [
+            86.94472674887255,
+            91.22763264725818,
+            97.207789530302
+          ],
+          "processPeakRssMiBByRun": [
+            71.6171875,
+            71.3984375,
+            71.30078125
+          ],
+          "cpuMicrosecondsPerOperationByRun": [
+            14.138127662429142,
+            13.898102156713641,
+            12.935460634205404
+          ]
+        },
+        "select-native": {
+          "opsPerSecondByRun": [
+            182314.88626685826,
+            186247.54970316545,
+            192259.4382769431
+          ],
+          "madPercentByRun": [
+            2.7639721312114895,
+            1.5558794191175132,
+            1.1839056937710428
+          ],
+          "medianOpsPerSecondAcrossRuns": 186247.54970316545,
+          "microsecondsPerOperationByRun": [
+            5.485015625856675,
+            5.3691981537140405,
+            5.201305116472536
+          ],
+          "inputMiBPerSecondByRun": [
+            319.5712670883994,
+            326.4646495384389,
+            337.0026088266577
+          ],
+          "outputMiBPerSecondByRun": [
+            3.129642441562127,
+            3.197151083619097,
+            3.30035199068544
+          ],
+          "processPeakRssMiBByRun": [
+            71.1484375,
+            71.19921875,
+            71.3203125
+          ],
+          "cpuMicrosecondsPerOperationByRun": [
+            5.209883894016076,
+            5.392069437013257,
+            5.149956312168363
+          ]
+        },
+        "select-js": {
+          "opsPerSecondByRun": [
+            264870.54338493326,
+            254838.00348074394,
+            270508.57691834774
+          ],
+          "madPercentByRun": [
+            1.5698988076830247,
+            2.377054512992664,
+            1.0117339411331092
+          ],
+          "medianOpsPerSecondAcrossRuns": 264870.54338493326,
+          "microsecondsPerOperationByRun": [
+            3.7754292614815674,
+            3.9240615070803675,
+            3.696740456040502
+          ],
+          "inputMiBPerSecondByRun": [
+            464.27923082495437,
+            446.69365920792325,
+            474.16187703697506
+          ],
+          "outputMiBPerSecondByRun": [
+            4.546804219178008,
+            4.374584257748976,
+            4.64358747914339
+          ],
+          "processPeakRssMiBByRun": [
+            70.171875,
+            70.12890625,
+            70.33984375
+          ],
+          "cpuMicrosecondsPerOperationByRun": [
+            3.6118387580993065,
+            3.9744269507337573,
+            3.6966812846693524
+          ]
+        }
+      },
+      "nativeVsJsRatioByRun": {
+        "sort": [
+          2.6418333662409705,
+          2.4735382834775748,
+          2.3883648094335728
+        ],
+        "select": [
+          0.6883169564155805,
+          0.7308468405782291,
+          0.7107332435339974
+        ]
+      }
+    },
+    {
+      "id": "api-original",
+      "inputBytes": 1378184,
+      "source": "jsonplaceholder-data.json",
+      "transform": "none; original pinned bytes",
+      "methods": {
+        "sort-native": {
+          "opsPerSecondByRun": [
+            177.9445623601773,
+            172.4027289436406,
+            178.1800687775064
+          ],
+          "madPercentByRun": [
+            1.330002555633522,
+            1.37210558931118,
+            1.995749288359826
+          ],
+          "medianOpsPerSecondAcrossRuns": 177.9445623601773,
+          "microsecondsPerOperationByRun": [
+            5619.727777777787,
+            5800.372222222222,
+            5612.300000000005
+          ],
+          "inputMiBPerSecondByRun": [
+            233.87942193202835,
+            226.5955758919357,
+            234.18895712667359
+          ],
+          "outputMiBPerSecondByRun": [
+            184.14781852140348,
+            178.41279340611717,
+            184.39153483632614
+          ],
+          "processPeakRssMiBByRun": [
+            135.23828125,
+            136.31640625,
+            134.01171875
+          ],
+          "cpuMicrosecondsPerOperationByRun": [
+            5493.827160493827,
+            5627.329192546584,
+            5268.75
+          ]
+        },
+        "sort-js": {
+          "opsPerSecondByRun": [
+            115.47244105853603,
+            106.46473210569818,
+            111.57725609211815
+          ],
+          "madPercentByRun": [
+            1.2925606366014646,
+            1.186773324140555,
+            3.8630727689204543
+          ],
+          "medianOpsPerSecondAcrossRuns": 111.57725609211815,
+          "microsecondsPerOperationByRun": [
+            8660.074999999988,
+            9392.781818181818,
+            8962.400000000003
+          ],
+          "inputMiBPerSecondByRun": [
+            151.76989622861618,
+            139.93071589694932,
+            146.65030394559838
+          ],
+          "outputMiBPerSecondByRun": [
+            119.49788090310021,
+            110.17615771279932,
+            115.46690740894333
+          ],
+          "processPeakRssMiBByRun": [
+            255.59765625,
+            252.46484375,
+            258.66796875
+          ],
+          "cpuMicrosecondsPerOperationByRun": [
+            8388.888888888889,
+            9000,
+            8849.056603773584
+          ]
+        },
+        "select-native": {
+          "opsPerSecondByRun": [
+            349.89153362457654,
+            339.6477852466995,
+            316.6078633520461
+          ],
+          "madPercentByRun": [
+            1.2400309473577744,
+            2.181833251944593,
+            1.6951301314727791
+          ],
+          "medianOpsPerSecondAcrossRuns": 339.6477852466995,
+          "microsecondsPerOperationByRun": [
+            2858.02857142857,
+            2944.226470588232,
+            3158.481250000001
+          ],
+          "inputMiBPerSecondByRun": [
+            459.87597787556973,
+            446.4122231125234,
+            416.1299624881518
+          ],
+          "outputMiBPerSecondByRun": [
+            0.006339968813769297,
+            0.006154354018866817,
+            0.0057368749653710135
+          ],
+          "processPeakRssMiBByRun": [
+            69.24609375,
+            71.58203125,
+            71.34765625
+          ],
+          "cpuMicrosecondsPerOperationByRun": [
+            2548.58934169279,
+            2831.715210355987,
+            3003.4364261168384
+          ]
+        },
+        "select-js": {
+          "opsPerSecondByRun": [
+            518.2824120863457,
+            555.4558159695533,
+            537.5016921349569
+          ],
+          "madPercentByRun": [
+            1.2670155097868459,
+            3.1892465558581913,
+            1.960139997926729
+          ],
+          "medianOpsPerSecondAcrossRuns": 537.5016921349569,
+          "microsecondsPerOperationByRun": [
+            1929.4500000000005,
+            1800.3232142857134,
+            1860.4592592592587
+          ],
+          "inputMiBPerSecondByRun": [
+            681.1986234844287,
+            730.0570662271336,
+            706.4592667325244
+          ],
+          "outputMiBPerSecondByRun": [
+            0.009391179875984734,
+            0.010064754966184152,
+            0.009739429617466145
+          ],
+          "processPeakRssMiBByRun": [
+            127.84375,
+            192.23046875,
+            133.7734375
+          ],
+          "cpuMicrosecondsPerOperationByRun": [
+            2047.2103004291846,
+            1646.1232604373758,
+            2125.773195876289
+          ]
+        }
+      },
+      "nativeVsJsRatioByRun": {
+        "sort": [
+          1.54101325588131,
+          1.6193412178267559,
+          1.5969210484115237
+        ],
+        "select": [
+          0.6750982195519394,
+          0.6114757924603619,
+          0.5890360309276043
+        ]
+      }
+    },
+    {
+      "id": "upstream-original",
+      "inputBytes": 3965,
+      "source": "upstream-test.json",
+      "transform": "none; original pinned bytes",
+      "methods": {
+        "sort-native": {
+          "opsPerSecondByRun": [
+            83996.67090629887,
+            84469.05167518444,
+            84311.50271208318
+          ],
+          "madPercentByRun": [
+            1.5733846188472604,
+            1.642045383579022,
+            1.8544416949106461
+          ],
+          "medianOpsPerSecondAcrossRuns": 84311.50271208318,
+          "microsecondsPerOperationByRun": [
+            11.905233733793258,
+            11.83865546218489,
+            11.860777804126176
+          ],
+          "inputMiBPerSecondByRun": [
+            317.6181794581175,
+            319.40440167627935,
+            318.80865884152394
+          ],
+          "outputMiBPerSecondByRun": [
+            234.6289149137014,
+            235.94842181836626,
+            235.50833839768566
+          ],
+          "processPeakRssMiBByRun": [
+            70.93359375,
+            70.82421875,
+            70.85546875
+          ],
+          "cpuMicrosecondsPerOperationByRun": [
+            11.553358273076974,
+            11.842982444673925,
+            11.115946042169389
+          ]
+        },
+        "sort-js": {
+          "opsPerSecondByRun": [
+            33451.768786011635,
+            33232.51969464062,
+            35474.88769784072
+          ],
+          "madPercentByRun": [
+            2.876936612119038,
+            6.2895386974668375,
+            1.9052353299917617
+          ],
+          "medianOpsPerSecondAcrossRuns": 33451.768786011635,
+          "microsecondsPerOperationByRun": [
+            29.8937854795339,
+            30.09100751879699,
+            28.18895463510848
+          ],
+          "inputMiBPerSecondByRun": [
+            126.49179767278302,
+            125.662746991396,
+            134.14185497468802
+          ],
+          "outputMiBPerSecondByRun": [
+            93.44122960493858,
+            92.82879847107161,
+            99.09243208596752
+          ],
+          "processPeakRssMiBByRun": [
+            78.4921875,
+            78.5,
+            78.4296875
+          ],
+          "cpuMicrosecondsPerOperationByRun": [
+            27.723032453028512,
+            29.133778244520478,
+            27.927701769800425
+          ]
+        },
+        "select-native": {
+          "opsPerSecondByRun": [
+            85680.69720155702,
+            86654.50638414832,
+            87438.17250520815
+          ],
+          "madPercentByRun": [
+            5.767147478402092,
+            3.524864941136184,
+            1.2831033940315035
+          ],
+          "medianOpsPerSecondAcrossRuns": 86654.50638414832,
+          "microsecondsPerOperationByRun": [
+            11.671240228678107,
+            11.540080738177624,
+            11.436652566594255
+          ],
+          "inputMiBPerSecondByRun": [
+            323.9860195199715,
+            327.66830235781487,
+            330.6315936881545
+          ],
+          "outputMiBPerSecondByRun": [
+            1.8793640476568332,
+            1.9007240742067446,
+            1.9179134060094714
+          ],
+          "processPeakRssMiBByRun": [
+            70.84765625,
+            70.81640625,
+            71.2890625
+          ],
+          "cpuMicrosecondsPerOperationByRun": [
+            10.73609688419797,
+            11.098849524969241,
+            11.26464973387107
+          ]
+        },
+        "select-js": {
+          "opsPerSecondByRun": [
+            138173.7632783457,
+            132267.01322070323,
+            124363.06416994175
+          ],
+          "madPercentByRun": [
+            1.953981150908243,
+            1.4707167565560677,
+            4.137605763405253
+          ],
+          "medianOpsPerSecondAcrossRuns": 132267.01322070323,
+          "microsecondsPerOperationByRun": [
+            7.237263980322652,
+            7.560464061673345,
+            8.040972668810275
+          ],
+          "inputMiBPerSecondByRun": [
+            522.4790300356299,
+            500.14372579583005,
+            470.2563757265272
+          ],
+          "outputMiBPerSecondByRun": [
+            3.030773692514373,
+            2.9012120285760634,
+            2.7278427847944835
+          ],
+          "processPeakRssMiBByRun": [
+            70.203125,
+            70.8359375,
+            70.484375
+          ],
+          "cpuMicrosecondsPerOperationByRun": [
+            7.1857060965468245,
+            7.102583522679458,
+            7.326331436863481
+          ]
+        }
+      },
+      "nativeVsJsRatioByRun": {
+        "sort": [
+          2.510978461067905,
+          2.5417588690636266,
+          2.3766531251687386
+        ],
+        "select": [
+          0.6200938236657605,
+          0.6551482812993968,
+          0.7030879553250968
+        ]
+      }
+    },
+    {
+      "id": "cldr-original",
+      "inputBytes": 25897,
+      "source": "cldr-bn-languages.json",
+      "transform": "none; original pinned bytes",
+      "methods": {
+        "sort-native": {
+          "opsPerSecondByRun": [
+            6698.438495157367,
+            6422.158544417263,
+            5975.381030463456
+          ],
+          "madPercentByRun": [
+            0.14663894510573655,
+            1.7196713635116239,
+            4.562731943239768
+          ],
+          "medianOpsPerSecondAcrossRuns": 6422.158544417263,
+          "microsecondsPerOperationByRun": [
+            149.28852459016375,
+            155.71088646967348,
+            167.35334448160523
+          ],
+          "inputMiBPerSecondByRun": [
+            165.43337031277687,
+            158.6100004432429,
+            147.57580046263897
+          ],
+          "outputMiBPerSecondByRun": [
+            121.92382537705755,
+            116.8950252330283,
+            108.76285776846458
+          ],
+          "processPeakRssMiBByRun": [
+            71.84375,
+            71.9453125,
+            72.1171875
+          ],
+          "cpuMicrosecondsPerOperationByRun": [
+            143.21440480160052,
+            141.90231362467867,
+            163.34141338802908
+          ]
+        },
+        "sort-js": {
+          "opsPerSecondByRun": [
+            3988.0796299859717,
+            3936.65384423241,
+            3971.734819839911
+          ],
+          "madPercentByRun": [
+            3.0508799824961352,
+            3.314357018259621,
+            2.8241541408827517
+          ],
+          "medianOpsPerSecondAcrossRuns": 3971.734819839911,
+          "microsecondsPerOperationByRun": [
+            250.74725,
+            254.02284263959342,
+            251.77914572864336
+          ],
+          "inputMiBPerSecondByRun": [
+            98.49481408857986,
+            97.22473583611176,
+            98.09114134730737
+          ],
+          "outputMiBPerSecondByRun": [
+            72.59033948699212,
+            71.65429617979028,
+            72.29283406397299
+          ],
+          "processPeakRssMiBByRun": [
+            95.05859375,
+            95.2265625,
+            94.92578125
+          ],
+          "cpuMicrosecondsPerOperationByRun": [
+            234.94983277591973,
+            254.5084351367074,
+            242.998585572843
+          ]
+        },
+        "select-native": {
+          "opsPerSecondByRun": [
+            5475.428017605302,
+            5211.052622646922,
+            5430.539999321187
+          ],
+          "madPercentByRun": [
+            1.2656352494908245,
+            3.2979533387476154,
+            4.4229185282064165
+          ],
+          "medianOpsPerSecondAcrossRuns": 5430.539999321187,
+          "microsecondsPerOperationByRun": [
+            182.63412408759118,
+            191.89980842911854,
+            184.14374999999987
+          ],
+          "inputMiBPerSecondByRun": [
+            135.22830903236817,
+            128.69894959324583,
+            134.11969600908353
+          ],
+          "outputMiBPerSecondByRun": [
+            0.10443550143442729,
+            0.099392940953196,
+            0.1035793304313886
+          ],
+          "processPeakRssMiBByRun": [
+            71.60546875,
+            70.9296875,
+            71.1640625
+          ],
+          "cpuMicrosecondsPerOperationByRun": [
+            174.45166531275385,
+            187.2058194266153,
+            172.11106574111884
+          ]
+        },
+        "select-js": {
+          "opsPerSecondByRun": [
+            11773.983494434355,
+            12588.972060475016,
+            11852.675046821043
+          ],
+          "madPercentByRun": [
+            3.3373613573928305,
+            2.646568734860202,
+            1.341881682980998
+          ],
+          "medianOpsPerSecondAcrossRuns": 11852.675046821043,
+          "microsecondsPerOperationByRun": [
+            84.93302207130722,
+            79.43460317460323,
+            84.36913996627334
+          ],
+          "inputMiBPerSecondByRun": [
+            290.78564696823736,
+            310.913667154428,
+            292.72911614181953
+          ],
+          "outputMiBPerSecondByRun": [
+            0.22457091320866307,
+            0.24011558648061784,
+            0.22607183545724951
+          ],
+          "processPeakRssMiBByRun": [
+            78.36328125,
+            78.546875,
+            78.41796875
+          ],
+          "cpuMicrosecondsPerOperationByRun": [
+            81.4449606523182,
+            77.04022216250112,
+            79.84862819299906
+          ]
+        }
+      },
+      "nativeVsJsRatioByRun": {
+        "sort": [
+          1.6796150319548482,
+          1.6313749693350268,
+          1.5044763312532297
+        ],
+        "select": [
+          0.46504464866912504,
+          0.41393789720193364,
+          0.45816998929517516
+        ]
+      }
+    },
+    {
+      "id": "lock-normalized",
+      "inputBytes": 93728,
+      "source": "typescript-package-lock.json",
+      "transform": "normalized",
+      "methods": {
+        "sort-native": {
+          "opsPerSecondByRun": [
+            3021.8289744530825,
+            2853.8157812021363,
+            2935.986536262419
+          ],
+          "madPercentByRun": [
+            3.2297817659884056,
+            0.5083466048874071,
+            1.9673576415832679
+          ],
+          "medianOpsPerSecondAcrossRuns": 2935.986536262419,
+          "microsecondsPerOperationByRun": [
+            330.9254125412537,
+            350.4080419580418,
+            340.6010169491526
+          ],
+          "inputMiBPerSecondByRun": [
+            270.1091633963952,
+            255.09113840152153,
+            262.43605238991165
+          ],
+          "outputMiBPerSecondByRun": [
+            270.1091633963952,
+            255.09113840152153,
+            262.43605238991165
+          ],
+          "processPeakRssMiBByRun": [
+            71.46484375,
+            71.453125,
+            71.5078125
+          ],
+          "cpuMicrosecondsPerOperationByRun": [
+            317.8122690317812,
+            362.1951219512195,
+            325.14177693761815
+          ]
+        },
+        "sort-js": {
+          "opsPerSecondByRun": [
+            1082.6477392030713,
+            1124.2695978597083,
+            1148.0208121199034
+          ],
+          "madPercentByRun": [
+            1.9151359503497234,
+            3.405049335632418,
+            2.842926172051987
+          ],
+          "medianOpsPerSecondAcrossRuns": 1124.2695978597083,
+          "microsecondsPerOperationByRun": [
+            923.6614678899087,
+            889.4663716814166,
+            871.0643478260884
+          ],
+          "inputMiBPerSecondByRun": [
+            96.77353601458117,
+            100.49394690341447,
+            102.61697261655264
+          ],
+          "outputMiBPerSecondByRun": [
+            96.77353601458117,
+            100.49394690341447,
+            102.61697261655264
+          ],
+          "processPeakRssMiBByRun": [
+            127.41015625,
+            127.36328125,
+            127.33984375
+          ],
+          "cpuMicrosecondsPerOperationByRun": [
+            887.396694214876,
+            870.6467661691543,
+            840.4785643070787
+          ]
+        },
+        "select-native": {
+          "opsPerSecondByRun": [
+            5804.972893474259,
+            5612.31113374677,
+            5560.846846091343
+          ],
+          "madPercentByRun": [
+            2.1981071780743533,
+            1.0768010632548108,
+            3.100805418862424
+          ],
+          "medianOpsPerSecondAcrossRuns": 5612.31113374677,
+          "microsecondsPerOperationByRun": [
+            172.26609294320116,
+            178.17971530249102,
+            179.82872531418283
+          ],
+          "inputMiBPerSecondByRun": [
+            518.8832276912264,
+            501.6619662702725,
+            497.0617801575178
+          ],
+          "outputMiBPerSecondByRun": [
+            0.09964896400693575,
+            0.09634170571083246,
+            0.09545826266254823
+          ],
+          "processPeakRssMiBByRun": [
+            71.890625,
+            69.828125,
+            72.00390625
+          ],
+          "cpuMicrosecondsPerOperationByRun": [
+            174.09144196951934,
+            166.69962428317183,
+            171.37629599512096
+          ]
+        },
+        "select-js": {
+          "opsPerSecondByRun": [
+            3596.763908815553,
+            3789.782745717542,
+            3837.1144899035926
+          ],
+          "madPercentByRun": [
+            1.684964034875159,
+            3.090287364464202,
+            4.840116844597238
+          ],
+          "medianOpsPerSecondAcrossRuns": 3789.782745717542,
+          "microsecondsPerOperationByRun": [
+            278.02770083102536,
+            263.86736842105284,
+            260.6125
+          ],
+          "inputMiBPerSecondByRun": [
+            321.5002895788804,
+            338.75346869527226,
+            342.9842633339729
+          ],
+          "outputMiBPerSecondByRun": [
+            0.06174254451625819,
+            0.0650559324483068,
+            0.06586843568636386
+          ],
+          "processPeakRssMiBByRun": [
+            78.3671875,
+            78.3828125,
+            78.36328125
+          ],
+          "cpuMicrosecondsPerOperationByRun": [
+            250.90799031477,
+            245.48631333721607,
+            229.92489890236857
+          ]
+        }
+      },
+      "nativeVsJsRatioByRun": {
+        "sort": [
+          2.7911469862555918,
+          2.5383731683530315,
+          2.5574331974356004
+        ],
+        "select": [
+          1.613943266959073,
+          1.4809057696219359,
+          1.44922619867698
+        ]
+      }
+    },
+    {
+      "id": "api-normalized",
+      "inputBytes": 1085130,
+      "source": "jsonplaceholder-data.json",
+      "transform": "normalized",
+      "methods": {
+        "sort-native": {
+          "opsPerSecondByRun": [
+            191.90966428282886,
+            163.60815654028423,
+            193.9830342438252
+          ],
+          "madPercentByRun": [
+            1.5445647839410488,
+            2.683093400380147,
+            3.233151896126909
+          ],
+          "medianOpsPerSecondAcrossRuns": 191.90966428282886,
+          "microsecondsPerOperationByRun": [
+            5210.784999999998,
+            6112.164705882351,
+            5155.089999999996
+          ],
+          "inputMiBPerSecondByRun": [
+            198.59975242922408,
+            169.31163683563102,
+            200.74540133381083
+          ],
+          "outputMiBPerSecondByRun": [
+            198.59975242922408,
+            169.31163683563102,
+            200.74540133381083
+          ],
+          "processPeakRssMiBByRun": [
+            134.36328125,
+            133.29296875,
+            136.78125
+          ],
+          "cpuMicrosecondsPerOperationByRun": [
+            5118.64406779661,
+            5823.529411764706,
+            5209.039548022599
+          ]
+        },
+        "sort-js": {
+          "opsPerSecondByRun": [
+            114.43349697323409,
+            108.69511514271183,
+            109.03612069307322
+          ],
+          "madPercentByRun": [
+            3.426461900201395,
+            2.0017875870189394,
+            4.059863681275956
+          ],
+          "medianOpsPerSecondAcrossRuns": 109.03612069307322,
+          "microsecondsPerOperationByRun": [
+            8738.699999999993,
+            9200.045454545447,
+            9171.272727272728
+          ],
+          "inputMiBPerSecondByRun": [
+            118.42271859222937,
+            112.48429326516236,
+            112.83718647735074
+          ],
+          "outputMiBPerSecondByRun": [
+            118.42271859222937,
+            112.48429326516236,
+            112.83718647735074
+          ],
+          "processPeakRssMiBByRun": [
+            256.421875,
+            227.50390625,
+            253.58203125
+          ],
+          "cpuMicrosecondsPerOperationByRun": [
+            9132.075471698114,
+            9138.613861386139,
+            9106.796116504855
+          ]
+        },
+        "select-native": {
+          "opsPerSecondByRun": [
+            465.4165775443435,
+            434.8754279569552,
+            439.86144364525154
+          ],
+          "madPercentByRun": [
+            1.656145657265866,
+            2.048012341973574,
+            1.938650571370532
+          ],
+          "medianOpsPerSecondAcrossRuns": 439.86144364525154,
+          "microsecondsPerOperationByRun": [
+            2148.612765957446,
+            2299.509090909091,
+            2273.443181818183
+          ],
+          "inputMiBPerSecondByRun": [
+            481.64128378934237,
+            450.0354510678585,
+            455.19528230931456
+          ],
+          "outputMiBPerSecondByRun": [
+            0.008433260892241027,
+            0.007879861003095769,
+            0.007970206670055179
+          ],
+          "processPeakRssMiBByRun": [
+            71.52734375,
+            71.515625,
+            71.11328125
+          ],
+          "cpuMicrosecondsPerOperationByRun": [
+            2146.987951807229,
+            2282.115869017632,
+            2088.16120906801
+          ]
+        },
+        "select-js": {
+          "opsPerSecondByRun": [
+            619.2278229048372,
+            575.5349994740807,
+            579.0087370421838
+          ],
+          "madPercentByRun": [
+            0.8852176082052037,
+            2.538536564122646,
+            2.90218276983837
+          ],
+          "medianOpsPerSecondAcrossRuns": 579.0087370421838,
+          "microsecondsPerOperationByRun": [
+            1614.9145161290335,
+            1737.5137931034465,
+            1727.0896551724136
+          ],
+          "inputMiBPerSecondByRun": [
+            640.8144831359158,
+            595.598501185712,
+            599.1933353677606
+          ],
+          "outputMiBPerSecondByRun": [
+            0.01122029174346152,
+            0.010428585996634992,
+            0.010491529468347065
+          ],
+          "processPeakRssMiBByRun": [
+            192.40625,
+            192.52734375,
+            192.39453125
+          ],
+          "cpuMicrosecondsPerOperationByRun": [
+            1602.5179856115108,
+            1726.7441860465117,
+            1700.381679389313
+          ]
+        }
+      },
+      "nativeVsJsRatioByRun": {
+        "sort": [
+          1.6770409832683553,
+          1.5052024769050019,
+          1.7790713115140058
+        ],
+        "select": [
+          0.7516079871234542,
+          0.7556020543569738,
+          0.7596801490289176
+        ]
+      }
+    },
+    {
+      "id": "cldr-normalized",
+      "inputBytes": 19086,
+      "source": "cldr-bn-languages.json",
+      "transform": "normalized",
+      "methods": {
+        "sort-native": {
+          "opsPerSecondByRun": [
+            7671.706884857475,
+            7029.855917910444,
+            7606.470597642698
+          ],
+          "madPercentByRun": [
+            2.3260667061005695,
+            4.09643025592628,
+            2.362185843205997
+          ],
+          "medianOpsPerSecondAcrossRuns": 7606.470597642698,
+          "microsecondsPerOperationByRun": [
+            130.34908854166656,
+            142.25042613636387,
+            131.46701708278573
+          ],
+          "inputMiBPerSecondByRun": [
+            139.6390892070673,
+            127.95622830318331,
+            138.45166952763418
+          ],
+          "outputMiBPerSecondByRun": [
+            139.6390892070673,
+            127.95622830318331,
+            138.45166952763418
+          ],
+          "processPeakRssMiBByRun": [
+            71.8515625,
+            72.1953125,
+            71.86328125
+          ],
+          "cpuMicrosecondsPerOperationByRun": [
+            123.86576407892842,
+            144.12955465587044,
+            125.86306098964327
+          ]
+        },
+        "sort-js": {
+          "opsPerSecondByRun": [
+            3905.2746177125728,
+            4011.4876232634374,
+            3699.780698482786
+          ],
+          "madPercentByRun": [
+            3.122562186292661,
+            1.9579600564746513,
+            1.6272979571531558
+          ],
+          "medianOpsPerSecondAcrossRuns": 3905.2746177125728,
+          "microsecondsPerOperationByRun": [
+            256.06393861892553,
+            249.2840796019899,
+            270.286290322581
+          ],
+          "inputMiBPerSecondByRun": [
+            71.08313689581124,
+            73.01640775452229,
+            67.34277192234273
+          ],
+          "outputMiBPerSecondByRun": [
+            71.08313689581124,
+            73.01640775452229,
+            67.34277192234273
+          ],
+          "processPeakRssMiBByRun": [
+            94.8984375,
+            95,
+            95.22265625
+          ],
+          "cpuMicrosecondsPerOperationByRun": [
+            237.8668171557562,
+            241.56355455568055,
+            249.7737556561086
+          ]
+        },
+        "select-native": {
+          "opsPerSecondByRun": [
+            7303.105868060537,
+            7133.1016821150615,
+            7044.026665387745
+          ],
+          "madPercentByRun": [
+            2.9536219735678753,
+            0.6490072903581414,
+            2.884885964830478
+          ],
+          "medianOpsPerSecondAcrossRuns": 7133.1016821150615,
+          "microsecondsPerOperationByRun": [
+            136.92804377565005,
+            140.19146853146867,
+            141.96425531914906
+          ],
+          "inputMiBPerSecondByRun": [
+            132.9298768976244,
+            129.83548994526677,
+            128.2141618114381
+          ],
+          "outputMiBPerSecondByRun": [
+            0.13929568992730212,
+            0.13605311741094706,
+            0.1343541462972211
+          ],
+          "processPeakRssMiBByRun": [
+            71.265625,
+            71.11328125,
+            71.39453125
+          ],
+          "cpuMicrosecondsPerOperationByRun": [
+            132.99893600851192,
+            134.63047230503688,
+            142.71733811776218
+          ]
+        },
+        "select-js": {
+          "opsPerSecondByRun": [
+            13160.537573484646,
+            12340.300523788295,
+            13495.31712495765
+          ],
+          "madPercentByRun": [
+            1.411128757557321,
+            5.272501565542126,
+            4.151792196390307
+          ],
+          "medianOpsPerSecondAcrossRuns": 13160.537573484646,
+          "microsecondsPerOperationByRun": [
+            75.98473804100239,
+            81.03530364372475,
+            74.09977777777772
+          ],
+          "inputMiBPerSecondByRun": [
+            239.54584133866115,
+            224.6160276384577,
+            245.6394411534707
+          ],
+          "outputMiBPerSecondByRun": [
+            0.25101733347863475,
+            0.23537255332542983,
+            0.2574027466765909
+          ],
+          "processPeakRssMiBByRun": [
+            78.28515625,
+            78.58984375,
+            78.9296875
+          ],
+          "cpuMicrosecondsPerOperationByRun": [
+            71.28378378378379,
+            81.31618759455371,
+            69.63121854632456
+          ]
+        }
+      },
+      "nativeVsJsRatioByRun": {
+        "sort": [
+          1.9644474808665329,
+          1.752431162230907,
+          2.0559247202846307
+        ],
+        "select": [
+          0.5549245862702873,
+          0.5780330607317578,
+          0.5219608105659725
+        ]
+      }
+    },
+    {
+      "id": "api-user-small",
+      "inputBytes": 401,
+      "source": "jsonplaceholder-data.json",
+      "transform": "first-user",
+      "methods": {
+        "sort-native": {
+          "opsPerSecondByRun": [
+            501819.0616061536,
+            426316.7944464049,
+            501590.0245826498
+          ],
+          "madPercentByRun": [
+            2.88660432013,
+            3.7010062288359165,
+            0.3499233909841713
+          ],
+          "medianOpsPerSecondAcrossRuns": 501590.0245826498,
+          "microsecondsPerOperationByRun": [
+            1.9927501294975467,
+            2.3456734827877312,
+            1.9936600629808265
+          ],
+          "inputMiBPerSecondByRun": [
+            191.90735216528662,
+            163.03351838398777,
+            191.81976304783112
+          ],
+          "outputMiBPerSecondByRun": [
+            191.90735216528662,
+            163.03351838398777,
+            191.81976304783112
+          ],
+          "processPeakRssMiBByRun": [
+            70.85546875,
+            70.9375,
+            70.55078125
+          ],
+          "cpuMicrosecondsPerOperationByRun": [
+            1.9073015299089287,
+            2.2866315343146164,
+            1.8635023232988632
+          ]
+        },
+        "sort-js": {
+          "opsPerSecondByRun": [
+            193849.89326062784,
+            164488.11869213163,
+            183587.67751190887
+          ],
+          "madPercentByRun": [
+            1.8987114121795818,
+            6.635340793233194,
+            1.9537906117624657
+          ],
+          "medianOpsPerSecondAcrossRuns": 183587.67751190887,
+          "microsecondsPerOperationByRun": [
+            5.158630645493919,
+            6.079466456003886,
+            5.446988673491621
+          ],
+          "inputMiBPerSecondByRun": [
+            74.13273544074227,
+            62.90410575441817,
+            70.20822399356409
+          ],
+          "outputMiBPerSecondByRun": [
+            74.13273544074227,
+            62.90410575441817,
+            70.20822399356409
+          ],
+          "processPeakRssMiBByRun": [
+            71.58203125,
+            71.44921875,
+            71.515625
+          ],
+          "cpuMicrosecondsPerOperationByRun": [
+            4.928397668334328,
+            6.015564844351556,
+            5.261676639379367
+          ]
+        },
+        "select-native": {
+          "opsPerSecondByRun": [
+            434932.9719053726,
+            416363.0311372609,
+            411415.83767606155
+          ],
+          "madPercentByRun": [
+            3.0510099945986435,
+            4.304405212339849,
+            2.506856559336997
+          ],
+          "medianOpsPerSecondAcrossRuns": 416363.0311372609,
+          "microsecondsPerOperationByRun": [
+            2.299204853610335,
+            2.401750216076061,
+            2.4306307838041343
+          ],
+          "inputMiBPerSecondByRun": [
+            166.32854627042235,
+            159.22696636776126,
+            157.33504381952352
+          ],
+          "outputMiBPerSecondByRun": [
+            7.880903688623503,
+            7.544419852836568,
+            7.454777637334032
+          ],
+          "processPeakRssMiBByRun": [
+            70.69140625,
+            71.14453125,
+            71.91796875
+          ],
+          "cpuMicrosecondsPerOperationByRun": [
+            2.2155070033206843,
+            2.2448420498280464,
+            2.2783465405532204
+          ]
+        },
+        "select-js": {
+          "opsPerSecondByRun": [
+            632942.3948944749,
+            641511.7728621857,
+            618830.9604431653
+          ],
+          "madPercentByRun": [
+            2.7502823349156365,
+            1.3429193236181638,
+            2.868942782835204
+          ],
+          "medianOpsPerSecondAcrossRuns": 632942.3948944749,
+          "microsecondsPerOperationByRun": [
+            1.5799226091763399,
+            1.558817846067538,
+            1.615950176901083
+          ],
+          "inputMiBPerSecondByRun": [
+            242.05198321598476,
+            245.3291138818135,
+            236.65544046183516
+          ],
+          "outputMiBPerSecondByRun": [
+            11.468797209734939,
+            11.624072727567224,
+            11.213100670261516
+          ],
+          "processPeakRssMiBByRun": [
+            70.0703125,
+            70.02734375,
+            70.18359375
+          ],
+          "cpuMicrosecondsPerOperationByRun": [
+            1.497646175767588,
+            1.56524247188719,
+            1.5139094918896425
+          ]
+        }
+      },
+      "nativeVsJsRatioByRun": {
+        "sort": [
+          2.588699189694505,
+          2.5917786514680223,
+          2.732155182638077
+        ],
+        "select": [
+          0.687160435789556,
+          0.6490341233795363,
+          0.6648274956725388
+        ]
+      }
+    }
+  ],
+  "caveats": "Median across process medians does not replace raw within-run variation. CPU and process RSS include measurement overhead; peakRSS includes setup, not serializer-only allocation. Text sorting and selection are separate APIs, not compatible stringify acceleration."
+}

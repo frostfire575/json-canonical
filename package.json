@@ -1,7 +1,7 @@
 {
   "name": "stable-json-rs",
   "version": "0.1.0",
-  "description": "Compatibility-first stable JSON with a bounded Rust JSON-text engine",
+  "description": "Bounded Rust JSON-text sorting and extraction with compatible JavaScript serialization",
   "license": "MIT",
   "main": "js/index.cjs",
   "module": "js/index.mjs",
@@ -12,7 +12,7 @@
       "require": { "types": "./js/dist/index.d.ts", "default": "./js/index.cjs" }
     }
   },
-  "files": ["js/dist", "js/index.cjs", "js/index.mjs", "js/index.d.mts", "native", "LICENSE", "NOTICE", "THIRD_PARTY_NOTICES.txt", "README.md", "docs", "benches/*.md"],
+  "files": ["js/dist", "js/index.cjs", "js/index.mjs", "js/index.d.mts", "native", "examples", "LICENSE", "NOTICE", "THIRD_PARTY_NOTICES.txt", "README.md", "docs", "benches/*.md"],
   "engines": { "node": ">=22.13.0" },
   "packageManager": "pnpm@12.10.1",
   "napi": {
@@ -27,6 +27,7 @@
     "test:types": "tsc -p tests/tsconfig.json",
     "test:rust": "cargo test --locked",
     "bench": "node benches/run.cjs",
+    "bench:text": "node benches/native-text-verification/run.cjs",
     "check": "pnpm build && pnpm test:rust && pnpm test && pnpm test:types",
     "test:pack": "node scripts/test-pack.cjs",
     "audit:deps": "node scripts/audit.cjs",

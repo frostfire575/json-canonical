@@ -1,33 +1,14 @@
 # Public API
 
-## Compatibility serialization
-`stringify(value, options?)` and alias `stableStringify` return `string | undefined`.
-Options: `{cmp?: (a:{key,value}, b:{key,value}) => number, cycles?: boolean}`
-or comparator function shorthand. Default object keys sort lexically by UTF-16.
-Object cycles throw TypeError, or become `"__cycle__"` with `cycles:true`.
-Unsupported top-level values may return undefined. Getters/callbacks may throw.
-No replacer or spacing. Array cycles/deep nesting can throw RangeError, following
-upstream. Functions execute in JavaScript, with no native conversion.
+The performance-oriented APIs consume existing JSON text: `stringifyJson` sorts
+keys and `selectJson` extracts raw text. Choose them for measured workloads,
+without converting arbitrary live objects to JSON first. Both are synchronous
+and copy strings across Node-API; neither is streaming or zero-copy.
 
-`stringifyBatch(values, options?)` returns an ordered `(string|undefined)[]`,
-calling compatibility serialization per value. Sparse input slots produce
-undefined result entries. Any error aborts; no partial results are returned,
-although earlier input getters/callbacks may already have run.
-
-## Explicit version cache
-`createSerializerCache(options?)` returns:
-* `stringify(object, version)` — both arguments required. Uses object identity
-  and `Object.is(version, previousVersion)` to reuse a result. Change version
-  on every mutation affecting serialization, including nested state, prototypes,
-  getters, comparator options or external callback state. No deep mutation
-  detection. Passing the same version explicitly asserts unchanged output.
-* `delete(object)` — invalidate one entry, returns whether present.
-* `clear()` — replace the WeakMap, invalidating all entries.
-
-One version/result is retained per weakly-held object. Large result strings cost
-memory while the key remains alive. Exceptions are not cached. Undefined results
-are cached. Unversioned calls throw TypeError; mutation with an unchanged version
-violates the caller contract and can yield the old result.
+For live JavaScript values, `stringify` / `stableStringify` preserve upstream
+behavior and run in JavaScript. The default export remains compatible `stringify`.
+See [performance by API](performance.md) before choosing a pipeline and the
+[distribution review](distribution.md) for native installation boundaries.
 
 ## Native JSON text
 `stringifyJson(input: string, options?: JsonTextOptions): string`
@@ -84,3 +65,32 @@ choices mean this is a JSON Pointer subset, not a full RFC6901 compliance claim.
 Rust only materializes one path-level decoded key at a time and scans raw values;
 it still validates/scans all bytes and copies input/output at Node-API boundaries.
 Deep paths may scan a subtree repeatedly. Calls are synchronous.
+
+## Compatibility serialization
+`stringify(value, options?)` and alias `stableStringify` return `string | undefined`.
+Options: `{cmp?: (a:{key,value}, b:{key,value}) => number, cycles?: boolean}`
+or comparator function shorthand. Default object keys sort lexically by UTF-16.
+Object cycles throw TypeError, or become `"__cycle__"` with `cycles:true`.
+Unsupported top-level values may return undefined. Getters/callbacks may throw.
+No replacer or spacing. Array cycles/deep nesting can throw RangeError, following
+upstream. Functions execute in JavaScript, with no native conversion.
+
+`stringifyBatch(values, options?)` returns an ordered `(string|undefined)[]`,
+calling compatibility serialization per value. Sparse input slots produce
+undefined result entries. Any error aborts; no partial results are returned,
+although earlier input getters/callbacks may already have run.
+
+## Explicit version cache
+`createSerializerCache(options?)` returns:
+* `stringify(object, version)` — both arguments required. Uses object identity
+  and `Object.is(version, previousVersion)` to reuse a result. Change version
+  on every mutation affecting serialization, including nested state, prototypes,
+  getters, comparator options or external callback state. No deep mutation
+  detection. Passing the same version explicitly asserts unchanged output.
+* `delete(object)` — invalidate one entry, returns whether present.
+* `clear()` — replace the WeakMap, invalidating all entries.
+
+One version/result is retained per weakly-held object. Large result strings cost
+memory while the key remains alive. Exceptions are not cached. Undefined results
+are cached. Unversioned calls throw TypeError; mutation with an unchanged version
+violates the caller contract and can yield the old result.

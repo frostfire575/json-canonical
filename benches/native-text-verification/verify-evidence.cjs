@@ -1,0 +1,32 @@
+'use strict';
+const fs = require('node:fs');
+const path = require('node:path');
+const zlib = require('node:zlib');
+const assert = require('node:assert/strict');
+const { hash } = require('./run.cjs');
+const { summarize } = require('./summarize.cjs');
+const root = path.resolve(__dirname, '../..');
+const file = path.resolve(process.argv[2]);
+const report = JSON.parse(fs.readFileSync(file));
+const summary = summarize(report);
+assert.equal(hash(fs.readFileSync(path.join(root, report.runner))), report.runnerSha256, 'Actual frozen source matches recorded bytes');
+const compressed = fs.readFileSync(path.join(root, report.correctnessCorpus.file));
+assert.equal(hash(compressed), report.correctnessCorpus.sha256, 'Actual full input/output corpus identity');
+const corpus = JSON.parse(zlib.gunzipSync(compressed));
+assert.deepEqual(Object.keys(corpus).sort(), report.configuration.selected.toSorted());
+for (const cell of report.results) {
+  const expected = corpus[cell.id];
+  assert.equal(hash(expected.input), cell.inputSha256);
+  assert.equal(Buffer.byteLength(expected.input), cell.inputBytes);
+  const output = cell.method.startsWith('select') ? expected.selectedExpected : expected.sortedExpected;
+  assert.equal(hash(output), cell.expectedSha256);
+  assert.equal(hash(output), cell.beforeSha256);
+  assert.equal(hash(output), cell.afterSha256);
+  assert.equal(Buffer.byteLength(output), cell.outputBytes);
+  assert.ok(cell.samples.length >= 9 && cell.samples.every(sample => sample.elapsedMs >= 100 && sample.operations > 0 && Number.isFinite(sample.opsPerSecond)));
+  assert.ok(cell.configuration.warmupMs >= 1000);
+  assert.equal(cell.tarballSha256, report.candidate.tarballSha256);
+  assert.equal(cell.native.length, cell.method.endsWith('native') ? 1 : 0);
+  for (const native of cell.native) assert.equal(native.sha256, report.candidate.packedInstalledFiles[`native/${path.basename(native.path)}`].sha256);
+}
+console.log(JSON.stringify({ status: 'PASS', cells: summary.cells, uniqueInputs: Object.keys(corpus).length, completeExactPrePostOutputHashes: true, actualFrozenRunnerAndCorpusHashes: true, minimumSamplesAndNativeIdentity: true, rawReport: path.relative(root, file), rawSha256: hash(fs.readFileSync(file)) }, null, 2));

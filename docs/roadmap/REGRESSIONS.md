@@ -68,3 +68,33 @@ batch/limit getter regressions. Packed/installed/loaded source identities and
 independent actual native extraction PASS;12runtime/package/license files equal
 measured security-fixed candidate. Missing-combined rejection is expected and
 retained as a release gate; it is not a serialization regression.
+
+## Additional native text review, 2026-10-19
+No new reproducible runtime defect found by independent12-group review. Added
+permanent lexical/Unicode/duplicate/pointer/options/depth/malformed coverage;
+74groupfullsuite PASS both local runtimes. Prior batch/option regressions remain.
+Clarified security documentation: sorting rejects decodedduplicates, whereas
+selection uses the last traversed duplicate and can retain unvisited escaped
+surrogate keys. No runtime behavior or expected result was weakened.
+Distribution review's first failing prototype was a reviewer assumption about
+pnpm transitive package hoisting, corrected using createRequire from its declaring
+wrapper. Original FAIL report retained; actual library loading already succeeded.
+
+## Development tooling: Node22 Windows package generation stall
+Extra minimum-runtime optional prototype stalled in napi-rs3.10.8 create-npm-dirs,
+producing filesystemreconciliation metadata warnings. Node22CLI--help passes;
+actual addon and full74tests also pass. Do not claim this proves Linux22failure.
+Preserve the failed unique prototype/report; leadterminated only own confirmed
+child to stop repeated metadata creation. Toolhost/runtime separation and bounded
+prototype commands are being verified, with allCIbuildhosts explicitlyNode24.
+Consumer matrix remainsNode22/24. This is an unverified development-tool scope,
+not a hidden passing optional/runtime claim. Finalresolution evidence follows.
+
+### Tooling resolution
+Bounded plain-fs probe verifies Node22Windowsfstatdevice4033986277 vs lstat0 on
+samefile/ino; Node24consistent. InstalledCLIcomparesbothidentities and retries.
+Use Node24buildtoolhost, retain22/24consumerruntimes. ActualNode22optionalconsumer
+checks7PASS with Node24metadata; Node22metadata generation remains FAILED, not
+hidden as passed. Future commands timeout/outputcap; reports preserve artifacts.
+No native API behavior or safety guard changed. FinalallNode24CIconfiglintPASS;
+foreignexecutionstillUNVERIFIED. See DISTRIBUTION_REVIEW_2.md for commands/scopes.

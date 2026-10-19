@@ -1,5 +1,9 @@
 # Reproducible local benchmarks
 
+For primary native JSON-text sorting/extraction use [the independent text runner](native-text-verification/README.md):
+set NATIVE_TEXT_CANDIDATE explicitly, then run pnpm bench:text. Original source
+text, normalized sensitivity controls and semantically excluded cases stay separate.
+
 For current installed CJS/ESM object APIs, use [the public API runner](public-api/README.md)
 and [per-API evidence](../docs/roadmap/PUBLIC_API_PERFORMANCE_REVIEW.md). The older
 harness below preserves historical comparisons and supports exploratory work.
