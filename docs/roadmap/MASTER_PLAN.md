@@ -35,7 +35,7 @@ improve intended end-to-end workload median by >=10% across multiple runs withou
 >10% unexplained regressions. Otherwise retain explicit JS path and report result.
 
 ## Risks and mitigation
-Semantic drift: JS fallback + differential tests. Unicode: UTF-16 sort and raw
+Semantic drift: explicit JS compatibility traversal + differential tests. Unicode: UTF-16 sort and raw
 tokens. Stack/memory exhaustion: native limits, JS upstream limitations documented.
 Stale cache: explicit version contract. Cross-platform packaging: hosted CI and
 artifact install; unavailable targets stay unverified. Dependency drift: both
@@ -71,3 +71,13 @@ snapshots and captured option limits. Schema2 verifies packed/installed/loaded
 runtime bytes and real binary architecture headers. A host-only candidate must
 fail the combined gate. Hostedplatform execution remains an explicit release
 blocker; local fullchecks and fresh audits cannot substitute for it.
+
+## Current local readiness outcome
+Source757bc26 validation and sourcefc006f9 final documentation candidate are
+verified on Windows Node22/24. Installed public APIs show no robust repeated
+>=10% compatible stringify gain on seven real inputs; separate native text and
+object-conversion results have explicit workload boundaries. Validation races
+fixed without compatibility traversal changes. RD-PACK/RD-DOCS final evidence
+closure does not satisfy R4-PACKAGE/P7-TARGETS: actual three-target combined
+artifact installation is blocked by unavailable runners. Keep advanced features
+deferred and prioritize those runtime/release gates over new APIs.

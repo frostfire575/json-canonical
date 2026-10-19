@@ -61,3 +61,10 @@ regressions. Current native batch34913/34898 vsold34629/35020batches/s (two runs
 shows no meaningful before/after throughput change. No failing case removed;
 public compatibility traversal unchanged. Final documentation pack remains a
 separate identity/install gate; combined-target verification remains unexecuted.
+
+### RD-01 final artifact closure
+Same final documentation tarball passes both installers/runtimes with installed
+batch/limit getter regressions. Packed/installed/loaded source identities and
+independent actual native extraction PASS;12runtime/package/license files equal
+measured security-fixed candidate. Missing-combined rejection is expected and
+retained as a release gate; it is not a serialization regression.

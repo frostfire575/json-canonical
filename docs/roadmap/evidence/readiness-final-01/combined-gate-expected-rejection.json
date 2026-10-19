@@ -1,0 +1,18 @@
+{
+  "date": "2026-10-19T01:45:01.358Z",
+  "host": "win32/x64",
+  "node": "v24.20.0",
+  "status": "EXPECTED_REJECTION",
+  "command": [
+    "G:\\[Softwares]\\NodeJs\\node.exe",
+    "scripts/verify-ci-candidate.cjs",
+    "verify",
+    ".verification/readiness-final-01",
+    "--all-targets"
+  ],
+  "exitCode": 1,
+  "stdout": "",
+  "stderr": "node:internal/assert/utils:77\r\n    throw err;\r\n    ^\r\n\r\nAssertionError [ERR_ASSERTION]: combined candidate missing stable-json-rs.linux-x64-gnu.node\r\n    at packedFiles (D:\\misc\\npm\\stable-json-rs\\scripts\\verify-ci-candidate.cjs:65:73)\r\n    at main (D:\\misc\\npm\\stable-json-rs\\scripts\\verify-ci-candidate.cjs:111:18)\r\n    at Object.<anonymous> (D:\\misc\\npm\\stable-json-rs\\scripts\\verify-ci-candidate.cjs:279:30)\r\n    at Module._compile (node:internal/modules/cjs/loader:1929:14)\r\n    at Object..js (node:internal/modules/cjs/loader:2060:10)\r\n    at Module.load (node:internal/modules/cjs/loader:1651:32)\r\n    at Module._load (node:internal/modules/cjs/loader:1443:12)\r\n    at wrapModuleLoad (node:internal/modules/cjs/loader:261:19)\r\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\r\n    at node:internal/main/run_main_module:33:47 {\r\n  generatedMessage: false,\r\n  code: 'ERR_ASSERTION',\r\n  actual: false,\r\n  expected: true,\r\n  operator: '==',\r\n  diff: 'simple'\r\n}\r\n\r\nNode.js v24.20.0\r\n",
+  "candidateSha256": "b424ebbc68d01fe6031ed40d8d17ecc9e1f459cce5bd84f5296cba042956957a",
+  "note": "Only actual Windows addon available; this is a negative gate check, not combined verification."
+}

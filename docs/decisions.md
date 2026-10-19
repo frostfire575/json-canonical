@@ -112,3 +112,15 @@ on a target. Strict installed TS checks no longer skip declaration checking.
 Old schema1 candidate evidence remains immutable; new checks use new candidate
 folders. A host-only artifact must fail the combined gate rather than receive
 synthetic foreign binaries.
+
+## ADR 013 — Keep public performance claims at API boundaries
+Installed CJS/ESM stringify/alias measurements do not establish a repeated >=10%
+gain over upstream across seven real fixtures. Retain the compatibility traversal
+for observable behavior, without advertising Rust acceleration. Object-to-native
+roundtrip includes JSON.stringify on every call and is a separate, exact-checked
+JSON-only comparison. Existing-text native results cannot advertise a universal
+stringify speedup. Retain JS/native batches for ordered convenience and native
+aggregate limits/indexed errors; measured native batching is4-7% slower than the
+same-native loop. Keep explicit-version cache for skipped known-unchanged work,
+with historical miss costs disclosed; no fresh cache timing claimed. No new API
+or automatic native/fallback routing is justified by these measurements.

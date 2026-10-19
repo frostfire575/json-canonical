@@ -79,3 +79,15 @@ frozen runners, source/license/packed/installed/loaded hashes and samples retain
 Commands and machine metadata are embedded in each raw report. No new Node22 or
 foreign-platform performance measurements; prior cache and output findings remain
 historical evidence. Final runner6selftests and both syntax checks PASS.
+
+### Final artifact linkage
+Sourcefc006f9 documentation candidate readiness-final-01 tar SHA256
+b424ebbc68d01fe6031ed40d8d17ecc9e1f459cce5bd84f5296cba042956957a.
+All12runtime/package/license manifest hashes match measured readiness-benchmark-01;
+README/performance docs updated, tar identity differs. Independent extracted/loaded
+native SHA and compiled DLL also match. Thus114current measurements apply to the
+final runtime without silently reusing an older wrapper. No new timing fabricated.
+Evidence: docs/roadmap/evidence/readiness-final-01/runtime-equivalence.json and
+independent-review-*.json. Four final installed consumer checks PASS on Windows.
+Actual combined/foreign-platform execution NOTRUN; output/cache historical reports
+retain their original source/environment boundaries.

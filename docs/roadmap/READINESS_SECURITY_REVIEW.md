@@ -128,3 +128,44 @@ mechanism; never treat untrusted process environment as a safe artifact selector
 No new loader behavior was added. Linux/macOS execution, combined three-native
 artifact installation and unavailable runtime/platform variants remain
 UNVERIFIED until the respective real jobs execute.
+
+## Final packed candidate independent identity review
+
+Executed 2026-10-19T01:46:00Z on Windows x64 / Node24.20.0 with independent
+Node stdin assertions, `tar -xzOf` returning binary buffers, SHA-256 and actual
+installed `createRequire`/API/`require.cache` observations. No rebuild, repack or
+benchmark occurred in this review.
+
+- Final source: `fc006f9efa8516bcb43ca29d5228decf11d9691a`; runtime frozen at
+  `757bc263d0ce9c6774da5fd68e3f7b9935e152ef`.
+- Candidate: `.verification/readiness-final-01/stable-json-rs-0.1.0.tgz`;
+  SHA-256 `b424ebbc68d01fe6031ed40d8d17ecc9e1f459cce5bd84f5296cba042956957a`.
+- All 9 reviewed packed runtime/manifest files match the actual prior measured
+  benchmark candidate bytes, not merely their declared manifest hashes. Eight
+  wrapper/type/loader/addon files also match the current tested source bytes.
+- Actual extracted native, both npm/pnpm installed and loaded native, prior
+  benchmark packed native and compiled release DLL all have SHA-256
+  `96ba87bcc9a76f9c2cce21cede7ef74ea10e69b147a69b5435536f1ce81c5f86`.
+- Both actual installed consumers independently passed compatible stringify,
+  native text sorting and the changing-index batch snapshot regression; actual
+  locally installed addon paths were observed after calls.
+- Inspected all four current checksum-bound verification reports: npm/pnpm on
+  Node22.13.0/24.20.0, each PASS for CJS/ESM/strict declarations/native behavior.
+  Report verifier hashes match the present verifier. This independent process
+  loaded Node24; Node22/full type execution is evidence from the four inspected
+  executed reports, not a new independent run.
+
+Append-only report:
+`.verification/readiness-final-01/independent-review-2026-10-19T01-46-00-687Z.json`.
+The lead may retain a compact copy with other final evidence. Initial reviewer
+assertions incorrectly expected raw source `package.json` bytes, then all source
+fields, to survive packing unchanged. Actual pnpm packing normalizes formatting
+and omits the source-only `packageManager` field. The corrected assertion allows
+only that specific known omission; every other parsed field matches and packed,
+installed and prior benchmark manifest bytes are exactly equal. These were
+reviewer harness corrections, not runtime failures or unexplained source drift.
+
+No further release-blocking correctness/security issue was found in frozen
+runtime source review. This is a host-only tarball, not a combined artifact;
+foreign binaries, actual cross-platform installations and hosted CI execution
+remain NOT RUN and cannot be inferred from these checks.

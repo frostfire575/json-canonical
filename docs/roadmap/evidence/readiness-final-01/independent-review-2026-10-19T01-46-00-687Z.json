@@ -1,0 +1,124 @@
+{
+  "status": "PASS",
+  "date": "2026-10-19T01:46:00.687Z",
+  "node": "v24.20.0",
+  "platform": "win32",
+  "arch": "x64",
+  "command": "Independent Node stdin: binary-safe tar -xzOf; SHA256; actual createRequire/API and require.cache addon checks",
+  "finalCandidate": "b424ebbc68d01fe6031ed40d8d17ecc9e1f459cce5bd84f5296cba042956957a",
+  "finalCommit": "fc006f9efa8516bcb43ca29d5228decf11d9691a",
+  "benchmarkCandidate": "66e82b265c2e3dfb3edfe7220c1b2c63a0506e453612d7c8884f95f7e7667017",
+  "benchmarkCommit": "757bc263d0ce9c6774da5fd68e3f7b9935e152ef",
+  "identities": [
+    {
+      "file": "package.json",
+      "bytes": 1827,
+      "sha256": "91633fcc50ca614e88363d3cd68b106726df2257cccd3b9ef5f86068375ab2d3"
+    },
+    {
+      "file": "js/dist/index.js",
+      "bytes": 6713,
+      "sha256": "b6245abfad41dfbedfb3c4870fa17c398353d8ef7a9432f903c25d0d3533893a"
+    },
+    {
+      "file": "js/dist/index.d.ts",
+      "bytes": 1837,
+      "sha256": "e9ba420fd011039ecd68b0254fa9eec8cf99293fd59d05b78ba39c1d69d59bd5"
+    },
+    {
+      "file": "js/index.cjs",
+      "bytes": 59,
+      "sha256": "f725264677360136f8151ec72515ce19f7f61814df9f4c779baca304ad3f850a"
+    },
+    {
+      "file": "js/index.mjs",
+      "bytes": 200,
+      "sha256": "8b07c342282dfb402ad7166bbb1e23f3ab8460254330f3760c616ae6b706b95f"
+    },
+    {
+      "file": "js/index.d.mts",
+      "bytes": 104,
+      "sha256": "ebe3fc72c98258b4fab6dc3802ccf5bfba8086818db27f70b9e6552b33d13acf"
+    },
+    {
+      "file": "native/binding.js",
+      "bytes": 33427,
+      "sha256": "a1df31adec1a2b469c8af3b067545edfc83c7e037435c04ce3ee5d73fb1536d3"
+    },
+    {
+      "file": "native/binding.d.ts",
+      "bytes": 913,
+      "sha256": "839513876a6251830f3bd1f40520725432837ce788a3ed893ba5cff3fc478eab"
+    },
+    {
+      "file": "native/stable-json-rs.win32-x64-msvc.node",
+      "bytes": 412672,
+      "sha256": "96ba87bcc9a76f9c2cce21cede7ef74ea10e69b147a69b5435536f1ce81c5f86"
+    }
+  ],
+  "releaseDllSha256": "96ba87bcc9a76f9c2cce21cede7ef74ea10e69b147a69b5435536f1ce81c5f86",
+  "consumers": [
+    {
+      "manager": "npm",
+      "installed": "D:\\misc\\npm\\stable-json-rs\\.verification\\readiness-final-01\\npm\\node_modules\\stable-json-rs",
+      "loadedNative": "D:\\misc\\npm\\stable-json-rs\\.verification\\readiness-final-01\\npm\\node_modules\\stable-json-rs\\native\\stable-json-rs.win32-x64-msvc.node",
+      "sha256": "96ba87bcc9a76f9c2cce21cede7ef74ea10e69b147a69b5435536f1ce81c5f86"
+    },
+    {
+      "manager": "pnpm",
+      "installed": "D:\\misc\\npm\\stable-json-rs\\.verification\\readiness-final-01\\pnpm\\node_modules\\.pnpm\\stable-json-rs@file+candidate.tgz\\node_modules\\stable-json-rs",
+      "loadedNative": "D:\\misc\\npm\\stable-json-rs\\.verification\\readiness-final-01\\pnpm\\node_modules\\.pnpm\\stable-json-rs@file+candidate.tgz\\node_modules\\stable-json-rs\\native\\stable-json-rs.win32-x64-msvc.node",
+      "sha256": "96ba87bcc9a76f9c2cce21cede7ef74ea10e69b147a69b5435536f1ce81c5f86"
+    }
+  ],
+  "verifiedReports": [
+    {
+      "filename": "stable-json-rs-0.1.0.tgz",
+      "manager": "npm",
+      "node": "v22.13.0",
+      "status": "PASS",
+      "loadedNative": {
+        "path": "D:\\misc\\npm\\stable-json-rs\\.verification\\readiness-final-01\\npm\\node_modules\\stable-json-rs\\native\\stable-json-rs.win32-x64-msvc.node",
+        "sha256": "96ba87bcc9a76f9c2cce21cede7ef74ea10e69b147a69b5435536f1ce81c5f86"
+      }
+    },
+    {
+      "filename": "stable-json-rs-0.1.0.tgz",
+      "manager": "npm",
+      "node": "v24.20.0",
+      "status": "PASS",
+      "loadedNative": {
+        "path": "D:\\misc\\npm\\stable-json-rs\\.verification\\readiness-final-01\\npm\\node_modules\\stable-json-rs\\native\\stable-json-rs.win32-x64-msvc.node",
+        "sha256": "96ba87bcc9a76f9c2cce21cede7ef74ea10e69b147a69b5435536f1ce81c5f86"
+      }
+    },
+    {
+      "filename": "stable-json-rs-0.1.0.tgz",
+      "manager": "pnpm",
+      "node": "v22.13.0",
+      "status": "PASS",
+      "loadedNative": {
+        "path": "D:\\misc\\npm\\stable-json-rs\\.verification\\readiness-final-01\\pnpm\\node_modules\\.pnpm\\stable-json-rs@file+candidate.tgz\\node_modules\\stable-json-rs\\native\\stable-json-rs.win32-x64-msvc.node",
+        "sha256": "96ba87bcc9a76f9c2cce21cede7ef74ea10e69b147a69b5435536f1ce81c5f86"
+      }
+    },
+    {
+      "filename": "stable-json-rs-0.1.0.tgz",
+      "manager": "pnpm",
+      "node": "v24.20.0",
+      "status": "PASS",
+      "loadedNative": {
+        "path": "D:\\misc\\npm\\stable-json-rs\\.verification\\readiness-final-01\\pnpm\\node_modules\\.pnpm\\stable-json-rs@file+candidate.tgz\\node_modules\\stable-json-rs\\native\\stable-json-rs.win32-x64-msvc.node",
+        "sha256": "96ba87bcc9a76f9c2cce21cede7ef74ea10e69b147a69b5435536f1ce81c5f86"
+      }
+    }
+  ],
+  "reviewerHarnessCorrections": [
+    "First raw source package.json comparison failed: pack normalizes formatting.",
+    "Parsed comparison revealed source-only packageManager omitted by pnpm pack. Exact comparison now permits only known pnpm@12.10.1 field omission; all other fields match. Packed/installed/benchmark manifest bytes remain exactly equal."
+  ],
+  "limitations": [
+    "Windows x64 only; combined tarball and Linux/macOS not verified.",
+    "Existing Node22/24 CJS/ESM/types reports inspected; independent process directly loads Node24 host addon."
+  ]
+}

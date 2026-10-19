@@ -235,3 +235,45 @@ Environment unchanged: Windows x64,i7-12700K,Node24.20/22.13,Rust1.98.1,pnpm12.1
 - Final PUBLIC_API_CANDIDATE-selected node --test benches/public-api/run.test.cjs:
   6PASS; node --check on run.cjs/run.test.cjs PASS. Final guards don't change frozen
   measured source snapshots. No release-platform gate inferred from these checks.
+
+## Final documentation candidate, 2026-10-19
+Environment: Windows11 x64/i7-12700K,Node24.20.0 and22.13.0,pnpm12.10.1,
+Rust1.98.1; sourcefc006f9 (runtime unchanged from757bc26). Commands executed:
+1. pnpm pack --pack-destination .verification/readiness-final-01: PASS once.
+2. node scripts/verify-ci-candidate.cjs manifest .verification/readiness-final-01
+   and prepare with the same path: PASS schema2.
+3. In npm consumer: npm install --offline --ignore-scripts --no-audit --no-fund
+   --cache D:/misc/npm/stable-json-rs/.verification/npm-cache ./candidate.tgz: PASS.
+   In pnpm: pnpm add --offline --ignore-scripts --store-dir
+   D:/misc/npm/stable-json-rs/.verification/pnpm-store ./candidate.tgz: PASS.
+   Both isolated consumers contain no Rust/compiler setup or lifecycle execution.
+4. node scripts/verify-ci-candidate.cjs verify .verification/readiness-final-01:
+   PASS npm+pnpm CJS/ESM/native/strict CTS+MTS on Node24.20.0.
+5. .tools/node-v22.13.0-win-x64/node.exe scripts/verify-ci-candidate.cjs verify
+   .verification/readiness-final-01: PASS both installers on Node22.13.0.
+   Token/Unicode/errors/all APIs and new batch/limit regressions execute installed.
+6. node scripts/verify-installed-identity.cjs .verification/readiness-final-01:
+   PASS8source runtime/loader/declaration/native identities and loaded paths.
+7. node scripts/verify-ci-candidate.cjs verify .verification/readiness-final-01
+   --all-targets: EXPECTED_REJECTION (exit1, missing genuine Linux native artifact).
+   Negative report preserves stderr and command; not counted as combined success.
+8. Lead Node stdin comparison of final and measured schema2 manifest entries:
+   PASS12runtime/package/license identities (all entries except README/performance
+   documentation). Candidate digests differ only with changed documentation/archive.
+   See runtime-equivalence.json. Timing not repeated for byte-identical runtime.
+9. Independent reviewer binary-safe tar extraction, installed/loaded actual addon,
+   compiled releaseDLL and benchmark candidate comparisons: PASS on Node24;
+   inspects all4Node22/24reports. See independent-review-*.json and security review.
+   Review harness accounted for pnpm's known packageManager omission/formatting;
+   packed/installed/benchmark manifest bytes still match exactly.
+10. Final lead PUBLIC_API_CANDIDATE=.verification/readiness-benchmark-01 node
+    --test benches/public-api/run.test.cjs:6PASS,0fail/skip. Actionlint and node
+    --check on verifier/run/run.test: PASS. No runtime code edited after fullchecks.
+
+Final tar SHA256:b424ebbc68d01fe6031ed40d8d17ecc9e1f459cce5bd84f5296cba042956957a.
+Native SHA256:96ba87bcc9a76f9c2cce21cede7ef74ea10e69b147a69b5435536f1ce81c5f86.
+Persistent compact reports: docs/roadmap/evidence/readiness-final-01/. Actual tar
+remains ignored locally. This host-only package is NOT a verified combined release.
+Hosted jobs, Linux/macOS native execution and Rust1.88 remain NOTRUN/UNVERIFIED.
+No push, publication or release performed. Later changes are roadmap/evidence only;
+final candidate docs preserve the preverification checkpoint, not recursive reports.

@@ -184,3 +184,16 @@ hit/miss evidence, no new cache speed claim. Full reports preserve samples/MAD,
 machine/commit/source/tar identities and caveats. Actions pinned to inspected
 maintainer commits; actionlint passes. Genuine final documentation candidate next;
 Linux/macOS and combined execution remain blocked, no remote action taken.
+
+## Final current-source Windows package verified
+Packed sourcefc006f9 once, tarb424ebbc68d01fe6031ed40d8d17ecc9e1f459cce5bd84f5296cba042956957a.
+Four isolated npm/pnpm x Node22/24 installed CJS/ESM/strict TS/native checks pass,
+including single-read regressions. Source identity and all12packed runtime/package/
+license hashes match the measured candidate. Independent reviewer directly reads
+actual packed/installed/loaded native bytes and confirms releaseDLL equality.
+Expected combined gate rejects missing Linux artifact; no placeholder foreign
+binary. Lead6public harness tests and final actionlint/syntax/whitespace pass.
+All locally executable readiness tasks complete. R4-PACKAGE/P7-TARGETS/P7 remain
+blocked; next required work is genuine three-target CI/combined installation.
+No runtime code changed after source757bc26 and its tests/measurements. Local
+feature branch retained for review; no remote operation or release performed.
