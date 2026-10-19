@@ -14,7 +14,8 @@ pnpm check
 
 The intended npm name is `stable-json-rs`. Publication has not been authorized.
 Local packed artifacts include the host native binary and need no end-user Rust
-compiler. Per-platform optional packages remain a release engineering task.
+compiler. CI assembles a candidate tarball bundling the three target binaries;
+per-platform optional packages remain an alternative release layout.
 
 ```js
 // CommonJS

@@ -21,3 +21,17 @@ at bootstrap. Subsequent milestones append commands and actual results here.
 - Packed installation/audit/full benchmarks: NOT RUN at this milestone.
 
 Reproduce: `pnpm check`. Review details: INDEPENDENT_REVIEW.md; tests live in tests/.
+
+## 2026-10-19 borrowed scanner and packaging candidate
+- `pnpm check`: PASS release build, Rust3, Node27 (including14 independent review
+  tests and2000 additional lexical documents), strict CJS/ESM consumer types.
+- `node --test benches/harness.test.cjs`: PASS4, provenance checksums included.
+- `cargo clippy --all-targets --locked -- -D warnings`: PASS after annotating
+  test-only helper dead-code in the standalone stage benchmark harness.
+- `cargo fmt --all --check`: PASS.
+- `pnpm test:pack`: PASS offline install with scripts disabled; CJS/ESM/native
+  text+batch calls. Tarball retained at
+  `.pack-test/1792368342034-568/stable-json-rs-0.1.0.tgz` (ignored build artifact).
+- `node scripts/setup-upstream.cjs`: PASS pin and read-only checkout verification.
+- Independent scanner source/re-execution review: PASS, see INDEPENDENT_REVIEW.md.
+- Cross-platform CI executions remain NOT RUN (no remote push authorized).

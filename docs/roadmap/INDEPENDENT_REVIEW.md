@@ -120,3 +120,61 @@ launched by the reviewer.
   avoid allocation of an already-existing JS string or every boundary copy.
 - Public compatibility inherits upstream recursion limits and array-cycle quirks.
   It is not a hardened untrusted-live-object serializer.
+
+## Optimized structural scanner review — 2026-10-19
+
+Reviewed candidate `src/tree.rs` and revised `src/engine.rs` against base commit
+`9c4a1fe` (candidate implementation uncommitted at review time). The historical
+performance measurements above describe the previous repeated-deserialization
+engine; they do not measure this optimized candidate.
+
+The candidate first validates the entire document with serde_json RawValue, then
+constructs a borrowed-token tree with checked indexing, decodes escaped object
+keys, sorts them by UTF-16 code units, rejects duplicates and emits once. It
+does not expose the structural scanner as an independent JSON validator.
+
+Source review found no unchecked pointer use or unsafe Rust. String scanning
+skips each validated backslash escape and searches for the next quote/backslash;
+Unicode continuation bytes cannot be mistaken for these ASCII delimiters.
+Escaped keys are decoded with serde_json before sorting or duplicate detection.
+Unescaped keys borrow their source tokens and safe UTF-8 slices. Scalars retain
+their exact validated lexical tokens, including values that overflow JavaScript
+or f64 numbers. All container branches, including empty containers, enforce
+the same depth counter before recursing.
+
+The **whole-document validation before scan** invariant is essential: the scanner
+deliberately does not validate literal spelling, numeric grammar, JSON's exact
+whitespace alphabet or every string escape. Future callers must preserve this
+ordering; do not treat `tree::parse` as a standalone validator. Its module remains
+private to the crate. Input/output byte limits are not a hard total-memory budget:
+the borrowed tree still allocates node/member vectors and decoded escaped keys.
+OOM resilience and adversarial peak-memory profiling have not been proven.
+
+Added three executable test groups to `tests/review.test.cjs`:
+
+- 2,000 seeded lexical documents generated from an independent AST renderer.
+  The expected output is rendered from known source tokens and sorted known keys,
+  without reparsing text through either the production scanner or JSON.parse.
+  Cases include unusual exponent spellings, enormous precision/exponents,
+  escaped lone-surrogate values, quoted delimiters, backslashes, Unicode keys,
+  literal/escaped equivalent key spellings and legal structural whitespace.
+  All documents also run through the native batch entry point in two batches.
+- Malformed delimiters, invalid literal/number grammar, invalid escapes,
+  disallowed whitespace, truncation and duplicated decoded escaped keys. These
+  assert that complete serde validation remains ahead of structural scanning.
+- Depth limits 1/2/8/64/128 over arrays, objects and mixed branches, with accepted
+  boundary depth and rejected depth+1, plus empty containers in object branches.
+
+Independent verification against the already rebuilt release addon:
+
+| Command | Outcome |
+|---|---|
+| `node --test tests/review.test.cjs` | PASS: 14/14, zero skipped |
+| `cargo test --locked` | PASS: 3/3; zero doc tests |
+| `node --test tests/*.test.cjs tests/*.test.mjs` | PASS: 27/27, zero skipped; 11,000 generated unique inputs across the suites |
+| `pnpm test:types` | PASS, compiler exit 0 |
+
+No correctness defect was found in the optimized scanner within these checks.
+No benchmarks were run during this review; performance acceptance belongs to the
+separate isolated before/after measurements. Cross-platform execution remains
+unverified locally.

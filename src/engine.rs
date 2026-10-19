@@ -1,6 +1,5 @@
-use serde::de::{Deserialize, Deserializer, MapAccess, Visitor};
+use crate::tree::{self, Node};
 use serde_json::value::RawValue;
-use std::fmt;
 
 #[derive(Clone, Copy)]
 pub struct Limits {
@@ -18,36 +17,14 @@ impl Limits {
     }
 }
 
-// Retain raw leaves, including number precision and escaped lone surrogates in
-// VALUES. Decoded keys must be Unicode scalar strings; reject lone surrogate keys.
-struct Members<'a>(Vec<(String, &'a RawValue)>);
-impl<'de> Deserialize<'de> for Members<'de> {
-    fn deserialize<D: Deserializer<'de>>(deserializer: D) -> Result<Self, D::Error> {
-        struct MembersVisitor;
-        impl<'de> Visitor<'de> for MembersVisitor {
-            type Value = Members<'de>;
-            fn expecting(&self, f: &mut fmt::Formatter) -> fmt::Result {
-                f.write_str("a JSON object")
-            }
-            fn visit_map<M: MapAccess<'de>>(self, mut map: M) -> Result<Self::Value, M::Error> {
-                let mut entries = Vec::new();
-                while let Some(entry) = map.next_entry()? {
-                    entries.push(entry);
-                }
-                Ok(Members(entries))
-            }
-        }
-        deserializer.deserialize_map(MembersVisitor)
-    }
-}
-
 pub fn stringify(input: &str, limits: Limits) -> Result<String, String> {
     if input.len() > limits.bytes {
         return Err("JSON input byte limit exceeded".into());
     }
     let root: &RawValue = serde_json::from_str(input).map_err(|e| e.to_string())?;
     let mut output = String::with_capacity(input.len().min(limits.bytes));
-    write(root, &mut output, 0, limits)?;
+    let tree = tree::parse(root.get(), limits.depth)?;
+    write(&tree, &mut output, limits)?;
     Ok(output)
 }
 
@@ -58,45 +35,36 @@ fn append(out: &mut String, text: &str, limits: Limits) -> Result<(), String> {
     out.push_str(text);
     Ok(())
 }
-fn write(raw: &RawValue, out: &mut String, depth: usize, limits: Limits) -> Result<(), String> {
-    let text = raw.get();
-    match text.as_bytes()[0] {
-        b'{' => {
-            if depth >= limits.depth {
-                return Err("JSON nesting limit exceeded".into());
-            }
-            let Members(mut members) = serde_json::from_str(text).map_err(|e| e.to_string())?;
-            members.sort_unstable_by(|a, b| a.0.encode_utf16().cmp(b.0.encode_utf16()));
-            if members.windows(2).any(|pair| pair[0].0 == pair[1].0) {
-                return Err("Duplicate decoded object key".into());
-            }
+pub(crate) fn write(node: &Node<'_>, out: &mut String, limits: Limits) -> Result<(), String> {
+    match node {
+        Node::Object(members) => {
             append(out, "{", limits)?;
-            for (index, (key, value)) in members.iter().enumerate() {
+            for (index, member) in members.iter().enumerate() {
                 if index > 0 {
                     append(out, ",", limits)?;
                 }
-                let key = serde_json::to_string(key).map_err(|e| e.to_string())?;
-                append(out, &key, limits)?;
+                if member.token.as_bytes().contains(&b'\\') {
+                    let key = serde_json::to_string(&member.key).map_err(|e| e.to_string())?;
+                    append(out, &key, limits)?;
+                } else {
+                    append(out, member.token, limits)?;
+                }
                 append(out, ":", limits)?;
-                write(value, out, depth + 1, limits)?;
+                write(&member.value, out, limits)?;
             }
             append(out, "}", limits)
         }
-        b'[' => {
-            if depth >= limits.depth {
-                return Err("JSON nesting limit exceeded".into());
-            }
-            let members: Vec<&RawValue> = serde_json::from_str(text).map_err(|e| e.to_string())?;
+        Node::Array(members) => {
             append(out, "[", limits)?;
-            for (index, value) in members.iter().enumerate() {
+            for (index, member) in members.iter().enumerate() {
                 if index > 0 {
                     append(out, ",", limits)?;
                 }
-                write(value, out, depth + 1, limits)?;
+                write(member, out, limits)?;
             }
             append(out, "]", limits)
         }
-        _ => append(out, text, limits),
+        Node::Scalar(token) => append(out, token, limits),
     }
 }
 

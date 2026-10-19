@@ -1,4 +1,5 @@
 mod engine;
+mod tree;
 
 use napi::{Error, Result, Status};
 use napi_derive::napi;

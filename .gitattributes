@@ -1,0 +1,4 @@
+* text=auto eol=lf
+# Fixture checksums describe exact downloaded bytes, independent of platform.
+benches/data/** -text
+*.node binary

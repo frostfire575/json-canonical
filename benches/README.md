@@ -14,6 +14,11 @@ median absolute deviation (MAD), output throughput, process CPU time, sampled
 RSS/heap, process maximum RSS and timer-probe delays. An output checksum keeps
 results observable. Fixtures, logging, module loading and validation are outside
 the measured loop. Garbage collection remains enabled and is part of each run.
+The `medianLatencyUs` field is the reciprocal of median sample throughput (an
+amortized per-operation duration), not a distribution of individual call latency.
+The checksum reads output length and a middle UTF-16 code unit. That common
+consumption step may force V8 concatenated strings to flatten; timings therefore
+cover producing and touching the output, rather than only constructing a rope.
 
 Cold require is measured separately in five fresh processes, excluding process
 startup. Disk caches can be warm. No claim about cold disk or deployment startup
@@ -32,6 +37,9 @@ and both stable JavaScript competitors receive objects directly. Batch methods
 include conversion of the returned result list to a string on both sides so the
 comparison and result consumption are equivalent. Cache-hit uses unchanged
 identity/version; cache-miss changes the explicit version for every call.
+`batch-text-native` compares a single native batch call with
+`batch-text-upstream-loop` parsing each pre-existing text and applying upstream.
+Both return a list of strings, and both include the same result-list consumption.
 
 PowerShell examples:
 

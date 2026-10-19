@@ -1,0 +1,66 @@
+name: Verify and package (no publishing)
+on: [push, pull_request, workflow_dispatch]
+permissions:
+  contents: read
+jobs:
+  verify:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: windows-latest
+            target: x86_64-pc-windows-msvc
+            node: 24
+          - os: ubuntu-22.04
+            target: x86_64-unknown-linux-gnu
+            node: 22
+          - os: macos-14
+            target: aarch64-apple-darwin
+            node: 24
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 12.10.1
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt, clippy
+      - run: node scripts/setup-upstream.cjs
+      - run: pnpm install --frozen-lockfile
+      - run: cargo fmt --all --check
+      - run: cargo clippy --all-targets --locked -- -D warnings
+      - run: pnpm check
+      - run: node --test benches/harness.test.cjs
+      - run: pnpm test:pack
+      - uses: actions/upload-artifact@v4
+        with:
+          name: native-${{ matrix.target }}
+          path: native/*.node
+  bundle:
+    needs: verify
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 12.10.1
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm build:js
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: native-*
+          path: native
+          merge-multiple: true
+      - run: pnpm test:pack
+      - run: pnpm pack
+      - uses: actions/upload-artifact@v4
+        with:
+          name: multi-platform-npm-candidate
+          path: '*.tgz'

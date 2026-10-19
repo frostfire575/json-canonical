@@ -170,3 +170,80 @@ test('review: cache versions, failed serialization, undefined results and invali
   assert.deepEqual(api.stringifyBatch(Array(3)), [undefined, undefined, undefined]);
   assert.throws(() => api.stringifyBatch({ 0: 1, length: 1 }), TypeError);
 });
+
+test('review scanner: 2000 seeded lexical documents preserve independently rendered tokens', () => {
+  let state = 0x62ac789f;
+  const random = () => { state ^= state << 13; state ^= state >>> 17; state ^= state << 5; return (state >>> 0) / 0x100000000; };
+  const pick = values => values[Math.floor(random() * values.length)];
+  const whitespace = () => pick(['', ' ', '\t', '\r\n']);
+  const leaves = ['null', 'true', 'false', '0', '-0', '-0.000', '1E+0002', '1e-9999', '1E9999', '123456789012345678901234567890.000001', '"\\ud800"', '"\\udc00"', '"\\u0061"', '"\\/"', '"😀বাংলা"', '"braces:{}[],colon: comma, quote:\\" slash:\\\\"'];
+  const keys = ['', 'a', '😀', '\ue000', 'a/b', 'a"b', 'a\\b', '\u0000', '\t', '\n', 'বাংলা', '0', '01', '__proto__', 'constructor'];
+  function make(depth) {
+    if (depth > 3 || random() < 0.45) return { scalar: pick(leaves) };
+    const length = Math.floor(random() * 5);
+    if (random() < 0.45) return { array: Array.from({ length }, () => make(depth + 1)) };
+    const selected = [...keys].sort(() => random() - 0.5).slice(0, length);
+    return { object: selected.map(key => [key, make(depth + 1)]) };
+  }
+  function escapedKey(key) {
+    // Deliberately alter source spelling without changing the decoded key.
+    if (random() < 0.5) return JSON.stringify(key).replaceAll('/', '\\/');
+    let token = '"';
+    for (let i = 0; i < key.length; i++) token += '\\u' + key.charCodeAt(i).toString(16).padStart(4, '0');
+    return token + '"';
+  }
+  function source(node) {
+    if (node.scalar !== undefined) return node.scalar;
+    if (node.array) return '[' + whitespace() + node.array.map(source).join(whitespace() + ',' + whitespace()) + whitespace() + ']';
+    return '{' + whitespace() + node.object.map(([key, value]) => escapedKey(key) + whitespace() + ':' + whitespace() + source(value)).join(whitespace() + ',' + whitespace()) + whitespace() + '}';
+  }
+  function expected(node) {
+    if (node.scalar !== undefined) return node.scalar;
+    if (node.array) return '[' + node.array.map(expected).join(',') + ']';
+    return '{' + [...node.object].sort((a, b) => a[0] < b[0] ? -1 : a[0] > b[0] ? 1 : 0).map(([key, value]) => JSON.stringify(key) + ':' + expected(value)).join(',') + '}';
+  }
+  const inputs = [], outputs = [];
+  for (let i = 0; i < 2000; i++) {
+    const tree = make(0);
+    const input = whitespace() + source(tree) + whitespace();
+    const output = expected(tree);
+    assert.equal(api.stringifyJson(input), output, 'case ' + i + ': ' + input);
+    inputs.push(input); outputs.push(output);
+  }
+  // Exercise the same scanner through the single-boundary batch entry point.
+  assert.deepEqual(api.stringifyJsonBatch(inputs.slice(0, 1024)), outputs.slice(0, 1024));
+  assert.deepEqual(api.stringifyJsonBatch(inputs.slice(1024)), outputs.slice(1024));
+});
+
+test('review scanner: validator rejects malformed delimiters, escapes and numeric tokens first', () => {
+  for (const input of [
+    '{"x" 1}', '{"x":}', '{"x":1,}', '{,"x":1}', '{"x":1 "y":2}', '{"x":1]',
+    '[1 2]', '[,1]', '[1,,2]', '[1}', '[[0]}', 'truefalse', 'null:', '1:2', '+1', '.1', '1.', '1e', '1e+', '--1', '00',
+    '{"x":"\\"}', '"\\u000"', '"\\u00g0"', '"\\q"', '"\\uD800x" garbage',
+    '{"x":\v1}', '\fnull', '\u00a0null', '"unescaped\nnewline"'
+  ]) assert.throws(() => api.stringifyJson(input), Error, JSON.stringify(input));
+  for (const key of ['a', 'a/b', '😀', '\u0000', 'a"b', 'a\\b']) {
+    let escaped = '"';
+    for (let i = 0; i < key.length; i++) escaped += '\\u' + key.charCodeAt(i).toString(16).padStart(4, '0');
+    escaped += '"';
+    assert.throws(() => api.stringifyJson('{' + JSON.stringify(key) + ':0,' + escaped + ':1}'), /Duplicate decoded/);
+  }
+});
+
+test('review scanner: depth limits count empty and mixed object/array containers in every branch', () => {
+  const branches = [
+    (value, level) => '[' + value + ']',
+    (value, level) => '{"z":0,"a":' + value + '}',
+    (value, level) => level % 2 ? '{"z":0,"a":' + value + '}' : '[false,' + value + ',true]'
+  ];
+  for (const branch of branches) {
+    for (const maxDepth of [1, 2, 8, 64, 128]) {
+      let text = '0';
+      for (let i = 0; i < maxDepth; i++) text = branch(text, i);
+      assert.doesNotThrow(() => api.stringifyJson(text, { maxDepth }));
+      assert.throws(() => api.stringifyJson(branch(text, maxDepth), { maxDepth }), /nesting/);
+    }
+  }
+  assert.equal(api.stringifyJson('{"a":[],"b":{}}', { maxDepth: 2 }), '{"a":[],"b":{}}');
+  assert.throws(() => api.stringifyJson('{"a":[],"b":{}}', { maxDepth: 1 }), /nesting/);
+});

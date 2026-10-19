@@ -4,8 +4,10 @@ Rust text processing uses safe code and serde_json validation, with bounded
 per-document UTF-8 input/output (default16MiB, maximum64MiB), nesting (maximum128)
 and batch size (1024 / aggregate64MiB input). Native input is copied by Node-API
 before Rust can apply byte limits. Batch output can be large; limits are not a
-complete process memory budget. Traversal reparses raw nested containers; very
-deep inputs incur extra scanning. Native processing is synchronous.
+complete process memory budget. Borrowed token trees still allocate container and
+member vectors. Serde validates the whole document before the safe structural
+scanner runs; do not reuse that scanner as an independent validator. Native
+processing is synchronous.
 
 Public wrappers reject literal malformed UTF-16 to avoid Node-API replacement.
 Escaped surrogate values retain their text. Keys are decoded Unicode scalars;

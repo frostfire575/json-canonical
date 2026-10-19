@@ -22,3 +22,19 @@ observation encoding). Independent reviewer identified comparator capture/receiv
 Array iterator patch effects and ill-formed input replacement; all fixed/tested.
 Native deep-input child processes tested up to100000 containers without crash.
 Baseline raw data exists; acceptance comparisons await isolated full runs.
+
+## 2026-10-19 — baseline diagnosis, scanner candidate and packed installation
+Full baseline102 cells and9x100ms confirmations saved. Existing-text native API
+beats parse+upstream on real lock/API workloads, but deep/Unicode regressed65–67%.
+Source diagnosis: nested RawValue subtrees repeatedly scanned/deserialized; this
+was an inference, not an allocation/call-stack profiler result. Replaced with one
+serde validation and borrowed token tree. Added Rust stage profiler (safe memchr
+scanner, no unsafe). Stage profile real API whole3.65ms, scan/sort/drop2.47ms,
+validation0.567ms, prebuilt emission0.486ms; these are Rust-only and not additive
+end-to-end npm claims. Full raw samples retained in benches/results stage text.
+Independent reviewer added2000 lexical-token documents/malformed/depth regressions;
+27 JS tests,3 Rust tests, strict types and clippy pass. `pnpm check` repeats pass.
+Packed artifact installed offline with lifecycle scripts disabled, CJS/ESM/native
+calls PASS. Created nonpublishing3-target CI and bundle candidate workflow; remote
+jobs have NOT RUN. `.gitattributes` preserves exact fixture bytes across platforms.
+Scanner optimization performance acceptance remains IN_PROGRESS pending new matrix.

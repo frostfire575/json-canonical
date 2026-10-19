@@ -6,9 +6,12 @@ upstream. This preserves property access, comparator, toJSON, UTF-16 and number
 semantics without crossing Node-API for each property. It is an explicit JS
 fallback, not a claim of Rust acceleration for arbitrary objects.
 
-The separate Rust engine consumes JSON text. It validates input, sorts decoded
-object keys by UTF-16 code units and emits deterministic JSON while preserving
-primitive JSON token spelling. The Node-API boundary transfers text in and out,
+The separate Rust engine consumes JSON text. Serde validates the whole input
+once; a structural scanner builds a borrowed token tree, sorts decoded object
+keys by UTF-16 code units and emits deterministic JSON while preserving primitive
+JSON token spelling. Unescaped keys and scalar tokens borrow input slices; escaped
+keys allocate decoded strings. The scanner is not a standalone validator and
+must only receive validated text. The Node-API boundary transfers text in and out,
 never arbitrary live objects. This API is not RFC 8785 canonicalization, and
 different numeric/string spellings can produce different output. No unsafe Rust.
 Default text input and output bounds are 16 MiB and maximum nesting is 128.
