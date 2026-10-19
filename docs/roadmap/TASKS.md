@@ -12,6 +12,7 @@
 | P7 | P1 | BLOCKED | P3,P4,P5 | CI, packed install, audit, examples and accurate documentation; platform release gates explicit; target runtime jobs required |
 
 ## Detailed follow-up acceptance
+
 | ID | Priority | Status | Dependencies | Acceptance criteria |
 |---|---|---|---|---|
 | P4-SCAN | P0 | DONE | P1 | Capture old native samples; test single-validated borrowed spans; all regression tests + two before/after runs; reject regressions without tradeoff |
@@ -24,4 +25,4 @@
 | P7-AUDIT | P1 | DONE | P2 | pnpm audit and available Cargo advisory/license checks recorded; failures addressed or blocked |
 | P7-CI | P1 | DONE | P3 | Nonpublishing 3-target CI config, bundled artifact design; local actionlint checks pass; remote run explicitly pending |
 | P7-TARGETS | P0 | BLOCKED | P7-CI | Execute Linux x64/macOS ARM64 CI and install combined artifact on every target; Docker daemon/macOS unavailable locally |
-| P7-FRESH | P1 | IN_PROGRESS | P7-PACK | Fresh isolated Git checkout installs locked deps, rebuilds native, passes tests/checksums/types/packed install |
+| P7-FRESH | P1 | DONE | P7-PACK | Fresh isolated Git checkout installs locked deps, rebuilds native, passes tests/checksums/types/packed install |

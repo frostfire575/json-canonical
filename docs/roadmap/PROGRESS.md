@@ -52,3 +52,26 @@ artifact includesselect and38Rustcrate license texts; offlineCJS/ESM/native PASS
 License generator initiallyfound napi crates omitLICENSEtext: vendored exact
 workspaceSHA license references and preserved attribution. pnpm audit zeroadvisories;
 OSV38cratequeries noadvisories returned. Select performance stillpending.
+
+## 2026-10-19 — final local verification and release boundary
+Selective extraction confirmed twice: real lock `/name` +49% throughput, wide+56%,
+but real API -25%,tiny/Unicode/deep substantially slower. Keep explicit niche API;
+no automatic route or general extraction claim. Full parser/stream/async/hash
+remain deferred with separate reasons in phases/advanced-evaluation.md.
+Downloaded Node22.13.0 into project-local.tools after official checksum verification;
+all33 JS tests and actual release addon pass at the declared Node minimum.
+Both npm and pnpm offline tarball installs (scripts disabled) execute CJS/ESM/native
+and compile packed CJS/ESM TypeScript consumers. TS7 executable discovery initially
+hit export restrictions; fixed by reading its declared bin from exported manifest.
+actionlint1.7.12 validates CI definition; macos-15 ARM64 selected from current
+official runner documentation. No hosted job has executed.
+Detached fresh worktree at37a969c independently clones/pins upstream, installs198
+locked packages offline, rebuilds release addon, passes5 Rust/33 Node tests,
+strict types,rustfmt,clippy,5 harness tests,unchanged regenerated notices and offline
+npm packed installation. Fresh Git status clean. Worktree is retained ignored at
+.verification/fresh for reproducibility. All local changes committed; stable branch
+is merged locally to master. No remote push,publish or release performed.
+Remaining production gate: Linux/macOS jobs and multi-platform artifact installation;
+Docker client exists but daemon is unavailable, WSL has only docker-desktop. Rust
+minimum1.88 has not been executed (local1.98.1 verified). No critical correctness
+issue remains in reviewed scope. Production readiness is not claimed.

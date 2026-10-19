@@ -66,3 +66,27 @@ Reproduce: `pnpm check`. Review details: INDEPENDENT_REVIEW.md; tests live in te
   checksums (6e7241b51e6817ea6a047693d8e6fed13b31819c9a0dd6c5a726e1592d22f6e9).
 - Docker client29.7.2 exists but Linux daemon unavailable; WSL only docker-desktop.
   Linux/macOS runtime gates remain NOT RUN.
+
+## 2026-10-19 clean checkout and packed declaration validation
+Fresh isolated Git worktree `.verification/fresh` at37a969c, same Windows/Node24/Rust1.98:
+- `node scripts/setup-upstream.cjs`: PASS fresh clone pinned/detached49e230d.
+- `pnpm install --frozen-lockfile --offline`: PASS198 packages,0 downloads.
+- `pnpm check`: PASS new release build,Rust5,Node33,strict TS.
+- `cargo fmt --all --check`: PASS.
+- `cargo clippy --all-targets --locked -- -D warnings`: PASS.
+- `node --test benches/harness.test.cjs`: PASS5 including exact fixture hashes.
+- `pnpm licenses:generate`; `git diff --exit-code -- THIRD_PARTY_NOTICES.txt`: PASS.
+- `pnpm test:pack --npm`: PASS fresh offline artifact runtime installation.
+- `git status --short`: empty (generated outputs match tracked sources).
+
+Additional root packed-consumer tests after extending script:
+- `pnpm test:pack --npm`: PASS runtime APIs + packed CJS/ESM strict TS consumers;
+  artifact `.pack-test/1792369141208-27252/stable-json-rs-0.1.0.tgz`.
+- `pnpm test:pack`: PASS same runtime/types via pnpm; artifact
+  `.pack-test/1792369142141-29916/stable-json-rs-0.1.0.tgz`.
+- Initial TypeScript7 bin subpath resolution failed; fixed using exported package
+  manifest's bin entry. Both installer checks then reran successfully.
+
+NOT RUN: Linux/macOS runtime jobs, combined three-platform package installation,
+Rust1.88 compiler execution, long-duration fuzzing and native allocation-count
+profiling. Those are not counted as passing.

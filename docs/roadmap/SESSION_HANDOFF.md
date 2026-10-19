@@ -1,20 +1,39 @@
 # Session handoff
 
-- Current phase:6/7, selective extraction evaluation and release validation.
-- Last completed task: scanner accepted from repeated evidence; audits/notices and selective tests pass.
-- Currently active task: selective end-to-end benchmarks.
-- Next recommended task: evaluate selective results; fresh checkout verification and local merge.
-- Files changed: Cargo files/src, JS/TS wrappers, tests, benches, research/public docs.
-- Tests passing: Rust5; Node33 including14500 generated inputs and16 upstream assertions;
-  strict CJS/ESM types, rustfmt, clippy and release native build.
-- Tests failing: none currently. Initial TS/trace issues fixed; see TEST_RESULTS.md.
-- Latest benchmark results: optimized native lock3377 vsJSparse+upstream1338ops/s;
-  realAPI231 vs137ops/s; deep72084 vs31470; Unicode4432 vs13134. Batch3.2%slower
-  than same-native loop; no batching optimization claim. Rawfiles in benches/REPORT.md.
-- Outstanding problems: Linux/macOS runtime verification unavailable locally;
-  selective performance acceptance pending. CI defined, NOT RUN; no critical reviewed issue.
-- Architectural decisions: compatibility semantics stay in JS; native text engine
-  is evaluated separately before claiming any automatic fast path.
-- Exact commands required to resume: `git status --short`; `pnpm install --frozen-lockfile`;
-  `pnpm check`; `pnpm bench`; read current roadmap and decisions first.
-- Relevant Git commit reference: scanner28326e7, MVP9c4a1fe; branch feat/native-mvp.
+- Current phase: 7, local release validation complete; target runtime gates blocked.
+- Last completed task: fresh Git worktree rebuild; npm/pnpm packed runtime and TS
+  consumer verification; minimum Node22.13.0 checks; local integration merge.
+- Currently active task: none locally. No test or benchmark processes running.
+- Next recommended task: execute hosted Linux x64/macOS ARM64 CI and install the
+  combined candidate on each target when a remote workflow is authorized. Until
+  then, use the verified Windows candidate and preserve documented scope.
+- Files changed: Cargo.lock/Toml/build.rs, src/{lib,engine,tree,selection}.rs,
+  typed JS wrappers/conditional declarations, native generated loader, tests,
+  benches/{fixtures,harness,reports,raw results}, scripts, CI, notices and docs.
+- Tests passing: 5 Rust;33 JS on Windows Node24.20.0 AND22.13.0,14500 generated
+  cases and16 upstream assertions;18 independent review tests;5 harness tests;
+  strict CJS/ESM types including packed consumers;rustfmt/clippy;release build;
+  offline npm/pnpm package installs;dependency/license checks;actionlint.
+- Tests failing: none. Historical failures and fixes: TEST_RESULTS.md/REGRESSIONS.md.
+- Latest benchmark results: native existing-text lock3377 vs JS parse+upstream1338
+  ops/s;real API231 vs137;deep72084 vs31470;Unicode4432 vs13134. Native batch3.2%
+  slower than same-native loop. Select lock6789 vs JS4556;API513 vs681. Two longer
+  confirmations, exact outputs, source/artifact hashes and all unfavorable results
+  preserved in benches/REPORT.md and results/. No universal speed claim.
+- Outstanding problems: Linux/macOS runtime and combined package NOT RUN;Docker
+  daemon unavailable,WSL only docker-desktop;no macOS host. Rust1.88 minimum NOT RUN
+  (1.98.1 verified). No known critical defect in reviewed scope. Unicode-heavy native
+  text and most selective workloads lose to JS. Full parse/stream/async/hash deferred.
+- Architectural decisions: compatibility API deliberately stays in JS; native APIs
+  process existing JSON text with explicit token/Unicode/duplicate/limit semantics.
+  Single serde validation precedes borrowed scanning. Selection uses raw visitors.
+  Cache requires explicit versions. CI bundles target binaries without publishing.
+- Exact commands required to resume (after reading AGENTS and roadmap):
+  `git status --short`; `git log -5 --oneline`; `pnpm install --frozen-lockfile`;
+  `pnpm setup:upstream`; `pnpm check`; `node --test benches/harness.test.cjs`;
+  `pnpm test:pack --npm`; `pnpm test:pack`; `pnpm audit:deps` when refreshing audits.
+  `pnpm bench` reproduces full matrix; use raw configuration overrides for longer
+  confirmations. Optional `scripts/verify-node22.ps1` repeats minimum runtime tests.
+- Relevant Git commit reference: fresh source37a969c;select991e97c;scanner28326e7;
+  baseline9c4a1fe. Final evidence commit follows37a969c. Local branch master contains
+  feat/native-mvp after fast-forward; feature branch retained. No remote actions.

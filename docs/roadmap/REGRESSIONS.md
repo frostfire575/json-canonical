@@ -10,3 +10,10 @@
   spelling. Internal generated binding is not a supported public API.
 - TS ESM default initially typed as CJS namespace: conditional .d.mts declaration
   verified by strict consumer compilation.
+
+## 2026-10-19 packed-consumer harness correction
+TypeScript7 exports package.json but not the bin/tsc subpath. The new packed TS
+consumer check initially failed ERR_PACKAGE_PATH_NOT_EXPORTED before compilation.
+Read the exported package.json bin manifest and resolve its declared executable
+instead. Both npm and pnpm packed consumer checks now pass. No library API
+expectation was weakened; this was test-runner executable discovery.

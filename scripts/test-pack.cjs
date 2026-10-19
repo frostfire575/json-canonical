@@ -40,4 +40,25 @@ import('stable-json-rs').then(esm => {
 }).catch(error => { console.error(error); process.exitCode = 1; });
 `);
 console.log(execFileSync(process.execPath, ['verify.cjs'], { cwd: directory, encoding: 'utf8' }));
+fs.writeFileSync(path.join(directory, 'types.cts'), `
+import api = require('stable-json-rs');
+const text: string | undefined = api.stringify({a: 1});
+const selected: string | undefined = api.selectJson('{"a":1}', '/a');
+const batch: string[] = api.stringifyJsonBatch(['{}']);
+api.createSerializerCache().stringify({}, 1);
+void [text, selected, batch];
+`);
+fs.writeFileSync(path.join(directory, 'types.mts'), `
+import stringify, {selectJson} from 'stable-json-rs';
+const text: string | undefined = stringify({a: 1});
+const selected: string | undefined = selectJson('{"a":1}', '/a');
+void [text, selected];
+`);
+fs.writeFileSync(path.join(directory, 'tsconfig.json'), JSON.stringify({ compilerOptions: {
+  target: 'ES2022', module: 'NodeNext', moduleResolution: 'NodeNext', strict: true, noEmit: true, skipLibCheck: true,
+}, include: ['types.cts', 'types.mts'] }));
+const tsManifest = require.resolve('typescript/package.json');
+const tsBinary = path.resolve(path.dirname(tsManifest), JSON.parse(fs.readFileSync(tsManifest, 'utf8')).bin.tsc);
+execFileSync(process.execPath, [tsBinary, '-p', directory], { cwd: directory, stdio: 'inherit' });
+console.log('Packed CJS/ESM TypeScript consumers PASS');
 console.log(`Artifact preserved: ${path.join(directory, filename)}`);
