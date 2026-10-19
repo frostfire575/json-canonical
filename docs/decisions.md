@@ -42,7 +42,9 @@ in `cargo bench --bench engine` distinguish validation, scan/sort and emission;
 these Rust-only results are not end-to-end npm API performance claims.
 
 ## ADR 007 — Raw selective extraction
-Experimental until performance gate confirmed. RawValue visitors walk path-level
+Accepted as an explicit niche API after two benchmark confirmations on real
+dependency metadata (+49% throughput). API fixture and deep/Unicode inputs lose,
+so no general replacement recommendation. RawValue visitors walk path-level
 containers without constructing a JS DOM or full Rust token tree. A separate
 allocation-free scan enforces whole-document depth after serde syntax validation.
 Use JSON Pointer subset (no fragments/expressions), last duplicate wins, raw text

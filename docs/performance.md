@@ -45,7 +45,11 @@ amortization is not demonstrated. JS batch convenience is6.1% below upstream
 loop in this run. Cache hits skip traversal under an explicit unchanged-version
 assertion; they are not faster actual serialization or mutation detection.
 See report for variability, raw data, cold loading, CPU/RSS and unfavorable cells.
-Selective extraction benchmarks are still pending.
+Selective extraction was measured twice with9x100ms samples. Dependency lock
+`/name` extraction returned raw text at6789ops/s vs4556 for parse+lookup+stringify
+(+49% throughput). Real API `/users/0/email` returned513 vs681ops/s (-24.7%).
+Tiny/Unicode/deep also lost. Parsed-scalar comparisons are separately included
+in the report. No broad parsing/extraction acceleration claim is justified.
 
 Performance gate: correctness first; intended workload median >=10% improvement
 across repeated independent runs with no unexplained >10% regression before an

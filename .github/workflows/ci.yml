@@ -38,6 +38,7 @@ jobs:
       - run: git diff --exit-code -- THIRD_PARTY_NOTICES.txt
       - run: node --test benches/harness.test.cjs
       - run: pnpm test:pack
+      - run: pnpm test:pack --npm
       - uses: actions/upload-artifact@v4
         with:
           name: native-${{ matrix.target }}

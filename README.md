@@ -8,6 +8,7 @@ JavaScript objects is **not** promised.
 ```sh
 # Build this checkout (Node >=22.13, pnpm 12.10.1, Rust >=1.88, platform linker)
 pnpm install --frozen-lockfile
+pnpm setup:upstream
 pnpm build
 pnpm check
 ```
@@ -45,8 +46,8 @@ decoded keys/lone surrogate keys and enforce byte/depth bounds. They are not
 RFC 8785 canonicalization. Use the compatibility API for arbitrary JS values.
 
 Windows x64 has a verified local release build. Linux x64 and macOS ARM64 are
-targeted by CI but **UNVERIFIED** until their jobs execute. Node 24.20.0 is the
-only locally tested runtime.
+targeted by CI but **UNVERIFIED** until their jobs execute. Node 24.20.0 and
+22.13.0 are locally tested runtimes.
 
 Measured on Windows i7-12700K / Node24.20.0 (9×100ms samples, second confirmation):
 
@@ -60,6 +61,9 @@ Rust wins on selected text workloads and loses on Unicode-heavy input. Ordinary
 object conversion can erase gains; batch calls show no measured advantage over
 same-native repeated calls. See [performance](docs/performance.md) and
 [full evidence](benches/REPORT.md) for variability, CPU/memory and raw artifacts.
+Selective extraction was about49% faster on dependency metadata in two runs;
+it was about25% slower on the large API fixture and also lost on tiny, Unicode
+and deep inputs. Use it for measured workloads, not as a general JSON.parse replacement.
 
 [API](docs/api.md) · [compatibility](docs/compatibility.md) ·
 [architecture](docs/architecture.md) · [security](docs/security.md) ·

@@ -111,3 +111,33 @@ Median fresh-process require times, potentially warm OS disk cache and excluding
 Latency is the reciprocal of median sample throughput: an amortized per-operation duration, not individually timed call percentiles. All measured APIs are synchronous. Timer probes cover benchmark burst blocking plus scheduling and do not establish per-request p99 latency or async responsiveness. The 16-call timer-check batch can overshoot the target duration; actual elapsed time is used. The checksum touches length and a middle UTF-16 code unit, which may flatten V8 ropes; that output-consumption cost is included for all methods.
 
 Runs were serial and isolated from builds/tests, but CPU placement, thermal state, power mode and GC remain uncontrolled. Within-run MAD is not a confidence interval and does not capture all between-run differences. These local measurements justify retaining the explicit native text API and the scanner optimization while preserving the Unicode caveat; deployment and cross-platform claims require additional evidence.
+
+## Selective extraction evaluation
+
+Measured separately at commit `991e97c140b5b87176b4ce8856c0c374a47b69dd` after the selective API was built and independently reviewed. The compiled addon SHA-256 is `ac72d4650ae9e2bb97825dae58b916e9a8bc81af82a3871501136d5dec2460cb`. Exact source hashes now include src/tree.rs and src/selection.rs. Earlier serialization reports retain their original source/artifact identity and are not overwritten.
+
+[First selection run](results/2026-10-19T00-14-09-631Z-7976.json) and [second selection run](results/2026-10-19T00-14-43-812Z-19944.json) each use nine 100 ms samples, 200 ms warmup and 24 dataset/method cells; all exact result checks passed. The harness now has 5 passing tests, including native/raw/scalar selection of boolean and numeric zero. Parent API correctness tests are separate.
+
+Raw-text comparison: `selectJson(input, pointer)` versus `JSON.stringify(lookup(JSON.parse(input)))`. Scalar comparison: `JSON.parse(selectJson(input, pointer))` versus `lookup(JSON.parse(input))`. JS lookup uses predecoded pointer segments; native includes public pointer parsing and whole-input validation. No fixture construction is timed. The selected values are scalars; this benchmark makes no object-selection throughput claim. Values are normalized by JSON.stringify outside timing so the raw strings are comparable despite the native API's general token-preserving semantics.
+
+| Workload | Pointer | JS raw-text ops/s | Native raw run 1 | Native raw run 2 | Run 2 rate change | Native run 2 MAD |
+|---|---|---:|---:|---:|---:|---:|
+| tiny | `/a` | 4,471,782 | 1,196,923.7 | 1,149,528 | -74.3% | 1.5% |
+| dependency-lock | `/name` | 4,556.3 | 6,858.8 | 6,788.8 | +49.0% | 0.4% |
+| public-api-data | `/users/0/email` | 681.2 | 505.7 | 512.6 | -24.7% | 0.8% |
+| wide | `/key-1500` | 7,174 | 11,286.4 | 11,191.1 | +56.0% | 0.5% |
+| unicode | `/বাংলা😀0` | 45,661.8 | 10,907.9 | 10,948.1 | -76.0% | 0.4% |
+| deep | `/a` repeated 80 times, then `/leaf` | 124,090.1 | 10,810.1 | 10,103 | -91.9% | 1.7% |
+
+| Workload | JS scalar ops/s | Native + parse scalar ops/s | Rate change | Native scalar MAD |
+|---|---:|---:|---:|---:|
+| tiny | 5,979,674.5 | 1,101,336 | -81.6% | 1.0% |
+| dependency-lock | 4,514.7 | 6,758.6 | +49.7% | 1.6% |
+| public-api-data | 685.1 | 517.1 | -24.5% | 1.0% |
+| wide | 7,208.3 | 11,182.6 | +55.1% | 2.0% |
+| unicode | 47,407 | 11,023.6 | -76.7% | 0.5% |
+| deep | 125,793.6 | 10,700.2 | -91.5% | 1.0% |
+
+The >=10% improvement gate is met in both repetitions for the real TypeScript dependency lock and synthetic wide object. Tiny, JSONPlaceholder real API, Unicode and deep workloads fail the gate. The result supports a narrow explicit extraction API for measured input shapes, not a general replacement for JSON.parse or a streaming claim. Deep selection traverses 81 path components; repeated subtree visits and pointer conversion are likely contributors to the large regression, but this benchmark does not separately profile them.
+
+For real API raw selection in run 2, lifetime maximum RSS is 51.6 MiB native versus 111.1 MiB JS. For dependency-lock raw selection it is 51.4 MiB native versus 57.5 MiB JS. These are process-wide maxima including all fixture setup, not selected-value allocation counts. Input MiB/s, CPU times, probe delays and raw samples are retained in both JSON reports. Output throughput for returned scalars is a logical rendered payload size, not actual bytes transferred through the FFI.

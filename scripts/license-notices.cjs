@@ -8,7 +8,7 @@ const packages = metadata.packages.filter(pkg => pkg.source?.startsWith('registr
 let output = 'Third-party Rust dependency notices (build and runtime inventory)\n\n';
 for (const pkg of packages) {
   const directory = path.dirname(pkg.manifest_path);
-  const files = fs.readdirSync(directory).filter(name => /^(licen[cs]e|copying|notice)/i.test(name) && fs.statSync(path.join(directory, name)).isFile());
+  const files = fs.readdirSync(directory).filter(name => /^(licen[cs]e|copying|notice)/i.test(name) && fs.statSync(path.join(directory, name)).isFile()).sort();
   let fallback;
   if (!files.length && pkg.repository === 'https://github.com/napi-rs/napi-rs') {
     const info = JSON.parse(fs.readFileSync(path.join(directory, '.cargo_vcs_info.json'), 'utf8'));

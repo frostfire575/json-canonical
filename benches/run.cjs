@@ -14,7 +14,38 @@ const repetitions = Number(process.env.BENCH_REPS || 7);
 if (!(sampleMs > 0) || !Number.isInteger(repetitions) || repetitions < 5) throw new Error('Use BENCH_SAMPLE_MS > 0 and integer BENCH_REPS >= 5');
 let sink = 0;
 const median = (xs) => [...xs].sort((a, b) => a - b)[Math.floor(xs.length / 2)];
-function loadMethod(name, value) {
+function loadMethod(name, value, dataset) {
+  if (name.startsWith('select-')) {
+    const pointers = { tiny: '/a', 'dependency-lock': '/name', 'public-api-data': '/users/0/email', unicode: '/বাংলা😀0', deep: '/a'.repeat(80) + '/leaf', wide: '/key-1500' };
+    const pointer = pointers[dataset];
+    if (pointer === undefined) throw new Error(`No selective path for ${dataset}`);
+    const segments = pointer.slice(1).split('/').map((part) => part.replace(/~1/g, '/').replace(/~0/g, '~'));
+    const input = JSON.stringify(value);
+    const lookup = (document) => {
+      let result = document;
+      for (const segment of segments) result = result?.[segment];
+      return result;
+    };
+    const scalar = lookup(JSON.parse(input));
+    if (scalar !== null && typeof scalar === 'object') throw new Error('Selective scalar cases must select scalar values');
+    const isScalar = name.endsWith('-scalar');
+    let fn;
+    if (name === 'select-js-text') fn = () => JSON.stringify(lookup(JSON.parse(input)));
+    else if (name === 'select-js-scalar') fn = () => lookup(JSON.parse(input));
+    else {
+      const api = require('../js/index.cjs');
+      if (name === 'select-native-text') fn = () => api.selectJson(input, pointer);
+      else if (name === 'select-native-scalar') fn = () => {
+        const raw = api.selectJson(input, pointer);
+        return raw === undefined ? undefined : JSON.parse(raw);
+      };
+      else throw new Error(`Unknown selective method ${name}`);
+    }
+    return { fn, expected: isScalar ? scalar : JSON.stringify(scalar), comparable: false,
+      operationGroup: isScalar ? 'selection returning JS scalar' : 'selection returning raw JSON text',
+      scalarOutput: isScalar, pointer, inputBytes: Buffer.byteLength(input),
+      input: 'pre-existing normalized JSON text; JS baseline uses predecoded path segments, native includes pointer parsing' };
+  }
   if (name === 'JSON.stringify-context') return { fn: () => JSON.stringify(value), expected: JSON.stringify(value), comparable: false };
   if (name === 'upstream') return { fn: () => oracle(value), expected: oracle(value), comparable: true };
   if (name === 'upstream-from-text') {
@@ -58,20 +89,24 @@ function loadMethod(name, value) {
 function consume(value) {
   sink = (sink + value.length + value.charCodeAt(value.length >>> 1)) >>> 0;
 }
-function runFor(fn, milliseconds) {
+function consumeScalar(value) {
+  if (typeof value === 'string') { consume(value); return; }
+  sink = (sink + (typeof value === 'number' ? value + 31 : value === undefined ? 17 : value === null ? 19 : value ? 23 : 29)) >>> 0;
+}
+function runFor(fn, milliseconds, consumeResult = consume) {
   let count = 0;
   const start = performance.now();
   // Check the clock every 16 calls to amortize timer overhead. Large operations
   // can overshoot the target; elapsed time, rather than target, is recorded.
   do {
-    for (let j = 0; j < 16; j++) { consume(fn()); count++; }
+    for (let j = 0; j < 16; j++) { consumeResult(fn()); count++; }
   } while (performance.now() - start < milliseconds);
   return { iterations: count, elapsedMs: performance.now() - start };
 }
 async function worker(dataset, method) {
   const value = datasets()[dataset];
   let prepared;
-  try { prepared = loadMethod(method, value); }
+  try { prepared = loadMethod(method, value, dataset); }
   catch (error) {
     if (error.code === 'MODULE_NOT_FOUND' || /is not a function/.test(error.message)) return { dataset, method, status: 'UNAVAILABLE', reason: error.message };
     throw error;
@@ -82,7 +117,8 @@ async function worker(dataset, method) {
     return { dataset, method,
       status: error.code === 'MODULE_NOT_FOUND' || /is not a function/.test(error.message) ? 'UNAVAILABLE' : 'INCOMPATIBLE', reason: error.message };
   }
-  runFor(fn, sampleMs * 2);
+  const consumeResult = prepared.scalarOutput ? consumeScalar : consume;
+  runFor(fn, sampleMs * 2, consumeResult);
   const cpuStart = process.cpuUsage();
   const memoryBefore = process.memoryUsage();
   const samples = [];
@@ -93,7 +129,7 @@ async function worker(dataset, method) {
     await new Promise((resolve) => setImmediate(resolve));
     const scheduled = performance.now();
     const probe = new Promise((resolve) => setTimeout(() => resolve(performance.now() - scheduled), 0));
-    const sample = runFor(fn, sampleMs);
+    const sample = runFor(fn, sampleMs, consumeResult);
     samples.push({ ...sample, opsPerSecond: sample.iterations / sample.elapsedMs * 1000 });
     timerDelaysMs.push(await probe);
   }
@@ -102,12 +138,15 @@ async function worker(dataset, method) {
   const rates = samples.map((s) => s.opsPerSecond);
   const rate = median(rates);
   const mad = median(rates.map((n) => Math.abs(n - rate)));
+  const outputBytes = Buffer.byteLength(typeof expected === 'string' ? expected : JSON.stringify(expected) ?? '');
   return { dataset, method, status: 'OK', comparableStableOperation: prepared.comparable,
+    operationGroup: prepared.operationGroup, pointer: prepared.pointer,
+    scalarOutput: prepared.scalarOutput, inputMiBPerSecond: prepared.inputBytes === undefined ? undefined : rate * prepared.inputBytes / 1048576,
     inputContract: prepared.input, cacheContract: prepared.cache, unitsPerOperation: prepared.units || 1,
-    ...describe(value), outputBytes: Buffer.byteLength(expected), repetitions, sampleMs,
+    ...describe(value), outputBytes, repetitions, sampleMs,
     medianOpsPerSecond: rate, medianItemsPerSecond: rate * (prepared.units || 1), medianLatencyUs: 1e6 / rate, madPercent: mad / rate * 100,
     minOpsPerSecond: Math.min(...rates), maxOpsPerSecond: Math.max(...rates),
-    outputMiBPerSecond: rate * Buffer.byteLength(expected) / 1048576,
+    outputMiBPerSecond: rate * outputBytes / 1048576,
     cpuMicroseconds: cpu, rssBeforeBytes: memoryBefore.rss, rssAfterBytes: memoryAfter.rss,
     processMaxRssBytes: process.resourceUsage().maxRSS * 1024,
     heapUsedBeforeBytes: memoryBefore.heapUsed, heapUsedAfterBytes: memoryAfter.heapUsed,
@@ -158,7 +197,7 @@ async function main() {
       cpu: os.cpus()[0]?.model, logicalCpus: os.cpus().length, totalMemoryBytes: os.totalmem(), rust: command('rustc', ['--version']),
       commit: command('git', ['rev-parse', 'HEAD']), dirty: command('git', ['status', '--short']), upstreamCommit: command('git', ['-C', 'upstream/fast-json-stable-stringify', 'rev-parse', 'HEAD']),
       dependencies: Object.fromEntries(['safe-stable-stringify', 'fast-stable-stringify', '@napi-rs/cli'].map((name) => [name, packageVersion(name)])),
-      sourceHashes: Object.fromEntries(['benches/run.cjs', 'benches/datasets.cjs', 'js/dist/index.js', 'src/lib.rs', 'src/engine.rs', 'pnpm-lock.yaml'].map((file) => [file, fileHash(path.join(root, file))])),
+      sourceHashes: Object.fromEntries(['benches/run.cjs', 'benches/datasets.cjs', 'js/dist/index.js', 'src/lib.rs', 'src/engine.rs', 'src/tree.rs', 'src/selection.rs', 'pnpm-lock.yaml'].map((file) => [file, fileHash(path.join(root, file))])),
       nativeArtifacts: fs.existsSync(path.join(root, 'native')) ? fs.readdirSync(path.join(root, 'native')).filter((name) => name.endsWith('.node')).map((name) => ({ file: name, sha256: fileHash(path.join(root, 'native', name)) })) : [] },
     coldStart: ['./upstream/fast-json-stable-stringify', './js/index.cjs', './native/binding.js'].map(coldStart), results: [],
     limitations: ['Sampled RSS and process maximum RSS include runtime, fixture preparation, require and warmup; they are not allocation counts or serializer-only peaks.',

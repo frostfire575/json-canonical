@@ -55,6 +55,16 @@ Remove-Item Env:BENCH_DATASETS,Env:BENCH_REPS,Env:BENCH_SAMPLE_MS
 ```
 
 `BENCH_METHODS` accepts a comma-separated subset. Minimum repetitions is five.
+For selection, use `select-js-text,select-native-text` to compare returning raw
+JSON text (JS includes JSON.stringify of the selected value), and
+`select-js-scalar,select-native-scalar` to compare returning a JS scalar (native
+includes JSON.parse of the selected raw text). These are distinct operations.
+Paths are predefined for tiny, dependency-lock, public-api-data, Unicode, deep
+and wide data; each raw cell records the exact pointer. Both consume identical
+output types. JS uses path segments decoded before timing, while the public
+native API includes pointer parsing on each call. Full-input validation remains
+part of native timing. Output byte throughput for scalars is a logical rendered
+payload size, not FFI traffic; input MiB/s is also recorded for text selection.
 Raw results are written with exclusive creation to timestamped `results/*.json`
 and include command, machine, Node/V8/Rust, Git dirty state, upstream commit and
 content hashes. Run serially on an otherwise idle machine for release decisions.

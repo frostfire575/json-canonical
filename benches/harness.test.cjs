@@ -55,3 +55,21 @@ test('fewer than five repetitions are rejected', () => {
   assert.notEqual(result.status, 0);
   assert.match(result.stderr, /BENCH_REPS >= 5/);
 });
+
+test('selection workers validate matching text/scalar results, including boolean and zero', () => {
+  for (const dataset of ['tiny', 'wide']) {
+    for (const method of ['select-js-text', 'select-native-text', 'select-js-scalar', 'select-native-scalar']) {
+      const result = spawnSync(process.execPath, [path.join(__dirname, 'run.cjs'), '--worker', dataset, method], {
+        encoding: 'utf8', env: { ...process.env, BENCH_REPS: '5', BENCH_SAMPLE_MS: '1' },
+      });
+      assert.equal(result.status, 0, result.stderr);
+      const report = JSON.parse(result.stdout);
+      assert.equal(report.status, 'OK', report.reason);
+      assert.equal(report.scalarOutput, method.endsWith('-scalar'));
+      assert.equal(report.pointer, dataset === 'tiny' ? '/a' : '/key-1500');
+      assert.equal(report.outputBytes, dataset === 'tiny' ? 4 : 1);
+      assert.ok(report.sink > 0);
+      assert.ok(report.inputMiBPerSecond > 0);
+    }
+  }
+});

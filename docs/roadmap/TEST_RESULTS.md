@@ -49,3 +49,20 @@ Reproduce: `pnpm check`. Review details: INDEPENDENT_REVIEW.md; tests live in te
 - `pnpm test:pack`: PASSselect plusCJS/ESM/native+thirdpartynotices;
   artifact `.pack-test/1792368713493-11320/stable-json-rs-0.1.0.tgz`.
 - Selection performance acceptance NOTRUN at this milestone.
+
+## 2026-10-19 minimum runtime, installer and CI definition checks
+- `scripts/verify-node22.ps1`: PASS Node22.13.0,33 tests and release native addon
+  loading. Official nodejs.org Windows archive verified against SHASUMS256.txt;
+  download is local under ignored.tools/. Repeated literal test-glob invocation
+  `.tools/node-v22.13.0-win-x64/node.exe --test tests/*.test.cjs tests/*.test.mjs`
+  also PASS33, confirming CI command works on the minimum runtime.
+- `pnpm test:pack --npm`: PASS offline npm install, lifecycle scripts disabled,
+  CJS/ESM/native selection/sorting/batch plus bundled third-party notices. Artifact
+  `.pack-test/1792368954361-27280/stable-json-rs-0.1.0.tgz` retained locally.
+- `node --test benches/harness.test.cjs`: PASS5 including raw/scalar selection
+  worker consumption of zero and boolean values.
+- `.tools/actionlint/actionlint.exe -color .github/workflows/ci.yml`: PASS exit0,
+  actionlint1.7.12 Windows archive checksum verified against official release
+  checksums (6e7241b51e6817ea6a047693d8e6fed13b31819c9a0dd6c5a726e1592d22f6e9).
+- Docker client29.7.2 exists but Linux daemon unavailable; WSL only docker-desktop.
+  Linux/macOS runtime gates remain NOT RUN.

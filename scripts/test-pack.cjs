@@ -19,7 +19,12 @@ pnpm(['pack', '--pack-destination', directory], root);
 const filename = fs.readdirSync(directory).find(file => file.endsWith('.tgz'));
 assert.ok(filename, 'packed tarball exists');
 fs.writeFileSync(path.join(directory, 'package.json'), JSON.stringify({ name: 'stable-json-pack-test', private: true }));
-console.log(pnpm(['add', '--offline', '--ignore-scripts', path.join(directory, filename)], directory));
+if (process.argv.includes('--npm')) {
+  const npmCli = path.join(path.dirname(process.execPath), 'node_modules/npm/bin/npm-cli.js');
+  console.log(execFileSync(process.execPath, [npmCli, 'install', '--offline', '--ignore-scripts', '--no-audit', '--no-fund', path.join(directory, filename)], { cwd: directory, encoding: 'utf8' }));
+} else {
+  console.log(pnpm(['add', '--offline', '--ignore-scripts', path.join(directory, filename)], directory));
+}
 fs.writeFileSync(path.join(directory, 'verify.cjs'), `
 const assert = require('node:assert/strict');
 const api = require('stable-json-rs');
