@@ -70,3 +70,13 @@ overwrite previous raw/tarball evidence. On target CI, --all-targets is required
 For performance, read benches/reproduction/README.md; run serial with no builds
 or concurrent tests. Archived comparison groups require the retained old Windows
 addon; normal independent groups do not. Private profiling README documents probes.
+
+## Current active production-readiness work
+Branchchore/production-readiness, basea406f93. Two wrapper TOCTOU defects found:
+indexedbatchvalidation vsnative rereads and limit-getter validation vsreturnedtuple
+rereads. Both fixed in js/index.ts, rebuilt. Public compatibilitytraversal unchanged.
+Initialpnpm check5Rust61JS/TS passedbatchfix; refinedlimitfixfullcheck inprogress.
+CIverifier schema2 binds packed/installed/loaded bytes and rejectsmissingforeign
+binariesbeforecombinedupload. Do notoverwriteoldschema1candidate evidence; new
+schema2candidate required. Independent publicCJS/ESM installed benchmark runner
+readybutNOTTIMED; waitingrelease-build/fulltest+newpack. No platformclaim expanded.

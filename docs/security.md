@@ -12,6 +12,12 @@ Serde validates the whole document before the safe structural
 scanner runs; do not reuse that scanner as an independent validator. Native
 processing is synchronous.
 
+Text batches snapshot indexed values once before validating type, UTF-16 and
+aggregate bytes. This prevents getters, custom iterators and later option reads
+from replacing the values sent to Rust. Limit getters are captured once during
+validation for all native APIs. These rules do not sandbox arbitrary JavaScript
+callbacks or hostile global intrinsic monkeypatching.
+
 Public wrappers reject literal malformed UTF-16 to avoid Node-API replacement.
 Escaped surrogate values retain their text. Keys are decoded Unicode scalars;
 duplicates are rejected. Errors propagate rather than returning partial results.

@@ -34,6 +34,8 @@ call but still converts every array element and returned string. Measurements
 show this is slower than repeated native calls on tested real batches; retain it
 as a small convenience API with aggregate limits and indexed errors. Do not add
 parallelism or a second dispatch system without a measured use case.
+Text batches transfer a validated indexed snapshot, avoiding a second read of
+caller-controlled array getters. Native options use the same single-read rule.
 Caching must require a caller-provided version on each call;
 identity alone never implies immutability. WeakMap storage does not retain keys.
 Selective extraction validates syntax and bounds on the full input, then uses

@@ -192,3 +192,22 @@ execution remain NOT RUN/UNVERIFIED. No push, publication or release occurred.
 - Additional minimum-runtime CLI check: `.tools/node-v22.13.0-win-x64/node.exe
   --test 'tests/*.test.cjs' 'tests/*.test.mjs'`: PASS49; explicit quoted glob
   handling works on this minimum Windows runtime. No test-runner change required.
+
+## 2026-10-19 production-readiness source validation
+Environment unchanged: Windows x64,i7-12700K,Node24.20/22.13,Rust1.98.1,pnpm12.10.1.
+- Independent failing baselines: batch review7groups5PASS/2FAIL; option-limit
+  regression review9groups8PASS/1FAIL. See READINESS_SECURITY_REVIEW.md.
+- `pnpm check` after both fixes: PASS release build,5Rust,62JS,strictTS.
+- `./scripts/verify-node22.ps1` after both fixes: PASS62JS,0failures/0skips.
+- Independent security-only reruns:9groupsPASS on EACH Node22 and24.
+- `node --test tests/candidate-verifier.test.cjs`: PASS4 (also infullsuite).
+  Unit archive includes actual host addon only; expectedmissing-combined gate
+  failure is verified, not a combinedpackage success claim.
+- `cargo fmt --all --check`; `cargo clippy --all-targets --locked -- -D warnings`:
+  PASS. `node --test benches/harness.test.cjs benches/reproduction/reproduction.test.cjs`:
+  PASS12. Local actionlint and verifier syntax checks PASS.
+- Fresh `pnpm audit:deps`: PASS,0npmadvisories,0OSVmatches38locked crates; raw
+  artifacts docs/audits/2026-10-19T01-21-02-497Z. No dependency upgrades made.
+- Public-API benchmark runner selftests4PASS (agent-owned; no timings yet).
+- Current combined-native runtime/package check remains NOTRUN: no Linuxserver,
+  macOS host or foreign addon available. Preparedschema2gate rejectsabsence.

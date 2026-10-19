@@ -1,0 +1,10 @@
+{
+  "command": [
+    "C:\\Users\\frost\\AppData\\Roaming\\npm\\node_modules\\pnpm\\pnpm.exe",
+    "audit",
+    "--json"
+  ],
+  "status": 0,
+  "stdout": "{\n  \"advisories\": {},\n  \"metadata\": {\n    \"vulnerabilities\": {\n      \"info\": 0,\n      \"low\": 0,\n      \"moderate\": 0,\n      \"high\": 0,\n      \"critical\": 0\n    },\n    \"dependencies\": 1,\n    \"devDependencies\": 265,\n    \"optionalDependencies\": 89,\n    \"totalDependencies\": 280\n  }\n}\n",
+  "stderr": ""
+}

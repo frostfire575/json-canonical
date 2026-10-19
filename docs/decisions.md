@@ -92,3 +92,23 @@ JSON.parse fallback would change native duplicate/token/Unicode semantics.
 Raw evidence, an anomalous short-warmup batch cell and targeted confirmation are
 retained in OUTPUT_BENCHMARK_REVIEW.md. This is not a universal speed guarantee or
 cross-platform performance verification. Selection output is unchanged.
+
+## ADR 011 — Single-read native wrapper validation
+Accepted after failing-before/passing-after independent regressions. Snapshot text
+batch length and indexed strings before validation/native conversion, without
+using caller-overridable array methods/iterators. Capture native option values
+while validating them, preserving depth-before-bytes order. Native receives the
+same immutable strings and numeric limits that passed guards. This deliberately
+changes extension-API behavior for stateful accessors; it closes silent Unicode
+replacement and limit bypasses. Upstream-compatible stringify traversal is not
+changed. No claim of sandboxing hostile global runtime mutation.
+
+## ADR 012 — Inspect actual packed candidate identities
+CI candidate schema2 binds selected runtime/declaration/license/docs and target
+binary bytes from the tarball, verifies architecture headers and requires all
+three actual targets before upload. Installed files and actual loaded local addon
+must match the packed hashes. Header inspection never substitutes for execution
+on a target. Strict installed TS checks no longer skip declaration checking.
+Old schema1 candidate evidence remains immutable; new checks use new candidate
+folders. A host-only artifact must fail the combined gate rather than receive
+synthetic foreign binaries.

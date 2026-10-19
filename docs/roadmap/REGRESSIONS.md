@@ -42,3 +42,13 @@ consumers and byte identities pass. The full-count candidate is rejected and its
 A single short-warmup batchsize1cell~20% low was preserved; matched1s repeats were
 within~3% with original/candidate binaries. Exactcause unproven; not represented
 as a reproducible implementation defect or silently excluded from raw evidence.
+
+## RD-01: Native wrapper validation and use must share a snapshot
+Independent reviewer reproduced literal lone-surrogate replacement when native
+batch reread an indexed value not checked by the .some/iterator guards. Original
+expected-fail suite:5PASS/2FAIL in7groups. A later8group suite adds option mutation.
+Lead also reproduced limitsgetter bypass: first maxDepth1 validated, second read
+undefined yielded[[0]] instead of error. Ninth regression group failed beforefix.
+Fix: captureindexedbatchvaluesonce; validate/passplain snapshot. Captureoption
+valuesduringvalidationloop andforwardthat tuple. Compatibilitystringifyunchanged.
+Allnewnegativecases retained; final compiled and installed verification follows.

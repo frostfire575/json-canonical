@@ -89,12 +89,15 @@ function native() {
     return binding ??= require('../../native/binding.js');
 }
 function limits(options) {
+    const result = [undefined, undefined];
+    let index = 0;
     for (const [name, max] of [['maxDepth', 128], ['maxBytes', 67108864]]) {
         const value = options?.[name];
         if (value !== undefined && (!Number.isInteger(value) || value < 1 || value > max))
             throw new RangeError(`${name} must be an integer from 1 to ${max}`);
+        result[index++] = value;
     }
-    return [options?.maxDepth, options?.maxBytes];
+    return result;
 }
 /** Rust JSON-text sorter; preserves scalar token spelling, not JS normalization. */
 function stringifyJson(input, options) {
@@ -106,19 +109,26 @@ function stringifyJson(input, options) {
 }
 /** Single native call. Maximum 1024 documents and 64 MiB combined UTF-8 input. */
 function stringifyJsonBatch(inputs, options) {
-    if (!Array.isArray(inputs) || inputs.some(input => typeof input !== 'string'))
+    if (!Array.isArray(inputs))
         throw new TypeError('inputs must be an array of JSON strings');
-    if (inputs.length > 1024)
+    const length = inputs.length;
+    if (!Number.isInteger(length) || length < 0 || length > 1024)
         throw new RangeError('Batch limit is 1024 documents');
+    // Read each indexed value once. Native conversion must receive exactly the
+    // values whose UTF16 and byte limits were checked, even with accessors/proxies
+    // or a custom iterator. Option getters may also mutate the original array.
+    const snapshot = [];
     let total = 0;
-    for (const input of inputs) {
+    for (let index = 0; index < length; index++) {
+        const input = inputs[index];
         if (typeof input !== 'string' || !input.isWellFormed())
             throw new TypeError('JSON text must contain well-formed UTF-16; escape lone surrogates');
         total += Buffer.byteLength(input);
+        snapshot[index] = input;
     }
     if (total > 67108864)
         throw new RangeError('Batch input limit is 64 MiB');
-    return native().stringifyJsonBatch(inputs, ...limits(options));
+    return native().stringifyJsonBatch(snapshot, ...limits(options));
 }
 /** Extract raw JSON text using a JSON Pointer subset; missing paths yield undefined. */
 function selectJson(input, path, options) {

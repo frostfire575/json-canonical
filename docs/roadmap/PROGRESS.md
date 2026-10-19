@@ -149,3 +149,23 @@ identity script and compact persistent JSON evidence added. No library/runtime
 files changed after accepted measurements. Remaining work requires actual hosted
 Windows/Linux/macOS combined-candidate execution; no remote action was taken.
 Local feature branch is retained for review, with master unchanged.
+
+## 2026-10-19 production-readiness continuation
+Resumed clean sourcea406f93; new branchchore/production-readiness. Confirmed host
+Windowsx64/Node24.20.0/Rust1.98.1 and only Windowsaddon exists. Docker daemon
+still unavailable; WSL lists onlydocker-desktop, no macOS host. No foreign binary
+or combined runtime pass inferred. Independent reviewers own CI/package integrity,
+security/correctness and installed-public-API benchmarking with disjoint files.
+
+Independent security review reproduced batch guard TOCTOU: wrapper .some/iterator
+checks followed by native indexed rereads allowed malformedUTF16 to be replaced
+silently. New typed wrapper captures length and indexed strings once, validates
+snapshot, then passes snapshot to native. Source compiled verification pending;
+regression tests preserve iterator/getter/options mutation cases. Public object
+compatibility traversal unchanged. Fresh audit artifact directory is
+2026-10-19T01-21-02-497Z (zero npm/OSV advisories in checked scope).
+
+Both getter-related wrapper fixes rebuilt and independently9groupsPASS on22/24;
+fullrelease5Rust62JS/strictTS and minNode62JS PASS. Rootrustfmt/clippy,harness12
+and currentCIconfiglint PASS. Prepared first schema2 packed candidate next, then
+isolated installedCJS/ESM objectbenchmarks. No general stringifyspeed claim exists.

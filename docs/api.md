@@ -38,6 +38,11 @@ default16777216). Bytes are UTF-8; the limit applies to input and output for eac
 document. Containers count toward nesting; `[0]` needs depth1. Batch maximum:
 1024 documents and 64 MiB combined input. Errors include a zero-based batch item
 index for document errors. No partial output on failure.
+Text batches read length and each indexed input once, then validate and serialize
+that snapshot. Sparse slots are invalid; custom array iterators and instance
+methods do not control validation. Mutating the original array from an options
+getter cannot replace the validated input. Text options are read once per call,
+in maxDepth then maxBytes order; the captured validated limits reach Rust.
 Batching is a convenience API, not a performance recommendation: real batches
 were slower than repeated native calls in the independent Windows measurements.
 The explicit version cache can be useful when callers know records are unchanged;
