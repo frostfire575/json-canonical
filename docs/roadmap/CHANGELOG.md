@@ -26,3 +26,14 @@
   binary architecture checks and negative combined gate; pinned reviewed CI actions.
 - Measured114 installed public-API/text/batch cells; compatible stringify shows no
   robust repeated >=10% gain. Per-API reports preserve unfavorable results.
+
+- Positioned native existing-text sorting as measured performance API, with raw
+  extraction benefits explicitly narrower and compatible default unchanged.
+- Independently verified162native-text cells on original licensed sources plus
+  normalized/small controls and direct-field extraction baselines; fullcorpora,
+  samples/memory/source/native identities retained, no universal speed claim.
+- Added12adversarial groups (74JS bothlocalruntimes), native-first shippedexamples
+  and offlinefinalcandidate checks onNode22/24 withactualnativebyteidentity.
+- Validated realWindows optional-package feasibility; keptcombinedrootdesign.
+  DiagnosedNode22WindowsCLIstatidentityfailure, boundedtoolprobes andusedNode24
+  buildtoolhosts while retaining22/24consumer jobs. Foreignexecutionunverified.

@@ -98,3 +98,12 @@ checks7PASS with Node24metadata; Node22metadata generation remains FAILED, not
 hidden as passed. Future commands timeout/outputcap; reports preserve artifacts.
 No native API behavior or safety guard changed. FinalallNode24CIconfiglintPASS;
 foreignexecutionstillUNVERIFIED. See DISTRIBUTION_REVIEW_2.md for commands/scopes.
+
+## Final example verification harness corrections
+V1failedbecauseNodedisallowsdirectTypeScriptstrippingunder node_modules; V2failed
+TypeScript7TS5112becausecommandlinefilescoexistedwithtsconfig. PreservedFAILreports
+andindependentlycapturedexpectedrejections. CorrectV3copiesidenticalshippedTSbytes
+intoconsumerapplication, typechecksstrict explicitproject andexecutesactualinstalled
+API on22/24;22commandsPASS. No runtime/sourcefixorweakenedexpectation. Shipped
+CJS/ESMexamplesrunfromeachinstalledpackage. ProductTSconsumersarecompilednormally,
+withnode22type-strippingflagusedonlyfortheextraapplicationexecutionprobe.

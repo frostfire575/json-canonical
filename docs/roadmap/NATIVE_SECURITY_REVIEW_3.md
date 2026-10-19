@@ -102,3 +102,55 @@ sandbox callbacks or hostile monkeypatching of global intrinsics. No new
 global mutation test or broader promise was added. Dependency advisory/license
 audits, packaged consumer execution and unavailable Linux/macOS runtime checks
 remain separate evidence owned by the lead, not inferred from this review.
+
+## Final documentation and packed-identity challenge
+
+After the native-text positioning work, independently read the current README,
+API, performance, distribution and `NATIVE_TEXT_REVIEW_2.md` documents and the
+shipped CJS/ESM/TS examples. The documents consistently distinguish existing-text
+sorting, workload-dependent raw extraction and JavaScript compatibility. They
+identify original versus normalized input, mock/fictional fixtures, raw scalar
+differences, synchronous copying and whole-process memory observations. No
+misleading universal speedup or default-export change was found. One ambiguity
+was corrected by the lead in commit `b47fbee`: the native API has no value
+traversal callbacks, but options accessors still execute JavaScript.
+
+Independently reran both immutable evidence checks:
+
+```powershell
+node benches/native-text-verification/verify-evidence.cjs benches/native-text-verification/results/2026-10-19T09-56-55-718Z-33544.json
+node benches/native-text-verification/verify-evidence.cjs benches/native-text-verification/results/2026-10-19T10-01-50-243Z-33224.json
+```
+
+Results: **108PASS +54PASS**, checking complete exact pre/post output hashes,
+actual frozen runner/corpus bytes, minimum sample requirements and native
+identity. Five original-text sorting wins and the narrower normalized-lock
+extraction conclusion are accurately scoped in the current documentation.
+No timing was repeated by this reviewer.
+
+On2026-10-19 independently inspected the final actual candidate at
+`.verification/native-text-final-01/stable-json-rs-0.1.0.tgz`, packed from
+`b47fbee12b557dc6ce43e2c394326babedaed488`, SHA256
+`91982c646f59fe61a28bf0795f3839fb2deab30fac7f8679273c27b501449ff3`.
+Used binary-safe `tar -xOf` Buffers directly, rather than trusting existing
+verifier reports. Archive inventory/path checks, all14 manifest-bound file
+size/hash checks, four actual shipped examples, and complete installed npm/pnpm
+byte equality **PASS**. All8 runtime/declaration/loader/native files also equal
+the older measured `.verification/readiness-final-01` archive and source bytes.
+Changed description/examples/docs are not misrepresented as the older archive's
+metadata, and runtime equality does not invent a new benchmark run.
+
+Independent Node24 calls from both actual installed packages preserve `1.00`,
+`-0`, `1e999`, escaped lone-surrogate values and selected raw object order.
+Their actual require-cache loaded native paths hash to the packed bytes and
+compiled release DLL, SHA256
+`96ba87bcc9a76f9c2cce21cede7ef74ea10e69b147a69b5435536f1ce81c5f86`.
+PE metadata independently confirms x86-64. Only one real Windows binary is
+present; no foreign execution or genuine combined package is claimed.
+
+Compact exclusive-write evidence:
+`.verification/native-text-final-01/independent-review-2026-10-19T10-14-07-603Z.json`.
+The lead preserves a tracked copy with final milestone evidence. This reviewer
+does not infer Node22, ESM, strict TypeScript or Linux/macOS runtime success from
+these independent Node24 identity calls; the lead's separate installed reports
+cover available consumer checks. Linux/macOS remain **UNVERIFIED**.

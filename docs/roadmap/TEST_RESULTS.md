@@ -358,3 +358,52 @@ native artifact remains96ba87...; no runtime source changes or optimizations.
 Both new benchmark evidence verifications and7Node24selftestsPASS (Node22reviewer
 7PASS). Current script syntaxchecksPASS; gitdiffwhitespacePASS. Finalpacked
 consumer installs and example execution remain a separate next gate.
+
+## Final native-text-positioned package, 2026-10-19
+Sourceb47fbee12b557dc6ce43e2c394326babedaed488, runtime unchangedfrom757bc26.
+WindowsNode24.20.0/22.13.0,pnpm12.10.1,Rust1.98.1.
+- pnpm pack --pack-destination .verification/native-text-final-01:PASS once.
+- node scripts/verify-ci-candidate.cjs manifest .verification/native-text-final-01
+  andprepare withsamepath:PASSschema2. Actualhostbinaryonly.
+- In npmconsumer: npm install --offline --ignore-scripts --no-audit --no-fund
+  --cache D:/misc/npm/stable-json-rs/.verification/npm-cache ./candidate.tgz:PASS.
+  In pnpmconsumer: pnpm add --offline --ignore-scripts --store-dir
+  D:/misc/npm/stable-json-rs/.verification/pnpm-store ./candidate.tgz:PASS.
+- node scripts/verify-ci-candidate.cjs verify .verification/native-text-final-01:
+  PASSbothinstallersCJS/ESM/strictCTS+MTS/native APIs on24.20.0. Samecommandwith
+  .tools/node-v22.13.0-win-x64/node.exe:PASSbothon22.13.0. No rebuild/lifecycle.
+- node scripts/verify-installed-identity.cjs .verification/native-text-final-01:
+  PASS8source-runtime/declaration/loader/native identities andactual loadedpaths.
+- Independent reviewer binary-safe extraction:14manifestfiles and4shippedexamples
+  equalactualnpm/pnpminstalls/source;8runtimefiles equalmeasuredreadiness-final-01;
+  actual loadednative equalscompiledreleaseDLL96ba87.... Compactindependentreport.
+- Lead verify-examples-v3.cjs:PASS22commands acrossNode22/24 andnpm/pnpm, including
+  all3shippedCJS/ESMscripts, identicalshippedTS bytes inconsumerapplication, strict
+  explicitTSprojectcompile andactualTSexecution. Node22emits documentedexperimental
+  type-strippingwarning. All4examples'packed/installed/sourcebytesmatch.
+  report packaged-examples-and-equivalence-v3.json; sourcecopiedwithexactcommands.
+- SameV3report proves11runtime/licensefiles identicaltomeasuredcandidate. Package
+  metadata changesareonlydescription,filesaddsexamples,scriptsaddsbench:text;
+  exports/engines/dependencies/versionunchanged. No newtimingrequiredforidentical
+  runtime; no measurementsfabricatedforthenewarchivehash.
+- Actualverify --all-targets:EXPECTED_REJECTION, missinggenuineLinuxbinary. Stderr
+  retainedinV3report. This is a negativegate, NOT combinedtargetruntimePASS.
+
+TarSHA256:91982c646f59fe61a28bf0795f3839fb2deab30fac7f8679273c27b501449ff3.
+NativeSHA256:96ba87bcc9a76f9c2cce21cede7ef74ea10e69b147a69b5435536f1ce81c5f86.
+Reportsandprobes:docs/roadmap/evidence/native-text-final-01/. Archiveignoredlocal.
+
+Two initial example-probe FAILreportsarepreserved: V1incorrectlyexecutedTypeScript
+inside node_modules (NodeERR_UNSUPPORTED_NODE_MODULES_TYPE_STRIPPING); V2used
+fileargumentswithroottsconfig (TypeScript7TS5112). Both constraintsindependently
+reproducedwithcapturedoutput in example-harness-rejections.json. V3usesidentical
+shippedbytesasconsumerappandstrictprojectconfiguration. No productassertion,
+featureorcompatibilitypromisewasweakened. Theseareharness expectationerrors,
+notnewnativeAPIdefects. PackagepublishedTSdeclarationsandCJS/ESMchecks passed
+beforeandafter. No claimthatNodeexecutesTSdirectlyinside node_modules.
+
+Finalactionlint/source+installedexamplesworkflowdefinitionPASS; actualhostedjobs,
+Linux/macOSnativeexecutionsandgenuinecombinedinstallationNOTRUN/UNVERIFIED.
+Subsequentchangesonlyroadmap/evidence/review; candidatecontainspreverification
+checkpointanddoesnotrecursivelyrepackitsownreports. README/performancehashesbound.
+No push/publication/release performed.

@@ -93,3 +93,13 @@ unchanged. Combined target packaging remains preferred; optional split feasibili
 is a local experiment, never a substitute for actual Linux/macOS execution.
 Additional independent native API/security coverage and all available packed/runtime
 checks precede verified milestone commits. Advanced features remain deferred.
+
+## Native text acceptance outcome
+NT-REPRO/SEC/DIST/DOCS/VERIFY verifiedlocally. Keeptextsortingprimaryperformance
+surface; extractionraw-outputfunctionalitywithnormalizedlock-specificgain, no
+universalacceleration. Nativeandcompatibilityruntimeunchanged. Finaltarboundto
+actualinstalledbytesandall162measurements; directfieldnegativecontrols retained.
+Windows22/24consumerverificationcompleted. Combined3targetbuild/load/installation
+andminimumforeignOSdependencies remainreleaseblockers, notcompletedbylocaltests.
+Node24buildtoolhost avoidsobservedWindows22filesystemidentitytoolingfailure.
+Nextworkrequiresgenuineforeignrunners andexplicitremoteactionauthorization.

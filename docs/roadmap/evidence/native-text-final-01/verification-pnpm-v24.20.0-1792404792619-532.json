@@ -1,0 +1,113 @@
+{
+  "schemaVersion": 2,
+  "filename": "stable-json-rs-0.1.0.tgz",
+  "sha256": "91982c646f59fe61a28bf0795f3839fb2deab30fac7f8679273c27b501449ff3",
+  "files": {
+    "package.json": {
+      "bytes": 1928,
+      "sha256": "9f6bd7d69c845b8d1eb92f79b8379316207f23b2f67b363cb3f7a98f526eb63e"
+    },
+    "js/dist/index.js": {
+      "bytes": 6713,
+      "sha256": "b6245abfad41dfbedfb3c4870fa17c398353d8ef7a9432f903c25d0d3533893a"
+    },
+    "js/dist/index.d.ts": {
+      "bytes": 1837,
+      "sha256": "e9ba420fd011039ecd68b0254fa9eec8cf99293fd59d05b78ba39c1d69d59bd5"
+    },
+    "js/index.cjs": {
+      "bytes": 59,
+      "sha256": "f725264677360136f8151ec72515ce19f7f61814df9f4c779baca304ad3f850a"
+    },
+    "js/index.mjs": {
+      "bytes": 200,
+      "sha256": "8b07c342282dfb402ad7166bbb1e23f3ab8460254330f3760c616ae6b706b95f"
+    },
+    "js/index.d.mts": {
+      "bytes": 104,
+      "sha256": "ebe3fc72c98258b4fab6dc3802ccf5bfba8086818db27f70b9e6552b33d13acf"
+    },
+    "native/binding.js": {
+      "bytes": 33427,
+      "sha256": "a1df31adec1a2b469c8af3b067545edfc83c7e037435c04ce3ee5d73fb1536d3"
+    },
+    "native/binding.d.ts": {
+      "bytes": 913,
+      "sha256": "839513876a6251830f3bd1f40520725432837ce788a3ed893ba5cff3fc478eab"
+    },
+    "LICENSE": {
+      "bytes": 1145,
+      "sha256": "a833d366242c298cf1b10263516572fb8dcbe68eb5072cdcac2b4546e2b4eb36"
+    },
+    "NOTICE": {
+      "bytes": 377,
+      "sha256": "d9bb5e6f0e89950e927b76629d4cf03a1ea0f5ff9bb9aa2bf75ab243ac25e3d8"
+    },
+    "THIRD_PARTY_NOTICES.txt": {
+      "bytes": 346626,
+      "sha256": "954eb547ec8abe02e00ac64d0842ab5b3139bf94fdacb4bf80f4c4292d9c4c7a"
+    },
+    "README.md": {
+      "bytes": 6811,
+      "sha256": "e43c7c5abf956ff21ed1ec537e8130669412e0997523b069b30b34b4e53fbe74"
+    },
+    "docs/performance.md": {
+      "bytes": 14919,
+      "sha256": "eb1ccafdd32c74cd56e354a193413b28233c2bf3c39d1f20bb76a18979974d2a"
+    },
+    "native/stable-json-rs.win32-x64-msvc.node": {
+      "bytes": 412672,
+      "sha256": "96ba87bcc9a76f9c2cce21cede7ef74ea10e69b147a69b5435536f1ce81c5f86"
+    }
+  },
+  "gitCommit": "b47fbee12b557dc6ce43e2c394326babedaed488",
+  "manager": "pnpm",
+  "host": "win32/x64",
+  "node": "v24.20.0",
+  "date": "2026-10-19T10:13:12.619Z",
+  "command": [
+    "G:\\[Softwares]\\NodeJs\\node.exe",
+    "D:\\misc\\npm\\stable-json-rs\\scripts\\verify-ci-candidate.cjs",
+    "verify",
+    ".verification/native-text-final-01"
+  ],
+  "nodeVersions": {
+    "node": "24.20.0",
+    "acorn": "8.18.0",
+    "ada": "4.0.0",
+    "amaro": "1.1.11",
+    "ares": "1.34.8",
+    "brotli": "1.2.0",
+    "cldr": "48.0",
+    "icu": "78.3",
+    "llhttp": "9.4.3",
+    "merve": "1.2.2",
+    "modules": "137",
+    "napi": "10",
+    "nbytes": "0.1.4",
+    "ncrypto": "0.0.1",
+    "nghttp2": "1.70.0",
+    "nghttp3": "",
+    "ngtcp2": "",
+    "openssl": "3.5.7",
+    "simdjson": "4.6.6",
+    "simdutf": "6.4.0",
+    "sqlite": "3.53.4",
+    "tz": "2026c",
+    "undici": "7.29.0",
+    "unicode": "17.0",
+    "uv": "1.52.1",
+    "uvwasi": "0.0.23",
+    "v8": "13.6.233.17-node.53",
+    "zlib": "1.3.2.1-motley-42c2f19",
+    "zstd": "1.5.7"
+  },
+  "typeScript": "7.0.2",
+  "allTargetsRequired": false,
+  "verifierSha256": "bae40403f61440001f9afab2fc797813f31621a5b9c307cee409829f6973b232",
+  "status": "PASS",
+  "loadedNative": {
+    "path": "D:\\misc\\npm\\stable-json-rs\\.verification\\native-text-final-01\\pnpm\\node_modules\\.pnpm\\stable-json-rs@file+candidate.tgz\\node_modules\\stable-json-rs\\native\\stable-json-rs.win32-x64-msvc.node",
+    "sha256": "96ba87bcc9a76f9c2cce21cede7ef74ea10e69b147a69b5435536f1ce81c5f86"
+  }
+}

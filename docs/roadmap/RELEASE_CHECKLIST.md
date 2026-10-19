@@ -14,7 +14,7 @@
 - [x] Windows Node22.13.0 minimum and Node24.20.0 runtime tests.
 - [x] CI definition checked with actionlint1.7.12; hosted jobs NOT RUN.
 - [x] Prior baseline fresh Git worktree rebuild (37a969c); current fixture bytes verified.
-- [x] Source757bc26 security snapshots:5Rust/62JS on each local Windows runtime;
+- [x] Source757bc26 security snapshots:5Rust/74JS on each local Windows runtime;
   strict TS,9independent security groups, no unresolved review finding.
 - [x] Sourcefc006f9 final documentation tarball: offline npm/pnpm CJS/ESM/types/native
   on Windows22/24; schema2 identities and explicit missing-combined rejection.
@@ -30,3 +30,11 @@ This avoids unpublished optional platform packages during development. It costs
 download size; consider napi CLI optional package layout before public release.
 CI definition is not evidence the jobs have run. Native files are build outputs,
 not committed binaries. Local tarballs carry only available host artifacts.
+
+- [x] Native text positioning:162exact-checked cells, originalinputforms/direct
+  extraction baselines and memory caveats; no universal stringify/extractionclaim.
+- [x] Final positioned artifact91982c... installednpm/pnpm22/24 withnativeidentity,
+  shippedCJS/ESMexamples and strictTSapplication verified.
+- [x] RealWindowsoptionaldistributionprototype on22/24consumers usingNode24tools;
+  no unavailableoptionalDependencies added to root.
+- [x] DocumentedNode22WindowsCLIgenerationfailure; boundedprobes/allNode24buildhosts.

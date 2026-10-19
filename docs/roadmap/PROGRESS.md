@@ -227,3 +227,14 @@ Node24metadata/Node22optionalconsumer7controlsPASS; discoveredNode22WindowsCLI
 stat-identity retry is documented, bounded and avoided with Node24buildhosts.
 No serializer optimization/runtime code changes. Finalsource5Rust74JS/TS PASS;
 nextpackoncefreshcandidate, verifyfourinstalledconsumerchecks plusshippedexamples.
+
+## Final native-text-positioned artifact verified
+Packedcleansourceb47fbeeonce, tar91982c646f59fe61a28bf0795f3839fb2deab30fac7f8679273c27b501449ff3.
+Fouractualoffline npm/pnpm x Node22/24 import/types/native checksPASS; independent
+extracted/installed/loadednativeidentityPASS and11runtime/licensefilesequalmeasured
+candidate. All4shippedexamplesmatchsourceandinstallations. Correctedexampleprobe
+passes22commands includingstrictTSconsumerproject; twoharnessconstraintfailures
+preservedandclassified. Missingcombinedartifactgatecorrectlyrejects. AllNTlocal
+acceptancecriteria verified; actualforeign/combinedruntimegatesstillblocked.
+Retainbranchforreview, masterunchanged. No serializeroptimization/newAPI, push,
+publicationor release.

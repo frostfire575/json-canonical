@@ -58,4 +58,4 @@
 | NT-SEC | P0 | DONE | none | Independent native text/security/API review with adversarial tests on Node22/24; preserve/fix every found bug and rerun fullchecks |
 | NT-DIST | P1 | DONE | none | Verify combined and optional-package release layouts against official napi/npm docs and actual local prototype; real host binaries only; inspect/lint3platform CI; foreign runtime remains UNVERIFIED |
 | NT-DOCS | P1 | DONE | NT-REPRO | Native text APIs positioned as workload-specific performance surface; compatible stringify retained without acceleration claim; runnable CJS/ESM/TS examples and precise token/extraction limitations |
-| NT-VERIFY | P0 | IN_PROGRESS | NT-SEC,NT-DIST,NT-DOCS | Release build/Rust/JS/differential/TS checks, available runtime packaged installs/examples, lint/audit, updated evidence/handoff and verified local commits |
+| NT-VERIFY | P0 | DONE | NT-SEC,NT-DIST,NT-DOCS | Release build/Rust/JS/differential/TS checks, available runtime packaged installs/examples, lint/audit, updated evidence/handoff and verified local commits |

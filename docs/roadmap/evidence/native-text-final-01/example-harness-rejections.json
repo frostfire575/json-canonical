@@ -1,0 +1,38 @@
+{
+  "date": "2026-10-19T10:15:58.578Z",
+  "status": "PASS",
+  "note": "Original v1/v2 FAIL reports preserved. These are harness expectation corrections, not package API defects. V3 runs identical shipped TS bytes from consumer application and compiles explicit strict project.",
+  "results": [
+    {
+      "id": "packaged-ts-direct-strip",
+      "status": "EXPECTED_REJECTION",
+      "command": [
+        "G:\\[Softwares]\\NodeJs\\node.exe",
+        "D:\\misc\\npm\\stable-json-rs\\.verification\\native-text-final-01\\npm\\node_modules\\stable-json-rs\\examples\\json-text.mts"
+      ],
+      "cwd": "D:\\misc\\npm\\stable-json-rs",
+      "exitCode": 1,
+      "stdout": "",
+      "stderr": "node:internal/modules/typescript:189\r\n    throw new ERR_UNSUPPORTED_NODE_MODULES_TYPE_STRIPPING(filename);\r\n          ^\r\n\r\nError [ERR_UNSUPPORTED_NODE_MODULES_TYPE_STRIPPING]: Stripping types is currently unsupported for files under node_modules, for \"file:///D:/misc/npm/stable-json-rs/.verification/native-text-final-01/npm/node_modules/stable-json-rs/examples/json-text.mts\"\r\n    at stripTypeScriptModuleTypes (node:internal/modules/typescript:189:11)\r\n    at ModuleLoader.<anonymous> (node:internal/modules/esm/translators:680:29)\r\n    at #translate (node:internal/modules/esm/loader:438:20)\r\n    at afterLoad (node:internal/modules/esm/loader:506:29)\r\n    at ModuleLoader.loadAndTranslate (node:internal/modules/esm/loader:511:12)\r\n    at #getOrCreateModuleJobAfterResolve (node:internal/modules/esm/loader:564:36)\r\n    at afterResolve (node:internal/modules/esm/loader:611:52)\r\n    at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:617:12)\r\n    at node:internal/modules/esm/loader:636:32\r\n    at TracingChannel.tracePromise (node:diagnostics_channel:361:14) {\r\n  code: 'ERR_UNSUPPORTED_NODE_MODULES_TYPE_STRIPPING'\r\n}\r\n\r\nNode.js v24.20.0\r\n"
+    },
+    {
+      "id": "ts7-files-with-root-tsconfig",
+      "status": "EXPECTED_REJECTION",
+      "command": [
+        "G:\\[Softwares]\\NodeJs\\node.exe",
+        "D:\\misc\\npm\\stable-json-rs\\node_modules\\.pnpm\\typescript@7.0.2\\node_modules\\typescript\\bin\\tsc",
+        "--noEmit",
+        "--strict",
+        "--module",
+        "NodeNext",
+        "--moduleResolution",
+        "NodeNext",
+        "D:\\misc\\npm\\stable-json-rs\\.verification\\native-text-final-01\\npm\\typed-example.mts"
+      ],
+      "cwd": "D:\\misc\\npm\\stable-json-rs",
+      "exitCode": 1,
+      "stdout": "error TS5112: tsconfig.json is present but will not be loaded if files are specified on commandline. Use '--ignoreConfig' to skip this error.\n",
+      "stderr": ""
+    }
+  ]
+}

@@ -122,3 +122,12 @@ API323/324/349 vs512/549/529 andCLDR4993/5022/5532 vs11809/11634/12740.
 Generic pointer interpreter baseline preserved separately, not mislabeled direct
 lookup. No general extraction, liveobject, Node22 or foreignplatform speedclaim.
 NATIVE_TEXT_REVIEW_2.md has all9variants, latency/throughput/memory and exactcommands.
+
+### Final positioned artifact linkage
+Finaltar91982c646f59fe61a28bf0795f3839fb2deab30fac7f8679273c27b501449ff3,
+sourceb47fbee; docs/roadmap/evidence/native-text-final-01/. Independentactualtar/
+installed/loaded/releaseDLL checksPASS. Leadproves11runtime/licenseidentities equal
+measuredreadiness-final-01; packagechangesdescription/examples/devbenchscript only,
+exportsandbindingsunchanged. Therefore162timedcells describeitsruntime; no fictitious
+newtarbenchmarkrerun. Fouractualinstalled22/24npm/pnpm CJS/ESM/types/native reports
+and22example/probecommandsPASS. Combinedplatformexecutionremainsunverified.
