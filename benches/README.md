@@ -1,5 +1,9 @@
 # Reproducible local benchmarks
 
+For current installed CJS/ESM object APIs, use [the public API runner](public-api/README.md)
+and [per-API evidence](../docs/roadmap/PUBLIC_API_PERFORMANCE_REVIEW.md). The older
+harness below preserves historical comparisons and supports exploratory work.
+
 Run `node benches/run.cjs` after installing project dependencies and building the
 release addon. Every cell validates its exact output against the pinned upstream
 before timing. A differing output is INCOMPATIBLE and is never reported as a

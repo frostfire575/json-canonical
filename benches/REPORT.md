@@ -1,5 +1,8 @@
 # Local release-addon benchmark evaluation
 
+Historical source-specific evidence. Current installed public API measurements
+and API boundaries are in [performance by API](../docs/performance.md).
+
 The optimized native text engine improves the measured real API and dependency-lock text workloads. Deep-input performance improved substantially after removing repeated subtree parsing. Unicode-heavy input remains much slower than JavaScript. Ordinary object inputs and small batches still need workload-specific decisions; no automatic native routing is justified.
 
 Measured 2026-10-19 UTC, Windows x64 10.0.26300, Node v24.20.0, V8 13.6.233.17-node.53, 12th Gen Intel(R) Core(TM) i7-12700K, rustc 1.98.1 (48a229cea 2026-09-01), 32 GiB RAM. Optimized commit: `28326e78193cc29119a30683afb6aeaeac09556f`; native SHA-256: `117e5a5b6fade6a31a012586b982dd5eddd378fc9e112a981ed1259bd729f07e`. Baseline commit: `9c4a1fe4ef1a525ae97b5368ed4dd9b7d4f24d1c`. The actual release-mode addon is used, including JS/native conversion and return costs. Other platforms are UNVERIFIED.

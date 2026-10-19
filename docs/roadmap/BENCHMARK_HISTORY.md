@@ -53,3 +53,29 @@ Full-count candidate1FAILED sparse gate; retained all116cells. Predicate-only
 profiles00-55-33-341Z-25732 and00-56-25-381Z-2764 isolate routing overhead.
 Exact commands/manifests and raw allsamples/source snapshots live in reproduction/.
 No compilation/tests ran during independent timing. No productionbatch speedclaim.
+
+## Installed public API evidence, source757bc26, 2026-10-19
+114 cells on Windows11 x64/i7-12700K/Node24.20.0/Rust1.98.1;1s warmup,
+9x100ms minimum samples, two shuffled fresh-process runs. Packed candidate
+readiness-benchmark-01 SHA256
+66e82b265c2e3dfb3edfe7220c1b2c63a0506e453612d7c8884f95f7e7667017.
+All before/after exact comparisons PASS. Raw JSON in benches/public-api/results:
+- 2026-10-19T01-32-18-492Z-7352.json:84object cells, seven real inputs,
+  installed CJS/ESM stringify/alias, upstream and full object-native roundtrip.
+- 2026-10-19T01-35-24-055Z-14936.json:6batch cells,32real comments.
+- 2026-10-19T01-36-28-139Z-19788.json:24existing-text/selection cells.
+
+No compatible export repeats >=10% gain on any fixture. Actual public CJS
+lock1879/2162 vsupstream2067/2020; CLDR7958/8000 vs7620/7894ops/s.
+Full object-native lock2361/2396; CLDR6186/6213 (19-21%slower vsupstream).
+Existing-text lock3558/3451 vsparse+upstream1427/1393; CLDR9569/9311
+vs5165/5110. These are different APIs, not universal stringify speedups.
+Native batch34913/34898 vsold34629/35020 and current-native-loop36397/37643
+batches/s: no meaningful security-fix regression;4-7% slower than repeated calls.
+Selection lock7024/6999 vs4980/4956; fullAPI535/527 vs713/712; CLDR8762/8680
+vs17497/17110. CPU/RSS/maxRSS are process observations, not allocation counts.
+PUBLIC_API_PERFORMANCE_REVIEW.md has all CJS/ESM aliases, median/MAD and variability;
+frozen runners, source/license/packed/installed/loaded hashes and samples retained.
+Commands and machine metadata are embedded in each raw report. No new Node22 or
+foreign-platform performance measurements; prior cache and output findings remain
+historical evidence. Final runner6selftests and both syntax checks PASS.

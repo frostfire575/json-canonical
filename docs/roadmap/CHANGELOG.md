@@ -18,3 +18,11 @@
   rejected full-count Unicode routing, accepted bounded lossless UTF16 output.
 - Final host-only tarball verified across npm/pnpm and Node22/24, including exact
   packed/installed/compiled addon identities. Combined target jobs still unverified.
+
+- Fixed native batch indexed-read/iterator validation bypass and changing option
+  getter limit bypass with single-read validated snapshots;9security regressions.
+- Raised current JS verification to62groups on Windows Node22/24;5Rust and strictTS.
+- Hardened schema2 candidate verifier with packed/installed/loaded hashes, genuine
+  binary architecture checks and negative combined gate; pinned reviewed CI actions.
+- Measured114 installed public-API/text/batch cells; compatible stringify shows no
+  robust repeated >=10% gain. Per-API reports preserve unfavorable results.

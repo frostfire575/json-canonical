@@ -5,8 +5,19 @@ a separate Rust/napi-rs v3 engine for existing JSON text. Experimental 0.1.0;
 not yet a published or production-verified release. Rust acceleration of live
 JavaScript objects is **not** promised.
 
+| API | Execution and intended use |
+|---|---|
+| `stringify` / `stableStringify` | JavaScript traversal with upstream semantics; no Rust call or automatic native conversion |
+| `stringifyJson` | Rust sorting of existing JSON text; preserves scalar token spelling |
+| `selectJson` | Raw JSON-text extraction with explicit path/validation rules |
+| `stringifyBatch` / `stringifyJsonBatch` | Ordered convenience APIs; no batching speed guarantee |
+| `createSerializerCache` | Skips serialization only when the caller supplies an unchanged version |
+
+Object-input, existing-text and conversion-roundtrip benchmarks are separate
+operations. A native JSON-text result is never a universal `stringify` speedup.
+
 ```sh
-# Build this checkout (Node >=22.13, pnpm 12.10.1, Rust >=1.88, platform linker)
+# Build this checkout (Node >=22.13, pnpm 12.10.1, Rust stable, platform linker)
 pnpm install --frozen-lockfile
 pnpm setup:upstream
 pnpm build
@@ -49,29 +60,33 @@ Windows x64 has a verified local release build. Linux x64 and macOS ARM64 are
 targeted by CI but **UNVERIFIED** until their jobs execute. Node 24.20.0 and
 22.13.0 are locally tested runtimes.
 
-Independent Windows i7-12700K / Node24.20.0 rebuild (two runs,9×100ms):
+Installed Windows i7-12700K / Node24.20.0 measurements used two fresh-process
+runs, one-second warmup and nine samples per cell. On seven real-world inputs,
+compatible CJS/ESM `stringify` and its alias showed **no repeatable >=10% gain**
+over upstream. They use JavaScript traversal and do not load the native addon.
+
+Separate existing-JSON-text results (median ops/s ranges across the two runs):
 
 | Existing JSON text | JSON.parse + upstream ops/s | Rust text ops/s |
 |---|---:|---:|
-| Real dependency lock, original native |1358–1373|3268–3318|
-| Real API dataset, original native |137–139|232–236|
-| Unicode-heavy synthetic, original native |13254–13281|4479–4541|
+| Real dependency lock |1393–1427|3451–3558|
+| Real API dataset |143–146|205–250|
+| Real Bengali CLDR data |5110–5165|9311–9569|
 
-This corroborates the earlier3377/1338 lock result as a range. After profiling
-native string conversion, bounded output encoding improved dense Unicode to
-8258–8506ops/s, still below JS13260–13377. Real Bengali CLDR throughput improved
-from6840–6870 to8946–9082ops/s in matched runs. These are workload-specific results
-on one machine. The first candidate was rejected for a sparse-text regression.
+The complete object-to-native pipeline includes `JSON.stringify` on every call:
+it gained14–19% on dependency metadata but lost19–21% on CLDR. These JSON-only
+fixtures do not justify automatic native routing for arbitrary JavaScript values.
+Native batching was4–7% slower than repeated native calls; it remains an ordered,
+bounded convenience. Explicit version caching skips known unchanged records and
+adds overhead on misses. Selection won on dependency metadata and lost on the
+API and CLDR inputs. All results are workload-specific, from one Windows machine.
 
-Rust wins on selected text workloads. Ordinary object conversion can erase gains;
-batch calls show no measured advantage over same-native repeated calls. Explicit
-version caching helps known unchanged records but adds overhead on misses.
-See [performance](docs/performance.md), [independent reproduction](docs/roadmap/REPRODUCTION_REVIEW.md)
-and [output investigation](docs/roadmap/OUTPUT_BENCHMARK_REVIEW.md) for variability,
-CPU/memory, negative controls and raw artifacts; [historical report](benches/REPORT.md).
-Selective extraction was about49% faster on dependency metadata in two runs;
-it was about25% slower on the large API fixture and also lost on tiny, Unicode
-and deep inputs. Use it for measured workloads, not as a general JSON.parse replacement.
+See [performance by API](docs/performance.md) and the
+[installed API review](docs/roadmap/PUBLIC_API_PERFORMANCE_REVIEW.md) for exact
+outputs, variation, raw samples and artifact identities. The earlier3377/1338
+text-only claim and Unicode profiling are preserved in
+[independent reproduction](docs/roadmap/REPRODUCTION_REVIEW.md) and
+[output investigation](docs/roadmap/OUTPUT_BENCHMARK_REVIEW.md).
 
 [API](docs/api.md) · [compatibility](docs/compatibility.md) ·
 [architecture](docs/architecture.md) · [security](docs/security.md) ·

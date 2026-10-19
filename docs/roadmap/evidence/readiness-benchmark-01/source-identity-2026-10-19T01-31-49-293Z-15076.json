@@ -1,0 +1,178 @@
+{
+  "schemaVersion": 2,
+  "filename": "stable-json-rs-0.1.0.tgz",
+  "sha256": "66e82b265c2e3dfb3edfe7220c1b2c63a0506e453612d7c8884f95f7e7667017",
+  "files": {
+    "package.json": {
+      "bytes": 1827,
+      "sha256": "91633fcc50ca614e88363d3cd68b106726df2257cccd3b9ef5f86068375ab2d3"
+    },
+    "js/dist/index.js": {
+      "bytes": 6713,
+      "sha256": "b6245abfad41dfbedfb3c4870fa17c398353d8ef7a9432f903c25d0d3533893a"
+    },
+    "js/dist/index.d.ts": {
+      "bytes": 1837,
+      "sha256": "e9ba420fd011039ecd68b0254fa9eec8cf99293fd59d05b78ba39c1d69d59bd5"
+    },
+    "js/index.cjs": {
+      "bytes": 59,
+      "sha256": "f725264677360136f8151ec72515ce19f7f61814df9f4c779baca304ad3f850a"
+    },
+    "js/index.mjs": {
+      "bytes": 200,
+      "sha256": "8b07c342282dfb402ad7166bbb1e23f3ab8460254330f3760c616ae6b706b95f"
+    },
+    "js/index.d.mts": {
+      "bytes": 104,
+      "sha256": "ebe3fc72c98258b4fab6dc3802ccf5bfba8086818db27f70b9e6552b33d13acf"
+    },
+    "native/binding.js": {
+      "bytes": 33427,
+      "sha256": "a1df31adec1a2b469c8af3b067545edfc83c7e037435c04ce3ee5d73fb1536d3"
+    },
+    "native/binding.d.ts": {
+      "bytes": 913,
+      "sha256": "839513876a6251830f3bd1f40520725432837ce788a3ed893ba5cff3fc478eab"
+    },
+    "LICENSE": {
+      "bytes": 1145,
+      "sha256": "a833d366242c298cf1b10263516572fb8dcbe68eb5072cdcac2b4546e2b4eb36"
+    },
+    "NOTICE": {
+      "bytes": 377,
+      "sha256": "d9bb5e6f0e89950e927b76629d4cf03a1ea0f5ff9bb9aa2bf75ab243ac25e3d8"
+    },
+    "THIRD_PARTY_NOTICES.txt": {
+      "bytes": 346626,
+      "sha256": "954eb547ec8abe02e00ac64d0842ab5b3139bf94fdacb4bf80f4c4292d9c4c7a"
+    },
+    "README.md": {
+      "bytes": 4053,
+      "sha256": "20d7ce49be20dec58e724867744fd2ab3b7d1c94022552eac003e5f2708fbfa4"
+    },
+    "docs/performance.md": {
+      "bytes": 6070,
+      "sha256": "2ac6eaec9d1194149bd41f68b82d5e9936e27d3826844ccc009f5d111a66377b"
+    },
+    "native/stable-json-rs.win32-x64-msvc.node": {
+      "bytes": 412672,
+      "sha256": "96ba87bcc9a76f9c2cce21cede7ef74ea10e69b147a69b5435536f1ce81c5f86"
+    }
+  },
+  "gitCommit": "757bc263d0ce9c6774da5fd68e3f7b9935e152ef",
+  "date": "2026-10-19T01:31:49.293Z",
+  "node": "v24.20.0",
+  "command": "node scripts/verify-installed-identity.cjs .verification\\readiness-benchmark-01",
+  "verifierSha256": "89be987b56fbeaa34b48565da0b152d0be0cf1c94bdffca149f7aaeb877f3472",
+  "status": "PASS",
+  "consumers": [
+    {
+      "manager": "npm",
+      "installed": "D:\\misc\\npm\\stable-json-rs\\.verification\\readiness-benchmark-01\\npm\\node_modules\\stable-json-rs",
+      "loadedNative": "D:\\misc\\npm\\stable-json-rs\\.verification\\readiness-benchmark-01\\npm\\node_modules\\stable-json-rs\\native\\stable-json-rs.win32-x64-msvc.node",
+      "files": [
+        {
+          "file": "js/dist/index.js",
+          "sha256": "b6245abfad41dfbedfb3c4870fa17c398353d8ef7a9432f903c25d0d3533893a"
+        },
+        {
+          "file": "js/dist/index.d.ts",
+          "sha256": "e9ba420fd011039ecd68b0254fa9eec8cf99293fd59d05b78ba39c1d69d59bd5"
+        },
+        {
+          "file": "js/index.cjs",
+          "sha256": "f725264677360136f8151ec72515ce19f7f61814df9f4c779baca304ad3f850a"
+        },
+        {
+          "file": "js/index.mjs",
+          "sha256": "8b07c342282dfb402ad7166bbb1e23f3ab8460254330f3760c616ae6b706b95f"
+        },
+        {
+          "file": "js/index.d.mts",
+          "sha256": "ebe3fc72c98258b4fab6dc3802ccf5bfba8086818db27f70b9e6552b33d13acf"
+        },
+        {
+          "file": "native/binding.js",
+          "sha256": "a1df31adec1a2b469c8af3b067545edfc83c7e037435c04ce3ee5d73fb1536d3"
+        },
+        {
+          "file": "native/binding.d.ts",
+          "sha256": "839513876a6251830f3bd1f40520725432837ce788a3ed893ba5cff3fc478eab"
+        },
+        {
+          "file": "native/stable-json-rs.win32-x64-msvc.node",
+          "sha256": "96ba87bcc9a76f9c2cce21cede7ef74ea10e69b147a69b5435536f1ce81c5f86"
+        }
+      ]
+    },
+    {
+      "manager": "pnpm",
+      "installed": "D:\\misc\\npm\\stable-json-rs\\.verification\\readiness-benchmark-01\\pnpm\\node_modules\\.pnpm\\stable-json-rs@file+candidate.tgz\\node_modules\\stable-json-rs",
+      "loadedNative": "D:\\misc\\npm\\stable-json-rs\\.verification\\readiness-benchmark-01\\pnpm\\node_modules\\.pnpm\\stable-json-rs@file+candidate.tgz\\node_modules\\stable-json-rs\\native\\stable-json-rs.win32-x64-msvc.node",
+      "files": [
+        {
+          "file": "js/dist/index.js",
+          "sha256": "b6245abfad41dfbedfb3c4870fa17c398353d8ef7a9432f903c25d0d3533893a"
+        },
+        {
+          "file": "js/dist/index.d.ts",
+          "sha256": "e9ba420fd011039ecd68b0254fa9eec8cf99293fd59d05b78ba39c1d69d59bd5"
+        },
+        {
+          "file": "js/index.cjs",
+          "sha256": "f725264677360136f8151ec72515ce19f7f61814df9f4c779baca304ad3f850a"
+        },
+        {
+          "file": "js/index.mjs",
+          "sha256": "8b07c342282dfb402ad7166bbb1e23f3ab8460254330f3760c616ae6b706b95f"
+        },
+        {
+          "file": "js/index.d.mts",
+          "sha256": "ebe3fc72c98258b4fab6dc3802ccf5bfba8086818db27f70b9e6552b33d13acf"
+        },
+        {
+          "file": "native/binding.js",
+          "sha256": "a1df31adec1a2b469c8af3b067545edfc83c7e037435c04ce3ee5d73fb1536d3"
+        },
+        {
+          "file": "native/binding.d.ts",
+          "sha256": "839513876a6251830f3bd1f40520725432837ce788a3ed893ba5cff3fc478eab"
+        },
+        {
+          "file": "native/stable-json-rs.win32-x64-msvc.node",
+          "sha256": "96ba87bcc9a76f9c2cce21cede7ef74ea10e69b147a69b5435536f1ce81c5f86"
+        }
+      ]
+    }
+  ],
+  "verificationReports": [
+    {
+      "manager": "npm",
+      "node": "v22.13.0",
+      "status": "PASS",
+      "sha256": "66e82b265c2e3dfb3edfe7220c1b2c63a0506e453612d7c8884f95f7e7667017"
+    },
+    {
+      "manager": "npm",
+      "node": "v24.20.0",
+      "status": "PASS",
+      "sha256": "66e82b265c2e3dfb3edfe7220c1b2c63a0506e453612d7c8884f95f7e7667017"
+    },
+    {
+      "manager": "pnpm",
+      "node": "v22.13.0",
+      "status": "PASS",
+      "sha256": "66e82b265c2e3dfb3edfe7220c1b2c63a0506e453612d7c8884f95f7e7667017"
+    },
+    {
+      "manager": "pnpm",
+      "node": "v24.20.0",
+      "status": "PASS",
+      "sha256": "66e82b265c2e3dfb3edfe7220c1b2c63a0506e453612d7c8884f95f7e7667017"
+    }
+  ],
+  "limitations": [
+    "Only the current host addon is loaded. Identity is not cross-platform runtime verification."
+  ]
+}

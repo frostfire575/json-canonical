@@ -60,3 +60,14 @@ semantics and explicit version caching without new acceleration claims.
 Keep parse/stream/async/hash deferred. Final bundled artifact verification is
 separate from source builds: CI packs once and each target/Node pair installs the
 same checksum-bound candidate. Actual hosted target runs remain unavailable.
+
+## Production-readiness priorities after independent output optimization
+Accepted output encoding is retained; new APIs remain deferred. The current
+continuation audits actual packed installs and all3target CI configuration, then
+measures installed CJS/ESM compatibility serialization on real live objects. No
+native-text result will be presented as object stringify acceleration. Two native
+wrapper validation/use races are fixed and independently tested: text batch
+snapshots and captured option limits. Schema2 verifies packed/installed/loaded
+runtime bytes and real binary architecture headers. A host-only candidate must
+fail the combined gate. Hostedplatform execution remains an explicit release
+blocker; local fullchecks and fresh audits cannot substitute for it.

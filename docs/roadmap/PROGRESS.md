@@ -169,3 +169,18 @@ Both getter-related wrapper fixes rebuilt and independently9groupsPASS on22/24;
 fullrelease5Rust62JS/strictTS and minNode62JS PASS. Rootrustfmt/clippy,harness12
 and currentCIconfiglint PASS. Prepared first schema2 packed candidate next, then
 isolated installedCJS/ESM objectbenchmarks. No general stringifyspeed claim exists.
+
+## Installed public API and CI review milestone
+Source757bc26 packed once into readiness-benchmark-01. Both offline installers
+pass CJS/ESM/native/strict types on Node22.13 and24.20; schema2 and loaded/source
+identities pass. Security fixes now have actual installed regression coverage.
+Independent runner completed114 exact-checked cells (84object,6batch,24text/select)
+from seven real fixtures with two shuffled processes,1s warmup,9samples per cell.
+No compatibility export repeats a >=10% gain on any fixture. Native text wins
+on lock/API/CLDR, but full object conversion loses19-21% on CLDR. Batch is4-7%
+slower than a same-native loop and unchanged materially by snapshot validation.
+Final runner6selftests pass. Cache retained with explicit versions and historical
+hit/miss evidence, no new cache speed claim. Full reports preserve samples/MAD,
+machine/commit/source/tar identities and caveats. Actions pinned to inspected
+maintainer commits; actionlint passes. Genuine final documentation candidate next;
+Linux/macOS and combined execution remain blocked, no remote action taken.

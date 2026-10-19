@@ -29,3 +29,9 @@ This scope does not prove all
 possible JS programs; arbitrary monkeypatching beyond tested behavior remains
 a risk. No RFC8785 compliance claim. JSON.stringify differs for numeric-looking
 key order, boxed primitives, toJSON arguments and other observable behavior.
+
+Production review adds single-read validation for native extensions. Text batches
+snapshot each indexed string once, including arrays with accessors or custom
+iterators; native options are captured once in validation order. Independent
+regressions cover malformed UTF-16 replacement and depth/byte-limit bypasses.
+These corrections do not change upstream compatibility traversal or its callbacks.

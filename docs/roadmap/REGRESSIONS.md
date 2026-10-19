@@ -52,3 +52,12 @@ undefined yielded[[0]] instead of error. Ninth regression group failed beforefix
 Fix: captureindexedbatchvaluesonce; validate/passplain snapshot. Captureoption
 valuesduringvalidationloop andforwardthat tuple. Compatibilitystringifyunchanged.
 Allnewnegativecases retained; final compiled and installed verification follows.
+
+### RD-01 resolution
+Source757bc26 release build5Rust62JS/strictTS PASS; all62JS and independent9security
+groups PASS on Node22/24. Actual readiness-benchmark-01 npm/pnpm installations pass
+both runtime versions including the single-read batch and changing-limit getter
+regressions. Current native batch34913/34898 vsold34629/35020batches/s (two runs)
+shows no meaningful before/after throughput change. No failing case removed;
+public compatibility traversal unchanged. Final documentation pack remains a
+separate identity/install gate; combined-target verification remains unexecuted.

@@ -1,0 +1,269 @@
+{
+  "raw": "benches/public-api/results/2026-10-19T01-36-28-139Z-19788.json",
+  "rows": [
+    {
+      "dataset": "dependency-lock",
+      "run": 1,
+      "method": "select-text",
+      "medianOpsPerSecond": 7023.740041803235,
+      "madPercent": 1.129162735329229,
+      "baselineMethod": "upstream-select-text",
+      "throughputDeltaPercent": 41.049660512105255,
+      "latencyMicroseconds": 142.37428977272708,
+      "exact": true
+    },
+    {
+      "dataset": "dependency-lock",
+      "run": 1,
+      "method": "upstream-text",
+      "medianOpsPerSecond": 1427.4300509711486,
+      "madPercent": 0.6762589867596415,
+      "baselineMethod": "upstream-text",
+      "throughputDeltaPercent": 0,
+      "latencyMicroseconds": 700.5597222222219,
+      "exact": true
+    },
+    {
+      "dataset": "dependency-lock",
+      "run": 1,
+      "method": "native-text",
+      "medianOpsPerSecond": 3558.0646500346925,
+      "madPercent": 1.7740000249284287,
+      "baselineMethod": "upstream-text",
+      "throughputDeltaPercent": 149.26367828770117,
+      "latencyMicroseconds": 281.05166666666656,
+      "exact": true
+    },
+    {
+      "dataset": "dependency-lock",
+      "run": 1,
+      "method": "upstream-select-text",
+      "medianOpsPerSecond": 4979.622082252682,
+      "madPercent": 0.74906820208846,
+      "baselineMethod": "upstream-select-text",
+      "throughputDeltaPercent": 0,
+      "latencyMicroseconds": 200.81845238095255,
+      "exact": true
+    },
+    {
+      "dataset": "dependency-lock",
+      "run": 2,
+      "method": "upstream-text",
+      "medianOpsPerSecond": 1392.9961315336604,
+      "madPercent": 0.8382187972492591,
+      "baselineMethod": "upstream-text",
+      "throughputDeltaPercent": 0,
+      "latencyMicroseconds": 717.877083333333,
+      "exact": true
+    },
+    {
+      "dataset": "dependency-lock",
+      "run": 2,
+      "method": "select-text",
+      "medianOpsPerSecond": 6998.651964195521,
+      "madPercent": 0.32273764501269075,
+      "baselineMethod": "upstream-select-text",
+      "throughputDeltaPercent": 41.212336868618536,
+      "latencyMicroseconds": 142.88465909090934,
+      "exact": true
+    },
+    {
+      "dataset": "dependency-lock",
+      "run": 2,
+      "method": "upstream-select-text",
+      "medianOpsPerSecond": 4956.119358542266,
+      "madPercent": 0.4287709047378817,
+      "baselineMethod": "upstream-select-text",
+      "throughputDeltaPercent": 0,
+      "latencyMicroseconds": 201.77076612903207,
+      "exact": true
+    },
+    {
+      "dataset": "dependency-lock",
+      "run": 2,
+      "method": "native-text",
+      "medianOpsPerSecond": 3450.5000284274124,
+      "madPercent": 0.5892158528204261,
+      "baselineMethod": "upstream-text",
+      "throughputDeltaPercent": 147.70348964490535,
+      "latencyMicroseconds": 289.8130681818184,
+      "exact": true
+    },
+    {
+      "dataset": "public-api-document",
+      "run": 1,
+      "method": "select-text",
+      "medianOpsPerSecond": 535.1605242661852,
+      "madPercent": 0.5591021307960105,
+      "baselineMethod": "upstream-select-text",
+      "throughputDeltaPercent": -24.91318772507404,
+      "latencyMicroseconds": 1868.5982142857135,
+      "exact": true
+    },
+    {
+      "dataset": "public-api-document",
+      "run": 1,
+      "method": "native-text",
+      "medianOpsPerSecond": 249.61738335457665,
+      "madPercent": 1.2130655372874066,
+      "baselineMethod": "upstream-text",
+      "throughputDeltaPercent": 70.56387006791165,
+      "latencyMicroseconds": 4006.1312500000026,
+      "exact": true
+    },
+    {
+      "dataset": "public-api-document",
+      "run": 1,
+      "method": "upstream-text",
+      "medianOpsPerSecond": 146.34833464741922,
+      "madPercent": 1.1053990043731836,
+      "baselineMethod": "upstream-text",
+      "throughputDeltaPercent": 0,
+      "latencyMicroseconds": 6833.012500000009,
+      "exact": true
+    },
+    {
+      "dataset": "public-api-document",
+      "run": 1,
+      "method": "upstream-select-text",
+      "medianOpsPerSecond": 712.7223916587727,
+      "madPercent": 0.7641011599912787,
+      "baselineMethod": "upstream-select-text",
+      "throughputDeltaPercent": 0,
+      "latencyMicroseconds": 1403.0708333333325,
+      "exact": true
+    },
+    {
+      "dataset": "public-api-document",
+      "run": 2,
+      "method": "select-text",
+      "medianOpsPerSecond": 526.45136059474,
+      "madPercent": 0.9802544142773644,
+      "baselineMethod": "upstream-select-text",
+      "throughputDeltaPercent": -26.09778165513389,
+      "latencyMicroseconds": 1899.510714285713,
+      "exact": true
+    },
+    {
+      "dataset": "public-api-document",
+      "run": 2,
+      "method": "upstream-text",
+      "medianOpsPerSecond": 143.32063154236263,
+      "madPercent": 0.9511151647857214,
+      "baselineMethod": "upstream-text",
+      "throughputDeltaPercent": 0,
+      "latencyMicroseconds": 6977.362500000013,
+      "exact": true
+    },
+    {
+      "dataset": "public-api-document",
+      "run": 2,
+      "method": "upstream-select-text",
+      "medianOpsPerSecond": 712.3620540564083,
+      "madPercent": 1.3440147820469146,
+      "baselineMethod": "upstream-select-text",
+      "throughputDeltaPercent": 0,
+      "latencyMicroseconds": 1403.7805555555535,
+      "exact": true
+    },
+    {
+      "dataset": "public-api-document",
+      "run": 2,
+      "method": "native-text",
+      "medianOpsPerSecond": 204.68681637801544,
+      "madPercent": 0.8873053709996708,
+      "baselineMethod": "upstream-text",
+      "throughputDeltaPercent": 42.81741168403532,
+      "latencyMicroseconds": 4885.512500000004,
+      "exact": true
+    },
+    {
+      "dataset": "cldr-bengali",
+      "run": 1,
+      "method": "native-text",
+      "medianOpsPerSecond": 9568.748467505118,
+      "madPercent": 1.7094483289525633,
+      "baselineMethod": "upstream-text",
+      "throughputDeltaPercent": 85.27599628842954,
+      "latencyMicroseconds": 104.50687500000011,
+      "exact": true
+    },
+    {
+      "dataset": "cldr-bengali",
+      "run": 1,
+      "method": "select-text",
+      "medianOpsPerSecond": 8761.824729652903,
+      "madPercent": 0.8407162895152925,
+      "baselineMethod": "upstream-select-text",
+      "throughputDeltaPercent": -49.924571336749764,
+      "latencyMicroseconds": 114.13147727272727,
+      "exact": true
+    },
+    {
+      "dataset": "cldr-bengali",
+      "run": 1,
+      "method": "upstream-text",
+      "medianOpsPerSecond": 5164.5915602628365,
+      "madPercent": 1.482591145420273,
+      "baselineMethod": "upstream-text",
+      "throughputDeltaPercent": 0,
+      "latencyMicroseconds": 193.6261538461539,
+      "exact": true
+    },
+    {
+      "dataset": "cldr-bengali",
+      "run": 1,
+      "method": "upstream-select-text",
+      "medianOpsPerSecond": 17497.253570358556,
+      "madPercent": 0.3921589242536719,
+      "baselineMethod": "upstream-select-text",
+      "throughputDeltaPercent": 0,
+      "latencyMicroseconds": 57.151826484018194,
+      "exact": true
+    },
+    {
+      "dataset": "cldr-bengali",
+      "run": 2,
+      "method": "native-text",
+      "medianOpsPerSecond": 9310.579444309604,
+      "madPercent": 0.3554412822501233,
+      "baselineMethod": "upstream-text",
+      "throughputDeltaPercent": 82.19258270848306,
+      "latencyMicroseconds": 107.40470085470086,
+      "exact": true
+    },
+    {
+      "dataset": "cldr-bengali",
+      "run": 2,
+      "method": "upstream-text",
+      "medianOpsPerSecond": 5110.295548752926,
+      "madPercent": 0.872449953844758,
+      "baselineMethod": "upstream-text",
+      "throughputDeltaPercent": 0,
+      "latencyMicroseconds": 195.6833984374997,
+      "exact": true
+    },
+    {
+      "dataset": "cldr-bengali",
+      "run": 2,
+      "method": "select-text",
+      "medianOpsPerSecond": 8680.01982866914,
+      "madPercent": 0.672525074849464,
+      "baselineMethod": "upstream-select-text",
+      "throughputDeltaPercent": -49.26974579386425,
+      "latencyMicroseconds": 115.20711009174326,
+      "exact": true
+    },
+    {
+      "dataset": "cldr-bengali",
+      "run": 2,
+      "method": "upstream-select-text",
+      "medianOpsPerSecond": 17110.144556735344,
+      "madPercent": 0.8190066086226064,
+      "baselineMethod": "upstream-select-text",
+      "throughputDeltaPercent": 0,
+      "latencyMicroseconds": 58.44485981308403,
+      "exact": true
+    }
+  ]
+}

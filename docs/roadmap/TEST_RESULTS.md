@@ -211,3 +211,27 @@ Environment unchanged: Windows x64,i7-12700K,Node24.20/22.13,Rust1.98.1,pnpm12.1
 - Public-API benchmark runner selftests4PASS (agent-owned; no timings yet).
 - Current combined-native runtime/package check remains NOTRUN: no Linuxserver,
   macOS host or foreign addon available. Preparedschema2gate rejectsabsence.
+
+## Installed readiness benchmark candidate and independent harness
+2026-10-19, same Windows environment; source757bc26. Commands executed:
+- pnpm pack --pack-destination .verification/readiness-benchmark-01: PASS once.
+- node scripts/verify-ci-candidate.cjs manifest .verification/readiness-benchmark-01
+  and prepare with that path: PASS schema2, genuine host addon only.
+- npm install --offline --ignore-scripts --no-audit --no-fund --cache
+  D:/misc/npm/stable-json-rs/.verification/npm-cache ./candidate.tgz in npm consumer:
+  PASS; pnpm add --offline --ignore-scripts --store-dir
+  D:/misc/npm/stable-json-rs/.verification/pnpm-store ./candidate.tgz in pnpm: PASS.
+- node scripts/verify-ci-candidate.cjs verify .verification/readiness-benchmark-01:
+  PASS both consumers Node24.20; same command with
+  .tools/node-v22.13.0-win-x64/node.exe: PASS both Node22.13.
+  CJS/ESM, strict CTS/MTS declarations, native loading, token/Unicode/errors and
+  new batch/limit regressions execute against installed package, no build scripts.
+- node scripts/verify-installed-identity.cjs .verification/readiness-benchmark-01:
+  PASS source/packed/installed/loaded identities. Native96ba87... matches releaseDLL.
+- PUBLIC_API_CANDIDATE=.verification/readiness-benchmark-01 with node
+  benches/public-api/run.cjs:84object cells PASS; PUBLIC_API_BATCH=1:6PASS;
+  PUBLIC_API_TEXT=1, batch unset:24PASS. All114 exact outputs checked before/after.
+  Raw paths/commands/machine/samples in BENCHMARK_HISTORY.md and public API review.
+- Final PUBLIC_API_CANDIDATE-selected node --test benches/public-api/run.test.cjs:
+  6PASS; node --check on run.cjs/run.test.cjs PASS. Final guards don't change frozen
+  measured source snapshots. No release-platform gate inferred from these checks.

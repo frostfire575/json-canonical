@@ -1,0 +1,71 @@
+{
+  "raw": "benches/public-api/results/2026-10-19T01-35-24-055Z-14936.json",
+  "rows": [
+    {
+      "dataset": "api-comments-batch32",
+      "run": 1,
+      "method": "batch-original",
+      "medianOpsPerSecond": 34629.23030937381,
+      "madPercent": 0.3893781095329735,
+      "baselineMethod": "batch-original",
+      "throughputDeltaPercent": 0,
+      "latencyMicroseconds": 28.87733833718243,
+      "exact": true
+    },
+    {
+      "dataset": "api-comments-batch32",
+      "run": 1,
+      "method": "batch-current",
+      "medianOpsPerSecond": 34912.72816606311,
+      "madPercent": 1.975989325065547,
+      "baselineMethod": "batch-original",
+      "throughputDeltaPercent": 0.8186663525483029,
+      "latencyMicroseconds": 28.642848970251748,
+      "exact": true
+    },
+    {
+      "dataset": "api-comments-batch32",
+      "run": 1,
+      "method": "loop-current",
+      "medianOpsPerSecond": 36397.16006369505,
+      "madPercent": 1.5597106871204995,
+      "baselineMethod": "batch-original",
+      "throughputDeltaPercent": 5.105310567190635,
+      "latencyMicroseconds": 27.47467105263156,
+      "exact": true
+    },
+    {
+      "dataset": "api-comments-batch32",
+      "run": 2,
+      "method": "batch-current",
+      "medianOpsPerSecond": 34898.33464268638,
+      "madPercent": 0.3542170837224188,
+      "baselineMethod": "batch-original",
+      "throughputDeltaPercent": -0.3462318156876809,
+      "latencyMicroseconds": 28.654662471395877,
+      "exact": true
+    },
+    {
+      "dataset": "api-comments-batch32",
+      "run": 2,
+      "method": "loop-current",
+      "medianOpsPerSecond": 37643.48581875581,
+      "madPercent": 0.9522449381540904,
+      "baselineMethod": "batch-original",
+      "throughputDeltaPercent": 7.492671150080232,
+      "latencyMicroseconds": 26.565021231422502,
+      "exact": true
+    },
+    {
+      "dataset": "api-comments-batch32",
+      "run": 2,
+      "method": "batch-original",
+      "medianOpsPerSecond": 35019.58358277127,
+      "madPercent": 0.5814179869339748,
+      "baselineMethod": "batch-original",
+      "throughputDeltaPercent": 0,
+      "latencyMicroseconds": 28.555450913241987,
+      "exact": true
+    }
+  ]
+}

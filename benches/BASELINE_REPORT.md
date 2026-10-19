@@ -1,5 +1,8 @@
 # Local release-addon benchmark evaluation
 
+Historical source-specific evidence. Current installed public API measurements
+and API boundaries are in [performance by API](../docs/performance.md).
+
 Measured 2026-10-19 UTC at commit `9c4a1fe4ef1a525ae97b5368ed4dd9b7d4f24d1c`, Windows x64 10.0.26300, Node v24.20.0, V8 13.6.233.17-node.53, 12th Gen Intel(R) Core(TM) i7-12700K, rustc 1.98.1 (48a229cea 2026-09-01), 32 GiB RAM. The lead built the actual addon in Cargo release mode before these runs. Native artifact SHA-256: `2b5bc47096a4ee7f3430442bf8c42aba6f1cbe9d12d150a92b87e5f688ff52ad`. Other operating systems are UNVERIFIED.
 
 The compatibility API stays close to upstream. The native API provides a measurable benefit for some already-serialized JSON workloads, but loses heavily on deep and Unicode-heavy data. Converting ordinary JS objects to text before native processing is slower than the direct upstream object serializer on every fixture in this matrix except the small batch-array fixture. No general Rust speedup is supported.

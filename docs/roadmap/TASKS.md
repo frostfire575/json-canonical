@@ -43,9 +43,9 @@
 
 | ID | Priority | Status | Dependencies | Acceptance criteria |
 |---|---|---|---|---|
-| RD-BATCH | P0 | IN_PROGRESS | none | Reproduce malformed-Unicode batch validation bypass; indexed single-read snapshot; independent regressions, release build/all tests and batch before/after measurements |
-| RD-CI | P0 | IN_PROGRESS | none | Review current official runner labels; bind packed/installed/loaded runtime files and binary architectures; negative verifier tests and actionlint; actual absent targets UNVERIFIED |
+| RD-BATCH | P0 | DONE | none | Reproduce malformed-Unicode batch validation bypass; indexed single-read snapshot; independent regressions, release build/all tests and batch before/after measurements |
+| RD-CI | P0 | DONE | none | Review current official runner labels; bind packed/installed/loaded runtime files and binary architectures; negative verifier tests and actionlint; actual absent targets UNVERIFIED |
 | RD-PACK | P0 | IN_PROGRESS | RD-BATCH,RD-CI | Pack a new candidate once; offline npm/pnpm CJS/ESM/strict declarations/native checks on available runtimes; same digest; combined missing binaries explicitly fail and target execution remains blocked |
-| RD-PUBLIC | P1 | IN_PROGRESS | RD-PACK | Measure actual installed CJS/ESM stringify/alias vs pinned upstream on equivalent real objects, conversion included for separate roundtrip; 2fresh runs/multiple samples/raw identities and no unsupported speed claim |
-| RD-REVIEW | P0 | IN_PROGRESS | RD-BATCH | Independent security/correctness/package review, dependency/advisory/license evidence; resolve findings or record release blockers |
-| RD-DOCS | P1 | TODO | RD-PUBLIC,RD-PACK,RD-REVIEW | Separate per-API performance report, current roadmap/handoff/test/regression evidence, reviewed verified local commits |
+| RD-PUBLIC | P1 | DONE | RD-PACK | Measure actual installed CJS/ESM stringify/alias vs pinned upstream on equivalent real objects, conversion included for separate roundtrip; 2fresh runs/multiple samples/raw identities and no unsupported speed claim |
+| RD-REVIEW | P0 | DONE | RD-BATCH | Independent security/correctness/package review, dependency/advisory/license evidence; resolve findings or record release blockers |
+| RD-DOCS | P1 | IN_PROGRESS | RD-PUBLIC,RD-PACK,RD-REVIEW | Separate per-API performance report, current roadmap/handoff/test/regression evidence, reviewed verified local commits |
