@@ -9,7 +9,7 @@
 | R2-PROFILE | P0 | DONE | R1-REPRO | Measure encoding/boundary/engine/sort/output and batch stages; no inferred bottleneck presented as measured; retain justified optimizations only after separate tests and before/after runs |
 | R3-COMPAT | P1 | DONE | none | Independent expansion for IEEE numbers, surrogate pairs, getters/toJSON/comparator effects, large/wide/repeated/cyclic values; exact strings/errors/events and current integration suite pass |
 | R4-PACKAGE | P1 | BLOCKED | none | CI installs identical final bundled tarball across three target runners with runtime/types/native checks; local lint/Windows artifact pass; unavailable actual jobs explicitly UNVERIFIED |
-| R4-CONFIG | P1 | IN_PROGRESS | none | Pack once, checksum-bound candidate workflow; identical tarball Windows Node22/24 npm/pnpm runtime/types install pass, lint/negative missing-platform test pass; remote jobs not counted |
+| R4-CONFIG | P1 | DONE | none | Pack once, checksum-bound candidate workflow; identical tarball Windows Node22/24 npm/pnpm runtime/types install pass, lint/negative missing-platform test pass; remote jobs not counted |
 | R5-UTILITY | P1 | DONE | R1-REPRO,R2-PROFILE | Benchmark real-data batch sizes and cache hit/miss/version/update patterns; simplify or retain with evidence; no new advanced features |
 
 | ID | Priority | Status | Dependencies | Acceptance criteria |

@@ -117,3 +117,14 @@ benchmark runner self-tests from `benches/reproduction/reproduction.test.cjs`.
 These follow-up checks are pending execution while isolated optimization timings
 run. The previous local candidate evidence above remains unchanged and does not
 verify the subsequent Rust output-route optimization.
+
+## Final ee4b51b installed-candidate follow-up
+Executed pack-once host candidate and both offline installers with scripts off.
+The SAME SHA256644220b6316efacad54546c124e1e1260efc18679a54ff9eef724f6c96232fff
+passes installed CJS/ESM/strictTS/native/denseUnicode/token/error checks on Node22
+and24. Independent reviewer verifies extracted, installed, loaded and compiled
+native SHA96ba87bcc9a76f9c2cce21cede7ef74ea10e69b147a69b5435536f1ce81c5f86.
+PACKED_OUTPUT_REVIEW.md and evidence/final-output-ee4b51b/ preserve commands/results.
+New identity script is reusable and append-only. Final actionlint/syntax checks
+passed. Earlier pending follow-up text above is historical; this section completes
+local follow-up. Linux/macOS/actual combined-package jobs remain NOT RUN.

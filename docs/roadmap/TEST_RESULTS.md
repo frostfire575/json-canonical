@@ -153,3 +153,42 @@ Windows x64 Node24.20.0,Node22.13.0,Rust1.98.1,pnpm12.10.1.
   source/SHA and overrides recorded explicitly. Candidate1performancefailure retained.
 - Final package consumers and hosted3target jobs not counted here; package checks
   follow below, actual Linux/macOS execution remains NOT RUN.
+
+## 2026-10-19 final packaged output candidate (source ee4b51b)
+Environment: Windows11 x64,i7-12700K; Node24.20.0 and22.13.0;pnpm12.10.1;
+Rust1.98.1. No production code changed after the source checks above.
+
+Commands actually executed:
+1. `pnpm pack --pack-destination .verification/final-output-ee4b51b`: PASS, once.
+2. `node scripts/verify-ci-candidate.cjs manifest .verification/final-output-ee4b51b`
+   and `prepare` with the same directory: PASS.
+3. In that directory's fresh npm consumer: `npm install --offline --ignore-scripts
+   --no-audit --no-fund ./candidate.tgz`: PASS.
+4. In its fresh pnpm consumer: `pnpm add --offline --ignore-scripts ./candidate.tgz`:
+   PASS. No Rust build or lifecycle script in either installation.
+5. `node scripts/verify-ci-candidate.cjs verify .verification/final-output-ee4b51b`:
+   PASS npm+pnpm installed CJS/ESM/native/strictTS consumers on Node24.20.0.
+6. `.tools/node-v22.13.0-win-x64/node.exe scripts/verify-ci-candidate.cjs verify
+   .verification/final-output-ee4b51b`: PASS both consumers on Node22.13.0.
+7. `node --check scripts/verify-installed-identity.cjs`: PASS.
+8. `node scripts/verify-installed-identity.cjs .verification/final-output-ee4b51b`:
+   PASS both consumers'8runtime/declaration/loader/native identities; actual local
+   .node loads recorded. Independent reviewer repeated on both Node versions and
+   independently extracted the tar binary via a binary-safe tar child-process
+   buffer; SHA matches compiled and installed artifacts. PACKED_OUTPUT_REVIEW.md.
+
+Tarball SHA256:644220b6316efacad54546c124e1e1260efc18679a54ff9eef724f6c96232fff.
+Native SHA256:96ba87bcc9a76f9c2cce21cede7ef74ea10e69b147a69b5435536f1ce81c5f86.
+Four runtime/installer reports, manifest and append-only source-identity records
+are copied into docs/roadmap/evidence/final-output-ee4b51b/ for persistent evidence.
+Large tarball remains in the ignored local candidate directory. All four reports
+bind the SAME tarball. Dense Unicode/Latin1/codeunits/raw escaped-surrogate tokens,
+batch errors, all public APIs and packed conditional declarations are exercised.
+
+The allowlist now ships public docs and benchmark summaries; full benchmark
+sources/raw corpora remain development-checkout material. Local candidate is
+Windows-only. Combined tarball, hosted transfers, Linux/macOS runtimes and Rust1.88
+execution remain NOT RUN/UNVERIFIED. No push, publication or release occurred.
+- Additional minimum-runtime CLI check: `.tools/node-v22.13.0-win-x64/node.exe
+  --test 'tests/*.test.cjs' 'tests/*.test.mjs'`: PASS49; explicit quoted glob
+  handling works on this minimum Windows runtime. No test-runner change required.

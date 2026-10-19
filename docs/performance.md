@@ -89,4 +89,4 @@ the archived original. Full-count routing was rejected because its sparse-text
 throughput regressed16%; the isolated predicate cost14.7us. The bounded predicate
 measured0.3–0.5us in private probes, not public-API latency. See
 [the output benchmark review](roadmap/OUTPUT_BENCHMARK_REVIEW.md) for per-run MAD,
-full negative controls, original binary provenance and remaining validation.
+full negative controls, original binary provenance and platform limits.

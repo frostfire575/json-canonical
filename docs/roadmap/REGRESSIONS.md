@@ -32,3 +32,13 @@ expectation was weakened; this was test-runner executable discovery.
   serialization tokens/ordering/errors unchanged. Rebuilt pnpm check PASS:
   5Rust48JS/strictTS; both root and private clippy PASS. Independent public-API
   before/after gate is still PENDING. Original output route retained in archive.
+
+### Resolution: bounded output route accepted
+Candidate2public before/after gate PASS208 exact cells on WindowsNode24/22.
+RealCLDR +31-32%/+34-35%; matched sparse controls within~2%,mixedprefix withingate.
+Root5Rust49JS/TS and independent4encoding groups pass; final same-tarball installed
+consumers and byte identities pass. The full-count candidate is rejected and its
+116cells remain unchanged. No serialization semantics were weakened to fix it.
+A single short-warmup batchsize1cell~20% low was preserved; matched1s repeats were
+within~3% with original/candidate binaries. Exactcause unproven; not represented
+as a reproducible implementation defect or silently excluded from raw evidence.

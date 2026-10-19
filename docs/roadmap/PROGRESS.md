@@ -138,3 +138,14 @@ syntax,license-generation unchanged PASS. No new production dependency or unsafe
 Rust. Final npm/pnpm installed-candidate checks still active. README/publicdocs
 now report original reproduction, updated output performance and remaininglosses.
 Batch remains convenience; versioncache retained on measured hit-rate benefits.
+
+## 2026-10-19 final local package milestone
+Packed sourceee4b51b exactly once and installed its identical checksum-bound tarball
+via npm ANDpnpm offline with scripts disabled. All installed CJS/ESM/types/native
+checks passed on Node22/24. Independent reviewer checked four matrix reports and
+binary-safe extracted addon bytes against installed/loaded/compiled bytes, all
+identical. Public docs/summaries now ship with the package. Reusable installed
+identity script and compact persistent JSON evidence added. No library/runtime
+files changed after accepted measurements. Remaining work requires actual hosted
+Windows/Linux/macOS combined-candidate execution; no remote action was taken.
+Local feature branch is retained for review, with master unchanged.

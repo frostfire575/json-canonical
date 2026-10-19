@@ -12,8 +12,9 @@
 - [x] No known critical unresolved issue in independently reviewed public scope.
 - [x] Windows Node22.13.0 minimum and Node24.20.0 runtime tests.
 - [x] CI definition checked with actionlint1.7.12; hosted jobs NOT RUN.
-- [x] Fresh Git worktree rebuild, fixture byte checks and offline installer verification.
-- [x] Packed-artifact CJS and ESM TypeScript consumers compile.
+- [x] Prior baseline fresh Git worktree rebuild (37a969c); current fixture bytes verified.
+- [x] Same final ee4b51b tarball: offline npm/pnpm CJS/ESM/types/native on Windows22/24.
+- [x] Independent packed/installed/compiled addon and wrapper byte identities verified.
 - [ ] Rust1.88 minimum toolchain execution (local Rust1.98.1 tested).
 - [ ] Human approval before any npm publication, remote push or release.
 

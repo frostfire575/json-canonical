@@ -1,87 +1,72 @@
 # Session handoff
 
-- Current phase: independent reproduction complete; native encoding and batch profiling active.
-- Prior baseline completed task: fresh Git worktree rebuild; npm/pnpm packed runtime and TS
-  consumer verification; minimum Node22.13.0 checks; local integration merge.
-- Currently active task: private dev-only napi encoding/stage probes. No production
-  serializer optimization adopted yet. See R1..R5 continuation tasks.
-- Next recommended task: measure and independently validate a justified Unicode
-  optimization, complete batch/cache utility evaluation, then execute hosted
-  Linux x64/macOS ARM64 CI and install the
-  combined candidate on each target when a remote workflow is authorized. Until
-  then, use the verified Windows candidate and preserve documented scope.
-- Files changed: Cargo.lock/Toml/build.rs, src/{lib,engine,tree,selection}.rs,
-  typed JS wrappers/conditional declarations, native generated loader, tests,
-  benches/{fixtures,harness,reports,raw results}, scripts, CI, notices and docs.
-- Tests passing: fresh baseline5 Rust/33 JS/types; expanded independent suite43 JS
-  on Node24.20.0 with25740 generated cases; installed candidate Windows22/24. Earlier
-  full baseline33 JS on Windows Node24.20.0 AND22.13.0,14500 generated
-  cases and16 upstream assertions;18 independent review tests;5 harness tests;
-  strict CJS/ESM types including packed consumers;rustfmt/clippy;release build;
-  offline npm/pnpm package installs;dependency/license checks;actionlint.
-- Tests failing: none. Historical failures and fixes: TEST_RESULTS.md/REGRESSIONS.md.
-- Latest benchmark results: native existing-text lock3377 vs JS parse+upstream1338
-  ops/s;real API231 vs137;deep72084 vs31470;Unicode4432 vs13134. Native batch3.2%
-  slower than same-native loop. Select lock6789 vs JS4556;API513 vs681. Two longer
-  confirmations, exact outputs, source/artifact hashes and all unfavorable results
-  preserved in benches/REPORT.md and results/. No universal speed claim.
-- Outstanding problems: Linux/macOS runtime and combined package NOT RUN;Docker
-  daemon unavailable,WSL only docker-desktop;no macOS host. Rust1.88 minimum NOT RUN
-  (1.98.1 verified). No known critical defect in reviewed scope. Unicode-heavy native
-  text and most selective workloads lose to JS. Full parse/stream/async/hash deferred.
-- Architectural decisions: compatibility API deliberately stays in JS; native APIs
-  process existing JSON text with explicit token/Unicode/duplicate/limit semantics.
-  Single serde validation precedes borrowed scanning. Selection uses raw visitors.
-  Cache requires explicit versions. CI bundles target binaries without publishing.
-- Exact commands required to resume (after reading AGENTS and roadmap):
-  `git status --short`; `git log -5 --oneline`; `pnpm install --frozen-lockfile`;
-  `pnpm setup:upstream`; `pnpm check`; `node --test benches/harness.test.cjs`;
-  `pnpm test:pack --npm`; `pnpm test:pack`; `pnpm audit:deps` when refreshing audits.
-  `pnpm bench` reproduces full matrix; use raw configuration overrides for longer
-  confirmations. Optional `scripts/verify-node22.ps1` repeats minimum runtime tests.
-- Prior baseline Git commit reference: fresh source37a969c;select991e97c;scanner28326e7;
-  baseline9c4a1fe. Final evidence commit follows37a969c. Local branch master contains
-  feat/native-mvp after fast-forward; feature branch retained. No remote actions.
+- Current phase: local verification complete; cross-platform release gates blocked.
+- Branch: perf/independent-reproduction. Master unchanged; no remote actions.
+- Last completed task: independently verify one final packed Windows candidate
+  with offline npm/pnpm installs on Node22.13.0 and24.20.0; CJS/ESM/strict types,
+  native dense-Unicode/token/error cases and packed/installed/compiled byte identity.
+- Currently active task: none executing. R1/R2/R3/R4-CONFIG/R5 are verified DONE.
+  R4-PACKAGE/P7-TARGETS remain BLOCKED by unavailable Linux/macOS target runners.
+- Next recommended task: execute prepared CI build and final-candidate consumer
+  matrices on Windows x64, Linux x64 and macOS ARM64 when remote execution is
+  authorized. Install the identical combined tarball on Node22/24 for every target.
+  Do not push/publish/release without explicit approval. Keep advanced APIs deferred.
+- Files changed: src/output.rs and binding mapping; native declaration; expanded
+  compatibility/output tests; independent runner/source snapshots/raw measurements;
+  private encoding/batch/allocation probes and pinned CLDR corpus/license;
+  pack-once CI/verifier and installed identity tool; package docs allowlist;
+  public docs, roadmap and compact candidate evidence JSON.
+- Tests passing:5 Rust;49 JS on EACH Windows Node22.13/24.20;25,740 seeded cases
+  plus16 upstream assertions and adversarial effects/cycles/large/wide graphs;
+  independent output review4 groups;12 benchmark-harness tests; strict TS;
+  release build; rustfmt/clippy; actionlint; unchanged38-crate license notices;
+  four installed npm/pnpm x Node22/24 CJS/ESM/types/native reports. Independent
+  reviewer verifies actual extracted/installed/loaded addon SHA and wrapper hashes.
+- Tests failing: none. Rejected performance experiment1 is retained, not shipped.
+- Latest benchmark results:404 original independent cells reproduce lock~3.2-3.4k
+  vs JS~1.3k ops/s. Revised experiment208 cells: real CLDR +31-32% on24 and
+  +34-35% on22 vs original native. Dense synthetic Unicode~4.5k ->8.3-8.5k
+  still loses to JS~13.3k; sparse/mixed controls within declared gate. Native batch
+  still slower than same-native loops. Version cache: misses3-5% slower,50% hits
+  ~1.8x,90% hits~7.3-7.7x. Full samples/MAD/artifact/source hashes in
+  REPRODUCTION_REVIEW.md, OUTPUT_BENCHMARK_REVIEW.md and benches/reproduction/results/.
+- Outstanding problems: actual Linux/macOS/combined artifact execution NOT RUN;
+  Rust1.88 minimum NOT RUN (1.98.1 verified); V8 internal call stacks and public
+  allocation peaks unmeasured. Private Rust-only allocator counts are available.
+  One short-warmup batch cell~20% low did not reproduce with matched1s warmup;
+  no exact cause claimed. Historical failures retained in REGRESSIONS.md.
+- Architectural decisions: JS compatibility traversal retained. Rust engine takes
+  bounded text, validates once and preserves scalar token spelling. Output uses
+  four distributed256-byte samples to choose lossless UTF8/UTF16; no full scan,
+  no new production dependency/unsafe code. Native input and selection unchanged.
+  Batch retained as bounded convenience, no speed claim; cache requires versions.
+  Parse/stream/async/hash remain deferred. CI packs once and verifies same SHA.
+- Relevant Git commit:ee4b51b260be4993a7097fcd1624dca2660ad7d5 is the tested library
+  source/candidate commit. Final evidence commit follows, adding only verifier
+  tooling/reports/status. Use git log -3 --oneline to identify the final HEAD.
+- Final local candidate: .verification/final-output-ee4b51b/stable-json-rs-0.1.0.tgz
+  (ignored binary; host-only). Tar SHA256:
+  644220b6316efacad54546c124e1e1260efc18679a54ff9eef724f6c96232fff.
+  Native SHA256:96ba87bcc9a76f9c2cce21cede7ef74ea10e69b147a69b5435536f1ce81c5f86.
+  Persistent reports: docs/roadmap/evidence/final-output-ee4b51b/.
 
-## Latest continuation checkpoint, 2026-10-19
-- Branch: perf/independent-reproduction, verified source6da938b; next commit records
-  full independent reproduction and private stage/allocation probes.
-- Last completed:404 measured cells,7 independent harness tests; private release
-  probes/clippy; Rust allocation counts on4 inputs. New native-output2 groups PASS
-  on unchanged production release; combined reproduction+output9 tests PASS.
-- Current: output-only adaptive UTF16 candidate, not implemented at checkpoint.
-- Next: release build/all tests, independent matched2run controls/core comparisons;
-  then evaluate batch fallback separately, final pack/lint/minimumNode checks.
-- Latest results: lock corroborated; dense Unicode output conversion dominates;
-  real batch slower3–33%; cache50%hits~1.8x,90%~7.3–7.7x,misses3–5%slower.
-- Files: benches/reproduction expanded runner/snapshots/raw/manifests; profiling
-  dev-only crate/data/raw/source snapshots; tests/native-output; evidence docs.
-- Commands: node --test benches/reproduction/reproduction.test.cjs tests/native-output.test.cjs;
-  node benches/reproduction/coverage.cjs encoding-controls; private profiler README.
-- No test failures outstanding. Linux/macOS actual hosted jobs still NOT RUN.
-
-## Active checkpoint after rejected candidate1
-- Current phase: bounded Unicode output optimization under independent timing.
-- Last completed: rebuilt candidate2; pnpm check5Rust48JS/TS and bothclippy PASS;
-  revised independent reviewer4/4PASS including mixedprefix/tail/middle blocks.
-- Current task: R2-PROFILE final public-API before/after gate. Do not accept source
-  merely because tests pass; candidate1 failed sparse-text throughput by16%.
-- Implementation: src/output.rs+src/lib.rs select lossless UTF8/UTF16 output using
-  four evenly spaced256byte samples, each>=32nonASCII. Engine/JS semantics unchanged.
-- Candidate2 release SHA256:96ba87bcc9a76f9c2cce21cede7ef74ea10e69b147a69b5435536f1ce81c5f86.
-- Original archived release: .verification/baseline-native/,SHA154d1683...;
-  source113a8eb, ignored binary can be rebuilt from that commit if absent.
-- Next: finish independent timings; ifgate passes, record exact results and commit;
-  run full49JS currenttests, Node22, final pack-once npm/pnpm22/24 checks, actionlint.
-- Changed files: src/output/lib, native declaration, independent tests/reviews,
-  runner/raw/probes, docs and installed-candidate verification extensions.
-- Existing source milestone3d049f7; current candidate not committed until gate.
-- Tests failing:none; performance gate candidate1FAILED and is rejected. Revised
-  public performance PENDING. Linux/macOS/combined hosted artifact NOT RUN.
-
-## Source milestone ready, before final candidate installation
-Current phase: output optimization accepted within verified Windows scope.
-Last completed: independent208-cell revision experiment and finalsource checks
-5Rust49JS22+24,12harness,TS/clippy/rustfmt/actionlint. Next: pack once and install
-same candidate through npm/pnpm offline on both runtimes. R4-CONFIG remains active
-until installed checks run. Source change and package verification are distinct.
+## Exact resume commands
+After AGENTS.md and roadmap/architecture/compatibility reads:
+```powershell
+git status --short
+git log -5 --oneline
+pnpm install --frozen-lockfile
+pnpm setup:upstream
+pnpm check
+node --test benches/harness.test.cjs benches/reproduction/reproduction.test.cjs
+./scripts/verify-node22.ps1
+node scripts/verify-ci-candidate.cjs verify .verification/final-output-ee4b51b
+node scripts/verify-installed-identity.cjs .verification/final-output-ee4b51b
+```
+Use existing candidate verify commands only if its ignored directory still exists.
+For a new candidate, pack into a NEW directory; run manifest/prepare, both offline
+installers there, then verify. Commands are recorded in TEST_RESULTS.md. Never
+overwrite previous raw/tarball evidence. On target CI, --all-targets is required.
+For performance, read benches/reproduction/README.md; run serial with no builds
+or concurrent tests. Archived comparison groups require the retained old Windows
+addon; normal independent groups do not. Private profiling README documents probes.
