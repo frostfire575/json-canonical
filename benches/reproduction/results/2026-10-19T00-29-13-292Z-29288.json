@@ -1,0 +1,879 @@
+{
+  "timestamp": "2026-10-19T00:29:13.292Z",
+  "command": "node benches/reproduction/run.cjs",
+  "config": {
+    "runs": 2,
+    "samples": 9,
+    "sampleMs": 100,
+    "warmupMs": 1000,
+    "seed": 291947
+  },
+  "selection": {
+    "datasets": "lock-normalized,unicode",
+    "methods": "oracle,native"
+  },
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "osRelease": "10.0.26300",
+    "osVersion": "Windows 11 Pro",
+    "node": "v24.20.0",
+    "v8": "13.6.233.17-node.53",
+    "processExecPath": "G:\\[Softwares]\\NodeJs\\node.exe",
+    "cpu": "12th Gen Intel(R) Core(TM) i7-12700K",
+    "logicalCpus": 20,
+    "totalMemoryBytes": 34087682048,
+    "rust": "rustc 1.98.1 (48a229cea 2026-09-01)",
+    "cargo": "cargo 1.98.1 (797e8a9bc 2026-08-05)",
+    "pnpm": "UNAVAILABLE",
+    "commit": "113a8eb79dbf7350d1f15a7e639d7a5e2492abee",
+    "dirty": "M .github/workflows/ci.yml\n M .gitignore\n M docs/roadmap/PROGRESS.md\n M docs/roadmap/TASKS.md\n?? benches/profiling/\n?? benches/reproduction/\n?? docs/roadmap/CI_REVIEW_2.md\n?? docs/roadmap/COMPATIBILITY_REVIEW_2.md\n?? scripts/verify-ci-candidate.cjs\n?? tests/expanded-compatibility.test.cjs",
+    "upstreamCommit": "49e230da2c84247b29ad4de02c9395793caefd15",
+    "napiOverride": null,
+    "nodeOptions": null,
+    "sourceHashes": {
+      "benches/reproduction/run.cjs": "ee5cfc3eddbca908e843607625febe8710c83743d0e1c45a1021f5d9dcc4fed4",
+      "js/index.ts": "bbb249b604ccaafff68a4974968995568363c101c43392dcfb57650bf2ea7ca1",
+      "js/dist/index.js": "859a2d9ce77ded096d4526b9b799e6dee275137b72db5b12b3317a6fd82760f6",
+      "native/binding.js": "a1df31adec1a2b469c8af3b067545edfc83c7e037435c04ce3ee5d73fb1536d3",
+      "src/lib.rs": "e8dee59b841e22ed90c77b4c145856ce1f5999fecf551a87e27f8729d1350919",
+      "src/tree.rs": "b345e2b5f4e22ae0f15f8132ae3dc8250aadfc4d53687d0f1c8692c03720440a",
+      "src/engine.rs": "1bea768b0d2db85a3e92653bb12b84e30981df44950032d165dee1b91514cdc6",
+      "Cargo.lock": "7fea717ccad5b4b81b64a1dc2d8c727eb849117c9989871db7ecb21b5108001e",
+      "Cargo.toml": "ccd6472ce856d3838ff371b836d07e1288c845461c0be195285a57bb2b26e337",
+      "pnpm-lock.yaml": "268854350104379c6e5698c2504908ef61cc5870655b68fab4c2ce58624b6fab"
+    },
+    "releaseArtifact": {
+      "path": "target/x86_64-pc-windows-msvc/release/stable_json_rs.dll",
+      "sha256": "154d1683ec0db600a2053528c08d776ac123367fb9afee573cb173466c14e0a1"
+    },
+    "cpuPowerPlan": "Power Scheme GUID: 381b4222-f694-41f0-9685-ff5bb260df2e  (Balanced)",
+    "dependencies": {
+      "safe-stable-stringify": "2.5.0",
+      "fast-stable-stringify": "1.0.0",
+      "@napi-rs/cli": "3.10.8"
+    }
+  },
+  "fixtures": [
+    {
+      "file": "typescript-package-lock.json",
+      "commit": "5237fd46890956e4bb8177a1a05dcd69e4166560",
+      "license": "Apache-2.0",
+      "licenseFile": "typescript-LICENSE.txt",
+      "purpose": "Real dependency metadata; large nested package graph object.",
+      "retrievedAt": "2026-10-18T23:56:25.261Z",
+      "bytes": 143844,
+      "sha256": "52b6c9bd0a26ef1b0fc27dfbfaa00df6a047cdddd587d07c4f6c1c3345faf5cf",
+      "structure": "object with 5 root properties",
+      "normalizedBytes": 93728,
+      "normalizedSha256": "5f8afda0d3a8190dd04d7561ef72ec6cd3abe74c45b1ba6a720b8dbfff7ac64e"
+    },
+    {
+      "file": "typescript-package.json",
+      "commit": "5237fd46890956e4bb8177a1a05dcd69e4166560",
+      "license": "Apache-2.0",
+      "licenseFile": "typescript-LICENSE.txt",
+      "purpose": "Real application/development configuration; medium nested object.",
+      "retrievedAt": "2026-10-18T23:56:25.262Z",
+      "bytes": 1838,
+      "sha256": "2828c1d269bd9c80d634131ec107ac69f1cfc3bf1f98d24c112c825c8acd7902",
+      "structure": "object with 12 root properties",
+      "normalizedBytes": 1370,
+      "normalizedSha256": "6faddd2dbc96b1fd682050a9b79f082dcc0a4289103040ceafbb82573f570d84"
+    },
+    {
+      "file": "upstream-test.json",
+      "commit": "49e230da2c84247b29ad4de02c9395793caefd15",
+      "license": "MIT",
+      "licenseFile": "upstream-LICENSE",
+      "purpose": "Established upstream benchmark fixture; array of API-shaped records. Mock fixture, not a captured production response.",
+      "retrievedAt": "2026-10-18T23:56:25.262Z",
+      "bytes": 3965,
+      "sha256": "a309a6d29ddefa0dee5628f8f2f9e50adab7f406e05fd465beafda68339739b8",
+      "structure": "array of 3 entries",
+      "normalizedBytes": 2929,
+      "normalizedSha256": "53771b6c7b6dfec175bfd04f0eb65548c71b627048a042a9c893837dd6d34935"
+    },
+    {
+      "file": "jsonplaceholder-data.json",
+      "commit": "7ae4432ac3f60e7226a899c25e04826207d07098",
+      "license": "MIT",
+      "licenseFile": "jsonplaceholder-LICENSE",
+      "purpose": "Actual JSONPlaceholder public API service backing data; fictional posts/comments/albums/photos/todos/users. Large arrays and nested API records, not private user information.",
+      "retrievedAt": "2026-10-19T00:00:05.305Z",
+      "bytes": 1378184,
+      "sha256": "e1feb959cada8c58528e199b1cfe6cf4c43734e47dc8c3b39cbba35916e07479",
+      "structure": {
+        "posts": 100,
+        "comments": 500,
+        "albums": 100,
+        "photos": 5000,
+        "users": 10,
+        "todos": 200
+      },
+      "normalizedBytes": 1085130,
+      "normalizedSha256": "a12b6a68c636a1e7e1d668710cff7b6e490a4f05b84a6262bf702b90b0c50268"
+    }
+  ],
+  "limitations": [
+    "Local serial child processes, randomly shuffled order per run; uncontrolled CPU placement, OS scheduling, thermal state, power mode and GC.",
+    "RSS includes fixture loading/JSON parsing/native require/warmup. No serializer-only peak or allocation count.",
+    "Text cases include full public wrapper validation, napi UTF conversion, native processing and returned JS string. Input text prepared before timing. JS baselines parse and sort each operation.",
+    "Source fixtures preserve formatting and token spelling; exact result comparisons establish fixture-specific equivalence only. General text semantics differ.",
+    "Batch methods include identical JSON.stringify of returned array. Cache hits skip serialization under explicit caller version contract."
+  ],
+  "results": [
+    {
+      "run": 1,
+      "dataset": "unicode",
+      "method": "native",
+      "exactOutputVerified": true,
+      "outputSha256": "e4f9138cf85cc4b8ae6d986e4265b9340c255bf7b1309d0f9fe6d7738f99836f",
+      "outputBytes": 39491,
+      "inputBytes": 39491,
+      "inputSha256": "22b09cbaebaa0744acea86715b3e6b1cf775567136140f75a422c472defb44c2",
+      "unitsPerOperation": 1,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "154d1683ec0db600a2053528c08d776ac123367fb9afee573cb173466c14e0a1"
+        }
+      ],
+      "warmup": {
+        "iterations": 4496,
+        "elapsedMs": 1000.9442000000001,
+        "opsPerSecond": 4491.75888126431
+      },
+      "samples": [
+        {
+          "iterations": 464,
+          "elapsedMs": 102.17540000000008,
+          "opsPerSecond": 4541.21050663858
+        },
+        {
+          "iterations": 464,
+          "elapsedMs": 101.75720000000001,
+          "opsPerSecond": 4559.8738959012235
+        },
+        {
+          "iterations": 464,
+          "elapsedMs": 101.36439999999993,
+          "opsPerSecond": 4577.543989803129
+        },
+        {
+          "iterations": 464,
+          "elapsedMs": 100.06200000000013,
+          "opsPerSecond": 4637.124982510837
+        },
+        {
+          "iterations": 464,
+          "elapsedMs": 102.78639999999996,
+          "opsPerSecond": 4514.215888483303
+        },
+        {
+          "iterations": 448,
+          "elapsedMs": 100.89290000000005,
+          "opsPerSecond": 4440.352096133621
+        },
+        {
+          "iterations": 464,
+          "elapsedMs": 101.70929999999998,
+          "opsPerSecond": 4562.021368744058
+        },
+        {
+          "iterations": 464,
+          "elapsedMs": 103.34289999999987,
+          "opsPerSecond": 4489.90690216745
+        },
+        {
+          "iterations": 464,
+          "elapsedMs": 103.29690000000005,
+          "opsPerSecond": 4491.906339880478
+        }
+      ],
+      "medianOpsPerSecond": 4541.21050663858,
+      "medianItemsPerSecond": 4541.21050663858,
+      "madPercent": 0.8000836585627259,
+      "minOpsPerSecond": 4440.352096133621,
+      "maxOpsPerSecond": 4637.124982510837,
+      "checksum": 158621200,
+      "cpuMicroseconds": {
+        "user": 859000,
+        "system": 47000
+      },
+      "memoryBefore": {
+        "rss": 58187776,
+        "heapTotal": 18296832,
+        "heapUsed": 11788960,
+        "external": 3756820,
+        "arrayBuffers": 143647
+      },
+      "memoryAfter": {
+        "rss": 58216448,
+        "heapTotal": 18296832,
+        "heapUsed": 9512240,
+        "external": 3756876,
+        "arrayBuffers": 143663
+      },
+      "processMaxRssBytes": 58867712
+    },
+    {
+      "run": 1,
+      "dataset": "unicode",
+      "method": "oracle",
+      "exactOutputVerified": true,
+      "outputSha256": "e4f9138cf85cc4b8ae6d986e4265b9340c255bf7b1309d0f9fe6d7738f99836f",
+      "outputBytes": 39491,
+      "inputBytes": 39491,
+      "inputSha256": "22b09cbaebaa0744acea86715b3e6b1cf775567136140f75a422c472defb44c2",
+      "unitsPerOperation": 1,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "154d1683ec0db600a2053528c08d776ac123367fb9afee573cb173466c14e0a1"
+        }
+      ],
+      "warmup": {
+        "iterations": 13216,
+        "elapsedMs": 1000.4865,
+        "opsPerSecond": 13209.573542471588
+      },
+      "samples": [
+        {
+          "iterations": 1328,
+          "elapsedMs": 100.19439999999986,
+          "opsPerSecond": 13254.23376955201
+        },
+        {
+          "iterations": 1344,
+          "elapsedMs": 100.94060000000013,
+          "opsPerSecond": 13314.761354697695
+        },
+        {
+          "iterations": 1328,
+          "elapsedMs": 100.76109999999994,
+          "opsPerSecond": 13179.68938409764
+        },
+        {
+          "iterations": 1328,
+          "elapsedMs": 100.64200000000005,
+          "opsPerSecond": 13195.28626219669
+        },
+        {
+          "iterations": 1248,
+          "elapsedMs": 100.3273999999999,
+          "opsPerSecond": 12439.273817521447
+        },
+        {
+          "iterations": 1360,
+          "elapsedMs": 100.41079999999988,
+          "opsPerSecond": 13544.359770064591
+        },
+        {
+          "iterations": 1328,
+          "elapsedMs": 100.16020000000003,
+          "opsPerSecond": 13258.759467333328
+        },
+        {
+          "iterations": 1328,
+          "elapsedMs": 100.28929999999991,
+          "opsPerSecond": 13241.691785664085
+        },
+        {
+          "iterations": 1344,
+          "elapsedMs": 100.7772,
+          "opsPerSecond": 13336.349888665294
+        }
+      ],
+      "medianOpsPerSecond": 13254.23376955201,
+      "medianItemsPerSecond": 13254.23376955201,
+      "madPercent": 0.45666604496392654,
+      "minOpsPerSecond": 12439.273817521447,
+      "maxOpsPerSecond": 13544.359770064591,
+      "checksum": 460910400,
+      "cpuMicroseconds": {
+        "user": 843000,
+        "system": 62000
+      },
+      "memoryBefore": {
+        "rss": 83722240,
+        "heapTotal": 43462656,
+        "heapUsed": 15326184,
+        "external": 3756820,
+        "arrayBuffers": 143647
+      },
+      "memoryAfter": {
+        "rss": 82227200,
+        "heapTotal": 42491904,
+        "heapUsed": 10269568,
+        "external": 2378656,
+        "arrayBuffers": 143627
+      },
+      "processMaxRssBytes": 84144128
+    },
+    {
+      "run": 1,
+      "dataset": "lock-normalized",
+      "method": "native",
+      "exactOutputVerified": true,
+      "outputSha256": "2792ad18d225a6a762bc1a6c6d63c8a23b12f1f79740fcec0f0e54b723461d04",
+      "outputBytes": 93728,
+      "inputBytes": 93728,
+      "inputSha256": "1e6164575f5508cdb890167271f2094c08bb1be44b6d519b47ade6de7e27f4a2",
+      "unitsPerOperation": 1,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "154d1683ec0db600a2053528c08d776ac123367fb9afee573cb173466c14e0a1"
+        }
+      ],
+      "warmup": {
+        "iterations": 2928,
+        "elapsedMs": 1000.9751000000001,
+        "opsPerSecond": 2925.147688488954
+      },
+      "samples": [
+        {
+          "iterations": 336,
+          "elapsedMs": 102.52819999999997,
+          "opsPerSecond": 3277.147165365237
+        },
+        {
+          "iterations": 336,
+          "elapsedMs": 102.82119999999986,
+          "opsPerSecond": 3267.8085842219352
+        },
+        {
+          "iterations": 336,
+          "elapsedMs": 103.77800000000002,
+          "opsPerSecond": 3237.6804332324764
+        },
+        {
+          "iterations": 336,
+          "elapsedMs": 103.52479999999991,
+          "opsPerSecond": 3245.599122142716
+        },
+        {
+          "iterations": 336,
+          "elapsedMs": 103.29639999999995,
+          "opsPerSecond": 3252.775508149366
+        },
+        {
+          "iterations": 336,
+          "elapsedMs": 104.8916999999999,
+          "opsPerSecond": 3203.3039792471695
+        },
+        {
+          "iterations": 352,
+          "elapsedMs": 104.79250000000002,
+          "opsPerSecond": 3359.0190137652976
+        },
+        {
+          "iterations": 336,
+          "elapsedMs": 101.7328,
+          "opsPerSecond": 3302.7696082286147
+        },
+        {
+          "iterations": 336,
+          "elapsedMs": 101.827,
+          "opsPerSecond": 3299.7142211790588
+        }
+      ],
+      "medianOpsPerSecond": 3267.8085842219352,
+      "medianItemsPerSecond": 3267.8085842219352,
+      "madPercent": 0.9219680471777802,
+      "minOpsPerSecond": 3203.3039792471695,
+      "maxOpsPerSecond": 3359.0190137652976,
+      "checksum": 559655168,
+      "cpuMicroseconds": {
+        "user": 796000,
+        "system": 94000
+      },
+      "memoryBefore": {
+        "rss": 63950848,
+        "heapTotal": 26685440,
+        "heapUsed": 14865400,
+        "external": 3756820,
+        "arrayBuffers": 143647
+      },
+      "memoryAfter": {
+        "rss": 61865984,
+        "heapTotal": 25452544,
+        "heapUsed": 13664784,
+        "external": 2378656,
+        "arrayBuffers": 143627
+      },
+      "processMaxRssBytes": 64741376
+    },
+    {
+      "run": 1,
+      "dataset": "lock-normalized",
+      "method": "oracle",
+      "exactOutputVerified": true,
+      "outputSha256": "2792ad18d225a6a762bc1a6c6d63c8a23b12f1f79740fcec0f0e54b723461d04",
+      "outputBytes": 93728,
+      "inputBytes": 93728,
+      "inputSha256": "1e6164575f5508cdb890167271f2094c08bb1be44b6d519b47ade6de7e27f4a2",
+      "unitsPerOperation": 1,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "154d1683ec0db600a2053528c08d776ac123367fb9afee573cb173466c14e0a1"
+        }
+      ],
+      "warmup": {
+        "iterations": 1344,
+        "elapsedMs": 1010.3331,
+        "opsPerSecond": 1330.2543487885332
+      },
+      "samples": [
+        {
+          "iterations": 144,
+          "elapsedMs": 105.48480000000018,
+          "opsPerSecond": 1365.1255915544207
+        },
+        {
+          "iterations": 144,
+          "elapsedMs": 106.7985000000001,
+          "opsPerSecond": 1348.3335440104483
+        },
+        {
+          "iterations": 144,
+          "elapsedMs": 102.53960000000006,
+          "opsPerSecond": 1404.3354957499337
+        },
+        {
+          "iterations": 144,
+          "elapsedMs": 104.89280000000008,
+          "opsPerSecond": 1372.830165654839
+        },
+        {
+          "iterations": 144,
+          "elapsedMs": 112.11529999999993,
+          "opsPerSecond": 1284.392049969987
+        },
+        {
+          "iterations": 144,
+          "elapsedMs": 104.04660000000013,
+          "opsPerSecond": 1383.9952482829792
+        },
+        {
+          "iterations": 144,
+          "elapsedMs": 103.93830000000003,
+          "opsPerSecond": 1385.4373219496563
+        },
+        {
+          "iterations": 144,
+          "elapsedMs": 102.48220000000015,
+          "opsPerSecond": 1405.1220602211877
+        },
+        {
+          "iterations": 144,
+          "elapsedMs": 105.76510000000007,
+          "opsPerSecond": 1361.5077185196242
+        }
+      ],
+      "medianOpsPerSecond": 1372.830165654839,
+      "medianItemsPerSecond": 1372.830165654839,
+      "madPercent": 0.9183332804173692,
+      "minOpsPerSecond": 1284.392049969987,
+      "maxOpsPerSecond": 1405.1220602211877,
+      "checksum": 247568640,
+      "cpuMicroseconds": {
+        "user": 922000,
+        "system": 16000
+      },
+      "memoryBefore": {
+        "rss": 117469184,
+        "heapTotal": 77541376,
+        "heapUsed": 21622240,
+        "external": 3756820,
+        "arrayBuffers": 143647
+      },
+      "memoryAfter": {
+        "rss": 115625984,
+        "heapTotal": 76046336,
+        "heapUsed": 12267016,
+        "external": 2378656,
+        "arrayBuffers": 143627
+      },
+      "processMaxRssBytes": 117694464
+    },
+    {
+      "run": 2,
+      "dataset": "unicode",
+      "method": "native",
+      "exactOutputVerified": true,
+      "outputSha256": "e4f9138cf85cc4b8ae6d986e4265b9340c255bf7b1309d0f9fe6d7738f99836f",
+      "outputBytes": 39491,
+      "inputBytes": 39491,
+      "inputSha256": "22b09cbaebaa0744acea86715b3e6b1cf775567136140f75a422c472defb44c2",
+      "unitsPerOperation": 1,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "154d1683ec0db600a2053528c08d776ac123367fb9afee573cb173466c14e0a1"
+        }
+      ],
+      "warmup": {
+        "iterations": 4512,
+        "elapsedMs": 1001.3383,
+        "opsPerSecond": 4505.969660802947
+      },
+      "samples": [
+        {
+          "iterations": 448,
+          "elapsedMs": 102.31209999999987,
+          "opsPerSecond": 4378.758719643137
+        },
+        {
+          "iterations": 464,
+          "elapsedMs": 101.21949999999993,
+          "opsPerSecond": 4584.096937843008
+        },
+        {
+          "iterations": 464,
+          "elapsedMs": 100.81729999999993,
+          "opsPerSecond": 4602.384709767077
+        },
+        {
+          "iterations": 464,
+          "elapsedMs": 101.89989999999989,
+          "opsPerSecond": 4553.4882762397265
+        },
+        {
+          "iterations": 464,
+          "elapsedMs": 103.44080000000008,
+          "opsPerSecond": 4485.657496848436
+        },
+        {
+          "iterations": 448,
+          "elapsedMs": 101.96420000000012,
+          "opsPerSecond": 4393.698964930823
+        },
+        {
+          "iterations": 448,
+          "elapsedMs": 100.0293999999999,
+          "opsPerSecond": 4478.683267119472
+        },
+        {
+          "iterations": 448,
+          "elapsedMs": 100.72530000000006,
+          "opsPerSecond": 4447.740537878763
+        },
+        {
+          "iterations": 448,
+          "elapsedMs": 100.9248,
+          "opsPerSecond": 4438.9486033165285
+        }
+      ],
+      "medianOpsPerSecond": 4478.683267119472,
+      "medianItemsPerSecond": 4478.683267119472,
+      "madPercent": 1.6702455757351826,
+      "minOpsPerSecond": 4378.758719643137,
+      "maxOpsPerSecond": 4602.384709767077,
+      "checksum": 157741600,
+      "cpuMicroseconds": {
+        "user": 844000,
+        "system": 63000
+      },
+      "memoryBefore": {
+        "rss": 58499072,
+        "heapTotal": 18296832,
+        "heapUsed": 12271072,
+        "external": 3756820,
+        "arrayBuffers": 143647
+      },
+      "memoryAfter": {
+        "rss": 58327040,
+        "heapTotal": 18296832,
+        "heapUsed": 11347184,
+        "external": 3756876,
+        "arrayBuffers": 143663
+      },
+      "processMaxRssBytes": 59047936
+    },
+    {
+      "run": 2,
+      "dataset": "lock-normalized",
+      "method": "oracle",
+      "exactOutputVerified": true,
+      "outputSha256": "2792ad18d225a6a762bc1a6c6d63c8a23b12f1f79740fcec0f0e54b723461d04",
+      "outputBytes": 93728,
+      "inputBytes": 93728,
+      "inputSha256": "1e6164575f5508cdb890167271f2094c08bb1be44b6d519b47ade6de7e27f4a2",
+      "unitsPerOperation": 1,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "154d1683ec0db600a2053528c08d776ac123367fb9afee573cb173466c14e0a1"
+        }
+      ],
+      "warmup": {
+        "iterations": 1328,
+        "elapsedMs": 1005.1688999999999,
+        "opsPerSecond": 1321.1709992221208
+      },
+      "samples": [
+        {
+          "iterations": 144,
+          "elapsedMs": 105.38239999999996,
+          "opsPerSecond": 1366.4520830802871
+        },
+        {
+          "iterations": 144,
+          "elapsedMs": 105.55909999999994,
+          "opsPerSecond": 1364.1647191004856
+        },
+        {
+          "iterations": 144,
+          "elapsedMs": 107.67160000000013,
+          "opsPerSecond": 1337.4000200609987
+        },
+        {
+          "iterations": 144,
+          "elapsedMs": 104.58460000000014,
+          "opsPerSecond": 1376.8757541741309
+        },
+        {
+          "iterations": 144,
+          "elapsedMs": 103.03139999999985,
+          "opsPerSecond": 1397.632178151517
+        },
+        {
+          "iterations": 144,
+          "elapsedMs": 111.20699999999988,
+          "opsPerSecond": 1294.8825163883582
+        },
+        {
+          "iterations": 144,
+          "elapsedMs": 108.84220000000005,
+          "opsPerSecond": 1323.016256562252
+        },
+        {
+          "iterations": 144,
+          "elapsedMs": 106.76800000000003,
+          "opsPerSecond": 1348.7187172186418
+        },
+        {
+          "iterations": 144,
+          "elapsedMs": 106.05849999999987,
+          "opsPerSecond": 1357.7412465761838
+        }
+      ],
+      "medianOpsPerSecond": 1357.7412465761838,
+      "medianItemsPerSecond": 1357.7412465761838,
+      "madPercent": 1.4092897042200447,
+      "minOpsPerSecond": 1294.8825163883582,
+      "maxOpsPerSecond": 1397.632178151517,
+      "checksum": 246068224,
+      "cpuMicroseconds": {
+        "user": 860000,
+        "system": 63000
+      },
+      "memoryBefore": {
+        "rss": 117579776,
+        "heapTotal": 77279232,
+        "heapUsed": 37046296,
+        "external": 3756820,
+        "arrayBuffers": 143647
+      },
+      "memoryAfter": {
+        "rss": 115806208,
+        "heapTotal": 76308480,
+        "heapUsed": 12267016,
+        "external": 2378656,
+        "arrayBuffers": 143627
+      },
+      "processMaxRssBytes": 117870592
+    },
+    {
+      "run": 2,
+      "dataset": "unicode",
+      "method": "oracle",
+      "exactOutputVerified": true,
+      "outputSha256": "e4f9138cf85cc4b8ae6d986e4265b9340c255bf7b1309d0f9fe6d7738f99836f",
+      "outputBytes": 39491,
+      "inputBytes": 39491,
+      "inputSha256": "22b09cbaebaa0744acea86715b3e6b1cf775567136140f75a422c472defb44c2",
+      "unitsPerOperation": 1,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "154d1683ec0db600a2053528c08d776ac123367fb9afee573cb173466c14e0a1"
+        }
+      ],
+      "warmup": {
+        "iterations": 13296,
+        "elapsedMs": 1000.6227,
+        "opsPerSecond": 13287.725733185946
+      },
+      "samples": [
+        {
+          "iterations": 1280,
+          "elapsedMs": 100.71929999999998,
+          "opsPerSecond": 12708.587132754103
+        },
+        {
+          "iterations": 1280,
+          "elapsedMs": 101.08089999999993,
+          "opsPerSecond": 12663.124289554218
+        },
+        {
+          "iterations": 1392,
+          "elapsedMs": 101.18209999999999,
+          "opsPerSecond": 13757.374080988635
+        },
+        {
+          "iterations": 1312,
+          "elapsedMs": 101.06680000000006,
+          "opsPerSecond": 12981.513217001026
+        },
+        {
+          "iterations": 1344,
+          "elapsedMs": 101.2009999999998,
+          "opsPerSecond": 13280.501180818399
+        },
+        {
+          "iterations": 1328,
+          "elapsedMs": 100.18080000000009,
+          "opsPerSecond": 13256.033092169346
+        },
+        {
+          "iterations": 1360,
+          "elapsedMs": 100.93550000000005,
+          "opsPerSecond": 13473.951186648894
+        },
+        {
+          "iterations": 1344,
+          "elapsedMs": 100.91840000000002,
+          "opsPerSecond": 13317.690331990992
+        },
+        {
+          "iterations": 1360,
+          "elapsedMs": 100.36099999999988,
+          "opsPerSecond": 13551.080599037492
+        }
+      ],
+      "medianOpsPerSecond": 13280.501180818399,
+      "medianItemsPerSecond": 13280.501180818399,
+      "madPercent": 2.0374187279159504,
+      "minOpsPerSecond": 12663.124289554218,
+      "maxOpsPerSecond": 13757.374080988635,
+      "checksum": 463549200,
+      "cpuMicroseconds": {
+        "user": 829000,
+        "system": 78000
+      },
+      "memoryBefore": {
+        "rss": 83836928,
+        "heapTotal": 43462656,
+        "heapUsed": 8958448,
+        "external": 3756820,
+        "arrayBuffers": 143647
+      },
+      "memoryAfter": {
+        "rss": 81580032,
+        "heapTotal": 42229760,
+        "heapUsed": 20725720,
+        "external": 2378656,
+        "arrayBuffers": 143627
+      },
+      "processMaxRssBytes": 84127744
+    },
+    {
+      "run": 2,
+      "dataset": "lock-normalized",
+      "method": "native",
+      "exactOutputVerified": true,
+      "outputSha256": "2792ad18d225a6a762bc1a6c6d63c8a23b12f1f79740fcec0f0e54b723461d04",
+      "outputBytes": 93728,
+      "inputBytes": 93728,
+      "inputSha256": "1e6164575f5508cdb890167271f2094c08bb1be44b6d519b47ade6de7e27f4a2",
+      "unitsPerOperation": 1,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "154d1683ec0db600a2053528c08d776ac123367fb9afee573cb173466c14e0a1"
+        }
+      ],
+      "warmup": {
+        "iterations": 3008,
+        "elapsedMs": 1001.9567999999999,
+        "opsPerSecond": 3002.1254409371745
+      },
+      "samples": [
+        {
+          "iterations": 336,
+          "elapsedMs": 103.00950000000012,
+          "opsPerSecond": 3261.8350734640944
+        },
+        {
+          "iterations": 336,
+          "elapsedMs": 101.08399999999983,
+          "opsPerSecond": 3323.96818487595
+        },
+        {
+          "iterations": 352,
+          "elapsedMs": 104.13030000000003,
+          "opsPerSecond": 3380.380158320872
+        },
+        {
+          "iterations": 336,
+          "elapsedMs": 101.27559999999994,
+          "opsPerSecond": 3317.6796780270884
+        },
+        {
+          "iterations": 336,
+          "elapsedMs": 103.74749999999995,
+          "opsPerSecond": 3238.6322561989464
+        },
+        {
+          "iterations": 320,
+          "elapsedMs": 100.22460000000001,
+          "opsPerSecond": 3192.8289062765025
+        },
+        {
+          "iterations": 352,
+          "elapsedMs": 101.22140000000013,
+          "opsPerSecond": 3477.5255035002433
+        },
+        {
+          "iterations": 336,
+          "elapsedMs": 101.28949999999986,
+          "opsPerSecond": 3317.2243914719734
+        },
+        {
+          "iterations": 336,
+          "elapsedMs": 100.60930000000008,
+          "opsPerSecond": 3339.651503389843
+        }
+      ],
+      "medianOpsPerSecond": 3317.6796780270884,
+      "medianItemsPerSecond": 3317.6796780270884,
+      "madPercent": 1.6832428077023647,
+      "minOpsPerSecond": 3192.8289062765025,
+      "maxOpsPerSecond": 3477.5255035002433,
+      "checksum": 567157248,
+      "cpuMicroseconds": {
+        "user": 891000,
+        "system": 16000
+      },
+      "memoryBefore": {
+        "rss": 64167936,
+        "heapTotal": 26947584,
+        "heapUsed": 17130744,
+        "external": 3756820,
+        "arrayBuffers": 143647
+      },
+      "memoryAfter": {
+        "rss": 62074880,
+        "heapTotal": 25452544,
+        "heapUsed": 13664800,
+        "external": 2378656,
+        "arrayBuffers": 143627
+      },
+      "processMaxRssBytes": 64839680
+    }
+  ]
+}

@@ -1,5 +1,31 @@
 # Development journal
 
+## 2026-10-19 — independent continuation started
+Read all recovery documents, architecture/compatibility/API/decisions and actual
+implementation. Master was clean at113a8eb. Created perf/independent-reproduction.
+Prior performance claims are historical evidence, pending fresh reproduction.
+Independent agents own separate reproduction, expanded compatibility, and final
+artifact CI review files. Timings will run serially, outside builds/tests.
+
+## 2026-10-19 — historical result independently reproduced
+Fresh pnpm check passed Rust5/JS33/types; rustfmt/clippy and five harness tests pass.
+Independent runner imports neither old benchmark runner nor datasets module,
+checks fixture/license hashes, actual loaded addon and release DLL SHA equality,
+then times shuffled serial child processes. Two9x100ms runs: normalized lock native
+3242/3428 vs parse+upstream1321/1341ops/s;1s warmup confirms3268/3318 vs1373/1358.
+Original3377/1338 is plausible historical data, not a fixed reproducible constant.
+Actual source lock143844 bytes differs from normalized93728-byte workload. Real API
+and Unicode reproductions recorded too; Unicode deficit remains about66%.
+Independent expanded tests pass43 JS groups (25740 generated cases overall),Rust5,
+strict types, including8192 IEEE patterns,2048 arbitrary UTF16 cases,1000 shared
+graphs,30k-record arrays and40k-key objects. No implementation defect found.
+CI review fixed final combined tarball gap: pack once, checksum manifest, three
+platforms x two Node versions install identical candidate with npm/pnpm and test
+installed runtime/types. Host candidate Windows Node22/24 checks and actionlint
+pass; missing-platform negative check correctly fails. Hosted jobs NOT RUN.
+Private development-only encoding/stage probe is being measured; not exported or
+shipped by the package. No optimization adopted before its profiling evidence.
+
 ## 2026-10-19 — bootstrap
 Repository was empty except for Git metadata. Detected Windows 11 x64, Node
 24.20.0, pnpm 12.10.1, rustc 1.98.1, Cargo 1.98.1 and Git 2.55.0.windows.5.

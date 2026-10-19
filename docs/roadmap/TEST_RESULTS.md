@@ -90,3 +90,20 @@ Additional root packed-consumer tests after extending script:
 NOT RUN: Linux/macOS runtime jobs, combined three-platform package installation,
 Rust1.88 compiler execution, long-duration fuzzing and native allocation-count
 profiling. Those are not counted as passing.
+
+## 2026-10-19 independent continuation (source113a8eb, perf/independent-reproduction)
+Environment reconfirmed: Windows x64,i7-12700K,Node24.20.0,pnpm12.10.1,Rust1.98.1.
+- `pnpm check`: PASS fresh release build,5 Rust/33 JS/strict TS before timing.
+- `node --test benches/harness.test.cjs`: PASS5.
+- `cargo fmt --all --check`; `cargo clippy --all-targets --locked -- -D warnings`: PASS.
+- Independent reproduction runner self-tests: PASS4;34 exact output prechecks and
+  76 measured-cell exact-output checks. REPRODUCTION_REVIEW.md links raw records.
+- `node --test tests/expanded-compatibility.test.cjs`: PASS10 groups; `pnpm test`:
+  PASS43 groups; `cargo test --locked`: PASS5; `pnpm test:types`: PASS. Independent
+  commands and scope in COMPATIBILITY_REVIEW_2.md. One diagnostic regex corrected
+  to documented native InvalidArg contract; no source behavior changed.
+- Final-candidate verifier Windows Node24.20.0/22.13.0, npm AND pnpm, offline with
+  scripts disabled: PASS installed CJS/ESM/types/native. Checksum identity retained;
+  missing all-target binary negative test fails as intended. See CI_REVIEW_2.md.
+- Updated CI `actionlint` and new verifier `node --check`: PASS. Hosted matrix and
+  actual Linux/macOS installs remain NOT RUN.

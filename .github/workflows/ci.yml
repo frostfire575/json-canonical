@@ -10,12 +10,18 @@ jobs:
         include:
           - os: windows-latest
             target: x86_64-pc-windows-msvc
+            platform: win32
+            arch: x64
             node: 24
           - os: ubuntu-22.04
             target: x86_64-unknown-linux-gnu
-            node: 22
+            platform: linux
+            arch: x64
+            node: 22.13.0
           - os: macos-15
             target: aarch64-apple-darwin
+            platform: darwin
+            arch: arm64
             node: 24
     runs-on: ${{ matrix.os }}
     steps:
@@ -29,6 +35,8 @@ jobs:
       - uses: dtolnay/rust-toolchain@stable
         with:
           components: rustfmt, clippy
+      - name: Check actual build host
+        run: node -e "require('node:assert/strict').equal(process.platform + '/' + process.arch, '${{ matrix.platform }}/${{ matrix.arch }}')"
       - run: node scripts/setup-upstream.cjs
       - run: pnpm install --frozen-lockfile
       - run: cargo fmt --all --check
@@ -43,6 +51,7 @@ jobs:
         with:
           name: native-${{ matrix.target }}
           path: native/*.node
+          if-no-files-found: error
   bundle:
     needs: verify
     runs-on: ubuntu-22.04
@@ -61,9 +70,68 @@ jobs:
           pattern: native-*
           path: native
           merge-multiple: true
-      - run: pnpm test:pack
-      - run: pnpm pack
+      - name: Pack the combined candidate exactly once
+        run: pnpm pack --pack-destination .verification/ci-candidate
+      - name: Record candidate identity
+        run: node scripts/verify-ci-candidate.cjs manifest .verification/ci-candidate
       - uses: actions/upload-artifact@v4
         with:
           name: multi-platform-npm-candidate
-          path: '*.tgz'
+          path: |
+            .verification/ci-candidate/*.tgz
+            .verification/ci-candidate/candidate.json
+          include-hidden-files: true
+          if-no-files-found: error
+  verify-candidate:
+    needs: bundle
+    strategy:
+      fail-fast: false
+      matrix:
+        node: [22.13.0, 24]
+        include:
+          - os: windows-latest
+            platform: win32
+            arch: x64
+          - os: ubuntu-22.04
+            platform: linux
+            arch: x64
+          - os: macos-15
+            platform: darwin
+            arch: arm64
+        # OS is an axis so each Node version verifies the same three targets.
+        os: [windows-latest, ubuntu-22.04, macos-15]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 12.10.1
+      - name: Check actual install host
+        run: node -e "require('node:assert/strict').equal(process.platform + '/' + process.arch, '${{ matrix.platform }}/${{ matrix.arch }}')"
+      # Only the TypeScript compiler is used from dev dependencies. There is no
+      # Rust setup, native compilation or JS build in this installation job.
+      - run: pnpm install --frozen-lockfile --ignore-scripts
+      - uses: actions/download-artifact@v4
+        with:
+          name: multi-platform-npm-candidate
+          path: .verification/ci-candidate
+      - name: Verify checksum and prepare isolated consumers
+        run: node scripts/verify-ci-candidate.cjs prepare .verification/ci-candidate
+      - name: Install exact candidate with npm and lifecycle scripts disabled
+        run: npm install --offline --ignore-scripts --no-audit --no-fund ./candidate.tgz
+        working-directory: .verification/ci-candidate/npm
+      - name: Install exact candidate with pnpm and lifecycle scripts disabled
+        run: pnpm add --offline --ignore-scripts ./candidate.tgz
+        working-directory: .verification/ci-candidate/pnpm
+      - name: Verify installed CJS, ESM, types and all bundled native files
+        run: node scripts/verify-ci-candidate.cjs verify .verification/ci-candidate --all-targets
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: candidate-evidence-${{ matrix.os }}-node-${{ matrix.node }}
+          path: .verification/ci-candidate/verification-*.json
+          include-hidden-files: true
+          if-no-files-found: warn

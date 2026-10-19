@@ -1,16 +1,21 @@
 # Session handoff
 
-- Current phase: 7, local release validation complete; target runtime gates blocked.
+- Current phase: independent reproduction complete; native encoding and batch profiling active.
 - Last completed task: fresh Git worktree rebuild; npm/pnpm packed runtime and TS
   consumer verification; minimum Node22.13.0 checks; local integration merge.
-- Currently active task: none locally. No test or benchmark processes running.
-- Next recommended task: execute hosted Linux x64/macOS ARM64 CI and install the
+- Currently active task: private dev-only napi encoding/stage probes. No production
+  serializer optimization adopted yet. See R1..R5 continuation tasks.
+- Next recommended task: measure and independently validate a justified Unicode
+  optimization, complete batch/cache utility evaluation, then execute hosted
+  Linux x64/macOS ARM64 CI and install the
   combined candidate on each target when a remote workflow is authorized. Until
   then, use the verified Windows candidate and preserve documented scope.
 - Files changed: Cargo.lock/Toml/build.rs, src/{lib,engine,tree,selection}.rs,
   typed JS wrappers/conditional declarations, native generated loader, tests,
   benches/{fixtures,harness,reports,raw results}, scripts, CI, notices and docs.
-- Tests passing: 5 Rust;33 JS on Windows Node24.20.0 AND22.13.0,14500 generated
+- Tests passing: fresh baseline5 Rust/33 JS/types; expanded independent suite43 JS
+  on Node24.20.0 with25740 generated cases; installed candidate Windows22/24. Earlier
+  full baseline33 JS on Windows Node24.20.0 AND22.13.0,14500 generated
   cases and16 upstream assertions;18 independent review tests;5 harness tests;
   strict CJS/ESM types including packed consumers;rustfmt/clippy;release build;
   offline npm/pnpm package installs;dependency/license checks;actionlint.

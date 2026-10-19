@@ -1,0 +1,705 @@
+{
+  "timestamp": "2026-10-19T00:27:21.010Z",
+  "command": "node benches/reproduction/run.cjs --check",
+  "config": {
+    "runs": 2,
+    "samples": 9,
+    "sampleMs": 100,
+    "warmupMs": 300,
+    "seed": 291947
+  },
+  "selection": {
+    "datasets": null,
+    "methods": null
+  },
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "osRelease": "10.0.26300",
+    "osVersion": "Windows 11 Pro",
+    "node": "v24.20.0",
+    "v8": "13.6.233.17-node.53",
+    "processExecPath": "G:\\[Softwares]\\NodeJs\\node.exe",
+    "cpu": "12th Gen Intel(R) Core(TM) i7-12700K",
+    "logicalCpus": 20,
+    "totalMemoryBytes": 34087682048,
+    "rust": "rustc 1.98.1 (48a229cea 2026-09-01)",
+    "cargo": "cargo 1.98.1 (797e8a9bc 2026-08-05)",
+    "pnpm": "UNAVAILABLE",
+    "commit": "113a8eb79dbf7350d1f15a7e639d7a5e2492abee",
+    "dirty": "M .github/workflows/ci.yml\n M docs/roadmap/PROGRESS.md\n M docs/roadmap/TASKS.md\n?? benches/reproduction/\n?? scripts/verify-ci-candidate.cjs\n?? tests/expanded-compatibility.test.cjs",
+    "upstreamCommit": "49e230da2c84247b29ad4de02c9395793caefd15",
+    "napiOverride": null,
+    "nodeOptions": null,
+    "sourceHashes": {
+      "benches/reproduction/run.cjs": "ee5cfc3eddbca908e843607625febe8710c83743d0e1c45a1021f5d9dcc4fed4",
+      "js/index.ts": "bbb249b604ccaafff68a4974968995568363c101c43392dcfb57650bf2ea7ca1",
+      "js/dist/index.js": "859a2d9ce77ded096d4526b9b799e6dee275137b72db5b12b3317a6fd82760f6",
+      "native/binding.js": "a1df31adec1a2b469c8af3b067545edfc83c7e037435c04ce3ee5d73fb1536d3",
+      "src/lib.rs": "e8dee59b841e22ed90c77b4c145856ce1f5999fecf551a87e27f8729d1350919",
+      "src/tree.rs": "b345e2b5f4e22ae0f15f8132ae3dc8250aadfc4d53687d0f1c8692c03720440a",
+      "src/engine.rs": "1bea768b0d2db85a3e92653bb12b84e30981df44950032d165dee1b91514cdc6",
+      "Cargo.lock": "7fea717ccad5b4b81b64a1dc2d8c727eb849117c9989871db7ecb21b5108001e",
+      "Cargo.toml": "ccd6472ce856d3838ff371b836d07e1288c845461c0be195285a57bb2b26e337",
+      "pnpm-lock.yaml": "268854350104379c6e5698c2504908ef61cc5870655b68fab4c2ce58624b6fab"
+    },
+    "releaseArtifact": {
+      "path": "target/x86_64-pc-windows-msvc/release/stable_json_rs.dll",
+      "sha256": "154d1683ec0db600a2053528c08d776ac123367fb9afee573cb173466c14e0a1"
+    },
+    "cpuPowerPlan": "Power Scheme GUID: 381b4222-f694-41f0-9685-ff5bb260df2e  (Balanced)",
+    "dependencies": {
+      "safe-stable-stringify": "2.5.0",
+      "fast-stable-stringify": "1.0.0",
+      "@napi-rs/cli": "3.10.8"
+    }
+  },
+  "fixtures": [
+    {
+      "file": "typescript-package-lock.json",
+      "commit": "5237fd46890956e4bb8177a1a05dcd69e4166560",
+      "license": "Apache-2.0",
+      "licenseFile": "typescript-LICENSE.txt",
+      "purpose": "Real dependency metadata; large nested package graph object.",
+      "retrievedAt": "2026-10-18T23:56:25.261Z",
+      "bytes": 143844,
+      "sha256": "52b6c9bd0a26ef1b0fc27dfbfaa00df6a047cdddd587d07c4f6c1c3345faf5cf",
+      "structure": "object with 5 root properties",
+      "normalizedBytes": 93728,
+      "normalizedSha256": "5f8afda0d3a8190dd04d7561ef72ec6cd3abe74c45b1ba6a720b8dbfff7ac64e"
+    },
+    {
+      "file": "typescript-package.json",
+      "commit": "5237fd46890956e4bb8177a1a05dcd69e4166560",
+      "license": "Apache-2.0",
+      "licenseFile": "typescript-LICENSE.txt",
+      "purpose": "Real application/development configuration; medium nested object.",
+      "retrievedAt": "2026-10-18T23:56:25.262Z",
+      "bytes": 1838,
+      "sha256": "2828c1d269bd9c80d634131ec107ac69f1cfc3bf1f98d24c112c825c8acd7902",
+      "structure": "object with 12 root properties",
+      "normalizedBytes": 1370,
+      "normalizedSha256": "6faddd2dbc96b1fd682050a9b79f082dcc0a4289103040ceafbb82573f570d84"
+    },
+    {
+      "file": "upstream-test.json",
+      "commit": "49e230da2c84247b29ad4de02c9395793caefd15",
+      "license": "MIT",
+      "licenseFile": "upstream-LICENSE",
+      "purpose": "Established upstream benchmark fixture; array of API-shaped records. Mock fixture, not a captured production response.",
+      "retrievedAt": "2026-10-18T23:56:25.262Z",
+      "bytes": 3965,
+      "sha256": "a309a6d29ddefa0dee5628f8f2f9e50adab7f406e05fd465beafda68339739b8",
+      "structure": "array of 3 entries",
+      "normalizedBytes": 2929,
+      "normalizedSha256": "53771b6c7b6dfec175bfd04f0eb65548c71b627048a042a9c893837dd6d34935"
+    },
+    {
+      "file": "jsonplaceholder-data.json",
+      "commit": "7ae4432ac3f60e7226a899c25e04826207d07098",
+      "license": "MIT",
+      "licenseFile": "jsonplaceholder-LICENSE",
+      "purpose": "Actual JSONPlaceholder public API service backing data; fictional posts/comments/albums/photos/todos/users. Large arrays and nested API records, not private user information.",
+      "retrievedAt": "2026-10-19T00:00:05.305Z",
+      "bytes": 1378184,
+      "sha256": "e1feb959cada8c58528e199b1cfe6cf4c43734e47dc8c3b39cbba35916e07479",
+      "structure": {
+        "posts": 100,
+        "comments": 500,
+        "albums": 100,
+        "photos": 5000,
+        "users": 10,
+        "todos": 200
+      },
+      "normalizedBytes": 1085130,
+      "normalizedSha256": "a12b6a68c636a1e7e1d668710cff7b6e490a4f05b84a6262bf702b90b0c50268"
+    }
+  ],
+  "limitations": [
+    "Local serial child processes, randomly shuffled order per run; uncontrolled CPU placement, OS scheduling, thermal state, power mode and GC.",
+    "RSS includes fixture loading/JSON parsing/native require/warmup. No serializer-only peak or allocation count.",
+    "Text cases include full public wrapper validation, napi UTF conversion, native processing and returned JS string. Input text prepared before timing. JS baselines parse and sort each operation.",
+    "Source fixtures preserve formatting and token spelling; exact result comparisons establish fixture-specific equivalence only. General text semantics differ.",
+    "Batch methods include identical JSON.stringify of returned array. Cache hits skip serialization under explicit caller version contract."
+  ],
+  "results": [
+    {
+      "run": 1,
+      "dataset": "api-source",
+      "method": "oracle",
+      "exactOutputVerified": true,
+      "outputSha256": "08186068c631474a302960f0e5372aeb89eb083632eaaca3a086bd63e85a3744",
+      "outputBytes": 1085130,
+      "inputBytes": 1378184,
+      "inputSha256": "737e004cdd48c98f557ae812a8d52692dc2ce77301ddb8e4f792910f3a84b9b0",
+      "unitsPerOperation": 1,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "154d1683ec0db600a2053528c08d776ac123367fb9afee573cb173466c14e0a1"
+        }
+      ]
+    },
+    {
+      "run": 1,
+      "dataset": "lock-normalized",
+      "method": "oracle",
+      "exactOutputVerified": true,
+      "outputSha256": "2792ad18d225a6a762bc1a6c6d63c8a23b12f1f79740fcec0f0e54b723461d04",
+      "outputBytes": 93728,
+      "inputBytes": 93728,
+      "inputSha256": "1e6164575f5508cdb890167271f2094c08bb1be44b6d519b47ade6de7e27f4a2",
+      "unitsPerOperation": 1,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "154d1683ec0db600a2053528c08d776ac123367fb9afee573cb173466c14e0a1"
+        }
+      ]
+    },
+    {
+      "run": 1,
+      "dataset": "api-source",
+      "method": "safe-stable",
+      "exactOutputVerified": true,
+      "outputSha256": "08186068c631474a302960f0e5372aeb89eb083632eaaca3a086bd63e85a3744",
+      "outputBytes": 1085130,
+      "inputBytes": 1378184,
+      "inputSha256": "737e004cdd48c98f557ae812a8d52692dc2ce77301ddb8e4f792910f3a84b9b0",
+      "unitsPerOperation": 1,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "154d1683ec0db600a2053528c08d776ac123367fb9afee573cb173466c14e0a1"
+        }
+      ]
+    },
+    {
+      "run": 1,
+      "dataset": "api-normalized",
+      "method": "oracle",
+      "exactOutputVerified": true,
+      "outputSha256": "08186068c631474a302960f0e5372aeb89eb083632eaaca3a086bd63e85a3744",
+      "outputBytes": 1085130,
+      "inputBytes": 1085130,
+      "inputSha256": "ada3a545a4f049ded26af6a5b285f8e0e2a59f8c4b141c780e5d3db09d2bfacb",
+      "unitsPerOperation": 1,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "154d1683ec0db600a2053528c08d776ac123367fb9afee573cb173466c14e0a1"
+        }
+      ]
+    },
+    {
+      "run": 1,
+      "dataset": "api-normalized",
+      "method": "native",
+      "exactOutputVerified": true,
+      "outputSha256": "08186068c631474a302960f0e5372aeb89eb083632eaaca3a086bd63e85a3744",
+      "outputBytes": 1085130,
+      "inputBytes": 1085130,
+      "inputSha256": "ada3a545a4f049ded26af6a5b285f8e0e2a59f8c4b141c780e5d3db09d2bfacb",
+      "unitsPerOperation": 1,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "154d1683ec0db600a2053528c08d776ac123367fb9afee573cb173466c14e0a1"
+        }
+      ]
+    },
+    {
+      "run": 1,
+      "dataset": "batch-api-records-32",
+      "method": "native-batch",
+      "exactOutputVerified": true,
+      "outputSha256": "55a447b265f29c5aa6949869ac33df7feef4117d9b064ef54d8d16ebe5ee5c64",
+      "outputBytes": 9338,
+      "inputBytes": 8633,
+      "inputSha256": "c8fe5a880cd4aa50018e61b33928eb6fc01d3d45a4e4238060f0efad662c5fdc",
+      "unitsPerOperation": 32,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "154d1683ec0db600a2053528c08d776ac123367fb9afee573cb173466c14e0a1"
+        }
+      ]
+    },
+    {
+      "run": 1,
+      "dataset": "unicode",
+      "method": "oracle",
+      "exactOutputVerified": true,
+      "outputSha256": "e4f9138cf85cc4b8ae6d986e4265b9340c255bf7b1309d0f9fe6d7738f99836f",
+      "outputBytes": 39491,
+      "inputBytes": 39491,
+      "inputSha256": "22b09cbaebaa0744acea86715b3e6b1cf775567136140f75a422c472defb44c2",
+      "unitsPerOperation": 1,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "154d1683ec0db600a2053528c08d776ac123367fb9afee573cb173466c14e0a1"
+        }
+      ]
+    },
+    {
+      "run": 1,
+      "dataset": "batch-tiny-32",
+      "method": "public-loop",
+      "exactOutputVerified": true,
+      "outputSha256": "49d0600af69a9bbf1135e511786f7d96f707f4dde16d7a0431be8f5d3e7fefd7",
+      "outputBytes": 1869,
+      "inputBytes": 1452,
+      "inputSha256": "9e015281ff59837817509e18540c5a4428f88c9e083fc9591f305c24c23c9ce8",
+      "unitsPerOperation": 32,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "154d1683ec0db600a2053528c08d776ac123367fb9afee573cb173466c14e0a1"
+        }
+      ]
+    },
+    {
+      "run": 1,
+      "dataset": "lock-source",
+      "method": "native",
+      "exactOutputVerified": true,
+      "outputSha256": "2792ad18d225a6a762bc1a6c6d63c8a23b12f1f79740fcec0f0e54b723461d04",
+      "outputBytes": 93728,
+      "inputBytes": 143844,
+      "inputSha256": "378f2bc78a43c4c40cccf668d8cf431f547fab8b3f74dc19ef9575bcabaaea45",
+      "unitsPerOperation": 1,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "154d1683ec0db600a2053528c08d776ac123367fb9afee573cb173466c14e0a1"
+        }
+      ]
+    },
+    {
+      "run": 1,
+      "dataset": "cache-api-document",
+      "method": "public-stringify",
+      "exactOutputVerified": true,
+      "outputSha256": "08186068c631474a302960f0e5372aeb89eb083632eaaca3a086bd63e85a3744",
+      "outputBytes": 1085130,
+      "inputBytes": 1085130,
+      "inputSha256": "a12b6a68c636a1e7e1d668710cff7b6e490a4f05b84a6262bf702b90b0c50268",
+      "unitsPerOperation": 1,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "154d1683ec0db600a2053528c08d776ac123367fb9afee573cb173466c14e0a1"
+        }
+      ]
+    },
+    {
+      "run": 1,
+      "dataset": "unicode",
+      "method": "safe-stable",
+      "exactOutputVerified": true,
+      "outputSha256": "e4f9138cf85cc4b8ae6d986e4265b9340c255bf7b1309d0f9fe6d7738f99836f",
+      "outputBytes": 39491,
+      "inputBytes": 39491,
+      "inputSha256": "22b09cbaebaa0744acea86715b3e6b1cf775567136140f75a422c472defb44c2",
+      "unitsPerOperation": 1,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "154d1683ec0db600a2053528c08d776ac123367fb9afee573cb173466c14e0a1"
+        }
+      ]
+    },
+    {
+      "run": 1,
+      "dataset": "unicode",
+      "method": "native",
+      "exactOutputVerified": true,
+      "outputSha256": "e4f9138cf85cc4b8ae6d986e4265b9340c255bf7b1309d0f9fe6d7738f99836f",
+      "outputBytes": 39491,
+      "inputBytes": 39491,
+      "inputSha256": "22b09cbaebaa0744acea86715b3e6b1cf775567136140f75a422c472defb44c2",
+      "unitsPerOperation": 1,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "154d1683ec0db600a2053528c08d776ac123367fb9afee573cb173466c14e0a1"
+        }
+      ]
+    },
+    {
+      "run": 1,
+      "dataset": "lock-normalized",
+      "method": "native",
+      "exactOutputVerified": true,
+      "outputSha256": "2792ad18d225a6a762bc1a6c6d63c8a23b12f1f79740fcec0f0e54b723461d04",
+      "outputBytes": 93728,
+      "inputBytes": 93728,
+      "inputSha256": "1e6164575f5508cdb890167271f2094c08bb1be44b6d519b47ade6de7e27f4a2",
+      "unitsPerOperation": 1,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "154d1683ec0db600a2053528c08d776ac123367fb9afee573cb173466c14e0a1"
+        }
+      ]
+    },
+    {
+      "run": 1,
+      "dataset": "batch-tiny-32",
+      "method": "oracle-loop",
+      "exactOutputVerified": true,
+      "outputSha256": "49d0600af69a9bbf1135e511786f7d96f707f4dde16d7a0431be8f5d3e7fefd7",
+      "outputBytes": 1869,
+      "inputBytes": 1452,
+      "inputSha256": "9e015281ff59837817509e18540c5a4428f88c9e083fc9591f305c24c23c9ce8",
+      "unitsPerOperation": 32,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "154d1683ec0db600a2053528c08d776ac123367fb9afee573cb173466c14e0a1"
+        }
+      ]
+    },
+    {
+      "run": 1,
+      "dataset": "batch-tiny-32",
+      "method": "public-batch",
+      "exactOutputVerified": true,
+      "outputSha256": "49d0600af69a9bbf1135e511786f7d96f707f4dde16d7a0431be8f5d3e7fefd7",
+      "outputBytes": 1869,
+      "inputBytes": 1452,
+      "inputSha256": "9e015281ff59837817509e18540c5a4428f88c9e083fc9591f305c24c23c9ce8",
+      "unitsPerOperation": 32,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "154d1683ec0db600a2053528c08d776ac123367fb9afee573cb173466c14e0a1"
+        }
+      ]
+    },
+    {
+      "run": 1,
+      "dataset": "cache-api-document",
+      "method": "cache-miss",
+      "exactOutputVerified": true,
+      "outputSha256": "08186068c631474a302960f0e5372aeb89eb083632eaaca3a086bd63e85a3744",
+      "outputBytes": 1085130,
+      "inputBytes": 1085130,
+      "inputSha256": "a12b6a68c636a1e7e1d668710cff7b6e490a4f05b84a6262bf702b90b0c50268",
+      "unitsPerOperation": 1,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "154d1683ec0db600a2053528c08d776ac123367fb9afee573cb173466c14e0a1"
+        }
+      ]
+    },
+    {
+      "run": 1,
+      "dataset": "lock-source",
+      "method": "safe-stable",
+      "exactOutputVerified": true,
+      "outputSha256": "2792ad18d225a6a762bc1a6c6d63c8a23b12f1f79740fcec0f0e54b723461d04",
+      "outputBytes": 93728,
+      "inputBytes": 143844,
+      "inputSha256": "378f2bc78a43c4c40cccf668d8cf431f547fab8b3f74dc19ef9575bcabaaea45",
+      "unitsPerOperation": 1,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "154d1683ec0db600a2053528c08d776ac123367fb9afee573cb173466c14e0a1"
+        }
+      ]
+    },
+    {
+      "run": 1,
+      "dataset": "lock-normalized",
+      "method": "safe-stable",
+      "exactOutputVerified": true,
+      "outputSha256": "2792ad18d225a6a762bc1a6c6d63c8a23b12f1f79740fcec0f0e54b723461d04",
+      "outputBytes": 93728,
+      "inputBytes": 93728,
+      "inputSha256": "1e6164575f5508cdb890167271f2094c08bb1be44b6d519b47ade6de7e27f4a2",
+      "unitsPerOperation": 1,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "154d1683ec0db600a2053528c08d776ac123367fb9afee573cb173466c14e0a1"
+        }
+      ]
+    },
+    {
+      "run": 1,
+      "dataset": "api-normalized",
+      "method": "fast-stable",
+      "exactOutputVerified": true,
+      "outputSha256": "08186068c631474a302960f0e5372aeb89eb083632eaaca3a086bd63e85a3744",
+      "outputBytes": 1085130,
+      "inputBytes": 1085130,
+      "inputSha256": "ada3a545a4f049ded26af6a5b285f8e0e2a59f8c4b141c780e5d3db09d2bfacb",
+      "unitsPerOperation": 1,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "154d1683ec0db600a2053528c08d776ac123367fb9afee573cb173466c14e0a1"
+        }
+      ]
+    },
+    {
+      "run": 1,
+      "dataset": "batch-api-records-32",
+      "method": "public-batch",
+      "exactOutputVerified": true,
+      "outputSha256": "55a447b265f29c5aa6949869ac33df7feef4117d9b064ef54d8d16ebe5ee5c64",
+      "outputBytes": 9338,
+      "inputBytes": 8633,
+      "inputSha256": "c8fe5a880cd4aa50018e61b33928eb6fc01d3d45a4e4238060f0efad662c5fdc",
+      "unitsPerOperation": 32,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "154d1683ec0db600a2053528c08d776ac123367fb9afee573cb173466c14e0a1"
+        }
+      ]
+    },
+    {
+      "run": 1,
+      "dataset": "lock-source",
+      "method": "oracle",
+      "exactOutputVerified": true,
+      "outputSha256": "2792ad18d225a6a762bc1a6c6d63c8a23b12f1f79740fcec0f0e54b723461d04",
+      "outputBytes": 93728,
+      "inputBytes": 143844,
+      "inputSha256": "378f2bc78a43c4c40cccf668d8cf431f547fab8b3f74dc19ef9575bcabaaea45",
+      "unitsPerOperation": 1,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "154d1683ec0db600a2053528c08d776ac123367fb9afee573cb173466c14e0a1"
+        }
+      ]
+    },
+    {
+      "run": 1,
+      "dataset": "api-source",
+      "method": "fast-stable",
+      "exactOutputVerified": true,
+      "outputSha256": "08186068c631474a302960f0e5372aeb89eb083632eaaca3a086bd63e85a3744",
+      "outputBytes": 1085130,
+      "inputBytes": 1378184,
+      "inputSha256": "737e004cdd48c98f557ae812a8d52692dc2ce77301ddb8e4f792910f3a84b9b0",
+      "unitsPerOperation": 1,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "154d1683ec0db600a2053528c08d776ac123367fb9afee573cb173466c14e0a1"
+        }
+      ]
+    },
+    {
+      "run": 1,
+      "dataset": "batch-api-records-32",
+      "method": "public-loop",
+      "exactOutputVerified": true,
+      "outputSha256": "55a447b265f29c5aa6949869ac33df7feef4117d9b064ef54d8d16ebe5ee5c64",
+      "outputBytes": 9338,
+      "inputBytes": 8633,
+      "inputSha256": "c8fe5a880cd4aa50018e61b33928eb6fc01d3d45a4e4238060f0efad662c5fdc",
+      "unitsPerOperation": 32,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "154d1683ec0db600a2053528c08d776ac123367fb9afee573cb173466c14e0a1"
+        }
+      ]
+    },
+    {
+      "run": 1,
+      "dataset": "api-source",
+      "method": "native",
+      "exactOutputVerified": true,
+      "outputSha256": "08186068c631474a302960f0e5372aeb89eb083632eaaca3a086bd63e85a3744",
+      "outputBytes": 1085130,
+      "inputBytes": 1378184,
+      "inputSha256": "737e004cdd48c98f557ae812a8d52692dc2ce77301ddb8e4f792910f3a84b9b0",
+      "unitsPerOperation": 1,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "154d1683ec0db600a2053528c08d776ac123367fb9afee573cb173466c14e0a1"
+        }
+      ]
+    },
+    {
+      "run": 1,
+      "dataset": "lock-source",
+      "method": "fast-stable",
+      "exactOutputVerified": true,
+      "outputSha256": "2792ad18d225a6a762bc1a6c6d63c8a23b12f1f79740fcec0f0e54b723461d04",
+      "outputBytes": 93728,
+      "inputBytes": 143844,
+      "inputSha256": "378f2bc78a43c4c40cccf668d8cf431f547fab8b3f74dc19ef9575bcabaaea45",
+      "unitsPerOperation": 1,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "154d1683ec0db600a2053528c08d776ac123367fb9afee573cb173466c14e0a1"
+        }
+      ]
+    },
+    {
+      "run": 1,
+      "dataset": "batch-api-records-32",
+      "method": "native-loop",
+      "exactOutputVerified": true,
+      "outputSha256": "55a447b265f29c5aa6949869ac33df7feef4117d9b064ef54d8d16ebe5ee5c64",
+      "outputBytes": 9338,
+      "inputBytes": 8633,
+      "inputSha256": "c8fe5a880cd4aa50018e61b33928eb6fc01d3d45a4e4238060f0efad662c5fdc",
+      "unitsPerOperation": 32,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "154d1683ec0db600a2053528c08d776ac123367fb9afee573cb173466c14e0a1"
+        }
+      ]
+    },
+    {
+      "run": 1,
+      "dataset": "batch-tiny-32",
+      "method": "native-batch",
+      "exactOutputVerified": true,
+      "outputSha256": "49d0600af69a9bbf1135e511786f7d96f707f4dde16d7a0431be8f5d3e7fefd7",
+      "outputBytes": 1869,
+      "inputBytes": 1452,
+      "inputSha256": "9e015281ff59837817509e18540c5a4428f88c9e083fc9591f305c24c23c9ce8",
+      "unitsPerOperation": 32,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "154d1683ec0db600a2053528c08d776ac123367fb9afee573cb173466c14e0a1"
+        }
+      ]
+    },
+    {
+      "run": 1,
+      "dataset": "api-normalized",
+      "method": "safe-stable",
+      "exactOutputVerified": true,
+      "outputSha256": "08186068c631474a302960f0e5372aeb89eb083632eaaca3a086bd63e85a3744",
+      "outputBytes": 1085130,
+      "inputBytes": 1085130,
+      "inputSha256": "ada3a545a4f049ded26af6a5b285f8e0e2a59f8c4b141c780e5d3db09d2bfacb",
+      "unitsPerOperation": 1,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "154d1683ec0db600a2053528c08d776ac123367fb9afee573cb173466c14e0a1"
+        }
+      ]
+    },
+    {
+      "run": 1,
+      "dataset": "batch-tiny-32",
+      "method": "native-loop",
+      "exactOutputVerified": true,
+      "outputSha256": "49d0600af69a9bbf1135e511786f7d96f707f4dde16d7a0431be8f5d3e7fefd7",
+      "outputBytes": 1869,
+      "inputBytes": 1452,
+      "inputSha256": "9e015281ff59837817509e18540c5a4428f88c9e083fc9591f305c24c23c9ce8",
+      "unitsPerOperation": 32,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "154d1683ec0db600a2053528c08d776ac123367fb9afee573cb173466c14e0a1"
+        }
+      ]
+    },
+    {
+      "run": 1,
+      "dataset": "batch-api-records-32",
+      "method": "oracle-loop",
+      "exactOutputVerified": true,
+      "outputSha256": "55a447b265f29c5aa6949869ac33df7feef4117d9b064ef54d8d16ebe5ee5c64",
+      "outputBytes": 9338,
+      "inputBytes": 8633,
+      "inputSha256": "c8fe5a880cd4aa50018e61b33928eb6fc01d3d45a4e4238060f0efad662c5fdc",
+      "unitsPerOperation": 32,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "154d1683ec0db600a2053528c08d776ac123367fb9afee573cb173466c14e0a1"
+        }
+      ]
+    },
+    {
+      "run": 1,
+      "dataset": "cache-api-document",
+      "method": "cache-hit",
+      "exactOutputVerified": true,
+      "outputSha256": "08186068c631474a302960f0e5372aeb89eb083632eaaca3a086bd63e85a3744",
+      "outputBytes": 1085130,
+      "inputBytes": 1085130,
+      "inputSha256": "a12b6a68c636a1e7e1d668710cff7b6e490a4f05b84a6262bf702b90b0c50268",
+      "unitsPerOperation": 1,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "154d1683ec0db600a2053528c08d776ac123367fb9afee573cb173466c14e0a1"
+        }
+      ]
+    },
+    {
+      "run": 1,
+      "dataset": "lock-normalized",
+      "method": "fast-stable",
+      "exactOutputVerified": true,
+      "outputSha256": "2792ad18d225a6a762bc1a6c6d63c8a23b12f1f79740fcec0f0e54b723461d04",
+      "outputBytes": 93728,
+      "inputBytes": 93728,
+      "inputSha256": "1e6164575f5508cdb890167271f2094c08bb1be44b6d519b47ade6de7e27f4a2",
+      "unitsPerOperation": 1,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "154d1683ec0db600a2053528c08d776ac123367fb9afee573cb173466c14e0a1"
+        }
+      ]
+    },
+    {
+      "run": 1,
+      "dataset": "unicode",
+      "method": "fast-stable",
+      "exactOutputVerified": true,
+      "outputSha256": "e4f9138cf85cc4b8ae6d986e4265b9340c255bf7b1309d0f9fe6d7738f99836f",
+      "outputBytes": 39491,
+      "inputBytes": 39491,
+      "inputSha256": "22b09cbaebaa0744acea86715b3e6b1cf775567136140f75a422c472defb44c2",
+      "unitsPerOperation": 1,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "154d1683ec0db600a2053528c08d776ac123367fb9afee573cb173466c14e0a1"
+        }
+      ]
+    },
+    {
+      "run": 1,
+      "dataset": "cache-api-document",
+      "method": "oracle",
+      "exactOutputVerified": true,
+      "outputSha256": "08186068c631474a302960f0e5372aeb89eb083632eaaca3a086bd63e85a3744",
+      "outputBytes": 1085130,
+      "inputBytes": 1085130,
+      "inputSha256": "a12b6a68c636a1e7e1d668710cff7b6e490a4f05b84a6262bf702b90b0c50268",
+      "unitsPerOperation": 1,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "154d1683ec0db600a2053528c08d776ac123367fb9afee573cb173466c14e0a1"
+        }
+      ]
+    }
+  ]
+}
