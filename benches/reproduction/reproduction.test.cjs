@@ -11,7 +11,7 @@ test('independent fixtures verify exact retained bytes and preserve source URLs'
   assert.equal(inputs['batch-api-records-32'].length, 32);
 });
 test('encoding density controls and retained CLDR fixture match exact stable strings', () => {
-  for (const dataset of ['latin1-large', 'sparse-unicode', 'ascii-string-50k', 'short-unicode', 'real-cldr-bn']) {
+  for (const dataset of ['latin1-large', 'sparse-unicode', 'ascii-string-50k', 'short-unicode', 'real-cldr-bn', 'unicode-prefix-ascii-tail', 'ascii-prefix-unicode-tail', 'ascii-prefix-dense-unicode']) {
     for (const method of ['native', 'oracle']) {
       const candidate = prepare(dataset, method);
       assert.equal(candidate.fn(), candidate.expected, `${dataset}/${method}`);

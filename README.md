@@ -49,18 +49,26 @@ Windows x64 has a verified local release build. Linux x64 and macOS ARM64 are
 targeted by CI but **UNVERIFIED** until their jobs execute. Node 24.20.0 and
 22.13.0 are locally tested runtimes.
 
-Measured on Windows i7-12700K / Node24.20.0 (9×100ms samples, second confirmation):
+Independent Windows i7-12700K / Node24.20.0 rebuild (two runs,9×100ms):
 
 | Existing JSON text | JSON.parse + upstream ops/s | Rust text ops/s |
 |---|---:|---:|
-| Real dependency lock |1338|3377|
-| Real API dataset |137|231|
-| Unicode-heavy synthetic |13134|4432|
+| Real dependency lock, original native |1358–1373|3268–3318|
+| Real API dataset, original native |137–139|232–236|
+| Unicode-heavy synthetic, original native |13254–13281|4479–4541|
 
-Rust wins on selected text workloads and loses on Unicode-heavy input. Ordinary
-object conversion can erase gains; batch calls show no measured advantage over
-same-native repeated calls. See [performance](docs/performance.md) and
-[full evidence](benches/REPORT.md) for variability, CPU/memory and raw artifacts.
+This corroborates the earlier3377/1338 lock result as a range. After profiling
+native string conversion, bounded output encoding improved dense Unicode to
+8258–8506ops/s, still below JS13260–13377. Real Bengali CLDR throughput improved
+from6840–6870 to8946–9082ops/s in matched runs. These are workload-specific results
+on one machine. The first candidate was rejected for a sparse-text regression.
+
+Rust wins on selected text workloads. Ordinary object conversion can erase gains;
+batch calls show no measured advantage over same-native repeated calls. Explicit
+version caching helps known unchanged records but adds overhead on misses.
+See [performance](docs/performance.md), [independent reproduction](docs/roadmap/REPRODUCTION_REVIEW.md)
+and [output investigation](docs/roadmap/OUTPUT_BENCHMARK_REVIEW.md) for variability,
+CPU/memory, negative controls and raw artifacts; [historical report](benches/REPORT.md).
 Selective extraction was about49% faster on dependency metadata in two runs;
 it was about25% slower on the large API fixture and also lost on tiny, Unicode
 and deep inputs. Use it for measured workloads, not as a general JSON.parse replacement.

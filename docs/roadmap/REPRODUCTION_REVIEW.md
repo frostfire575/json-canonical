@@ -301,3 +301,17 @@ not establish cold-machine startup or per-request latency. Historical slower
 require numbers are not reproduced exactly; environment/cache/run variation is
 preserved rather than hidden. All baseline timing has now stopped; the lead may
 build and test a candidate before a separately coordinated after window.
+
+The first candidate was subsequently measured independently and **rejected**:
+dense outputs improved, but the sparse-Unicode control regressed15–16%, failing
+the predeclared negative-control gate. Full measurements and source/artifact
+identity are preserved in `OUTPUT_BENCHMARK_REVIEW.md`. No baseline evidence was
+rewritten, and rejection is not recorded as an accepted optimization.
+
+Candidate 2 subsequently passed the independent measured gate: matched archived
+original versus candidate controls on Windows Node24 and Node22 show 31–35% gains
+on real CLDR data, while sparse/mixed-prefix regressions remain below 10%.
+Text/roundtrip/batch regression checks and a retained/repeated anomalous batch
+cell are documented in `OUTPUT_BENCHMARK_REVIEW.md`. Its 208 measured cells all
+pass exact output checks; this accepts a scoped output optimization, not
+cross-platform production readiness.

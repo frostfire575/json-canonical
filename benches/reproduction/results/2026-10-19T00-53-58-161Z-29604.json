@@ -1,0 +1,2539 @@
+{
+  "timestamp": "2026-10-19T00:53:58.161Z",
+  "command": "node benches/reproduction/run.cjs",
+  "config": {
+    "runs": 2,
+    "samples": 9,
+    "sampleMs": 100,
+    "warmupMs": 300,
+    "seed": 291947,
+    "consumption": "flatten"
+  },
+  "selection": {
+    "datasets": "tiny,deep,wide,application-config,upstream-api-fixture,large-string,record-array,backend-payload,array-of-32,lock-normalized,api-normalized,unicode",
+    "methods": "object-native-roundtrip"
+  },
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "osRelease": "10.0.26300",
+    "osVersion": "Windows 11 Pro",
+    "node": "v24.20.0",
+    "v8": "13.6.233.17-node.53",
+    "processExecPath": "G:\\[Softwares]\\NodeJs\\node.exe",
+    "cpu": "12th Gen Intel(R) Core(TM) i7-12700K",
+    "logicalCpus": 20,
+    "totalMemoryBytes": 34087682048,
+    "rust": "rustc 1.98.1 (48a229cea 2026-09-01)",
+    "cargo": "cargo 1.98.1 (797e8a9bc 2026-08-05)",
+    "pnpm": "12.10.1",
+    "commit": "3d049f7998360ee6670b3578be9530d80d3dcc7a",
+    "dirty": "M .github/workflows/ci.yml\n M benches/reproduction/coverage.cjs\n M benches/reproduction/run.cjs\n M docs/compatibility.md\n M docs/performance.md\n M docs/roadmap/CI_REVIEW_2.md\n M native/binding.d.ts\n M scripts/verify-ci-candidate.cjs\n M src/lib.rs\n?? benches/reproduction/results/2026-10-19T00-52-20-913Z-coverage-incomplete.json\n?? benches/reproduction/results/2026-10-19T00-52-20-954Z-11408.json\n?? benches/reproduction/results/2026-10-19T00-52-46-566Z-29092.json\n?? benches/reproduction/results/2026-10-19T00-53-11-903Z-30576.json\n?? benches/reproduction/run-733864751133.cjs\n?? docs/roadmap/OUTPUT_REVIEW.md\n?? src/output.rs\n?? tests/output-review.test.cjs",
+    "upstreamCommit": "49e230da2c84247b29ad4de02c9395793caefd15",
+    "napiOverride": null,
+    "nodeOptions": null,
+    "sourceHashes": {
+      "benches/reproduction/run.cjs": "73386475113318bc26659eaa7894ef44d5013a6537b5024e8af5f764e5693a2d",
+      "js/index.ts": "bbb249b604ccaafff68a4974968995568363c101c43392dcfb57650bf2ea7ca1",
+      "js/dist/index.js": "859a2d9ce77ded096d4526b9b799e6dee275137b72db5b12b3317a6fd82760f6",
+      "js/index.cjs": "f725264677360136f8151ec72515ce19f7f61814df9f4c779baca304ad3f850a",
+      "js/index.mjs": "8b07c342282dfb402ad7166bbb1e23f3ab8460254330f3760c616ae6b706b95f",
+      "native/binding.js": "a1df31adec1a2b469c8af3b067545edfc83c7e037435c04ce3ee5d73fb1536d3",
+      "native/binding.d.ts": "839513876a6251830f3bd1f40520725432837ce788a3ed893ba5cff3fc478eab",
+      "src/lib.rs": "58deb597a723c7669f447e7e49adc70549b9dfb02c80f9504e3c954588fb2e13",
+      "src/tree.rs": "b345e2b5f4e22ae0f15f8132ae3dc8250aadfc4d53687d0f1c8692c03720440a",
+      "src/engine.rs": "1bea768b0d2db85a3e92653bb12b84e30981df44950032d165dee1b91514cdc6",
+      "src/selection.rs": "69d1d6b1750b5c472672e93bb6981499f4ab1980011da7023dbfe5ac0bcff179",
+      "src/output.rs": "34db91cc555dda1437a21bcbe714170d9578635bdfaa444dd9fd3140c5fa6f9d",
+      "build.rs": "fcbd1ff3f627a7553fa1704dc6f558998daff8bc256015c37aace62cc49ce584",
+      "Cargo.lock": "7fea717ccad5b4b81b64a1dc2d8c727eb849117c9989871db7ecb21b5108001e",
+      "Cargo.toml": "ccd6472ce856d3838ff371b836d07e1288c845461c0be195285a57bb2b26e337",
+      "pnpm-lock.yaml": "268854350104379c6e5698c2504908ef61cc5870655b68fab4c2ce58624b6fab",
+      "package.json": "4c67e19d6caa500e3ea99844068f88a9b75d287249e1d783ba7e65f61cef4674",
+      "tsconfig.json": "8d2902c8dc4217a67498f5846e1af0c453933d03290e444032933215520faf8f"
+    },
+    "embeddedNativeSources": {
+      "src/lib.rs": "mod engine;\nmod output;\nmod selection;\nmod tree;\n\nuse napi::{Error, Result, Status};\nuse napi_derive::napi;\n\nfn options(depth: Option<u32>, bytes: Option<u32>) -> Result<engine::Limits> {\n    engine::Limits::new(depth, bytes).map_err(invalid)\n}\nfn invalid(message: String) -> Error {\n    Error::new(Status::InvalidArg, message)\n}\n\n#[napi]\npub fn select_json(\n    input: String,\n    path: Vec<String>,\n    max_depth: Option<u32>,\n    max_bytes: Option<u32>,\n) -> Result<Option<String>> {\n    if path.len() > 128 {\n        return Err(invalid(\"Path limit is 128 segments\".into()));\n    }\n    selection::select(&input, &path, options(max_depth, max_bytes)?).map_err(invalid)\n}\n\n#[napi(ts_return_type = \"string\")]\npub fn stringify_json(\n    input: String,\n    max_depth: Option<u32>,\n    max_bytes: Option<u32>,\n) -> Result<output::Output> {\n    engine::stringify(&input, options(max_depth, max_bytes)?)\n        .map(output::encode)\n        .map_err(invalid)\n}\n\n#[napi(ts_return_type = \"string[]\")]\npub fn stringify_json_batch(\n    inputs: Vec<String>,\n    max_depth: Option<u32>,\n    max_bytes: Option<u32>,\n) -> Result<Vec<output::Output>> {\n    let limits = options(max_depth, max_bytes)?;\n    if inputs.len() > 1024 || inputs.iter().map(String::len).sum::<usize>() > 64 * 1024 * 1024 {\n        return Err(invalid(\"Batch exceeds 1024 documents or 64 MiB\".into()));\n    }\n    inputs\n        .iter()\n        .enumerate()\n        .map(|(index, input)| {\n            engine::stringify(input, limits)\n                .map(output::encode)\n                .map_err(|error| invalid(format!(\"Batch item {index}: {error}\")))\n        })\n        .collect()\n}\n",
+      "src/tree.rs": "//! Structural scan of JSON that has ALREADY passed serde_json validation.\n//! Leaves borrow source tokens; keys without escapes borrow source strings.\n//! All indexing remains checked and invalid structural states return errors.\nuse std::borrow::Cow;\n\npub enum Node<'a> {\n    Scalar(&'a str),\n    Array(Vec<Node<'a>>),\n    Object(Vec<Member<'a>>),\n}\npub struct Member<'a> {\n    pub key: Cow<'a, str>,\n    pub token: &'a str,\n    pub value: Node<'a>,\n}\n\n/// Allocation-free nesting check, for selection without building a token tree.\n/// The whole input must already have passed serde validation.\npub fn validate_depth(text: &str, max_depth: usize) -> Result<(), String> {\n    let mut cursor = Cursor { text, pos: 0 };\n    let mut depth = 0;\n    while let Some(&byte) = text.as_bytes().get(cursor.pos) {\n        match byte {\n            b'\"' => {\n                cursor.string()?;\n                continue;\n            }\n            b'{' | b'[' => {\n                depth += 1;\n                if depth > max_depth {\n                    return Err(\"JSON nesting limit exceeded\".into());\n                }\n            }\n            b'}' | b']' => {\n                depth -= 1;\n            }\n            _ => {}\n        }\n        cursor.pos += 1;\n    }\n    Ok(())\n}\n\npub fn parse(text: &str, max_depth: usize) -> Result<Node<'_>, String> {\n    let mut cursor = Cursor { text, pos: 0 };\n    let result = cursor.value(0, max_depth)?;\n    cursor.whitespace();\n    if cursor.pos != text.len() {\n        return Err(\"Unexpected trailing JSON content\".into());\n    }\n    Ok(result)\n}\n\nstruct Cursor<'a> {\n    text: &'a str,\n    pos: usize,\n}\nimpl<'a> Cursor<'a> {\n    fn whitespace(&mut self) {\n        while self\n            .text\n            .as_bytes()\n            .get(self.pos)\n            .is_some_and(u8::is_ascii_whitespace)\n        {\n            self.pos += 1;\n        }\n    }\n    fn expect(&mut self, byte: u8) -> Result<(), String> {\n        self.whitespace();\n        if self.text.as_bytes().get(self.pos) != Some(&byte) {\n            return Err(\"Unexpected JSON delimiter\".into());\n        }\n        self.pos += 1;\n        Ok(())\n    }\n    fn string(&mut self) -> Result<&'a str, String> {\n        self.expect(b'\"')?;\n        let start = self.pos - 1;\n        // memchr scans Unicode/long strings without decoding or allocating.\n        loop {\n            let tail = self\n                .text\n                .as_bytes()\n                .get(self.pos..)\n                .ok_or(\"Unterminated JSON string\")?;\n            let offset = memchr::memchr2(b'\"', b'\\\\', tail).ok_or(\"Unterminated JSON string\")?;\n            self.pos += offset;\n            if self.text.as_bytes()[self.pos] == b'\"' {\n                self.pos += 1;\n                return self\n                    .text\n                    .get(start..self.pos)\n                    .ok_or_else(|| \"Invalid JSON string span\".into());\n            }\n            self.pos += 2; // validated escape: skip backslash and next ASCII byte\n        }\n    }\n    fn value(&mut self, depth: usize, max_depth: usize) -> Result<Node<'a>, String> {\n        self.whitespace();\n        let start = self.pos;\n        let byte = *self\n            .text\n            .as_bytes()\n            .get(start)\n            .ok_or(\"Missing JSON value\")?;\n        if byte == b'{' || byte == b'[' {\n            if depth >= max_depth {\n                return Err(\"JSON nesting limit exceeded\".into());\n            }\n            self.pos += 1;\n            self.whitespace();\n            let end = if byte == b'{' { b'}' } else { b']' };\n            let mut array = Vec::new();\n            let mut members = Vec::new();\n            if self.text.as_bytes().get(self.pos) == Some(&end) {\n                self.pos += 1;\n            } else {\n                loop {\n                    if byte == b'{' {\n                        let token = self.string()?;\n                        let key = if token.as_bytes().contains(&b'\\\\') {\n                            Cow::Owned(\n                                serde_json::from_str::<String>(token).map_err(|e| e.to_string())?,\n                            )\n                        } else {\n                            Cow::Borrowed(&token[1..token.len() - 1])\n                        };\n                        self.expect(b':')?;\n                        members.push(Member {\n                            key,\n                            token,\n                            value: self.value(depth + 1, max_depth)?,\n                        });\n                    } else {\n                        array.push(self.value(depth + 1, max_depth)?);\n                    }\n                    self.whitespace();\n                    if self.text.as_bytes().get(self.pos) == Some(&end) {\n                        self.pos += 1;\n                        break;\n                    }\n                    self.expect(b',')?;\n                }\n            }\n            if byte == b'[' {\n                return Ok(Node::Array(array));\n            }\n            members.sort_unstable_by(|a, b| a.key.encode_utf16().cmp(b.key.encode_utf16()));\n            if members.windows(2).any(|pair| pair[0].key == pair[1].key) {\n                return Err(\"Duplicate decoded object key\".into());\n            }\n            return Ok(Node::Object(members));\n        }\n        if byte == b'\"' {\n            return self.string().map(Node::Scalar);\n        }\n        while self\n            .text\n            .as_bytes()\n            .get(self.pos)\n            .is_some_and(|b| !b.is_ascii_whitespace() && !b\",]}\".contains(b))\n        {\n            self.pos += 1;\n        }\n        let token = self\n            .text\n            .get(start..self.pos)\n            .ok_or(\"Invalid JSON scalar span\")?;\n        if token.is_empty() {\n            return Err(\"Missing JSON scalar\".into());\n        }\n        Ok(Node::Scalar(token))\n    }\n}\n",
+      "src/engine.rs": "use crate::tree::{self, Node};\nuse serde_json::value::RawValue;\n\n#[derive(Clone, Copy)]\npub struct Limits {\n    pub(crate) depth: usize,\n    bytes: usize,\n}\nimpl Limits {\n    pub fn new(depth: Option<u32>, bytes: Option<u32>) -> Result<Self, String> {\n        let depth = depth.unwrap_or(128) as usize;\n        let bytes = bytes.unwrap_or(16 * 1024 * 1024) as usize;\n        if !(1..=128).contains(&depth) || !(1..=64 * 1024 * 1024).contains(&bytes) {\n            return Err(\"Limits require maxDepth 1..128 and maxBytes 1..67108864\".into());\n        }\n        Ok(Self { depth, bytes })\n    }\n}\n\npub fn stringify(input: &str, limits: Limits) -> Result<String, String> {\n    let root = validate(input, limits)?;\n    let mut output = String::with_capacity(input.len().min(limits.bytes));\n    let tree = tree::parse(root.get(), limits.depth)?;\n    write(&tree, &mut output, limits)?;\n    Ok(output)\n}\n\npub(crate) fn validate(input: &str, limits: Limits) -> Result<&RawValue, String> {\n    if input.len() > limits.bytes {\n        return Err(\"JSON input byte limit exceeded\".into());\n    }\n    serde_json::from_str(input).map_err(|e| e.to_string())\n}\n\nfn append(out: &mut String, text: &str, limits: Limits) -> Result<(), String> {\n    if text.len() > limits.bytes.saturating_sub(out.len()) {\n        return Err(\"JSON output byte limit exceeded\".into());\n    }\n    out.push_str(text);\n    Ok(())\n}\npub(crate) fn write(node: &Node<'_>, out: &mut String, limits: Limits) -> Result<(), String> {\n    match node {\n        Node::Object(members) => {\n            append(out, \"{\", limits)?;\n            for (index, member) in members.iter().enumerate() {\n                if index > 0 {\n                    append(out, \",\", limits)?;\n                }\n                if member.token.as_bytes().contains(&b'\\\\') {\n                    let key = serde_json::to_string(&member.key).map_err(|e| e.to_string())?;\n                    append(out, &key, limits)?;\n                } else {\n                    append(out, member.token, limits)?;\n                }\n                append(out, \":\", limits)?;\n                write(&member.value, out, limits)?;\n            }\n            append(out, \"}\", limits)\n        }\n        Node::Array(members) => {\n            append(out, \"[\", limits)?;\n            for (index, member) in members.iter().enumerate() {\n                if index > 0 {\n                    append(out, \",\", limits)?;\n                }\n                write(member, out, limits)?;\n            }\n            append(out, \"]\", limits)\n        }\n        Node::Scalar(token) => append(out, token, limits),\n    }\n}\n\n#[cfg(test)]\nmod tests {\n    use super::*;\n    fn sort(text: &str) -> Result<String, String> {\n        stringify(text, Limits::new(None, None)?)\n    }\n    #[test]\n    fn nested_and_utf16() {\n        assert_eq!(\n            sort(r#\" {\"\\ue000\":0,\"😀\":1,\"a\":[{\"z\":2,\"a\":3}]} \"#).unwrap(),\n            \"{\\\"a\\\":[{\\\"a\\\":3,\\\"z\\\":2}],\\\"😀\\\":1,\\\"\\u{e000}\\\":0}\"\n        );\n    }\n    #[test]\n    fn tokens_and_duplicates() {\n        assert_eq!(\n            sort(r#\"[1.00,1e+30,-0,\"\\ud800\",\"\\u0061\"]\"#).unwrap(),\n            r#\"[1.00,1e+30,-0,\"\\ud800\",\"\\u0061\"]\"#\n        );\n        assert!(sort(r#\"{\"a\":1,\"\\u0061\":2}\"#).is_err());\n        assert!(sort(r#\"{\"\\ud800\":1}\"#).is_err());\n    }\n    #[test]\n    fn validation_and_limits() {\n        for bad in [\n            \"\",\n            \"[1,]\",\n            \"{} garbage\",\n            \"[01]\",\n            \"{\\\"x\\\":NaN}\",\n            \"[\\\"\\u{1}\\\"]\",\n        ] {\n            assert!(sort(bad).is_err(), \"{bad}\");\n        }\n        assert!(stringify(\"[[0]]\", Limits::new(Some(1), None).unwrap()).is_err());\n        assert!(stringify(\"[0]\", Limits::new(None, Some(2)).unwrap()).is_err());\n        assert!(Limits::new(Some(129), None).is_err());\n        // RawValue's initial validation must not overflow the native stack.\n        assert!(sort(&format!(\"{}0{}\", \"[\".repeat(10000), \"]\".repeat(10000))).is_err());\n    }\n}\n",
+      "src/selection.rs": "//! JSON text selection: validate everything, materialize only path-level keys.\nuse crate::engine::Limits;\nuse serde::de::{DeserializeSeed, Deserializer, MapAccess, SeqAccess, Visitor};\nuse serde_json::value::RawValue;\nuse std::fmt;\n\nenum Token<'a> {\n    Key(&'a str),\n    Index(usize),\n}\nstruct Select<'a>(Token<'a>);\nimpl<'de> DeserializeSeed<'de> for Select<'_> {\n    type Value = Option<&'de RawValue>;\n    fn deserialize<D: Deserializer<'de>>(self, deserializer: D) -> Result<Self::Value, D::Error> {\n        struct SelectVisitor<'a>(Token<'a>);\n        impl<'de> Visitor<'de> for SelectVisitor<'_> {\n            type Value = Option<&'de RawValue>;\n            fn expecting(&self, f: &mut fmt::Formatter) -> fmt::Result {\n                f.write_str(\"a JSON container\")\n            }\n            fn visit_map<M: MapAccess<'de>>(self, mut map: M) -> Result<Self::Value, M::Error> {\n                let Token::Key(target) = self.0 else {\n                    return Ok(None);\n                };\n                let mut selected = None;\n                while let Some((key, value)) = map.next_entry::<String, &'de RawValue>()? {\n                    // Last duplicate wins, like JSON.parse; not full RFC6901.\n                    if key == target {\n                        selected = Some(value);\n                    }\n                }\n                Ok(selected)\n            }\n            fn visit_seq<S: SeqAccess<'de>>(self, mut seq: S) -> Result<Self::Value, S::Error> {\n                let Token::Index(target) = self.0 else {\n                    return Ok(None);\n                };\n                let mut selected = None;\n                let mut index = 0;\n                while let Some(value) = seq.next_element::<&'de RawValue>()? {\n                    if index == target {\n                        selected = Some(value);\n                    }\n                    index += 1;\n                }\n                Ok(selected)\n            }\n        }\n        match self.0 {\n            Token::Key(_) => deserializer.deserialize_map(SelectVisitor(self.0)),\n            Token::Index(_) => deserializer.deserialize_seq(SelectVisitor(self.0)),\n        }\n    }\n}\n\npub fn select(input: &str, path: &[String], limits: Limits) -> Result<Option<String>, String> {\n    let root = crate::engine::validate(input, limits)?;\n    crate::tree::validate_depth(root.get(), limits.depth)?;\n    let mut current = root;\n    for segment in path {\n        let token = match current.get().as_bytes()[0] {\n            b'{' => Token::Key(segment),\n            b'[' => {\n                if segment.is_empty()\n                    || (segment.len() > 1 && segment.starts_with('0'))\n                    || !segment.bytes().all(|b| b.is_ascii_digit())\n                {\n                    return Ok(None);\n                }\n                let Ok(index) = segment.parse::<usize>() else {\n                    return Ok(None);\n                };\n                Token::Index(index)\n            }\n            _ => return Ok(None),\n        };\n        let mut deserializer = serde_json::Deserializer::from_str(current.get());\n        let selected = Select(token)\n            .deserialize(&mut deserializer)\n            .map_err(|e| e.to_string())?;\n        let Some(selected) = selected else {\n            return Ok(None);\n        };\n        current = selected;\n    }\n    Ok(Some(current.get().to_owned()))\n}\n\n#[cfg(test)]\nmod tests {\n    use super::*;\n    #[test]\n    fn raw_selection_and_missing() {\n        let limits = Limits::new(None, None).unwrap();\n        let input = r#\"{\"a\":[0,1.00],\"z\":null}\"#;\n        assert_eq!(\n            select(input, &[\"a\".into(), \"1\".into()], limits).unwrap(),\n            Some(\"1.00\".into())\n        );\n        assert_eq!(\n            select(input, &[\"z\".into()], limits).unwrap(),\n            Some(\"null\".into())\n        );\n        assert_eq!(select(input, &[\"missing\".into()], limits).unwrap(), None);\n    }\n    #[test]\n    fn validates_unselected_branches() {\n        let limits = Limits::new(Some(2), None).unwrap();\n        assert!(select(r#\"{\"a\":1,\"z\":[[0]]}\"#, &[\"a\".into()], limits).is_err());\n        assert!(select(r#\"{\"a\":1,\"z\":[0,]}\"#, &[\"a\".into()], limits).is_err());\n    }\n}\n",
+      "src/output.rs": "//! Choose a lossless Node string representation after serialization.\n//!\n//! Dense non-ASCII UTF8 output is expensive for napi_create_string_utf8 on the\n//! measured V8 version. Convert it once in Rust and use the UTF16 Node-API path.\n//! Short, ASCII and sparse Unicode outputs retain the cheaper original route.\nuse napi::bindgen_prelude::{Either, Utf16String};\n\npub type Output = Either<String, Utf16String>;\n\npub fn encode(output: String) -> Output {\n    // Empirical threshold, not a serialization rule. Both routes preserve every\n    // code unit, including literal backslash escapes in the raw JSON tokens.\n    if output.len() >= 1024\n        && !output.is_ascii()\n        && output.bytes().filter(|byte| !byte.is_ascii()).count() >= output.len() / 8\n    {\n        Either::B(output.into())\n    } else {\n        Either::A(output)\n    }\n}\n",
+      "build.rs": "fn main() {\n    napi_build::setup();\n}\n",
+      "Cargo.toml": "[package]\nname = \"stable-json-rs\"\nversion = \"0.1.0\"\nedition = \"2024\"\nrust-version = \"1.88\"\nlicense = \"MIT\"\ndescription = \"Bounded deterministic JSON text engine with Node-API bindings\"\n\n[lib]\ncrate-type = [\"cdylib\", \"rlib\"]\n\n[dependencies]\nnapi = { version = \"3\", default-features = false, features = [\"napi8\", \"dyn-symbols\"] }\nnapi-derive = \"3\"\nserde = \"1\"\nserde_json = { version = \"1\", features = [\"raw_value\"] }\nmemchr = \"2\"\n\n[build-dependencies]\nnapi-build = \"2\"\n\n[profile.release]\nlto = \"thin\"\ncodegen-units = 1\n\n[[bench]]\nname = \"engine\"\nharness = false\n\n"
+    },
+    "releaseArtifact": {
+      "path": "target/x86_64-pc-windows-msvc/release/stable_json_rs.dll",
+      "sha256": "bc95bc659185014f4c519c0af0af59c88e9920d2178d3be495f712d8adeacf86"
+    },
+    "cpuPowerPlan": "Power Scheme GUID: 381b4222-f694-41f0-9685-ff5bb260df2e  (Balanced)",
+    "dependencies": {
+      "safe-stable-stringify": "2.5.0",
+      "fast-stable-stringify": "1.0.0",
+      "@napi-rs/cli": "3.10.8"
+    }
+  },
+  "fixtures": [
+    {
+      "file": "typescript-package-lock.json",
+      "source": "https://raw.githubusercontent.com/microsoft/TypeScript/5237fd46890956e4bb8177a1a05dcd69e4166560/package-lock.json",
+      "commit": "5237fd46890956e4bb8177a1a05dcd69e4166560",
+      "license": "Apache-2.0",
+      "licenseFile": "typescript-LICENSE.txt",
+      "purpose": "Real dependency metadata; large nested package graph object.",
+      "retrievedAt": "2026-10-18T23:56:25.261Z",
+      "bytes": 143844,
+      "sha256": "52b6c9bd0a26ef1b0fc27dfbfaa00df6a047cdddd587d07c4f6c1c3345faf5cf",
+      "structure": "object with 5 root properties",
+      "normalizedBytes": 93728,
+      "normalizedSha256": "5f8afda0d3a8190dd04d7561ef72ec6cd3abe74c45b1ba6a720b8dbfff7ac64e"
+    },
+    {
+      "file": "typescript-package.json",
+      "source": "https://raw.githubusercontent.com/microsoft/TypeScript/5237fd46890956e4bb8177a1a05dcd69e4166560/package.json",
+      "commit": "5237fd46890956e4bb8177a1a05dcd69e4166560",
+      "license": "Apache-2.0",
+      "licenseFile": "typescript-LICENSE.txt",
+      "purpose": "Real application/development configuration; medium nested object.",
+      "retrievedAt": "2026-10-18T23:56:25.262Z",
+      "bytes": 1838,
+      "sha256": "2828c1d269bd9c80d634131ec107ac69f1cfc3bf1f98d24c112c825c8acd7902",
+      "structure": "object with 12 root properties",
+      "normalizedBytes": 1370,
+      "normalizedSha256": "6faddd2dbc96b1fd682050a9b79f082dcc0a4289103040ceafbb82573f570d84"
+    },
+    {
+      "file": "upstream-test.json",
+      "source": "https://raw.githubusercontent.com/epoberezkin/fast-json-stable-stringify/49e230da2c84247b29ad4de02c9395793caefd15/benchmark/test.json",
+      "commit": "49e230da2c84247b29ad4de02c9395793caefd15",
+      "license": "MIT",
+      "licenseFile": "upstream-LICENSE",
+      "purpose": "Established upstream benchmark fixture; array of API-shaped records. Mock fixture, not a captured production response.",
+      "retrievedAt": "2026-10-18T23:56:25.262Z",
+      "bytes": 3965,
+      "sha256": "a309a6d29ddefa0dee5628f8f2f9e50adab7f406e05fd465beafda68339739b8",
+      "structure": "array of 3 entries",
+      "normalizedBytes": 2929,
+      "normalizedSha256": "53771b6c7b6dfec175bfd04f0eb65548c71b627048a042a9c893837dd6d34935"
+    },
+    {
+      "file": "jsonplaceholder-data.json",
+      "source": "https://raw.githubusercontent.com/typicode/jsonplaceholder/7ae4432ac3f60e7226a899c25e04826207d07098/data.json",
+      "commit": "7ae4432ac3f60e7226a899c25e04826207d07098",
+      "license": "MIT",
+      "licenseFile": "jsonplaceholder-LICENSE",
+      "purpose": "Actual JSONPlaceholder public API service backing data; fictional posts/comments/albums/photos/todos/users. Large arrays and nested API records, not private user information.",
+      "retrievedAt": "2026-10-19T00:00:05.305Z",
+      "bytes": 1378184,
+      "sha256": "e1feb959cada8c58528e199b1cfe6cf4c43734e47dc8c3b39cbba35916e07479",
+      "structure": {
+        "posts": 100,
+        "comments": 500,
+        "albums": 100,
+        "photos": 5000,
+        "users": 10,
+        "todos": 200
+      },
+      "normalizedBytes": 1085130,
+      "normalizedSha256": "a12b6a68c636a1e7e1d668710cff7b6e490a4f05b84a6262bf702b90b0c50268"
+    },
+    {
+      "file": "cldr-bn-languages.json",
+      "source": "https://raw.githubusercontent.com/unicode-org/cldr-json/91c267402229a59e3ef2774544f001bf959e8809/cldr-json/cldr-localenames-full/main/bn/languages.json",
+      "commit": "91c267402229a59e3ef2774544f001bf959e8809",
+      "retrievedAt": "2026-10-19T00:42:47.022945+00:00",
+      "bytes": 25897,
+      "sha256": "2485a776d5e2bdc5eba15a446706fad90cd06950cebfb176f204db17ce83bf00",
+      "license": "Unicode-3.0",
+      "licenseFile": "cldr-LICENSE",
+      "purpose": "Real CLDR Bengali application localization language names; dense Unicode JSON values",
+      "fixtureDirectory": "benches/profiling/data",
+      "normalizedBytes": 19086,
+      "normalizedSha256": "36d0a6a25bef368aeaedf0d0422f4ab20132caabf37b7500b569dbcf9c0063a7"
+    }
+  ],
+  "limitations": [
+    "Local serial child processes, randomly shuffled order per run; uncontrolled CPU placement, OS scheduling, thermal state, power mode and GC.",
+    "RSS includes fixture loading/JSON parsing/native require/warmup. No serializer-only peak or allocation count.",
+    "Text cases include full public wrapper validation, napi UTF conversion, native processing and returned JS string. Input text prepared before timing. JS baselines parse and sort each operation.",
+    "Source fixtures preserve formatting and token spelling; exact result comparisons establish fixture-specific equivalence only. General text semantics differ.",
+    "Batch methods include identical JSON.stringify of returned array. Cache hits skip serialization under explicit caller version contract."
+  ],
+  "results": [
+    {
+      "run": 1,
+      "dataset": "backend-payload",
+      "method": "object-native-roundtrip",
+      "exactOutputVerified": true,
+      "outputSha256": "e3ec4f057460671313ad58db810de488a4f9a419a11a9718c70f79757703642a",
+      "outputBytes": 59774,
+      "inputBytes": 59774,
+      "inputSha256": "b635a7b3baa065e15e8e907ee4c17c426fea8f5eb0136e1498ba7d1ee095812d",
+      "unitsPerOperation": 1,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "bc95bc659185014f4c519c0af0af59c88e9920d2178d3be495f712d8adeacf86"
+        }
+      ],
+      "scalarOutput": false,
+      "arrayOutput": false,
+      "comparableStableOperation": true,
+      "outputHashContract": "exact returned string or JSON.stringify of non-string result",
+      "inputHashContract": "actual single JSON-text bytes, or JSON.stringify of batch/object/cache-pool inputs",
+      "warmup": {
+        "iterations": 432,
+        "elapsedMs": 305.9651,
+        "opsPerSecond": 1411.925739242809
+      },
+      "samples": [
+        {
+          "iterations": 144,
+          "elapsedMs": 101.4339,
+          "opsPerSecond": 1419.6437285759496
+        },
+        {
+          "iterations": 176,
+          "elapsedMs": 106.19720000000007,
+          "opsPerSecond": 1657.294165947877
+        },
+        {
+          "iterations": 192,
+          "elapsedMs": 106.68119999999999,
+          "opsPerSecond": 1799.7547834107604
+        },
+        {
+          "iterations": 208,
+          "elapsedMs": 100.27960000000007,
+          "opsPerSecond": 2074.2005353032905
+        },
+        {
+          "iterations": 208,
+          "elapsedMs": 104.51549999999997,
+          "opsPerSecond": 1990.1354344570905
+        },
+        {
+          "iterations": 208,
+          "elapsedMs": 105.44819999999993,
+          "opsPerSecond": 1972.532485144366
+        },
+        {
+          "iterations": 208,
+          "elapsedMs": 104.42000000000007,
+          "opsPerSecond": 1991.9555640681847
+        },
+        {
+          "iterations": 208,
+          "elapsedMs": 102.97789999999986,
+          "opsPerSecond": 2019.8508612042028
+        },
+        {
+          "iterations": 224,
+          "elapsedMs": 107.68770000000018,
+          "opsPerSecond": 2080.088998093558
+        }
+      ],
+      "medianOpsPerSecond": 1990.1354344570905,
+      "medianItemsPerSecond": 1990.1354344570905,
+      "madPercent": 4.224089445909144,
+      "minOpsPerSecond": 1419.6437285759496,
+      "maxOpsPerSecond": 2080.088998093558,
+      "checksum": 132237120,
+      "cpuMicroseconds": {
+        "user": 828000,
+        "system": 109000
+      },
+      "memoryBefore": {
+        "rss": 58089472,
+        "heapTotal": 28160000,
+        "heapUsed": 16466696,
+        "external": 3853831,
+        "arrayBuffers": 209183
+      },
+      "memoryAfter": {
+        "rss": 69337088,
+        "heapTotal": 26238976,
+        "heapUsed": 6842320,
+        "external": 2410131,
+        "arrayBuffers": 143627
+      },
+      "processMaxRssBytes": 69513216
+    },
+    {
+      "run": 1,
+      "dataset": "deep",
+      "method": "object-native-roundtrip",
+      "exactOutputVerified": true,
+      "outputSha256": "255c7bcbe267ba222d0354c539b1066d29355109f684151c45b32177061f9e6a",
+      "outputBytes": 1043,
+      "inputBytes": 1043,
+      "inputSha256": "550e9cf869cd26fdd3d576825e49b98146532efd358968bf15f1f0a5fc3d1559",
+      "unitsPerOperation": 1,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "bc95bc659185014f4c519c0af0af59c88e9920d2178d3be495f712d8adeacf86"
+        }
+      ],
+      "scalarOutput": false,
+      "arrayOutput": false,
+      "comparableStableOperation": true,
+      "outputHashContract": "exact returned string or JSON.stringify of non-string result",
+      "inputHashContract": "actual single JSON-text bytes, or JSON.stringify of batch/object/cache-pool inputs",
+      "warmup": {
+        "iterations": 15024,
+        "elapsedMs": 300.2421,
+        "opsPerSecond": 50039.6180282512
+      },
+      "samples": [
+        {
+          "iterations": 5104,
+          "elapsedMs": 100.07929999999999,
+          "opsPerSecond": 50999.557351020645
+        },
+        {
+          "iterations": 5008,
+          "elapsedMs": 100.16380000000004,
+          "opsPerSecond": 49998.10310711053
+        },
+        {
+          "iterations": 4880,
+          "elapsedMs": 100.15369999999996,
+          "opsPerSecond": 48725.10950668824
+        },
+        {
+          "iterations": 5072,
+          "elapsedMs": 100.19500000000005,
+          "opsPerSecond": 50621.28848744945
+        },
+        {
+          "iterations": 4928,
+          "elapsedMs": 100.22539999999992,
+          "opsPerSecond": 49169.17268476857
+        },
+        {
+          "iterations": 5136,
+          "elapsedMs": 100.25229999999999,
+          "opsPerSecond": 51230.74483079192
+        },
+        {
+          "iterations": 5104,
+          "elapsedMs": 100.10969999999998,
+          "opsPerSecond": 50984.07047468928
+        },
+        {
+          "iterations": 5040,
+          "elapsedMs": 100.28430000000003,
+          "opsPerSecond": 50257.1190106527
+        },
+        {
+          "iterations": 4640,
+          "elapsedMs": 100.17990000000009,
+          "opsPerSecond": 46316.67629933745
+        }
+      ],
+      "medianOpsPerSecond": 50257.1190106527,
+      "medianItemsPerSecond": 50257.1190106527,
+      "madPercent": 1.477279945574627,
+      "minOpsPerSecond": 46316.67629933745,
+      "maxOpsPerSecond": 51230.74483079192,
+      "checksum": 65629920,
+      "cpuMicroseconds": {
+        "user": 891000,
+        "system": 0
+      },
+      "memoryBefore": {
+        "rss": 58712064,
+        "heapTotal": 19247104,
+        "heapUsed": 11067792,
+        "external": 3853831,
+        "arrayBuffers": 209183
+      },
+      "memoryAfter": {
+        "rss": 58753024,
+        "heapTotal": 19247104,
+        "heapUsed": 9764624,
+        "external": 3853887,
+        "arrayBuffers": 209199
+      },
+      "processMaxRssBytes": 59256832
+    },
+    {
+      "run": 1,
+      "dataset": "upstream-api-fixture",
+      "method": "object-native-roundtrip",
+      "exactOutputVerified": true,
+      "outputSha256": "69e37521a588bf3866928fddae3d54c8974d23c74fb878a6f0b5a2be8332f31d",
+      "outputBytes": 2929,
+      "inputBytes": 2929,
+      "inputSha256": "53771b6c7b6dfec175bfd04f0eb65548c71b627048a042a9c893837dd6d34935",
+      "unitsPerOperation": 1,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "bc95bc659185014f4c519c0af0af59c88e9920d2178d3be495f712d8adeacf86"
+        }
+      ],
+      "scalarOutput": false,
+      "arrayOutput": false,
+      "comparableStableOperation": true,
+      "outputHashContract": "exact returned string or JSON.stringify of non-string result",
+      "inputHashContract": "actual single JSON-text bytes, or JSON.stringify of batch/object/cache-pool inputs",
+      "warmup": {
+        "iterations": 24032,
+        "elapsedMs": 300.0683,
+        "opsPerSecond": 80088.43320004146
+      },
+      "samples": [
+        {
+          "iterations": 7952,
+          "elapsedMs": 100.02820000000003,
+          "opsPerSecond": 79497.58168196566
+        },
+        {
+          "iterations": 7808,
+          "elapsedMs": 100.14869999999996,
+          "opsPerSecond": 77964.06743172905
+        },
+        {
+          "iterations": 7936,
+          "elapsedMs": 100.07080000000008,
+          "opsPerSecond": 79303.85287216645
+        },
+        {
+          "iterations": 7936,
+          "elapsedMs": 100.28199999999993,
+          "opsPerSecond": 79136.83412775978
+        },
+        {
+          "iterations": 7872,
+          "elapsedMs": 100.08179999999993,
+          "opsPerSecond": 78655.65967038968
+        },
+        {
+          "iterations": 7904,
+          "elapsedMs": 100.2367999999999,
+          "opsPerSecond": 78853.27544374928
+        },
+        {
+          "iterations": 7696,
+          "elapsedMs": 100.14969999999994,
+          "opsPerSecond": 76844.96309025394
+        },
+        {
+          "iterations": 8112,
+          "elapsedMs": 100.04919999999993,
+          "opsPerSecond": 81080.10858657546
+        },
+        {
+          "iterations": 7904,
+          "elapsedMs": 100.15779999999995,
+          "opsPerSecond": 78915.47138615268
+        }
+      ],
+      "medianOpsPerSecond": 78915.47138615268,
+      "medianItemsPerSecond": 78915.47138615268,
+      "madPercent": 0.49214872469470405,
+      "minOpsPerSecond": 76844.96309025394,
+      "maxOpsPerSecond": 81080.10858657546,
+      "checksum": 288405712,
+      "cpuMicroseconds": {
+        "user": 891000,
+        "system": 15000
+      },
+      "memoryBefore": {
+        "rss": 58953728,
+        "heapTotal": 19509248,
+        "heapUsed": 9503080,
+        "external": 3853831,
+        "arrayBuffers": 209183
+      },
+      "memoryAfter": {
+        "rss": 59056128,
+        "heapTotal": 19509248,
+        "heapUsed": 11291272,
+        "external": 3853887,
+        "arrayBuffers": 209199
+      },
+      "processMaxRssBytes": 59469824
+    },
+    {
+      "run": 1,
+      "dataset": "large-string",
+      "method": "object-native-roundtrip",
+      "exactOutputVerified": true,
+      "outputSha256": "84c4c36bf35fe0fb059411b2d655d5427bfa2c9a637309945a57bba8cb96f92f",
+      "outputBytes": 163015,
+      "inputBytes": 163015,
+      "inputSha256": "5df5fb9ff44461550175b0850705350cc0861afbea0d618ed2102f23b2c35804",
+      "unitsPerOperation": 1,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "bc95bc659185014f4c519c0af0af59c88e9920d2178d3be495f712d8adeacf86"
+        }
+      ],
+      "scalarOutput": false,
+      "arrayOutput": false,
+      "comparableStableOperation": true,
+      "outputHashContract": "exact returned string or JSON.stringify of non-string result",
+      "inputHashContract": "actual single JSON-text bytes, or JSON.stringify of batch/object/cache-pool inputs",
+      "warmup": {
+        "iterations": 896,
+        "elapsedMs": 302.0426,
+        "opsPerSecond": 2966.4689682846065
+      },
+      "samples": [
+        {
+          "iterations": 368,
+          "elapsedMs": 100.56599999999997,
+          "opsPerSecond": 3659.288427500349
+        },
+        {
+          "iterations": 400,
+          "elapsedMs": 100.91720000000004,
+          "opsPerSecond": 3963.645443987743
+        },
+        {
+          "iterations": 400,
+          "elapsedMs": 100.36160000000007,
+          "opsPerSecond": 3985.588113382008
+        },
+        {
+          "iterations": 400,
+          "elapsedMs": 103.22410000000002,
+          "opsPerSecond": 3875.0640596527355
+        },
+        {
+          "iterations": 400,
+          "elapsedMs": 101.25250000000005,
+          "opsPerSecond": 3950.519740253325
+        },
+        {
+          "iterations": 400,
+          "elapsedMs": 104.81529999999998,
+          "opsPerSecond": 3816.2367516956024
+        },
+        {
+          "iterations": 400,
+          "elapsedMs": 103.99469999999997,
+          "opsPerSecond": 3846.3498620602795
+        },
+        {
+          "iterations": 384,
+          "elapsedMs": 102.41460000000006,
+          "opsPerSecond": 3749.4654082523366
+        },
+        {
+          "iterations": 368,
+          "elapsedMs": 102.35559999999987,
+          "opsPerSecond": 3595.3089034698687
+        }
+      ],
+      "medianOpsPerSecond": 3846.3498620602795,
+      "medianItemsPerSecond": 3846.3498620602795,
+      "madPercent": 2.708278807930574,
+      "minOpsPerSecond": 3595.3089034698687,
+      "maxOpsPerSecond": 3985.588113382008,
+      "checksum": 720404160,
+      "cpuMicroseconds": {
+        "user": 625000,
+        "system": 297000
+      },
+      "memoryBefore": {
+        "rss": 59977728,
+        "heapTotal": 34222080,
+        "heapUsed": 13982840,
+        "external": 2410075,
+        "arrayBuffers": 143611
+      },
+      "memoryAfter": {
+        "rss": 67661824,
+        "heapTotal": 54538240,
+        "heapUsed": 19872672,
+        "external": 2410131,
+        "arrayBuffers": 143627
+      },
+      "processMaxRssBytes": 81121280
+    },
+    {
+      "run": 1,
+      "dataset": "array-of-32",
+      "method": "object-native-roundtrip",
+      "exactOutputVerified": true,
+      "outputSha256": "62b8882004a994715d244266f577f67d40782d3e4041eefd388964e27960841d",
+      "outputBytes": 1485,
+      "inputBytes": 1485,
+      "inputSha256": "423e7670cd181ac284ead8ceac19286db5a234fbf5e13fccc644fd16b441005e",
+      "unitsPerOperation": 1,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "bc95bc659185014f4c519c0af0af59c88e9920d2178d3be495f712d8adeacf86"
+        }
+      ],
+      "scalarOutput": false,
+      "arrayOutput": false,
+      "comparableStableOperation": true,
+      "outputHashContract": "exact returned string or JSON.stringify of non-string result",
+      "inputHashContract": "actual single JSON-text bytes, or JSON.stringify of batch/object/cache-pool inputs",
+      "warmup": {
+        "iterations": 21776,
+        "elapsedMs": 300.13610000000006,
+        "opsPerSecond": 72553.75144809304
+      },
+      "samples": [
+        {
+          "iterations": 7136,
+          "elapsedMs": 100.25369999999998,
+          "opsPerSecond": 71179.41781699829
+        },
+        {
+          "iterations": 7248,
+          "elapsedMs": 100.17509999999999,
+          "opsPerSecond": 72353.30935531885
+        },
+        {
+          "iterations": 7104,
+          "elapsedMs": 100.0539,
+          "opsPerSecond": 71001.73006749363
+        },
+        {
+          "iterations": 7168,
+          "elapsedMs": 100.04329999999993,
+          "opsPerSecond": 71648.97599339491
+        },
+        {
+          "iterations": 7360,
+          "elapsedMs": 100.05690000000004,
+          "opsPerSecond": 73558.14541525868
+        },
+        {
+          "iterations": 7424,
+          "elapsedMs": 100.10739999999998,
+          "opsPerSecond": 74160.35178218594
+        },
+        {
+          "iterations": 7360,
+          "elapsedMs": 100.11149999999998,
+          "opsPerSecond": 73518.02739944962
+        },
+        {
+          "iterations": 7296,
+          "elapsedMs": 100.11279999999988,
+          "opsPerSecond": 72877.79384853893
+        },
+        {
+          "iterations": 7216,
+          "elapsedMs": 100.07629999999995,
+          "opsPerSecond": 72104.98389728641
+        }
+      ],
+      "medianOpsPerSecond": 72353.30935531885,
+      "medianItemsPerSecond": 72353.30935531885,
+      "madPercent": 1.6097647149917835,
+      "minOpsPerSecond": 71001.73006749363,
+      "maxOpsPerSecond": 74160.35178218594,
+      "checksum": 139340800,
+      "cpuMicroseconds": {
+        "user": 859000,
+        "system": 31000
+      },
+      "memoryBefore": {
+        "rss": 58728448,
+        "heapTotal": 18984960,
+        "heapUsed": 11631112,
+        "external": 3853831,
+        "arrayBuffers": 209183
+      },
+      "memoryAfter": {
+        "rss": 58757120,
+        "heapTotal": 18984960,
+        "heapUsed": 9774416,
+        "external": 3853887,
+        "arrayBuffers": 209199
+      },
+      "processMaxRssBytes": 59244544
+    },
+    {
+      "run": 1,
+      "dataset": "record-array",
+      "method": "object-native-roundtrip",
+      "exactOutputVerified": true,
+      "outputSha256": "95d3d8f718ba3e07fd1db2adc5f9deba8991051fc16437c2bf39f33c7fc38a94",
+      "outputBytes": 59663,
+      "inputBytes": 59663,
+      "inputSha256": "7bc37474a38f304b426fdeb3f7eb71ab2b6186970dcdcf439f2e5f16eb53ad48",
+      "unitsPerOperation": 1,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "bc95bc659185014f4c519c0af0af59c88e9920d2178d3be495f712d8adeacf86"
+        }
+      ],
+      "scalarOutput": false,
+      "arrayOutput": false,
+      "comparableStableOperation": true,
+      "outputHashContract": "exact returned string or JSON.stringify of non-string result",
+      "inputHashContract": "actual single JSON-text bytes, or JSON.stringify of batch/object/cache-pool inputs",
+      "warmup": {
+        "iterations": 448,
+        "elapsedMs": 308.14889999999997,
+        "opsPerSecond": 1453.8426066099864
+      },
+      "samples": [
+        {
+          "iterations": 160,
+          "elapsedMs": 102.17360000000002,
+          "opsPerSecond": 1565.962244650281
+        },
+        {
+          "iterations": 192,
+          "elapsedMs": 107.59939999999995,
+          "opsPerSecond": 1784.3965672671047
+        },
+        {
+          "iterations": 208,
+          "elapsedMs": 105.46719999999993,
+          "opsPerSecond": 1972.1771318476278
+        },
+        {
+          "iterations": 208,
+          "elapsedMs": 102.58389999999997,
+          "opsPerSecond": 2027.6086208459617
+        },
+        {
+          "iterations": 208,
+          "elapsedMs": 101.97109999999998,
+          "opsPerSecond": 2039.7936278023876
+        },
+        {
+          "iterations": 224,
+          "elapsedMs": 104.99700000000007,
+          "opsPerSecond": 2133.3942874558306
+        },
+        {
+          "iterations": 208,
+          "elapsedMs": 101.6934,
+          "opsPerSecond": 2045.3638092540914
+        },
+        {
+          "iterations": 208,
+          "elapsedMs": 100.2536,
+          "opsPerSecond": 2074.73846325718
+        },
+        {
+          "iterations": 224,
+          "elapsedMs": 104.42700000000013,
+          "opsPerSecond": 2145.0391182357025
+        }
+      ],
+      "medianOpsPerSecond": 2039.7936278023876,
+      "medianItemsPerSecond": 2039.7936278023876,
+      "madPercent": 3.314869457044425,
+      "minOpsPerSecond": 1565.962244650281,
+      "maxOpsPerSecond": 2145.0391182357025,
+      "checksum": 136609616,
+      "cpuMicroseconds": {
+        "user": 875000,
+        "system": 31000
+      },
+      "memoryBefore": {
+        "rss": 60477440,
+        "heapTotal": 27897856,
+        "heapUsed": 14519760,
+        "external": 3853831,
+        "arrayBuffers": 209183
+      },
+      "memoryAfter": {
+        "rss": 61923328,
+        "heapTotal": 26501120,
+        "heapUsed": 6829256,
+        "external": 2410131,
+        "arrayBuffers": 143627
+      },
+      "processMaxRssBytes": 62464000
+    },
+    {
+      "run": 1,
+      "dataset": "wide",
+      "method": "object-native-roundtrip",
+      "exactOutputVerified": true,
+      "outputSha256": "fcf429ae0c43095f4e2ef1f77dc2f4ec1a448b3b792608ba5da91b6f74dd534c",
+      "outputBytes": 21784,
+      "inputBytes": 21784,
+      "inputSha256": "a85e7f6ca036307b47f0c105c26552afeddfbc52befe36500add5d02ace8a686",
+      "unitsPerOperation": 1,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "bc95bc659185014f4c519c0af0af59c88e9920d2178d3be495f712d8adeacf86"
+        }
+      ],
+      "scalarOutput": false,
+      "arrayOutput": false,
+      "comparableStableOperation": true,
+      "outputHashContract": "exact returned string or JSON.stringify of non-string result",
+      "inputHashContract": "actual single JSON-text bytes, or JSON.stringify of batch/object/cache-pool inputs",
+      "warmup": {
+        "iterations": 784,
+        "elapsedMs": 305.4034,
+        "opsPerSecond": 2567.096502527477
+      },
+      "samples": [
+        {
+          "iterations": 272,
+          "elapsedMs": 100.61330000000004,
+          "opsPerSecond": 2703.4199255963167
+        },
+        {
+          "iterations": 272,
+          "elapsedMs": 104.20039999999995,
+          "opsPerSecond": 2610.3546627460178
+        },
+        {
+          "iterations": 272,
+          "elapsedMs": 105.61290000000008,
+          "opsPerSecond": 2575.442961986649
+        },
+        {
+          "iterations": 272,
+          "elapsedMs": 105.56119999999999,
+          "opsPerSecond": 2576.7043193900795
+        },
+        {
+          "iterations": 256,
+          "elapsedMs": 100.31769999999995,
+          "opsPerSecond": 2551.8926370919603
+        },
+        {
+          "iterations": 272,
+          "elapsedMs": 105.70629999999994,
+          "opsPerSecond": 2573.167351425602
+        },
+        {
+          "iterations": 256,
+          "elapsedMs": 101.06200000000001,
+          "opsPerSecond": 2533.0984939937857
+        },
+        {
+          "iterations": 272,
+          "elapsedMs": 103.85399999999981,
+          "opsPerSecond": 2619.06137462207
+        },
+        {
+          "iterations": 272,
+          "elapsedMs": 106.55270000000019,
+          "opsPerSecond": 2552.72742971318
+        }
+      ],
+      "medianOpsPerSecond": 2575.442961986649,
+      "medianItemsPerSecond": 2575.442961986649,
+      "madPercent": 0.9144184220846643,
+      "minOpsPerSecond": 2533.0984939937857,
+      "maxOpsPerSecond": 2703.4199255963167,
+      "checksum": 70096000,
+      "cpuMicroseconds": {
+        "user": 922000,
+        "system": 0
+      },
+      "memoryBefore": {
+        "rss": 55447552,
+        "heapTotal": 18722816,
+        "heapUsed": 11781264,
+        "external": 3853831,
+        "arrayBuffers": 209183
+      },
+      "memoryAfter": {
+        "rss": 61693952,
+        "heapTotal": 25714688,
+        "heapUsed": 7892664,
+        "external": 2410131,
+        "arrayBuffers": 143627
+      },
+      "processMaxRssBytes": 63856640
+    },
+    {
+      "run": 1,
+      "dataset": "application-config",
+      "method": "object-native-roundtrip",
+      "exactOutputVerified": true,
+      "outputSha256": "313a944ba89f35f63ce613ae517e9f245e8fa71222fdbb8196b91faf0bee9fcc",
+      "outputBytes": 1370,
+      "inputBytes": 1370,
+      "inputSha256": "6faddd2dbc96b1fd682050a9b79f082dcc0a4289103040ceafbb82573f570d84",
+      "unitsPerOperation": 1,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "bc95bc659185014f4c519c0af0af59c88e9920d2178d3be495f712d8adeacf86"
+        }
+      ],
+      "scalarOutput": false,
+      "arrayOutput": false,
+      "comparableStableOperation": true,
+      "outputHashContract": "exact returned string or JSON.stringify of non-string result",
+      "inputHashContract": "actual single JSON-text bytes, or JSON.stringify of batch/object/cache-pool inputs",
+      "warmup": {
+        "iterations": 49760,
+        "elapsedMs": 300.0908,
+        "opsPerSecond": 165816.47954552423
+      },
+      "samples": [
+        {
+          "iterations": 16576,
+          "elapsedMs": 100.05939999999998,
+          "opsPerSecond": 165661.59701137527
+        },
+        {
+          "iterations": 15968,
+          "elapsedMs": 100.06720000000001,
+          "opsPerSecond": 159572.76710050844
+        },
+        {
+          "iterations": 16208,
+          "elapsedMs": 100.05250000000001,
+          "opsPerSecond": 161994.9526498588
+        },
+        {
+          "iterations": 15952,
+          "elapsedMs": 100.06470000000002,
+          "opsPerSecond": 159416.85729333118
+        },
+        {
+          "iterations": 16432,
+          "elapsedMs": 100.07230000000004,
+          "opsPerSecond": 164201.28247277212
+        },
+        {
+          "iterations": 16064,
+          "elapsedMs": 100.10769999999991,
+          "opsPerSecond": 160467.17685053212
+        },
+        {
+          "iterations": 16480,
+          "elapsedMs": 100.10030000000006,
+          "opsPerSecond": 164634.87122416205
+        },
+        {
+          "iterations": 16064,
+          "elapsedMs": 100.0755999999999,
+          "opsPerSecond": 160518.64790218612
+        },
+        {
+          "iterations": 16352,
+          "elapsedMs": 100.05860000000007,
+          "opsPerSecond": 163424.23339922793
+        }
+      ],
+      "medianOpsPerSecond": 161994.9526498588,
+      "medianItemsPerSecond": 161994.9526498588,
+      "madPercent": 1.3619744237847586,
+      "minOpsPerSecond": 159416.85729333118,
+      "maxOpsPerSecond": 165661.59701137527,
+      "checksum": 288104176,
+      "cpuMicroseconds": {
+        "user": 860000,
+        "system": 0
+      },
+      "memoryBefore": {
+        "rss": 58908672,
+        "heapTotal": 18984960,
+        "heapUsed": 11694408,
+        "external": 3853831,
+        "arrayBuffers": 209183
+      },
+      "memoryAfter": {
+        "rss": 58953728,
+        "heapTotal": 18984960,
+        "heapUsed": 11943936,
+        "external": 3853887,
+        "arrayBuffers": 209199
+      },
+      "processMaxRssBytes": 59441152
+    },
+    {
+      "run": 1,
+      "dataset": "unicode",
+      "method": "object-native-roundtrip",
+      "exactOutputVerified": true,
+      "outputSha256": "e4f9138cf85cc4b8ae6d986e4265b9340c255bf7b1309d0f9fe6d7738f99836f",
+      "outputBytes": 39491,
+      "inputBytes": 39491,
+      "inputSha256": "8eeb93e76b5e3e1c047fa1b1d9580572697b110d05109e9bd26bc5750328c619",
+      "unitsPerOperation": 1,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "bc95bc659185014f4c519c0af0af59c88e9920d2178d3be495f712d8adeacf86"
+        }
+      ],
+      "scalarOutput": false,
+      "arrayOutput": false,
+      "comparableStableOperation": true,
+      "outputHashContract": "exact returned string or JSON.stringify of non-string result",
+      "inputHashContract": "actual single JSON-text bytes, or JSON.stringify of batch/object/cache-pool inputs",
+      "warmup": {
+        "iterations": 1904,
+        "elapsedMs": 301.6408,
+        "opsPerSecond": 6312.143450090306
+      },
+      "samples": [
+        {
+          "iterations": 672,
+          "elapsedMs": 101.98329999999999,
+          "opsPerSecond": 6589.314132804097
+        },
+        {
+          "iterations": 688,
+          "elapsedMs": 102.1773,
+          "opsPerSecond": 6733.3938164347655
+        },
+        {
+          "iterations": 688,
+          "elapsedMs": 100.50559999999996,
+          "opsPerSecond": 6845.3897096281235
+        },
+        {
+          "iterations": 672,
+          "elapsedMs": 102.10329999999999,
+          "opsPerSecond": 6581.569841523242
+        },
+        {
+          "iterations": 672,
+          "elapsedMs": 102.20400000000006,
+          "opsPerSecond": 6575.085123869903
+        },
+        {
+          "iterations": 672,
+          "elapsedMs": 101.18859999999995,
+          "opsPerSecond": 6641.064309615908
+        },
+        {
+          "iterations": 672,
+          "elapsedMs": 101.85980000000006,
+          "opsPerSecond": 6597.303352254762
+        },
+        {
+          "iterations": 672,
+          "elapsedMs": 100.63570000000004,
+          "opsPerSecond": 6677.55080950398
+        },
+        {
+          "iterations": 672,
+          "elapsedMs": 101.44319999999993,
+          "opsPerSecond": 6624.396706728498
+        }
+      ],
+      "medianOpsPerSecond": 6624.396706728498,
+      "medianItemsPerSecond": 6624.396706728498,
+      "madPercent": 0.6465021208913515,
+      "minOpsPerSecond": 6575.085123869903,
+      "maxOpsPerSecond": 6845.3897096281235,
+      "checksum": 146306800,
+      "cpuMicroseconds": {
+        "user": 890000,
+        "system": 15000
+      },
+      "memoryBefore": {
+        "rss": 67575808,
+        "heapTotal": 27635712,
+        "heapUsed": 17016576,
+        "external": 3853831,
+        "arrayBuffers": 209183
+      },
+      "memoryAfter": {
+        "rss": 65413120,
+        "heapTotal": 25714688,
+        "heapUsed": 10508352,
+        "external": 2410131,
+        "arrayBuffers": 143627
+      },
+      "processMaxRssBytes": 68382720
+    },
+    {
+      "run": 1,
+      "dataset": "api-normalized",
+      "method": "object-native-roundtrip",
+      "exactOutputVerified": true,
+      "outputSha256": "08186068c631474a302960f0e5372aeb89eb083632eaaca3a086bd63e85a3744",
+      "outputBytes": 1085130,
+      "inputBytes": 1085130,
+      "inputSha256": "a12b6a68c636a1e7e1d668710cff7b6e490a4f05b84a6262bf702b90b0c50268",
+      "unitsPerOperation": 1,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "bc95bc659185014f4c519c0af0af59c88e9920d2178d3be495f712d8adeacf86"
+        }
+      ],
+      "scalarOutput": false,
+      "arrayOutput": false,
+      "comparableStableOperation": true,
+      "outputHashContract": "exact returned string or JSON.stringify of non-string result",
+      "inputHashContract": "actual single JSON-text bytes, or JSON.stringify of batch/object/cache-pool inputs",
+      "warmup": {
+        "iterations": 64,
+        "elapsedMs": 398.4364,
+        "opsPerSecond": 160.62789443936347
+      },
+      "samples": [
+        {
+          "iterations": 16,
+          "elapsedMs": 103.17790000000002,
+          "opsPerSecond": 155.071967931117
+        },
+        {
+          "iterations": 32,
+          "elapsedMs": 190.6712,
+          "opsPerSecond": 167.82817751186334
+        },
+        {
+          "iterations": 32,
+          "elapsedMs": 187.8166,
+          "opsPerSecond": 170.37897608624584
+        },
+        {
+          "iterations": 32,
+          "elapsedMs": 197.19939999999997,
+          "opsPerSecond": 162.27229900293815
+        },
+        {
+          "iterations": 32,
+          "elapsedMs": 198.71940000000018,
+          "opsPerSecond": 161.03108201816215
+        },
+        {
+          "iterations": 32,
+          "elapsedMs": 193.2387000000001,
+          "opsPerSecond": 165.59829889147454
+        },
+        {
+          "iterations": 32,
+          "elapsedMs": 191.43070000000012,
+          "opsPerSecond": 167.1623203592735
+        },
+        {
+          "iterations": 32,
+          "elapsedMs": 189.08259999999996,
+          "opsPerSecond": 169.23820594808834
+        },
+        {
+          "iterations": 32,
+          "elapsedMs": 189.779,
+          "opsPerSecond": 168.6171810368903
+        }
+      ],
+      "medianOpsPerSecond": 167.1623203592735,
+      "medianItemsPerSecond": 167.1623203592735,
+      "madPercent": 1.2418382230835465,
+      "minOpsPerSecond": 155.071967931117,
+      "maxOpsPerSecond": 170.37897608624584,
+      "checksum": 364637616,
+      "cpuMicroseconds": {
+        "user": 1093000,
+        "system": 531000
+      },
+      "memoryBefore": {
+        "rss": 77578240,
+        "heapTotal": 54059008,
+        "heapUsed": 15722440,
+        "external": 2410075,
+        "arrayBuffers": 143611
+      },
+      "memoryAfter": {
+        "rss": 158724096,
+        "heapTotal": 226770944,
+        "heapUsed": 91623656,
+        "external": 2410131,
+        "arrayBuffers": 143627
+      },
+      "processMaxRssBytes": 162664448
+    },
+    {
+      "run": 1,
+      "dataset": "lock-normalized",
+      "method": "object-native-roundtrip",
+      "exactOutputVerified": true,
+      "outputSha256": "2792ad18d225a6a762bc1a6c6d63c8a23b12f1f79740fcec0f0e54b723461d04",
+      "outputBytes": 93728,
+      "inputBytes": 93728,
+      "inputSha256": "5f8afda0d3a8190dd04d7561ef72ec6cd3abe74c45b1ba6a720b8dbfff7ac64e",
+      "unitsPerOperation": 1,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "bc95bc659185014f4c519c0af0af59c88e9920d2178d3be495f712d8adeacf86"
+        }
+      ],
+      "scalarOutput": false,
+      "arrayOutput": false,
+      "comparableStableOperation": true,
+      "outputHashContract": "exact returned string or JSON.stringify of non-string result",
+      "inputHashContract": "actual single JSON-text bytes, or JSON.stringify of batch/object/cache-pool inputs",
+      "warmup": {
+        "iterations": 528,
+        "elapsedMs": 302.0724,
+        "opsPerSecond": 1747.925331807871
+      },
+      "samples": [
+        {
+          "iterations": 192,
+          "elapsedMs": 108.8392,
+          "opsPerSecond": 1764.0702982013831
+        },
+        {
+          "iterations": 208,
+          "elapsedMs": 104.32740000000001,
+          "opsPerSecond": 1993.723604728959
+        },
+        {
+          "iterations": 224,
+          "elapsedMs": 102.19470000000001,
+          "opsPerSecond": 2191.894491593008
+        },
+        {
+          "iterations": 240,
+          "elapsedMs": 106.9099,
+          "opsPerSecond": 2244.8809698634086
+        },
+        {
+          "iterations": 224,
+          "elapsedMs": 105.15049999999997,
+          "opsPerSecond": 2130.2799320973277
+        },
+        {
+          "iterations": 240,
+          "elapsedMs": 104.58629999999994,
+          "opsPerSecond": 2294.7556228683884
+        },
+        {
+          "iterations": 240,
+          "elapsedMs": 104.64630000000011,
+          "opsPerSecond": 2293.43990184077
+        },
+        {
+          "iterations": 240,
+          "elapsedMs": 102.83960000000002,
+          "opsPerSecond": 2333.7313641826686
+        },
+        {
+          "iterations": 240,
+          "elapsedMs": 102.5444,
+          "opsPerSecond": 2340.4496003682307
+        }
+      ],
+      "medianOpsPerSecond": 2244.8809698634086,
+      "medianItemsPerSecond": 2244.8809698634086,
+      "madPercent": 3.957911154846938,
+      "minOpsPerSecond": 1764.0702982013831,
+      "maxOpsPerSecond": 2340.4496003682307,
+      "checksum": 241566976,
+      "cpuMicroseconds": {
+        "user": 891000,
+        "system": 47000
+      },
+      "memoryBefore": {
+        "rss": 61394944,
+        "heapTotal": 27111424,
+        "heapUsed": 17245968,
+        "external": 3853831,
+        "arrayBuffers": 209183
+      },
+      "memoryAfter": {
+        "rss": 72269824,
+        "heapTotal": 42491904,
+        "heapUsed": 9286240,
+        "external": 2410131,
+        "arrayBuffers": 143627
+      },
+      "processMaxRssBytes": 72552448
+    },
+    {
+      "run": 1,
+      "dataset": "tiny",
+      "method": "object-native-roundtrip",
+      "exactOutputVerified": true,
+      "outputSha256": "d971ba13c7415f1a0c4a1da6fc9e09cbdf80575e8dd6fc9ceecdb1dc0aa9ebd1",
+      "outputBytes": 28,
+      "inputBytes": 28,
+      "inputSha256": "a8702ef49388dccdb1d596f08dba7395ffbd1abbfe7bafec100b250b14a5a065",
+      "unitsPerOperation": 1,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "bc95bc659185014f4c519c0af0af59c88e9920d2178d3be495f712d8adeacf86"
+        }
+      ],
+      "scalarOutput": false,
+      "arrayOutput": false,
+      "comparableStableOperation": true,
+      "outputHashContract": "exact returned string or JSON.stringify of non-string result",
+      "inputHashContract": "actual single JSON-text bytes, or JSON.stringify of batch/object/cache-pool inputs",
+      "warmup": {
+        "iterations": 475824,
+        "elapsedMs": 300.0349,
+        "opsPerSecond": 1585895.5074892954
+      },
+      "samples": [
+        {
+          "iterations": 160640,
+          "elapsedMs": 100.03189999999995,
+          "opsPerSecond": 1605887.7218167412
+        },
+        {
+          "iterations": 163216,
+          "elapsedMs": 100.03050000000002,
+          "opsPerSecond": 1631662.342985389
+        },
+        {
+          "iterations": 161696,
+          "elapsedMs": 100.02649999999994,
+          "opsPerSecond": 1616531.6191209338
+        },
+        {
+          "iterations": 164768,
+          "elapsedMs": 100.0338999999999,
+          "opsPerSecond": 1647121.625768866
+        },
+        {
+          "iterations": 160944,
+          "elapsedMs": 100.03689999999995,
+          "opsPerSecond": 1608846.3357021268
+        },
+        {
+          "iterations": 160544,
+          "elapsedMs": 100.03089999999997,
+          "opsPerSecond": 1604944.0722816654
+        },
+        {
+          "iterations": 161536,
+          "elapsedMs": 100.03239999999994,
+          "opsPerSecond": 1614836.792879108
+        },
+        {
+          "iterations": 159792,
+          "elapsedMs": 100.04269999999997,
+          "opsPerSecond": 1597237.9793828041
+        },
+        {
+          "iterations": 158208,
+          "elapsedMs": 100.09930000000008,
+          "opsPerSecond": 1580510.553020849
+        }
+      ],
+      "medianOpsPerSecond": 1608846.3357021268,
+      "medianItemsPerSecond": 1608846.3357021268,
+      "madPercent": 0.4776890898939074,
+      "minOpsPerSecond": 1580510.553020849,
+      "maxOpsPerSecond": 1647121.625768866,
+      "checksum": 119484416,
+      "cpuMicroseconds": {
+        "user": 891000,
+        "system": 16000
+      },
+      "memoryBefore": {
+        "rss": 58826752,
+        "heapTotal": 19509248,
+        "heapUsed": 12046368,
+        "external": 3853831,
+        "arrayBuffers": 209183
+      },
+      "memoryAfter": {
+        "rss": 58859520,
+        "heapTotal": 19509248,
+        "heapUsed": 9933312,
+        "external": 3853887,
+        "arrayBuffers": 209199
+      },
+      "processMaxRssBytes": 59895808
+    },
+    {
+      "run": 2,
+      "dataset": "lock-normalized",
+      "method": "object-native-roundtrip",
+      "exactOutputVerified": true,
+      "outputSha256": "2792ad18d225a6a762bc1a6c6d63c8a23b12f1f79740fcec0f0e54b723461d04",
+      "outputBytes": 93728,
+      "inputBytes": 93728,
+      "inputSha256": "5f8afda0d3a8190dd04d7561ef72ec6cd3abe74c45b1ba6a720b8dbfff7ac64e",
+      "unitsPerOperation": 1,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "bc95bc659185014f4c519c0af0af59c88e9920d2178d3be495f712d8adeacf86"
+        }
+      ],
+      "scalarOutput": false,
+      "arrayOutput": false,
+      "comparableStableOperation": true,
+      "outputHashContract": "exact returned string or JSON.stringify of non-string result",
+      "inputHashContract": "actual single JSON-text bytes, or JSON.stringify of batch/object/cache-pool inputs",
+      "warmup": {
+        "iterations": 528,
+        "elapsedMs": 301.69649999999996,
+        "opsPerSecond": 1750.1031665929172
+      },
+      "samples": [
+        {
+          "iterations": 176,
+          "elapsedMs": 102.75650000000002,
+          "opsPerSecond": 1712.7870256382805
+        },
+        {
+          "iterations": 208,
+          "elapsedMs": 104.42449999999997,
+          "opsPerSecond": 1991.8697240590097
+        },
+        {
+          "iterations": 224,
+          "elapsedMs": 101.64919999999995,
+          "opsPerSecond": 2203.6572840711005
+        },
+        {
+          "iterations": 240,
+          "elapsedMs": 106.29570000000001,
+          "opsPerSecond": 2257.852387255552
+        },
+        {
+          "iterations": 224,
+          "elapsedMs": 100.04419999999993,
+          "opsPerSecond": 2239.010357422021
+        },
+        {
+          "iterations": 224,
+          "elapsedMs": 100.26209999999992,
+          "opsPerSecond": 2234.1443077693384
+        },
+        {
+          "iterations": 240,
+          "elapsedMs": 102.86820000000012,
+          "opsPerSecond": 2333.0825269616826
+        },
+        {
+          "iterations": 240,
+          "elapsedMs": 104.60229999999979,
+          "opsPerSecond": 2294.4046163420926
+        },
+        {
+          "iterations": 240,
+          "elapsedMs": 106.74919999999997,
+          "opsPerSecond": 2248.260408508917
+        }
+      ],
+      "medianOpsPerSecond": 2239.010357422021,
+      "medianItemsPerSecond": 2239.010357422021,
+      "madPercent": 1.578959795059895,
+      "minOpsPerSecond": 1712.7870256382805,
+      "maxOpsPerSecond": 2333.0825269616826,
+      "checksum": 238566144,
+      "cpuMicroseconds": {
+        "user": 860000,
+        "system": 78000
+      },
+      "memoryBefore": {
+        "rss": 61235200,
+        "heapTotal": 27635712,
+        "heapUsed": 17508216,
+        "external": 3853831,
+        "arrayBuffers": 209183
+      },
+      "memoryAfter": {
+        "rss": 72257536,
+        "heapTotal": 42754048,
+        "heapUsed": 9379856,
+        "external": 2410131,
+        "arrayBuffers": 143627
+      },
+      "processMaxRssBytes": 72478720
+    },
+    {
+      "run": 2,
+      "dataset": "large-string",
+      "method": "object-native-roundtrip",
+      "exactOutputVerified": true,
+      "outputSha256": "84c4c36bf35fe0fb059411b2d655d5427bfa2c9a637309945a57bba8cb96f92f",
+      "outputBytes": 163015,
+      "inputBytes": 163015,
+      "inputSha256": "5df5fb9ff44461550175b0850705350cc0861afbea0d618ed2102f23b2c35804",
+      "unitsPerOperation": 1,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "bc95bc659185014f4c519c0af0af59c88e9920d2178d3be495f712d8adeacf86"
+        }
+      ],
+      "scalarOutput": false,
+      "arrayOutput": false,
+      "comparableStableOperation": true,
+      "outputHashContract": "exact returned string or JSON.stringify of non-string result",
+      "inputHashContract": "actual single JSON-text bytes, or JSON.stringify of batch/object/cache-pool inputs",
+      "warmup": {
+        "iterations": 960,
+        "elapsedMs": 302.6706,
+        "opsPerSecond": 3171.7649484290846
+      },
+      "samples": [
+        {
+          "iterations": 288,
+          "elapsedMs": 100.62080000000003,
+          "opsPerSecond": 2862.2312682864767
+        },
+        {
+          "iterations": 336,
+          "elapsedMs": 100.45480000000003,
+          "opsPerSecond": 3344.7879046098333
+        },
+        {
+          "iterations": 400,
+          "elapsedMs": 101.46270000000004,
+          "opsPerSecond": 3942.335459237728
+        },
+        {
+          "iterations": 368,
+          "elapsedMs": 101.45720000000006,
+          "opsPerSecond": 3627.1452395689985
+        },
+        {
+          "iterations": 368,
+          "elapsedMs": 102.1952,
+          "opsPerSecond": 3600.951903807615
+        },
+        {
+          "iterations": 400,
+          "elapsedMs": 103.29880000000003,
+          "opsPerSecond": 3872.2618268556835
+        },
+        {
+          "iterations": 400,
+          "elapsedMs": 102.70489999999995,
+          "opsPerSecond": 3894.6535170181774
+        },
+        {
+          "iterations": 384,
+          "elapsedMs": 101.47949999999992,
+          "opsPerSecond": 3784.0154908134186
+        },
+        {
+          "iterations": 416,
+          "elapsedMs": 103.22919999999999,
+          "opsPerSecond": 4029.8675181053427
+        }
+      ],
+      "medianOpsPerSecond": 3784.0154908134186,
+      "medianItemsPerSecond": 3784.0154908134186,
+      "madPercent": 4.183914384300705,
+      "minOpsPerSecond": 2862.2312682864767,
+      "maxOpsPerSecond": 4029.8675181053427,
+      "checksum": 704743200,
+      "cpuMicroseconds": {
+        "user": 594000,
+        "system": 296000
+      },
+      "memoryBefore": {
+        "rss": 60198912,
+        "heapTotal": 50835456,
+        "heapUsed": 13818736,
+        "external": 2410075,
+        "arrayBuffers": 143611
+      },
+      "memoryAfter": {
+        "rss": 68104192,
+        "heapTotal": 55357440,
+        "heapUsed": 20698544,
+        "external": 2410131,
+        "arrayBuffers": 143627
+      },
+      "processMaxRssBytes": 80838656
+    },
+    {
+      "run": 2,
+      "dataset": "record-array",
+      "method": "object-native-roundtrip",
+      "exactOutputVerified": true,
+      "outputSha256": "95d3d8f718ba3e07fd1db2adc5f9deba8991051fc16437c2bf39f33c7fc38a94",
+      "outputBytes": 59663,
+      "inputBytes": 59663,
+      "inputSha256": "7bc37474a38f304b426fdeb3f7eb71ab2b6186970dcdcf439f2e5f16eb53ad48",
+      "unitsPerOperation": 1,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "bc95bc659185014f4c519c0af0af59c88e9920d2178d3be495f712d8adeacf86"
+        }
+      ],
+      "scalarOutput": false,
+      "arrayOutput": false,
+      "comparableStableOperation": true,
+      "outputHashContract": "exact returned string or JSON.stringify of non-string result",
+      "inputHashContract": "actual single JSON-text bytes, or JSON.stringify of batch/object/cache-pool inputs",
+      "warmup": {
+        "iterations": 448,
+        "elapsedMs": 305.5167,
+        "opsPerSecond": 1466.3682869054294
+      },
+      "samples": [
+        {
+          "iterations": 176,
+          "elapsedMs": 108.24720000000002,
+          "opsPerSecond": 1625.9081066300096
+        },
+        {
+          "iterations": 208,
+          "elapsedMs": 105.2151,
+          "opsPerSecond": 1976.9025548614218
+        },
+        {
+          "iterations": 208,
+          "elapsedMs": 105.59889999999996,
+          "opsPerSecond": 1969.7174875874662
+        },
+        {
+          "iterations": 224,
+          "elapsedMs": 106.86470000000008,
+          "opsPerSecond": 2096.108443667552
+        },
+        {
+          "iterations": 208,
+          "elapsedMs": 101.51400000000001,
+          "opsPerSecond": 2048.9784660243904
+        },
+        {
+          "iterations": 208,
+          "elapsedMs": 100.54690000000005,
+          "opsPerSecond": 2068.6863543281784
+        },
+        {
+          "iterations": 208,
+          "elapsedMs": 101.76009999999985,
+          "opsPerSecond": 2044.0231485621605
+        },
+        {
+          "iterations": 208,
+          "elapsedMs": 100.97739999999999,
+          "opsPerSecond": 2059.8668612976767
+        },
+        {
+          "iterations": 208,
+          "elapsedMs": 102.61509999999998,
+          "opsPerSecond": 2026.9921288387384
+        }
+      ],
+      "medianOpsPerSecond": 2044.0231485621605,
+      "medianItemsPerSecond": 2044.0231485621605,
+      "madPercent": 1.2066010985916118,
+      "minOpsPerSecond": 1625.9081066300096,
+      "maxOpsPerSecond": 2096.108443667552,
+      "checksum": 137564928,
+      "cpuMicroseconds": {
+        "user": 922000,
+        "system": 16000
+      },
+      "memoryBefore": {
+        "rss": 59846656,
+        "heapTotal": 27897856,
+        "heapUsed": 10174640,
+        "external": 3853831,
+        "arrayBuffers": 209183
+      },
+      "memoryAfter": {
+        "rss": 64258048,
+        "heapTotal": 25976832,
+        "heapUsed": 7961672,
+        "external": 2410131,
+        "arrayBuffers": 143627
+      },
+      "processMaxRssBytes": 66637824
+    },
+    {
+      "run": 2,
+      "dataset": "upstream-api-fixture",
+      "method": "object-native-roundtrip",
+      "exactOutputVerified": true,
+      "outputSha256": "69e37521a588bf3866928fddae3d54c8974d23c74fb878a6f0b5a2be8332f31d",
+      "outputBytes": 2929,
+      "inputBytes": 2929,
+      "inputSha256": "53771b6c7b6dfec175bfd04f0eb65548c71b627048a042a9c893837dd6d34935",
+      "unitsPerOperation": 1,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "bc95bc659185014f4c519c0af0af59c88e9920d2178d3be495f712d8adeacf86"
+        }
+      ],
+      "scalarOutput": false,
+      "arrayOutput": false,
+      "comparableStableOperation": true,
+      "outputHashContract": "exact returned string or JSON.stringify of non-string result",
+      "inputHashContract": "actual single JSON-text bytes, or JSON.stringify of batch/object/cache-pool inputs",
+      "warmup": {
+        "iterations": 24096,
+        "elapsedMs": 300.2015,
+        "opsPerSecond": 80266.0879442641
+      },
+      "samples": [
+        {
+          "iterations": 7984,
+          "elapsedMs": 100.0419,
+          "opsPerSecond": 79806.56105091967
+        },
+        {
+          "iterations": 8048,
+          "elapsedMs": 100.19290000000001,
+          "opsPerSecond": 80325.05297281544
+        },
+        {
+          "iterations": 8000,
+          "elapsedMs": 100.05049999999994,
+          "opsPerSecond": 79959.62039170224
+        },
+        {
+          "iterations": 7936,
+          "elapsedMs": 100.02910000000008,
+          "opsPerSecond": 79336.91295832906
+        },
+        {
+          "iterations": 7744,
+          "elapsedMs": 100.16099999999994,
+          "opsPerSecond": 77315.52200956465
+        },
+        {
+          "iterations": 8064,
+          "elapsedMs": 100.144,
+          "opsPerSecond": 80524.04537466049
+        },
+        {
+          "iterations": 8000,
+          "elapsedMs": 100.1006000000001,
+          "opsPerSecond": 79919.60088151312
+        },
+        {
+          "iterations": 7888,
+          "elapsedMs": 100.2152000000001,
+          "opsPerSecond": 78710.61475704277
+        },
+        {
+          "iterations": 7824,
+          "elapsedMs": 100.17619999999988,
+          "opsPerSecond": 78102.38360009673
+        }
+      ],
+      "medianOpsPerSecond": 79806.56105091967,
+      "medianItemsPerSecond": 79806.56105091967,
+      "madPercent": 0.6496858341821643,
+      "minOpsPerSecond": 77315.52200956465,
+      "maxOpsPerSecond": 80524.04537466049,
+      "checksum": 289715104,
+      "cpuMicroseconds": {
+        "user": 891000,
+        "system": 15000
+      },
+      "memoryBefore": {
+        "rss": 58982400,
+        "heapTotal": 19509248,
+        "heapUsed": 9967592,
+        "external": 3853831,
+        "arrayBuffers": 209183
+      },
+      "memoryAfter": {
+        "rss": 59015168,
+        "heapTotal": 19509248,
+        "heapUsed": 10415888,
+        "external": 3853887,
+        "arrayBuffers": 209199
+      },
+      "processMaxRssBytes": 59457536
+    },
+    {
+      "run": 2,
+      "dataset": "unicode",
+      "method": "object-native-roundtrip",
+      "exactOutputVerified": true,
+      "outputSha256": "e4f9138cf85cc4b8ae6d986e4265b9340c255bf7b1309d0f9fe6d7738f99836f",
+      "outputBytes": 39491,
+      "inputBytes": 39491,
+      "inputSha256": "8eeb93e76b5e3e1c047fa1b1d9580572697b110d05109e9bd26bc5750328c619",
+      "unitsPerOperation": 1,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "bc95bc659185014f4c519c0af0af59c88e9920d2178d3be495f712d8adeacf86"
+        }
+      ],
+      "scalarOutput": false,
+      "arrayOutput": false,
+      "comparableStableOperation": true,
+      "outputHashContract": "exact returned string or JSON.stringify of non-string result",
+      "inputHashContract": "actual single JSON-text bytes, or JSON.stringify of batch/object/cache-pool inputs",
+      "warmup": {
+        "iterations": 1952,
+        "elapsedMs": 302.1794,
+        "opsPerSecond": 6459.738817404495
+      },
+      "samples": [
+        {
+          "iterations": 672,
+          "elapsedMs": 101.1481,
+          "opsPerSecond": 6643.723411512426
+        },
+        {
+          "iterations": 688,
+          "elapsedMs": 102.10160000000002,
+          "opsPerSecond": 6738.386078180948
+        },
+        {
+          "iterations": 688,
+          "elapsedMs": 101.76229999999998,
+          "opsPerSecond": 6760.853479137167
+        },
+        {
+          "iterations": 640,
+          "elapsedMs": 100.5693,
+          "opsPerSecond": 6363.771051404355
+        },
+        {
+          "iterations": 656,
+          "elapsedMs": 102.44849999999997,
+          "opsPerSecond": 6403.217226216101
+        },
+        {
+          "iterations": 672,
+          "elapsedMs": 101.74770000000001,
+          "opsPerSecond": 6604.571896956884
+        },
+        {
+          "iterations": 656,
+          "elapsedMs": 101.70910000000003,
+          "opsPerSecond": 6449.767031661865
+        },
+        {
+          "iterations": 656,
+          "elapsedMs": 101.61740000000009,
+          "opsPerSecond": 6455.587330516225
+        },
+        {
+          "iterations": 672,
+          "elapsedMs": 101.45769999999993,
+          "opsPerSecond": 6623.44996979037
+        }
+      ],
+      "medianOpsPerSecond": 6604.571896956884,
+      "medianItemsPerSecond": 6604.571896956884,
+      "madPercent": 2.2557793111360533,
+      "minOpsPerSecond": 6363.771051404355,
+      "maxOpsPerSecond": 6760.853479137167,
+      "checksum": 145720400,
+      "cpuMicroseconds": {
+        "user": 828000,
+        "system": 79000
+      },
+      "memoryBefore": {
+        "rss": 67653632,
+        "heapTotal": 27373568,
+        "heapUsed": 12377208,
+        "external": 3853831,
+        "arrayBuffers": 209183
+      },
+      "memoryAfter": {
+        "rss": 65470464,
+        "heapTotal": 25976832,
+        "heapUsed": 14093672,
+        "external": 2410131,
+        "arrayBuffers": 143627
+      },
+      "processMaxRssBytes": 68472832
+    },
+    {
+      "run": 2,
+      "dataset": "tiny",
+      "method": "object-native-roundtrip",
+      "exactOutputVerified": true,
+      "outputSha256": "d971ba13c7415f1a0c4a1da6fc9e09cbdf80575e8dd6fc9ceecdb1dc0aa9ebd1",
+      "outputBytes": 28,
+      "inputBytes": 28,
+      "inputSha256": "a8702ef49388dccdb1d596f08dba7395ffbd1abbfe7bafec100b250b14a5a065",
+      "unitsPerOperation": 1,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "bc95bc659185014f4c519c0af0af59c88e9920d2178d3be495f712d8adeacf86"
+        }
+      ],
+      "scalarOutput": false,
+      "arrayOutput": false,
+      "comparableStableOperation": true,
+      "outputHashContract": "exact returned string or JSON.stringify of non-string result",
+      "inputHashContract": "actual single JSON-text bytes, or JSON.stringify of batch/object/cache-pool inputs",
+      "warmup": {
+        "iterations": 461216,
+        "elapsedMs": 300.02570000000003,
+        "opsPerSecond": 1537254.975157128
+      },
+      "samples": [
+        {
+          "iterations": 155616,
+          "elapsedMs": 100.0324,
+          "opsPerSecond": 1555655.9674665409
+        },
+        {
+          "iterations": 159056,
+          "elapsedMs": 100.03239999999994,
+          "opsPerSecond": 1590044.8254765465
+        },
+        {
+          "iterations": 156400,
+          "elapsedMs": 100.03790000000004,
+          "opsPerSecond": 1563407.4685694117
+        },
+        {
+          "iterations": 157600,
+          "elapsedMs": 100.03989999999999,
+          "opsPerSecond": 1575371.4268007067
+        },
+        {
+          "iterations": 161168,
+          "elapsedMs": 100.02909999999997,
+          "opsPerSecond": 1611211.1375589708
+        },
+        {
+          "iterations": 163280,
+          "elapsedMs": 100.02779999999996,
+          "opsPerSecond": 1632346.207754245
+        },
+        {
+          "iterations": 165232,
+          "elapsedMs": 100.03160000000003,
+          "opsPerSecond": 1651798.0318219438
+        },
+        {
+          "iterations": 158640,
+          "elapsedMs": 100.03480000000013,
+          "opsPerSecond": 1585848.1248525493
+        },
+        {
+          "iterations": 156608,
+          "elapsedMs": 100.03319999999985,
+          "opsPerSecond": 1565560.2340023136
+        }
+      ],
+      "medianOpsPerSecond": 1585848.1248525493,
+      "medianItemsPerSecond": 1585848.1248525493,
+      "madPercent": 1.4150570872115595,
+      "minOpsPerSecond": 1555655.9674665409,
+      "maxOpsPerSecond": 1651798.0318219438,
+      "checksum": 117478592,
+      "cpuMicroseconds": {
+        "user": 875000,
+        "system": 31000
+      },
+      "memoryBefore": {
+        "rss": 58621952,
+        "heapTotal": 19509248,
+        "heapUsed": 10001336,
+        "external": 3853831,
+        "arrayBuffers": 209183
+      },
+      "memoryAfter": {
+        "rss": 58724352,
+        "heapTotal": 19509248,
+        "heapUsed": 12416312,
+        "external": 3853887,
+        "arrayBuffers": 209199
+      },
+      "processMaxRssBytes": 59600896
+    },
+    {
+      "run": 2,
+      "dataset": "deep",
+      "method": "object-native-roundtrip",
+      "exactOutputVerified": true,
+      "outputSha256": "255c7bcbe267ba222d0354c539b1066d29355109f684151c45b32177061f9e6a",
+      "outputBytes": 1043,
+      "inputBytes": 1043,
+      "inputSha256": "550e9cf869cd26fdd3d576825e49b98146532efd358968bf15f1f0a5fc3d1559",
+      "unitsPerOperation": 1,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "bc95bc659185014f4c519c0af0af59c88e9920d2178d3be495f712d8adeacf86"
+        }
+      ],
+      "scalarOutput": false,
+      "arrayOutput": false,
+      "comparableStableOperation": true,
+      "outputHashContract": "exact returned string or JSON.stringify of non-string result",
+      "inputHashContract": "actual single JSON-text bytes, or JSON.stringify of batch/object/cache-pool inputs",
+      "warmup": {
+        "iterations": 15920,
+        "elapsedMs": 300.25780000000003,
+        "opsPerSecond": 53021.10386474556
+      },
+      "samples": [
+        {
+          "iterations": 5264,
+          "elapsedMs": 100.19330000000002,
+          "opsPerSecond": 52538.44318931504
+        },
+        {
+          "iterations": 5440,
+          "elapsedMs": 100.12280000000004,
+          "opsPerSecond": 54333.27873371498
+        },
+        {
+          "iterations": 5312,
+          "elapsedMs": 100.2305,
+          "opsPerSecond": 52997.83997884875
+        },
+        {
+          "iterations": 5376,
+          "elapsedMs": 100.24220000000003,
+          "opsPerSecond": 53630.10787871773
+        },
+        {
+          "iterations": 5360,
+          "elapsedMs": 100.33310000000006,
+          "opsPerSecond": 53422.05114762722
+        },
+        {
+          "iterations": 5264,
+          "elapsedMs": 100.22699999999998,
+          "opsPerSecond": 52520.77783431611
+        },
+        {
+          "iterations": 5392,
+          "elapsedMs": 100.45630000000006,
+          "opsPerSecond": 53675.08060718937
+        },
+        {
+          "iterations": 5408,
+          "elapsedMs": 100.29029999999989,
+          "opsPerSecond": 53923.46019505382
+        },
+        {
+          "iterations": 5568,
+          "elapsedMs": 100.10169999999994,
+          "opsPerSecond": 55623.43097070283
+        }
+      ],
+      "medianOpsPerSecond": 53630.10787871773,
+      "medianItemsPerSecond": 53630.10787871773,
+      "madPercent": 1.178942062355773,
+      "minOpsPerSecond": 52520.77783431611,
+      "maxOpsPerSecond": 55623.43097070283,
+      "checksum": 70412880,
+      "cpuMicroseconds": {
+        "user": 812000,
+        "system": 79000
+      },
+      "memoryBefore": {
+        "rss": 58941440,
+        "heapTotal": 19247104,
+        "heapUsed": 13061672,
+        "external": 3853831,
+        "arrayBuffers": 209183
+      },
+      "memoryAfter": {
+        "rss": 58986496,
+        "heapTotal": 19247104,
+        "heapUsed": 13277608,
+        "external": 3853887,
+        "arrayBuffers": 209199
+      },
+      "processMaxRssBytes": 59322368
+    },
+    {
+      "run": 2,
+      "dataset": "array-of-32",
+      "method": "object-native-roundtrip",
+      "exactOutputVerified": true,
+      "outputSha256": "62b8882004a994715d244266f577f67d40782d3e4041eefd388964e27960841d",
+      "outputBytes": 1485,
+      "inputBytes": 1485,
+      "inputSha256": "423e7670cd181ac284ead8ceac19286db5a234fbf5e13fccc644fd16b441005e",
+      "unitsPerOperation": 1,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "bc95bc659185014f4c519c0af0af59c88e9920d2178d3be495f712d8adeacf86"
+        }
+      ],
+      "scalarOutput": false,
+      "arrayOutput": false,
+      "comparableStableOperation": true,
+      "outputHashContract": "exact returned string or JSON.stringify of non-string result",
+      "inputHashContract": "actual single JSON-text bytes, or JSON.stringify of batch/object/cache-pool inputs",
+      "warmup": {
+        "iterations": 22736,
+        "elapsedMs": 300.1644,
+        "opsPerSecond": 75745.15831990735
+      },
+      "samples": [
+        {
+          "iterations": 7456,
+          "elapsedMs": 100.10609999999997,
+          "opsPerSecond": 74480.97568479845
+        },
+        {
+          "iterations": 7552,
+          "elapsedMs": 100.12939999999998,
+          "opsPerSecond": 75422.4034099875
+        },
+        {
+          "iterations": 7616,
+          "elapsedMs": 100.12970000000007,
+          "opsPerSecond": 76061.34843108483
+        },
+        {
+          "iterations": 7552,
+          "elapsedMs": 100.18509999999992,
+          "opsPerSecond": 75380.47074864432
+        },
+        {
+          "iterations": 7552,
+          "elapsedMs": 100.07359999999994,
+          "opsPerSecond": 75464.45815879517
+        },
+        {
+          "iterations": 7552,
+          "elapsedMs": 100.19680000000005,
+          "opsPerSecond": 75371.6685562812
+        },
+        {
+          "iterations": 7648,
+          "elapsedMs": 100.06849999999986,
+          "opsPerSecond": 76427.64706176281
+        },
+        {
+          "iterations": 7472,
+          "elapsedMs": 100.2059999999999,
+          "opsPerSecond": 74566.39322994638
+        },
+        {
+          "iterations": 7696,
+          "elapsedMs": 100.2152000000001,
+          "opsPerSecond": 76794.73772441698
+        }
+      ],
+      "medianOpsPerSecond": 75422.4034099875,
+      "medianItemsPerSecond": 75422.4034099875,
+      "madPercent": 0.8471554766348381,
+      "minOpsPerSecond": 74480.97568479845,
+      "maxOpsPerSecond": 76794.73772441698,
+      "checksum": 145331200,
+      "cpuMicroseconds": {
+        "user": 875000,
+        "system": 15000
+      },
+      "memoryBefore": {
+        "rss": 58241024,
+        "heapTotal": 18984960,
+        "heapUsed": 10413640,
+        "external": 3853831,
+        "arrayBuffers": 209183
+      },
+      "memoryAfter": {
+        "rss": 58454016,
+        "heapTotal": 18984960,
+        "heapUsed": 11319600,
+        "external": 3853887,
+        "arrayBuffers": 209199
+      },
+      "processMaxRssBytes": 59015168
+    },
+    {
+      "run": 2,
+      "dataset": "backend-payload",
+      "method": "object-native-roundtrip",
+      "exactOutputVerified": true,
+      "outputSha256": "e3ec4f057460671313ad58db810de488a4f9a419a11a9718c70f79757703642a",
+      "outputBytes": 59774,
+      "inputBytes": 59774,
+      "inputSha256": "b635a7b3baa065e15e8e907ee4c17c426fea8f5eb0136e1498ba7d1ee095812d",
+      "unitsPerOperation": 1,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "bc95bc659185014f4c519c0af0af59c88e9920d2178d3be495f712d8adeacf86"
+        }
+      ],
+      "scalarOutput": false,
+      "arrayOutput": false,
+      "comparableStableOperation": true,
+      "outputHashContract": "exact returned string or JSON.stringify of non-string result",
+      "inputHashContract": "actual single JSON-text bytes, or JSON.stringify of batch/object/cache-pool inputs",
+      "warmup": {
+        "iterations": 448,
+        "elapsedMs": 306.0843,
+        "opsPerSecond": 1463.6490666133482
+      },
+      "samples": [
+        {
+          "iterations": 160,
+          "elapsedMs": 101.25849999999997,
+          "opsPerSecond": 1580.1142620125722
+        },
+        {
+          "iterations": 192,
+          "elapsedMs": 107.70340000000004,
+          "opsPerSecond": 1782.6735274838113
+        },
+        {
+          "iterations": 208,
+          "elapsedMs": 104.14150000000006,
+          "opsPerSecond": 1997.2825434624992
+        },
+        {
+          "iterations": 208,
+          "elapsedMs": 103.75669999999991,
+          "opsPerSecond": 2004.689817621418
+        },
+        {
+          "iterations": 224,
+          "elapsedMs": 107.28030000000001,
+          "opsPerSecond": 2087.988195409595
+        },
+        {
+          "iterations": 224,
+          "elapsedMs": 107.39480000000003,
+          "opsPerSecond": 2085.7620666922417
+        },
+        {
+          "iterations": 224,
+          "elapsedMs": 106.70969999999988,
+          "opsPerSecond": 2099.1531229119773
+        },
+        {
+          "iterations": 224,
+          "elapsedMs": 106.79909999999995,
+          "opsPerSecond": 2097.3959518385464
+        },
+        {
+          "iterations": 208,
+          "elapsedMs": 100.25049999999987,
+          "opsPerSecond": 2074.8026194383096
+        }
+      ],
+      "medianOpsPerSecond": 2074.8026194383096,
+      "medianItemsPerSecond": 2074.8026194383096,
+      "madPercent": 1.1736298790802497,
+      "minOpsPerSecond": 1580.1142620125722,
+      "maxOpsPerSecond": 2099.1531229119773,
+      "checksum": 138944800,
+      "cpuMicroseconds": {
+        "user": 828000,
+        "system": 109000
+      },
+      "memoryBefore": {
+        "rss": 57274368,
+        "heapTotal": 27897856,
+        "heapUsed": 14489704,
+        "external": 3853831,
+        "arrayBuffers": 209183
+      },
+      "memoryAfter": {
+        "rss": 68456448,
+        "heapTotal": 25714688,
+        "heapUsed": 9940280,
+        "external": 2410131,
+        "arrayBuffers": 143627
+      },
+      "processMaxRssBytes": 68669440
+    },
+    {
+      "run": 2,
+      "dataset": "wide",
+      "method": "object-native-roundtrip",
+      "exactOutputVerified": true,
+      "outputSha256": "fcf429ae0c43095f4e2ef1f77dc2f4ec1a448b3b792608ba5da91b6f74dd534c",
+      "outputBytes": 21784,
+      "inputBytes": 21784,
+      "inputSha256": "a85e7f6ca036307b47f0c105c26552afeddfbc52befe36500add5d02ace8a686",
+      "unitsPerOperation": 1,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "bc95bc659185014f4c519c0af0af59c88e9920d2178d3be495f712d8adeacf86"
+        }
+      ],
+      "scalarOutput": false,
+      "arrayOutput": false,
+      "comparableStableOperation": true,
+      "outputHashContract": "exact returned string or JSON.stringify of non-string result",
+      "inputHashContract": "actual single JSON-text bytes, or JSON.stringify of batch/object/cache-pool inputs",
+      "warmup": {
+        "iterations": 768,
+        "elapsedMs": 302.92240000000004,
+        "opsPerSecond": 2535.3027706105586
+      },
+      "samples": [
+        {
+          "iterations": 272,
+          "elapsedMs": 103.0883,
+          "opsPerSecond": 2638.514749006434
+        },
+        {
+          "iterations": 272,
+          "elapsedMs": 103.38999999999999,
+          "opsPerSecond": 2630.8153593190837
+        },
+        {
+          "iterations": 272,
+          "elapsedMs": 101.27300000000002,
+          "opsPerSecond": 2685.8096432415346
+        },
+        {
+          "iterations": 272,
+          "elapsedMs": 101.60890000000006,
+          "opsPerSecond": 2676.9308594030626
+        },
+        {
+          "iterations": 272,
+          "elapsedMs": 104.84679999999992,
+          "opsPerSecond": 2594.2613413094173
+        },
+        {
+          "iterations": 272,
+          "elapsedMs": 104.36130000000003,
+          "opsPerSecond": 2606.330124289367
+        },
+        {
+          "iterations": 272,
+          "elapsedMs": 104.00279999999987,
+          "opsPerSecond": 2615.3142030791514
+        },
+        {
+          "iterations": 256,
+          "elapsedMs": 102.90190000000007,
+          "opsPerSecond": 2487.806347599022
+        },
+        {
+          "iterations": 256,
+          "elapsedMs": 100.70259999999985,
+          "opsPerSecond": 2542.1389318647225
+        }
+      ],
+      "medianOpsPerSecond": 2615.3142030791514,
+      "medianItemsPerSecond": 2615.3142030791514,
+      "madPercent": 0.8871035801345584,
+      "minOpsPerSecond": 2487.806347599022,
+      "maxOpsPerSecond": 2685.8096432415346,
+      "checksum": 69745520,
+      "cpuMicroseconds": {
+        "user": 812000,
+        "system": 0
+      },
+      "memoryBefore": {
+        "rss": 55799808,
+        "heapTotal": 19247104,
+        "heapUsed": 10642712,
+        "external": 3853831,
+        "arrayBuffers": 209183
+      },
+      "memoryAfter": {
+        "rss": 61956096,
+        "heapTotal": 25714688,
+        "heapUsed": 6764408,
+        "external": 2410131,
+        "arrayBuffers": 143627
+      },
+      "processMaxRssBytes": 61956096
+    },
+    {
+      "run": 2,
+      "dataset": "application-config",
+      "method": "object-native-roundtrip",
+      "exactOutputVerified": true,
+      "outputSha256": "313a944ba89f35f63ce613ae517e9f245e8fa71222fdbb8196b91faf0bee9fcc",
+      "outputBytes": 1370,
+      "inputBytes": 1370,
+      "inputSha256": "6faddd2dbc96b1fd682050a9b79f082dcc0a4289103040ceafbb82573f570d84",
+      "unitsPerOperation": 1,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "bc95bc659185014f4c519c0af0af59c88e9920d2178d3be495f712d8adeacf86"
+        }
+      ],
+      "scalarOutput": false,
+      "arrayOutput": false,
+      "comparableStableOperation": true,
+      "outputHashContract": "exact returned string or JSON.stringify of non-string result",
+      "inputHashContract": "actual single JSON-text bytes, or JSON.stringify of batch/object/cache-pool inputs",
+      "warmup": {
+        "iterations": 48288,
+        "elapsedMs": 300.06809999999996,
+        "opsPerSecond": 160923.47037222554
+      },
+      "samples": [
+        {
+          "iterations": 16624,
+          "elapsedMs": 100.08859999999999,
+          "opsPerSecond": 166092.84174221643
+        },
+        {
+          "iterations": 16512,
+          "elapsedMs": 100.10340000000002,
+          "opsPerSecond": 164949.44227668588
+        },
+        {
+          "iterations": 16512,
+          "elapsedMs": 100.03289999999993,
+          "opsPerSecond": 165065.69338687585
+        },
+        {
+          "iterations": 16240,
+          "elapsedMs": 100.0673999999999,
+          "opsPerSecond": 162290.61612473207
+        },
+        {
+          "iterations": 16752,
+          "elapsedMs": 100.0892,
+          "opsPerSecond": 167370.70533084488
+        },
+        {
+          "iterations": 16864,
+          "elapsedMs": 100.06539999999995,
+          "opsPerSecond": 168529.78152288412
+        },
+        {
+          "iterations": 16800,
+          "elapsedMs": 100.10209999999995,
+          "opsPerSecond": 167828.64695146264
+        },
+        {
+          "iterations": 16560,
+          "elapsedMs": 100.03659999999991,
+          "opsPerSecond": 165539.4125749977
+        },
+        {
+          "iterations": 16272,
+          "elapsedMs": 100.02659999999992,
+          "opsPerSecond": 162676.7279903547
+        }
+      ],
+      "medianOpsPerSecond": 165539.4125749977,
+      "medianItemsPerSecond": 165539.4125749977,
+      "madPercent": 1.1062578556738067,
+      "minOpsPerSecond": 162290.61612473207,
+      "maxOpsPerSecond": 168529.78152288412,
+      "checksum": 290410704,
+      "cpuMicroseconds": {
+        "user": 859000,
+        "system": 31000
+      },
+      "memoryBefore": {
+        "rss": 58781696,
+        "heapTotal": 19247104,
+        "heapUsed": 11577592,
+        "external": 3853831,
+        "arrayBuffers": 209183
+      },
+      "memoryAfter": {
+        "rss": 58810368,
+        "heapTotal": 19247104,
+        "heapUsed": 11634880,
+        "external": 3853887,
+        "arrayBuffers": 209199
+      },
+      "processMaxRssBytes": 59289600
+    },
+    {
+      "run": 2,
+      "dataset": "api-normalized",
+      "method": "object-native-roundtrip",
+      "exactOutputVerified": true,
+      "outputSha256": "08186068c631474a302960f0e5372aeb89eb083632eaaca3a086bd63e85a3744",
+      "outputBytes": 1085130,
+      "inputBytes": 1085130,
+      "inputSha256": "a12b6a68c636a1e7e1d668710cff7b6e490a4f05b84a6262bf702b90b0c50268",
+      "unitsPerOperation": 1,
+      "nativeArtifacts": [
+        {
+          "path": "native\\stable-json-rs.win32-x64-msvc.node",
+          "sha256": "bc95bc659185014f4c519c0af0af59c88e9920d2178d3be495f712d8adeacf86"
+        }
+      ],
+      "scalarOutput": false,
+      "arrayOutput": false,
+      "comparableStableOperation": true,
+      "outputHashContract": "exact returned string or JSON.stringify of non-string result",
+      "inputHashContract": "actual single JSON-text bytes, or JSON.stringify of batch/object/cache-pool inputs",
+      "warmup": {
+        "iterations": 48,
+        "elapsedMs": 300.072,
+        "opsPerSecond": 159.96160921378868
+      },
+      "samples": [
+        {
+          "iterations": 16,
+          "elapsedMs": 102.79070000000002,
+          "opsPerSecond": 155.6561050756537
+        },
+        {
+          "iterations": 32,
+          "elapsedMs": 196.41839999999996,
+          "opsPerSecond": 162.91752707485657
+        },
+        {
+          "iterations": 16,
+          "elapsedMs": 100.1286,
+          "opsPerSecond": 159.79450426751197
+        },
+        {
+          "iterations": 32,
+          "elapsedMs": 195.99869999999999,
+          "opsPerSecond": 163.26638901176386
+        },
+        {
+          "iterations": 32,
+          "elapsedMs": 193.8958,
+          "opsPerSecond": 165.0370972450151
+        },
+        {
+          "iterations": 32,
+          "elapsedMs": 182.1065000000001,
+          "opsPerSecond": 175.72134986944442
+        },
+        {
+          "iterations": 32,
+          "elapsedMs": 189.7299999999998,
+          "opsPerSecond": 168.66072840352098
+        },
+        {
+          "iterations": 32,
+          "elapsedMs": 193.7418,
+          "opsPerSecond": 165.16828067045932
+        },
+        {
+          "iterations": 16,
+          "elapsedMs": 101.21119999999996,
+          "opsPerSecond": 158.0852711952828
+        }
+      ],
+      "medianOpsPerSecond": 163.26638901176386,
+      "medianItemsPerSecond": 163.26638901176386,
+      "madPercent": 2.126515301322512,
+      "minOpsPerSecond": 155.6561050756537,
+      "maxOpsPerSecond": 175.72134986944442,
+      "checksum": 312546528,
+      "cpuMicroseconds": {
+        "user": 969000,
+        "system": 469000
+      },
+      "memoryBefore": {
+        "rss": 72314880,
+        "heapTotal": 48893952,
+        "heapUsed": 10299696,
+        "external": 2475647,
+        "arrayBuffers": 143611
+      },
+      "memoryAfter": {
+        "rss": 77746176,
+        "heapTotal": 81510400,
+        "heapUsed": 13474432,
+        "external": 2410131,
+        "arrayBuffers": 143627
+      },
+      "processMaxRssBytes": 127627264
+    }
+  ]
+}

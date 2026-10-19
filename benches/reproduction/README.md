@@ -42,6 +42,17 @@ stable. `node benches/reproduction/cold-start.cjs` independently measures five
 fresh-process requires per module in two serial rounds; Node startup is excluded
 and OS disk caches may be warm.
 
+For the screened output candidate, `archive-encoding-controls` and
+`revised-encoding-controls` include three additional placement controls:
+dense emoji prefix followed by a long ASCII tail, the reversed ordering, and a
+2k ASCII prefix followed by dense Bengali/emoji text. The archived group uses
+the official generated loader's `NAPI_RS_NATIVE_LIBRARY_PATH` override before
+the public wrapper lazily loads native. Every child asserts the preserved
+original release SHA-256. Reports distinguish actual loaded artifact identity,
+its original `113a8eb` Git source blobs, current wrapper hashes and current
+working-tree native source contents; the latter are not attributed to the
+archived binary. No runtime comparison bypasses the public wrapper.
+
 `REPRO_DATASETS` and `REPRO_METHODS` select comma-separated cells. Defaults retain
 the initial 34-cell matrix. Additional methods are enabled when an explicit
 dataset selection is supplied. `REPRO_RUNS` >=2, odd `REPRO_SAMPLES` >=9,

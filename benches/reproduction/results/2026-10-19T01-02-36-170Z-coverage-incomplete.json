@@ -1,0 +1,46 @@
+{
+  "timestamp": "2026-10-19T01:02:36.170Z",
+  "command": "node benches/reproduction/coverage.cjs archive-encoding-controls revised-encoding-controls candidate-text text-gaps candidate-roundtrip batch-elements",
+  "runnerSha256": "575ffccd1aff69efbbba1cb337b150494a8b03c378f9ef5d0d6d76b6edeaa50f",
+  "snapshot": "benches\\reproduction\\run-575ffccd1aff.cjs",
+  "groups": [
+    {
+      "name": "archive-encoding-controls",
+      "datasets": "latin1-large,sparse-unicode,ascii-string-50k,short-unicode,real-cldr-bn,unicode-prefix-ascii-tail,ascii-prefix-unicode-tail,ascii-prefix-dense-unicode",
+      "methods": "oracle,native",
+      "archive": true,
+      "artifact": "benches\\reproduction\\results\\2026-10-19T01-02-36-209Z-30388.json"
+    },
+    {
+      "name": "revised-encoding-controls",
+      "datasets": "latin1-large,sparse-unicode,ascii-string-50k,short-unicode,real-cldr-bn,unicode-prefix-ascii-tail,ascii-prefix-unicode-tail,ascii-prefix-dense-unicode",
+      "methods": "oracle,native",
+      "artifact": "benches\\reproduction\\results\\2026-10-19T01-03-17-292Z-10172.json"
+    },
+    {
+      "name": "candidate-text",
+      "datasets": "lock-normalized,api-normalized,unicode",
+      "methods": "oracle,native",
+      "warmupMs": "1000",
+      "artifact": "benches\\reproduction\\results\\2026-10-19T01-03-58-184Z-17584.json"
+    },
+    {
+      "name": "text-gaps",
+      "datasets": "tiny,deep,wide,application-config,upstream-api-fixture,large-string,record-array,backend-payload,array-of-32",
+      "methods": "oracle,native",
+      "artifact": "benches\\reproduction\\results\\2026-10-19T01-04-23-472Z-504.json"
+    },
+    {
+      "name": "candidate-roundtrip",
+      "datasets": "tiny,deep,wide,application-config,upstream-api-fixture,large-string,record-array,backend-payload,array-of-32,lock-normalized,api-normalized,unicode",
+      "methods": "object-native-roundtrip",
+      "artifact": "benches\\reproduction\\results\\2026-10-19T01-05-09-777Z-18272.json"
+    },
+    {
+      "name": "batch-elements",
+      "datasets": "batch-api-elements-1,batch-api-elements-8,batch-api-elements-32,batch-api-elements-128",
+      "methods": "native-batch-elements,native-loop-elements,oracle-loop-elements",
+      "artifact": "benches\\reproduction\\results\\2026-10-19T01-05-41-725Z-8148.json"
+    }
+  ]
+}

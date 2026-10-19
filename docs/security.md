@@ -5,7 +5,10 @@ per-document UTF-8 input/output (default16MiB, maximum64MiB), nesting (maximum12
 and batch size (1024 / aggregate64MiB input). Native input is copied by Node-API
 before Rust can apply byte limits. Batch output can be large; limits are not a
 complete process memory budget. Borrowed token trees still allocate container and
-member vectors. Serde validates the whole document before the safe structural
+member vectors. Dense output may also allocate a temporary UTF-16 vector before
+Node creates the returned string; this is not zero-copy serialization. UTF-8 byte
+limits continue to apply before this conversion and do not bound total RSS.
+Serde validates the whole document before the safe structural
 scanner runs; do not reuse that scanner as an independent validator. Native
 processing is synchronous.
 

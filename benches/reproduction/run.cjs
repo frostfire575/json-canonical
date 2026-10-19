@@ -27,6 +27,12 @@ function packageVersion(name) {
   }
   throw new Error(`Package metadata not found: ${name}`);
 }
+function loadedNativeArtifacts() {
+  const artifacts = Object.keys(require.cache).filter(file => file.endsWith('.node')).map(file => ({ path: path.relative(root, file), sha256: sha(fs.readFileSync(file)) }));
+  assert.equal(artifacts.length, 1, 'Exactly one actual native addon must be loaded');
+  if (process.env.REPRO_EXPECT_NATIVE_SHA) assert.equal(artifacts[0].sha256, process.env.REPRO_EXPECT_NATIVE_SHA, 'Loaded native binary differs from requested artifact');
+  return artifacts;
+}
 function fixtures() {
   const manifest = JSON.parse(read('benches/data/manifest.json'));
   const sources = manifest.map(item => {
@@ -67,6 +73,9 @@ function fixtures() {
     'sparse-unicode': JSON.stringify({ value: 'x'.repeat(50000) + '😀' }),
     'ascii-string-50k': JSON.stringify({ value: 'x'.repeat(50000) }),
     'short-unicode': JSON.stringify({ value: 'বাংলা😀漢字é' }),
+    'unicode-prefix-ascii-tail': JSON.stringify({ value: '😀'.repeat(300) + 'x'.repeat(50000) }),
+    'ascii-prefix-unicode-tail': JSON.stringify({ value: 'x'.repeat(50000) + '😀'.repeat(300) }),
+    'ascii-prefix-dense-unicode': JSON.stringify({ value: 'x'.repeat(2000) + 'বাংলা😀'.repeat(1000) }),
     ...(fixture('cldr-bn-languages.json') ? { 'real-cldr-bn': fixture('cldr-bn-languages.json').normalized } : {}),
     'deep': JSON.stringify(deep),
     'wide': JSON.stringify(Object.fromEntries(Array.from({ length: 1500 }, (_, i) => [`key-${1500 - i}`, i]))),
@@ -131,7 +140,7 @@ function prepare(dataset, method) {
     const prepared = preparePool(dataset, method);
     const api = require(path.join(root, 'js/index.cjs'));
     api.stringifyJson('{}');
-    return { ...prepared, native: Object.keys(require.cache).filter(file => file.endsWith('.node')).map(file => ({ path: path.relative(root, file), sha256: sha(fs.readFileSync(file)) })) };
+    return { ...prepared, native: loadedNativeArtifacts() };
   }
   const input = inputs[dataset];
   assert.notEqual(input, undefined, dataset);
@@ -202,8 +211,7 @@ function prepare(dataset, method) {
   assert.equal(typeof fn, 'function', `${dataset}/${method}`);
   // Load the real native addon and establish its identity, even for JS candidates.
   api.stringifyJson('{}');
-  const native = Object.keys(require.cache).filter(file => file.endsWith('.node')).map(file => ({ path: path.relative(root, file), sha256: sha(fs.readFileSync(file)) }));
-  assert.equal(native.length, 1, 'Exactly one actual native addon must be loaded');
+  const native = loadedNativeArtifacts();
   const actual = fn();
   assert.deepEqual(actual, expected, `${dataset}/${method}: exact output`);
   return { fn, expected, native, scalarOutput, arrayOutput, comparableStableOperation, inputBytes: isCache ? Buffer.byteLength(JSON.stringify(input)) : isBatch ? input.reduce((sum, text) => sum + Buffer.byteLength(text), 0) : Buffer.byteLength(input), inputSha256: sha(isCache || isBatch ? JSON.stringify(input) : input), units: isBatch ? input.length : 1 };
@@ -294,7 +302,7 @@ const defaultCells = [
   ...['batch-tiny-32', 'batch-api-records-32'].flatMap(dataset => ['oracle-loop', 'native-loop', 'native-batch', 'public-loop', 'public-batch'].map(method => [dataset, method])),
   ...['oracle', 'public-stringify', 'cache-hit', 'cache-miss'].map(method => ['cache-api-document', method]),
 ];
-const textWorkloads = ['tiny', 'deep', 'wide', 'application-config', 'upstream-api-fixture', 'large-string', 'record-array', 'backend-payload', 'lock-normalized', 'api-normalized', 'unicode', 'array-of-32', 'latin1-large', 'sparse-unicode', 'ascii-string-50k', 'short-unicode', 'real-cldr-bn'];
+const textWorkloads = ['tiny', 'deep', 'wide', 'application-config', 'upstream-api-fixture', 'large-string', 'record-array', 'backend-payload', 'lock-normalized', 'api-normalized', 'unicode', 'array-of-32', 'latin1-large', 'sparse-unicode', 'ascii-string-50k', 'short-unicode', 'real-cldr-bn', 'unicode-prefix-ascii-tail', 'ascii-prefix-unicode-tail', 'ascii-prefix-dense-unicode'];
 const extraCells = [
   ...textWorkloads.filter(dataset => !dataset.startsWith('batch-')).flatMap(dataset => ['oracle', 'native', 'safe-stable', 'fast-stable', 'object-oracle', 'object-public', 'object-native-roundtrip', 'object-safe-stable', 'object-fast-stable', 'JSON-context'].map(method => [dataset, method])),
   ...['tiny', 'deep', 'wide', 'lock-normalized', 'api-normalized', 'unicode'].flatMap(dataset => ['select-native-text', 'select-oracle-text', 'select-native-scalar', 'select-oracle-scalar'].map(method => [dataset, method])),
@@ -312,15 +320,28 @@ function shuffled(items, seed) {
   return result;
 }
 function environment() {
-  const files = ['benches/reproduction/run.cjs', 'js/index.ts', 'js/dist/index.js', 'native/binding.js', 'src/lib.rs', 'src/tree.rs', 'src/engine.rs', 'Cargo.lock', 'Cargo.toml', 'pnpm-lock.yaml'];
+  const files = ['benches/reproduction/run.cjs', 'js/index.ts', 'js/dist/index.js', 'js/index.cjs', 'js/index.mjs', 'native/binding.js', 'native/binding.d.ts', 'src/lib.rs', 'src/tree.rs', 'src/engine.rs', 'src/selection.rs', 'src/output.rs', 'build.rs', 'Cargo.lock', 'Cargo.toml', 'pnpm-lock.yaml', 'package.json', 'tsconfig.json'];
+  const nativeSources = ['src/lib.rs', 'src/tree.rs', 'src/engine.rs', 'src/selection.rs', 'src/output.rs', 'build.rs', 'Cargo.toml'];
   const target = 'target/x86_64-pc-windows-msvc/release/stable_json_rs.dll';
+  const archivedRef = process.env.REPRO_ARTIFACT_SOURCE_REF || null;
+  const compiledSources = Object.fromEntries(nativeSources.flatMap(file => {
+    if (!archivedRef) return [[file, read(file).toString('utf8')]];
+    try { return [[file, execFileSync('git', ['show', `${archivedRef}:${file}`], { cwd: root, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] })]]; }
+    catch { return []; }
+  }));
   return { platform: process.platform, arch: process.arch, osRelease: os.release(), osVersion: os.version(), node: process.version, v8: process.versions.v8, processExecPath: process.execPath,
     cpu: os.cpus()[0]?.model, logicalCpus: os.cpus().length, totalMemoryBytes: os.totalmem(),
     rust: command('rustc', ['--version']), cargo: command('cargo', ['--version']), pnpm: process.platform === 'win32' ? command('cmd.exe', ['/d', '/s', '/c', 'pnpm --version']) : command('pnpm', ['--version']),
     commit: command('git', ['rev-parse', 'HEAD']), dirty: command('git', ['status', '--short']), upstreamCommit: command('git', ['-C', 'upstream/fast-json-stable-stringify', 'rev-parse', 'HEAD']),
     napiOverride: process.env.NAPI_RS_NATIVE_LIBRARY_PATH || null, nodeOptions: process.env.NODE_OPTIONS || null,
     sourceHashes: Object.fromEntries(files.map(file => [file, sha(read(file))])),
+    embeddedNativeSources: Object.fromEntries(nativeSources.map(file => [file, read(file).toString('utf8')])),
+    compiledArtifactSourceRef: archivedRef || 'current working tree; embeddedNativeSources',
+    compiledArtifactSourceContract: archivedRef ? 'Lead-preserved original artifact; source texts below are exact Git blobs from this ref (LF bytes); current sourceHashes/embeddedNativeSources describe the current checkout and must not be attributed to the overridden binary. Actual loaded binary SHA recorded per child.' : 'Actual current release artifact; current source contents embedded',
+    compiledArtifactSources: compiledSources,
+    compiledArtifactGitSourceHashes: Object.fromEntries(Object.entries(compiledSources).map(([file, contents]) => [file, sha(contents)])),
     releaseArtifact: fs.existsSync(path.join(root, target)) ? { path: target, sha256: sha(read(target)) } : null,
+    releaseArtifactContract: 'Local current target release; actual per-child nativeArtifacts can differ under explicit archived override',
     cpuPowerPlan: command('powercfg', ['/getactivescheme']),
     dependencies: Object.fromEntries(['safe-stable-stringify', 'fast-stable-stringify', '@napi-rs/cli'].map(name => [name, packageVersion(name)])) };
 }

@@ -61,7 +61,7 @@ for (const manager of ['npm', 'pnpm']) {
     for (const filename of targets) {
       assert.ok(fs.statSync(path.join(installed, 'native', filename)).size > 0, `bundled ${filename}`);
     }
-    fs.writeFileSync(path.join(consumer, 'verify.cjs'), `
+    fs.writeFileSync(path.join(consumer, 'verify.cjs'), String.raw`
 const assert = require('node:assert/strict');
 const api = require('stable-json-rs');
 const value = {z:[null, '東京', {b:2,a:1}], a:-0};
@@ -72,6 +72,29 @@ assert.equal(api.stringifyJson('{"z":2,"a":1}'), '{"a":1,"z":2}');
 assert.deepEqual(api.stringifyJsonBatch(['{"b":2,"a":1}', '[1,2]']), ['{"a":1,"b":2}', '[1,2]']);
 assert.equal(api.selectJson('{"a":[1,{"東京":2}]}', '/a/1/東京'), '2');
 assert.throws(() => api.stringifyJson('{'), /./);
+// Exercise the large dense-Unicode native output route from the installed
+// binary, including Latin1 characters and astral UTF-16 surrogate pairs.
+const denseSamples = ['東京বাংলা😀'.repeat(256), 'éöÿ'.repeat(512)];
+const codeUnits = text => Array.from({length:text.length}, (_, index) => text.charCodeAt(index));
+for (const sample of denseSamples) {
+  const input = JSON.stringify({z:sample, a:sample});
+  const expected = JSON.stringify({a:sample, z:sample});
+  assert.ok(Buffer.byteLength(expected, 'utf8') > 1024);
+  const actual = api.stringifyJson(input);
+  assert.equal(actual, expected);
+  assert.deepEqual(codeUnits(actual), codeUnits(expected));
+  assert.deepEqual(api.stringifyJsonBatch([input, input]), [expected, expected]);
+  assert.equal(api.selectJson(input, '/z'), JSON.stringify(sample));
+}
+// JSON text retains lexical spelling. Dense output must not decode or replace
+// escaped lone surrogates, escaped ASCII, negative zero or decimal tokens.
+const suffix = JSON.stringify(denseSamples[0]);
+const lexical = '{"z":1.00,"a":"\\ud800x\\udfff","b":"\\u0061","c":-0,"d":' + suffix + '}';
+const lexicalExpected = '{"a":"\\ud800x\\udfff","b":"\\u0061","c":-0,"d":' + suffix + ',"z":1.00}';
+assert.equal(api.stringifyJson(lexical), lexicalExpected);
+assert.deepEqual(api.stringifyJsonBatch([lexical]), [lexicalExpected]);
+assert.equal(api.selectJson(lexical, '/a'), '"\\ud800x\\udfff"');
+assert.throws(() => api.stringifyJsonBatch([JSON.stringify({a:denseSamples[0]}), '{']), /Batch item 1/);
 const cache = api.createSerializerCache();
 const object = {a:1};
 assert.equal(cache.stringify(object, 1), '{"a":1}');
@@ -87,6 +110,12 @@ assert.equal(stringify({z:1,a:2}), '{"a":2,"z":1}');
 assert.equal(stringifyJson('{"z":1,"a":2}'), '{"a":2,"z":1}');
 assert.deepEqual(stringifyJsonBatch(['{}']), ['{}']);
 assert.equal(selectJson('{"a":1}', '/a'), '1');
+const dense = 'é東京😀'.repeat(300);
+const denseInput = JSON.stringify({z:dense, a:dense});
+const denseExpected = JSON.stringify({a:dense, z:dense});
+assert.equal(stringifyJson(denseInput), denseExpected);
+assert.deepEqual(stringifyJsonBatch([denseInput]), [denseExpected]);
+assert.equal(selectJson(denseInput, '/z'), JSON.stringify(dense));
 console.log('Installed ESM and native APIs PASS');
 `);
     for (const filename of ['verify.cjs', 'verify.mjs']) {

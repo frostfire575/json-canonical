@@ -121,6 +121,36 @@ impl Probe {
         self.utf16.clone().into()
     }
     #[napi]
+    pub fn routing_full_scan(&self) -> bool {
+        self.output.len() >= 1024
+            && !self.output.is_ascii()
+            && self.output.bytes().filter(|b| !b.is_ascii()).count() >= self.output.len() / 8
+    }
+    #[napi]
+    pub fn routing_screened(&self) -> bool {
+        self.output.len() >= 1024
+            && self
+                .output
+                .bytes()
+                .take(1024)
+                .filter(|b| !b.is_ascii())
+                .count()
+                >= 128
+            && self.output.bytes().filter(|b| !b.is_ascii()).count() >= self.output.len() / 8
+    }
+    #[napi]
+    pub fn routing_sampled(&self) -> bool {
+        self.output.len() >= 1024
+            && (0..4).all(|index| {
+                let start = index * (self.output.len() - 256) / 3;
+                self.output.as_bytes()[start..start + 256]
+                    .iter()
+                    .filter(|byte| !byte.is_ascii())
+                    .count()
+                    >= 32
+            })
+    }
+    #[napi]
     pub fn stored_engine(&self) -> Result<u32> {
         engine::stringify(&self.input, limits())
             .map(|output| output.len() as u32)

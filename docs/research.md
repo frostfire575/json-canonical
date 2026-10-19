@@ -214,3 +214,12 @@ scalar spans may remove parse/reformat work; explicit version caches may help
 immutable/versioned repeated data; full parsing to JS may lose to JSON.parse.
 Each needs end-to-end release-addon measurements with correctness assertions,
 real fixtures and raw artifacts before accepting it as a result.
+## Independent Unicode workload provenance (2026-10-19)
+
+CLDR Bengali language names are retained under `benches/profiling/data`, fixed at
+commit `91c267402229a59e3ef2774544f001bf959e8809` of
+[unicode-org/cldr-json](https://github.com/unicode-org/cldr-json/tree/91c267402229a59e3ef2774544f001bf959e8809).
+The adjacent manifest records the raw source URL, retrieval time,25,897-byte source
+and Unicode-3.0 license file hashes. The corpus is benchmark-only and not included
+in the npm artifact. It tests a real localization configuration independently of
+the dense synthetic Unicode fixture; source and normalized bytes are distinguished.

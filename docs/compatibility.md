@@ -19,8 +19,13 @@ Oracle: fast-json-stable-stringify 2.1.0 at
 | Duplicate JSON keys | Not applicable to JS objects | Reject decoded duplicates |
 
 All 16 assertions from the four unmodified upstream test files run against the
-public API. Seeded suite covers 6000 JS cases and 3000 supported native text
-objects plus separate adversarial review tests. This scope does not prove all
+public API. Seeded suites now cover 25,740 cases: 6,000 JS values, 3,000 supported
+native objects, 2,000 lexical documents, 3,500 selection paths, 8,192 IEEE-754
+bit patterns, 2,048 arbitrary UTF-16 strings and 1,000 shared nested graphs.
+Separate adversarial tests check observable getter/toJSON/comparator/proxy events,
+exceptions, cycles, 30,000 records and 40,000-key objects. Encoding tests compare
+exact string code units across output sizes, Unicode densities and raw escapes.
+This scope does not prove all
 possible JS programs; arbitrary monkeypatching beyond tested behavior remains
 a risk. No RFC8785 compliance claim. JSON.stringify differs for numeric-looking
 key order, boxed primitives, toJSON arguments and other observable behavior.

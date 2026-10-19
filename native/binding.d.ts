@@ -13,4 +13,4 @@ export declare function selectJson(input: string, path: Array<string>, maxDepth?
 
 export declare function stringifyJson(input: string, maxDepth?: number | undefined | null, maxBytes?: number | undefined | null): string
 
-export declare function stringifyJsonBatch(inputs: Array<string>, maxDepth?: number | undefined | null, maxBytes?: number | undefined | null): Array<string>
+export declare function stringifyJsonBatch(inputs: Array<string>, maxDepth?: number | undefined | null, maxBytes?: number | undefined | null): string[]

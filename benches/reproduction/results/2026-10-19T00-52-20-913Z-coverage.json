@@ -1,0 +1,40 @@
+{
+  "timestamp": "2026-10-19T00:52:20.913Z",
+  "command": "node benches/reproduction/coverage.cjs encoding-controls candidate-text text-gaps candidate-roundtrip batch-elements",
+  "runnerSha256": "73386475113318bc26659eaa7894ef44d5013a6537b5024e8af5f764e5693a2d",
+  "snapshot": "benches\\reproduction\\run-733864751133.cjs",
+  "groups": [
+    {
+      "name": "encoding-controls",
+      "datasets": "latin1-large,sparse-unicode,ascii-string-50k,short-unicode,real-cldr-bn",
+      "methods": "oracle,native",
+      "artifact": "benches\\reproduction\\results\\2026-10-19T00-52-20-954Z-11408.json"
+    },
+    {
+      "name": "candidate-text",
+      "datasets": "lock-normalized,api-normalized,unicode",
+      "methods": "oracle,native",
+      "warmupMs": "1000",
+      "artifact": "benches\\reproduction\\results\\2026-10-19T00-52-46-566Z-29092.json"
+    },
+    {
+      "name": "text-gaps",
+      "datasets": "tiny,deep,wide,application-config,upstream-api-fixture,large-string,record-array,backend-payload,array-of-32",
+      "methods": "oracle,native",
+      "artifact": "benches\\reproduction\\results\\2026-10-19T00-53-11-903Z-30576.json"
+    },
+    {
+      "name": "candidate-roundtrip",
+      "datasets": "tiny,deep,wide,application-config,upstream-api-fixture,large-string,record-array,backend-payload,array-of-32,lock-normalized,api-normalized,unicode",
+      "methods": "object-native-roundtrip",
+      "artifact": "benches\\reproduction\\results\\2026-10-19T00-53-58-161Z-29604.json"
+    },
+    {
+      "name": "batch-elements",
+      "datasets": "batch-api-elements-1,batch-api-elements-8,batch-api-elements-32,batch-api-elements-128",
+      "methods": "native-batch-elements,native-loop-elements,oracle-loop-elements",
+      "artifact": "benches\\reproduction\\results\\2026-10-19T00-54-30-582Z-31704.json"
+    }
+  ],
+  "completed": true
+}

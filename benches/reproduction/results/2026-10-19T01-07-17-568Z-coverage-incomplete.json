@@ -1,0 +1,21 @@
+{
+  "timestamp": "2026-10-19T01:07:17.568Z",
+  "command": "node benches/reproduction/coverage.cjs archive-basic-controls encoding-controls",
+  "runnerSha256": "575ffccd1aff69efbbba1cb337b150494a8b03c378f9ef5d0d6d76b6edeaa50f",
+  "snapshot": "benches\\reproduction\\run-575ffccd1aff.cjs",
+  "groups": [
+    {
+      "name": "archive-basic-controls",
+      "datasets": "latin1-large,sparse-unicode,ascii-string-50k,short-unicode,real-cldr-bn",
+      "methods": "oracle,native",
+      "archive": true,
+      "artifact": "benches\\reproduction\\results\\2026-10-19T01-07-17-604Z-26152.json"
+    },
+    {
+      "name": "encoding-controls",
+      "datasets": "latin1-large,sparse-unicode,ascii-string-50k,short-unicode,real-cldr-bn",
+      "methods": "oracle,native",
+      "artifact": "benches\\reproduction\\results\\2026-10-19T01-07-43-447Z-15432.json"
+    }
+  ]
+}

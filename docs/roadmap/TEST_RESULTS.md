@@ -126,3 +126,30 @@ Environment reconfirmed: Windows x64,i7-12700K,Node24.20.0,pnpm12.10.1,Rust1.98.
 - New output-density/token-preservation2 groups and7 reproduction harness tests:
   `node --test benches/reproduction/reproduction.test.cjs tests/native-output.test.cjs`
   PASS9 on unchanged production baseline before candidate changes.
+
+## 2026-10-19 output candidates (Windows x64 Node24.20.0 Rust1.98.1)
+- Candidate1 `pnpm check`: PASS5Rust45JS/TS; root clippy PASS; independent
+  `node --test tests/output-review.test.cjs`: PASS3. Performance gate FAIL on
+  sparse Unicode; not adopted. Failure evidence in REGRESSIONS.md.
+- Revised bounded-sampling candidate2 `cargo fmt --all; pnpm check`: PASS5Rust,
+  48JS,strictTS; `cargo clippy --all-targets --locked -- -D warnings`: PASS;
+  private crate clippy all-targets/all-features/locked: PASS.
+- Both private predicate probe runs PASS exact boolean route checks; retained raw
+  sources/samples; no unverified speedup counted as achieved public performance.
+
+## 2026-10-19 final source validation (candidate96ba87bcc9a76f9c...)
+Windows x64 Node24.20.0,Node22.13.0,Rust1.98.1,pnpm12.10.1.
+- `pnpm check`: PASS release build,5Rust tests,49JS tests,strictTS.
+- `./scripts/verify-node22.ps1`: PASS49JS;0failures,0skips.
+- `node --test benches/harness.test.cjs benches/reproduction/reproduction.test.cjs`:
+  PASS12. These self-tests run after the isolated performance window ended.
+- `cargo fmt --all --check`; `cargo clippy --all-targets --locked -- -D warnings`:
+  PASS. Private crate all-target/all-feature locked clippy also PASS.
+- `.tools/actionlint/actionlint.exe -color`: PASS; `node --check
+  scripts/verify-ci-candidate.cjs`: PASS.
+- `pnpm licenses:generate`; `git diff --exit-code -- THIRD_PARTY_NOTICES.txt`:
+  PASS,38locked Rust notices unchanged. No production dependency changed.
+- Revised independent review:4PASS; repeated benchmark208cells exactPASS; original
+  source/SHA and overrides recorded explicitly. Candidate1performancefailure retained.
+- Final package consumers and hosted3target jobs not counted here; package checks
+  follow below, actual Linux/macOS execution remains NOT RUN.

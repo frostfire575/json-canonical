@@ -47,6 +47,7 @@ const extra = {
   'sparse-unicode': { value: 'x'.repeat(50000) + '😀' },
   'unicode-short': { value: 'বাংলা😀' },
   'ascii-string': { value: 'x'.repeat(50000) },
+  'unicode-prefix-ascii-tail': { value: '😀'.repeat(256) + 'x'.repeat(50000) },
 };
 for (const dataset of (process.env.PROFILE_DATASETS || 'unicode,dependency-lock,tiny').split(',')) {
   const value = extra[dataset] ?? datasets()[dataset];
@@ -54,6 +55,9 @@ for (const dataset of (process.env.PROFILE_DATASETS || 'unicode,dependency-lock,
   const expected = oracle(value);
   const probe = new Probe(input);
   const methods = {
+    'routing-full-scan': [() => probe.routingFullScan(), Buffer.byteLength(expected) >= 1024 && [...Buffer.from(expected)].filter(byte=>byte>=128).length >= Buffer.byteLength(expected)/8],
+    'routing-screened': [() => probe.routingScreened(), Buffer.byteLength(expected) >= 1024 && [...Buffer.from(expected).subarray(0,1024)].filter(byte=>byte>=128).length >= 128 && [...Buffer.from(expected)].filter(byte=>byte>=128).length >= Buffer.byteLength(expected)/8],
+    'routing-sampled': [() => probe.routingSampled(), Buffer.byteLength(expected) >= 1024 && [0,1,2,3].every(index=>{const bytes=Buffer.from(expected);const start=Math.floor(index*(bytes.length-256)/3);return [...bytes.subarray(start,start+256)].filter(byte=>byte>=128).length>=32;})],
     boundary: [() => probe.boundary(), Buffer.byteLength(input)],
     'input-utf8-allocation-copy': [() => probe.acceptUtf8(input), Buffer.byteLength(input)],
     'input-utf16-allocation-copy': [() => probe.acceptUtf16(input), input.length],

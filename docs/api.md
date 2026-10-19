@@ -38,6 +38,10 @@ default16777216). Bytes are UTF-8; the limit applies to input and output for eac
 document. Containers count toward nesting; `[0]` needs depth1. Batch maximum:
 1024 documents and 64 MiB combined input. Errors include a zero-based batch item
 index for document errors. No partial output on failure.
+Batching is a convenience API, not a performance recommendation: real batches
+were slower than repeated native calls in the independent Windows measurements.
+The explicit version cache can be useful when callers know records are unchanged;
+its performance depends on hit rate and serialization cost.
 
 Entire JSON input is validated. Object keys are decoded, UTF-16 sorted, then
 re-escaped; duplicate decoded keys and lone surrogate keys are rejected. Primitive

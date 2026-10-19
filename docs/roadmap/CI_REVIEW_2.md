@@ -101,3 +101,19 @@ was performed for this candidate check.
 
 Linux/macOS runtime, the actual combined artifact, hosted artifact transfers and
 the six hosted consumer jobs remain **NOT RUN / UNVERIFIED**.
+
+## Output-route regression gate — follow-up
+
+The installed-candidate smoke checks now explicitly cover output above 1024 bytes
+with dense CJK/Bengali/astral Unicode and dense Latin1. They compare exact strings
+and UTF-16 code-unit arrays against known key-ordered JSON, then check native batch
+and selected raw output. A dense document containing escaped lone high/low
+surrogates separated by ASCII, escaped ASCII, `1.00` and `-0` verifies lexical
+preservation through the alternate native output route. A malformed second batch
+item must preserve `Batch item 1` error context. ESM consumers additionally check
+dense Unicode output. CI's build verification job also runs the independent
+benchmark runner self-tests from `benches/reproduction/reproduction.test.cjs`.
+
+These follow-up checks are pending execution while isolated optimization timings
+run. The previous local candidate evidence above remains unchanged and does not
+verify the subsequent Rust output-route optimization.

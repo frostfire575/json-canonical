@@ -82,3 +82,13 @@ No own unsafe Rust was introduced; instrumented timings are not used.
 The key-only internal timer restores original textual order and excludes tree
 construction, but includes iteration/timer granularity; full raw observations are
 in00-49-30-013Z-24432.json. UTF16 sorting behavior remains unchanged.
+
+## Final accepted output route
+Full-count classifier rejected. Bounded four256-byte samples isolate the small
+routing cost (~0.3–0.5us class probes), versus14.7us fullcount on sparse output.
+Raw predicate reports00-55-33-341Z-25732 and00-56-25-381Z-2764 retain exact code.
+Independent release public-API and minimum-runtime results in
+OUTPUT_BENCHMARK_REVIEW.md satisfy the declared repeated gate; this is separate
+from private stage timings. Allocation/copy costs remain and syntheticUnicode
+still loses to JS. No SIMD, new production dependency, sorting change or unsafe
+code was needed. Batch/preallocation complexity was rejected on measured evidence.

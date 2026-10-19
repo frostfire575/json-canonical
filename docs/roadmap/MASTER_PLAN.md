@@ -46,3 +46,17 @@ All implemented tasks have executable evidence; deferrals carry reasons; public
 docs match implementation; independent findings resolved. Production readiness
 requires passing release gates on every claimed platform. No publication without
 explicit approval. Finite session milestones must leave exact resumable commands.
+
+## Independent continuation, 2026-10-19
+Reproduced the earlier reported rates using a separate runner, two randomized runs,
+real source and normalized fixtures, full public boundary costs and retained hashes.
+Expanded baseline404 measured comparisons and compatibility25,740 seeded cases.
+Added a pinned Unicode-3.0 CLDR Bengali corpus to complement synthetic Unicode.
+Stage probes identify UTF8 output conversion as the dominant measured Unicode
+category. Whole-output density counting introduced a measured sparse regression;
+reject it. A bounded sampling candidate must pass the same public-API gates before
+adoption. Batch preallocation offered no real throughput gain; retain convenience
+semantics and explicit version caching without new acceleration claims.
+Keep parse/stream/async/hash deferred. Final bundled artifact verification is
+separate from source builds: CI packs once and each target/Node pair installs the
+same checksum-bound candidate. Actual hosted target runs remain unavailable.

@@ -56,3 +56,39 @@ explicit; no full RFC6901 compliance claim. Tests independently cover3500 paths.
 Use macos-15 ARM64 rather than near-deprecated macos-14; current hosted runner
 labels checked against [GitHub's runner reference](https://docs.github.com/en/actions/reference/runners/github-hosted-runners)
 on2026-10-19. CI definitions remain unexecuted evidence until jobs run.
+
+## ADR 009 — Batch and cache usefulness after independent reproduction
+Retain ordered batches for convenience, bounded aggregate input and indexed
+document errors, with no acceleration claim. Real record sizes1/8/32/128 showed
+native batch3–33% below the same native calls in a loop, including direct returned
+element consumption. Isolated probes show array input/output conversion and wrapper
+validation costs; saved generic call overhead is small. Preallocation saves3 Rust
+reallocations at32 items but did not improve real throughput, so reject that change.
+An additional adaptive JavaScript/native batch dispatcher would add error and
+observable-access complexity without an established acceptance result. Keep the
+small shared-engine implementation; no speculative batch optimization or workers.
+
+Keep the explicit versioned WeakMap cache. Two real32/128-record pools with the
+same mutation/version schedule show miss overhead3–5%,~1.8x throughput at50% hits
+and~7.3–7.7x at90%. These conditional gains justify the feature. No deep hashing,
+automatic mutation detection or immutable-object assumption is introduced.
+
+## ADR 010 — Bounded lossless output encoding
+Accepted for the verified Windows Node22.13/24.20 scope after independent exact
+tests and repeated public-API comparisons. Napi UTF8 output creation dominated
+the measured dense-Unicode workload; use the existing napi Utf16String path for
+dense output. Four distributed256-byte samples must each contain at least32
+non-ASCII bytes. This empirical classifier bounds routing work at1024 bytes and
+returns identical content regardless of classification. Input and pure engine
+semantics, token spelling, limits and error behavior stay unchanged.
+
+Reject unconditional UTF16 (ASCII regressions), the extra encoding_rs production
+dependency (slower probes), and full-output density counting (16% sparse regression).
+Prefix-only screening still penalized Unicode prefixes with long ASCII tails.
+Bounded sampling passed mixed-prefix controls, real CLDR (~31–32% improvement on
+Node24,34–35% on22) and the broader matrix. Dense synthetic Unicode improved but
+still loses to JS parse+upstream. Keep the explicit JS compatibility route; automatic
+JSON.parse fallback would change native duplicate/token/Unicode semantics.
+Raw evidence, an anomalous short-warmup batch cell and targeted confirmation are
+retained in OUTPUT_BENCHMARK_REVIEW.md. This is not a universal speed guarantee or
+cross-platform performance verification. Selection output is unchanged.

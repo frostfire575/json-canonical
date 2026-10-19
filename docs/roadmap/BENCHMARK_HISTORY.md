@@ -43,3 +43,13 @@ on every tested input; still256/11296 core reallocations for CLDR/lock respectiv
 No V8 allocation counts or internal call-stack profile. No production optimization
 accepted at this checkpoint. Prior reports saying allocations NOT MEASURED apply
 only to their original public-API benchmark evidence, not this isolated Rust run.
+
+Accepted output candidate2: see OUTPUT_BENCHMARK_REVIEW.md for160Node24cells,
+8targeted confirmation and40Node22cells, all exact checks pass. Native SHA256
+96ba87bcc9a76f9c2cce21cede7ef74ea10e69b147a69b5435536f1ce81c5f86.
+RealCLDR matched Node24old6870/6840,new9082/8946; Node22old6532/6666,new8799/8946.
+DenseUnicode Node24old4541/4479,new8258/8506, still belowJS13260/13377.
+Full-count candidate1FAILED sparse gate; retained all116cells. Predicate-only
+profiles00-55-33-341Z-25732 and00-56-25-381Z-2764 isolate routing overhead.
+Exact commands/manifests and raw allsamples/source snapshots live in reproduction/.
+No compilation/tests ran during independent timing. No productionbatch speedclaim.

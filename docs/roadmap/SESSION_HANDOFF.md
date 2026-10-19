@@ -59,3 +59,29 @@
 - Commands: node --test benches/reproduction/reproduction.test.cjs tests/native-output.test.cjs;
   node benches/reproduction/coverage.cjs encoding-controls; private profiler README.
 - No test failures outstanding. Linux/macOS actual hosted jobs still NOT RUN.
+
+## Active checkpoint after rejected candidate1
+- Current phase: bounded Unicode output optimization under independent timing.
+- Last completed: rebuilt candidate2; pnpm check5Rust48JS/TS and bothclippy PASS;
+  revised independent reviewer4/4PASS including mixedprefix/tail/middle blocks.
+- Current task: R2-PROFILE final public-API before/after gate. Do not accept source
+  merely because tests pass; candidate1 failed sparse-text throughput by16%.
+- Implementation: src/output.rs+src/lib.rs select lossless UTF8/UTF16 output using
+  four evenly spaced256byte samples, each>=32nonASCII. Engine/JS semantics unchanged.
+- Candidate2 release SHA256:96ba87bcc9a76f9c2cce21cede7ef74ea10e69b147a69b5435536f1ce81c5f86.
+- Original archived release: .verification/baseline-native/,SHA154d1683...;
+  source113a8eb, ignored binary can be rebuilt from that commit if absent.
+- Next: finish independent timings; ifgate passes, record exact results and commit;
+  run full49JS currenttests, Node22, final pack-once npm/pnpm22/24 checks, actionlint.
+- Changed files: src/output/lib, native declaration, independent tests/reviews,
+  runner/raw/probes, docs and installed-candidate verification extensions.
+- Existing source milestone3d049f7; current candidate not committed until gate.
+- Tests failing:none; performance gate candidate1FAILED and is rejected. Revised
+  public performance PENDING. Linux/macOS/combined hosted artifact NOT RUN.
+
+## Source milestone ready, before final candidate installation
+Current phase: output optimization accepted within verified Windows scope.
+Last completed: independent208-cell revision experiment and finalsource checks
+5Rust49JS22+24,12harness,TS/clippy/rustfmt/actionlint. Next: pack once and install
+same candidate through npm/pnpm offline on both runtimes. R4-CONFIG remains active
+until installed checks run. Source change and package verification are distinct.

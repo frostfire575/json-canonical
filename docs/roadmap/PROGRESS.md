@@ -112,3 +112,29 @@ usefulness at realistic hit ratios, with miss overhead disclosed. Detailed evide
 REPRODUCTION_REVIEW.md,PROFILING_REVIEW.md and append-only raw JSON directories.
 Next: independently validate adaptive output encoding through the public addon,
 then separately simplify batch execution if its before/after evidence supports it.
+
+## 2026-10-19 output optimization investigation
+Rejected first public candidate: dense Unicode improved~76%,realCLDR~27%,but
+sparse Unicode regressed~16% in both independent runs. Preserved all116 exact
+cells and source/artifact hashes. Profiling isolated whole-output routing count
+at14.7us for sparse text. Prefix-only screening still penalized a denseprefix +
+ASCII tail. Revised candidate bounds sampling at1024bytes and retains original
+encoding when any distributed sample is sparse. This is an empirical heuristic;
+no semantic normalization is involved. Rebuild,5Rust48JS,TS and clippy pass;
+independent renewed review/performance acceptance and package verification next.
+
+## 2026-10-19 accepted output encoding milestone
+Independent revised before/after208 measured cells, exact outputs allPASS:160
+Node24main,8targeted batch confirmation and40Node22controls. RealCLDR Node24
++31–32%,Node22+34–35%; dense synthetic Unicode rises~4.5k to8.3–8.5kops/s but
+still belowJS~13.3k. No confirmed repeat>10% control regression. A single short-
+warmup batchsize1loop cell was~20% low; matched1s reruns original/candidate were
+within~3%. No claim about its exactcause; unfavorablecell retained. All raw
+samples/source/artifact/runtime metadata preserved. Independent review4PASS.
+
+Final `pnpm check`: release build,5Rust49JS/strictTS PASS. WindowsNode22.13 full
+49JS PASS; both benchmark harnesses12PASS; rustfmt/clippy,actionlint,verifier
+syntax,license-generation unchanged PASS. No new production dependency or unsafe
+Rust. Final npm/pnpm installed-candidate checks still active. README/publicdocs
+now report original reproduction, updated output performance and remaininglosses.
+Batch remains convenience; versioncache retained on measured hit-rate benefits.
