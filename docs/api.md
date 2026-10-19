@@ -34,8 +34,9 @@ re-escaped; duplicate decoded keys and lone surrogate keys are rejected. Primiti
 tokens retain their original spelling (including numeric precision, -0, exponent
 and string escapes); whitespace outside primitive tokens is removed. Arrays retain
 order. These rules are deterministic for a given text, but semantically equivalent
-input spellings can produce different output. No JS callbacks, no JSON.parse
-object materialization, no claim of JavaScript-number normalization or JCS.
+input spellings can produce different output. No value-traversal callbacks or
+JSON.parse object materialization; options accessors still execute JavaScript.
+No claim of JavaScript-number normalization or JCS.
 Escaped lone surrogate **values** are retained; literal ill-formed UTF-16 input
 strings are rejected before native conversion. Native validation/limit errors
 are Error with Node-API InvalidArg code; wrapper type/range errors use TypeError
