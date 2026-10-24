@@ -43,4 +43,8 @@ assert.equal(canonicalHash('{}'), '44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77
 const node = process.env.CONSUMER_NODE ?? process.execPath;
 run(node, ['smoke.cjs'], consumer);
 run(node, ['smoke.mjs'], consumer);
+fs.writeFileSync(path.join(consumer, 'in.json'), '{"b":2,"a":1}');
+// Runs the installed bin shim, so a wrong `bin` path or a missing shebang fails here.
+const bin = path.join(consumer, 'node_modules', '.bin', 'stable-json');
+if (run(bin, ['canonicalize', 'in.json'], consumer) !== '{"a":1,"b":2}') throw new Error('stable-json bin printed the wrong output');
 console.log(`packed ${tarball} (${listing.length} files) installed and verified with ${run(node, ['--version'], consumer).trim()} in ${consumer}`);

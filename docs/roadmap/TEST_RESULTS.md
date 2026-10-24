@@ -11,9 +11,9 @@ rustc 1.98.1, pnpm 12.10.1, TypeScript 7.0.2.
 | `cargo clippy --workspace --all-targets --locked -- -D warnings` (pedantic enabled in workspace lints) | pass |
 | `cargo test --workspace --locked` | 14 passed (13 before the Ryu port) |
 | `pnpm build` (release addon + TypeScript) | pass |
-| `pnpm test` (Node 24.22.1 and Node 22.13.0) | 22 passed on each |
+| `pnpm test` (Node 24.22.1 and Node 22.13.0) | 29 passed on each (22 before the CLI) |
 | `pnpm test:types` (strict, NodeNext, `.mts` and `.cts` consumers, one `@ts-expect-error`) | pass |
-| `pnpm test:pack` (packed tarball, npm install `--offline --ignore-scripts`, CJS and ESM smoke), consumer on Node 24.22.1 and on Node 22.13.0 via `CONSUMER_NODE` | pass on each, 12 files in tarball |
+| `pnpm test:pack` (packed tarball, npm install `--offline --ignore-scripts`, CJS and ESM smoke, `stable-json` bin shim), consumer on Node 24.22.1 and on Node 22.13.0 via `CONSUMER_NODE` | pass on each, 14 files in tarball |
 
 Seeded coverage inside those runs:
 

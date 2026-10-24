@@ -5,6 +5,7 @@
   "license": "MIT",
   "keywords": ["json", "canonical", "canonicalization", "jcs", "rfc8785", "stable", "sort", "deterministic", "hash", "signature", "json-pointer", "napi", "rust"],
   "main": "js/index.cjs",
+  "bin": { "stable-json": "js/dist/cli.js" },
   "types": "js/dist/index.d.ts",
   "exports": {
     ".": {

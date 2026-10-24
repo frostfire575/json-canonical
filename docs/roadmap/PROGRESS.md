@@ -41,3 +41,13 @@ pass on Node 24.22.1 and 22.13.0, and a one-off sweep of 19,991,770 doubles (a
 fifth subnormal, a fifth next to powers of two) found no difference from
 `String(Number)` on either. Canonicalizing 200,000 random doubles went from 0.80x
 to 1.60x of the JavaScript pipeline over three pinned runs.
+
+## 2026-10-24: Command line (V2-CLI)
+
+Added `stable-json`, a bin built from `js/cli.ts` on top of the public API with
+`node:util` `parseArgs`, so the package still has no runtime dependencies. It
+covers canonicalize, sort-keys, minify, validate, select, hash and equal, reads a
+file or standard input, and exits 0, 1 (rejected JSON, unequal values, no match)
+or 2 (usage or file error). Seven new tests run the compiled CLI as a child
+process and compare its output with the API. `test:pack` now runs the bin shim
+npm installs. All 29 JS tests pass on Node 24.22.1 and 22.13.0.

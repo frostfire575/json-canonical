@@ -74,6 +74,29 @@ Error codes: `ERR_JSON_SYNTAX`, `ERR_JSON_ENCODING`, `ERR_JSON_DEPTH`,
 `ERR_JSON_SIZE`, `ERR_JSON_DUPLICATE_KEY`, `ERR_JSON_LONE_SURROGATE`,
 `ERR_JSON_NUMBER_RANGE`, `ERR_JSON_PRECISION`.
 
+## Command line
+
+The package installs a `stable-json` command with the same operations. It reads
+a file, or standard input when the file is left out or given as `-`.
+
+```sh
+stable-json canonicalize order.json > order.canonical.json
+stable-json hash order.json                     # sha256 hex, then a newline
+stable-json hash --algorithm sha512 --encoding base64 order.json
+curl -s https://api.example.com/users | stable-json select /0/email
+stable-json sort-keys package.json
+stable-json validate config.json                # config.json:2:11: expected a JSON value (ERR_JSON_SYNTAX)
+stable-json equal a.json b.json && echo same
+```
+
+`canonicalize`, `sort-keys`, `minify` and `select` write the exact output bytes,
+so piping `stable-json canonicalize` into `sha256sum` hashes the canonical form.
+When standard output is a terminal they add a newline so the prompt starts on its
+own line. `--max-depth`, `--max-bytes` and `--strict-numbers` work as the options
+above. The exit status is 0 on success, 1 when the JSON is rejected, `equal`
+finds different values or `select` matches nothing, and 2 for a bad argument or
+a file that cannot be read. `stable-json --help` lists everything.
+
 ## Performance
 
 Measured on an i7-12700K, Windows 11, Node 24.22, string in and string out,
