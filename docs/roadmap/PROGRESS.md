@@ -76,3 +76,7 @@ CI now builds and tests `aarch64-unknown-linux-gnu` on GitHub's native `ubuntu-2
 ## 2026-10-24: Package renamed to json-canonical (V2-NAME)
 
 Three independent reviews (search ranking, branding, a critic) all rejected `fast-canonical-json`: it reads as a fork of `canonical-json`, and "fast" is false for object input. `json-canonical` matches the queries people type ("canonical json", "json canonicalize") and npm ranks exact name matches first. The CLI installs as `jcanon` and `json-canonical`. The README gained a section for people coming from `canonical-json` or `json-stable-stringify`, including when to stay with them. The addon files keep the `stable-json-rs.*.node` names, which users never see.
+
+## 2026-10-24: json-canonical 0.2.0 published (V2-RELEASE)
+
+The tag `v0.2.0` ran the release workflow, which published `json-canonical@0.2.0` with a provenance attestation using a seven-day granular token. Next: the owner sets up trusted publishing on npmjs.com and deletes the token, then release-please (V2-RELEASE-PLEASE).

@@ -24,4 +24,4 @@ acceptance checks were run, and their results are in TEST_RESULTS.md.
 | V2-RELEASE-PLEASE | P1 | V2-RELEASE | release-please keeps a Release PR with version and CHANGELOG from conventional commits; merging it publishes through the existing publish job. Tags made with GITHUB_TOKEN do not trigger other workflows, so the release-please workflow must call the publish job itself | Release PR opens on its own; merging it publishes a patch with provenance | TODO (after the first publish) |
 | V2-STREAM | P3 | V2-CORE | Streaming canonicalization for inputs larger than memory | Use case first | DEFERRED |
 | V2-WASM | P3 | V2-NODE | WASI build for platforms without a prebuilt addon | Use case first | DEFERRED |
-| V2-RELEASE | P0 | V2-PUBLISH-CI | Publish: `NPM_TOKEN` repository secret, then push tag `v0.2.0` | Explicit approval | BLOCKED |
+| V2-RELEASE | P0 | V2-PUBLISH-CI | Publish: `NPM_TOKEN` repository secret, then push tag `v0.2.0` | Explicit approval | DONE (json-canonical@0.2.0, run 40113692205) |

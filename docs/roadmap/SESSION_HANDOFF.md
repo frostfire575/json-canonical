@@ -2,7 +2,7 @@
 
 - Branch: `main`, the default branch of the public repository
   github.com/frostfire575/json-canonical (renamed from stable-json-rs on 2026-10-24). The rewrite started on `rewrite/v2` from
-  the 0.1 commit 39ef120. No publication or release.
+  the 0.1 commit 39ef120. Published as `json-canonical@0.2.0` on 2026-10-24.
 - Phase: v2 engine, binding, API, tests, benchmarks and docs complete locally on
   Windows x64. Review findings fixed.
 - Active task: none.
