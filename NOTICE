@@ -1,4 +1,4 @@
-stable-json-rs adapts one piece of code from another project.
+json-canonical adapts one piece of code from another project.
 
 crates/core/src/ryu.rs is a Rust port of the d2d function from Ryu by Ulf Adams
 (https://github.com/ulfjack/ryu), and crates/core/src/ryu_tables.rs is generated

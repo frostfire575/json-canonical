@@ -1,9 +1,9 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createRequire } from 'node:module';
-import * as esm from 'stable-json-rs';
+import * as esm from 'json-canonical';
 
-const cjs = createRequire(import.meta.url)('stable-json-rs');
+const cjs = createRequire(import.meta.url)('json-canonical');
 
 test('ESM and CommonJS expose the same functions', () => {
   const names = ['JsonError', 'canonicalize', 'canonicalizeAsync', 'sortKeys', 'sortKeysAsync', 'minify', 'minifyAsync',

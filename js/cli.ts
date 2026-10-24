@@ -4,7 +4,8 @@ import { readFileSync } from 'node:fs';
 import { parseArgs, type ParseArgsConfig } from 'node:util';
 import * as json from './index';
 
-const USAGE = `Usage: stable-json <command> [options] [file]
+const USAGE = `Usage: jcanon <command> [options] [file]
+       (also installed as json-canonical)
 
 Reads the file, or standard input when the file is omitted or '-'.
 
@@ -67,7 +68,7 @@ function read(file: string | undefined): Buffer {
 }
 
 // A terminal gets a final newline so the prompt does not run into the output; pipes
-// and files get the exact bytes, so `stable-json canonicalize | sha256sum` hashes
+// and files get the exact bytes, so `jcanon canonicalize | sha256sum` hashes
 // the canonical form itself.
 function print(output: string | Buffer, newline = process.stdout.isTTY): void {
   process.stdout.write(output);
@@ -126,7 +127,7 @@ function run(argv: string[]): number {
       const [pointer, file] = positionals as [string, string | undefined];
       const value = json.select(read(file), pointer, options);
       if (value === undefined) {
-        process.stderr.write(`stable-json: nothing at '${pointer}'\n`);
+        process.stderr.write(`jcanon: nothing at '${pointer}'\n`);
         return 1;
       }
       print(value);
@@ -162,7 +163,7 @@ try {
     process.stderr.write(`${inputs[error.argument ?? 0] ?? '<stdin>'}${where}: ${reason} (${error.code})\n`);
     process.exitCode = 1;
   } else if (error instanceof UsageError || error instanceof RangeError) {
-    process.stderr.write(`stable-json: ${error.message}\n`);
+    process.stderr.write(`jcanon: ${error.message}\n`);
     process.exitCode = 2;
   } else {
     throw error;

@@ -1,4 +1,4 @@
-# stable-json-rs
+# json-canonical
 
 Canonical JSON for Node, written in Rust. It turns JSON text into one exact byte
 sequence per value (RFC 8785, JCS), so you can hash it, sign it, cache by it or
@@ -11,7 +11,7 @@ Linux x64, Linux ARM64 and macOS ARM64 with Node 22.13 and 24.22. Other
 platforms (Alpine/musl, Intel Macs, Windows ARM) have no prebuilt addon yet. Benchmarks are from Windows only.
 
 ```js
-const json = require('stable-json-rs');
+const json = require('json-canonical');
 
 json.canonicalize('{ "b": [1.0, 1e21], "a": "\\u00e9" }');
 // '{"a":"é","b":[1,1e+21]}'
@@ -45,6 +45,22 @@ against V8 itself:
   before `￿`. The engine compares UTF-8 bytes directly and fixes up the one
   range where the two orders disagree.
 
+## Coming from canonical-json or json-stable-stringify
+
+Both take a JavaScript value, so with JSON text you call `JSON.parse` first.
+This package skips that step: on the benchmark fixtures `canonicalize(text)` is
+1.4 to 2.7 times faster than `JSON.parse` plus `canonical-json`, and 2.0 to 4.0
+times faster than `JSON.parse` plus `json-stable-stringify`, with the same bytes
+out. It also keeps integers above 2^53 exact, where `JSON.parse` has already
+rounded them.
+
+Stay with those packages if you start from an object you built in code (the
+`canonicalizeValue` here is plain JavaScript and slower than `canonical-json`),
+if you need a browser or another runtime, or if you need `replacer` or
+indentation. Prebuilt addons cover Windows x64, Linux x64 and ARM64 (glibc) and
+macOS ARM64. Duplicate keys and lone surrogates throw here, where the `JSON.parse`
+route accepts them.
+
 ## API
 
 Every function accepts a string, a `Buffer` or any `Uint8Array` holding UTF-8.
@@ -77,26 +93,27 @@ Error codes: `ERR_JSON_SYNTAX`, `ERR_JSON_ENCODING`, `ERR_JSON_DEPTH`,
 
 ## Command line
 
-The package installs a `stable-json` command with the same operations. It reads
+The package installs a `jcanon` command (also available as `json-canonical`)
+with the same operations. It reads
 a file, or standard input when the file is left out or given as `-`.
 
 ```sh
-stable-json canonicalize order.json > order.canonical.json
-stable-json hash order.json                     # sha256 hex, then a newline
-stable-json hash --algorithm sha512 --encoding base64 order.json
-curl -s https://api.example.com/users | stable-json select /0/email
-stable-json sort-keys package.json
-stable-json validate config.json                # config.json:2:11: expected a JSON value (ERR_JSON_SYNTAX)
-stable-json equal a.json b.json && echo same
+jcanon canonicalize order.json > order.canonical.json
+jcanon hash order.json                          # sha256 hex, then a newline
+jcanon hash --algorithm sha512 --encoding base64 order.json
+curl -s https://api.example.com/users | jcanon select /0/email
+jcanon sort-keys package.json
+jcanon validate config.json                     # config.json:2:11: expected a JSON value (ERR_JSON_SYNTAX)
+jcanon equal a.json b.json && echo same
 ```
 
 `canonicalize`, `sort-keys`, `minify` and `select` write the exact output bytes,
-so piping `stable-json canonicalize` into `sha256sum` hashes the canonical form.
+so piping `jcanon canonicalize` into `sha256sum` hashes the canonical form.
 When standard output is a terminal they add a newline so the prompt starts on its
 own line. `--max-depth`, `--max-bytes` and `--strict-numbers` work as the options
 above. The exit status is 0 on success, 1 when the JSON is rejected, `equal`
 finds different values or `select` matches nothing, and 2 for a bad argument or
-a file that cannot be read. `stable-json --help` lists everything.
+a file that cannot be read. `jcanon --help` lists everything.
 
 ## Performance
 

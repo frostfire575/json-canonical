@@ -1,26 +1,38 @@
 {
-  "name": "stable-json-rs",
+  "name": "json-canonical",
   "version": "0.2.0",
-  "description": "Fast RFC 8785 JSON canonicalization, key sorting, minification, validation and JSON Pointer selection for JSON text, in Rust",
+  "description": "RFC 8785 canonical JSON for Node, native (Rust) and computed from JSON text: deterministic stringify, key sorting that keeps big numbers exact, canonical hash, equal, minify, validate and JSON Pointer select",
   "license": "MIT",
   "keywords": [
     "json",
     "canonical",
     "canonicalization",
+    "canonicalize",
+    "canonical-json",
     "jcs",
     "rfc8785",
     "stable",
+    "stable-stringify",
+    "stringify",
     "sort",
+    "sort-keys",
     "deterministic",
     "hash",
+    "sha256",
+    "digest",
+    "sign",
     "signature",
+    "bigint",
+    "minify",
+    "validate",
     "json-pointer",
     "napi",
     "rust"
   ],
   "main": "js/index.cjs",
   "bin": {
-    "stable-json": "js/dist/cli.js"
+    "json-canonical": "js/dist/cli.js",
+    "jcanon": "js/dist/cli.js"
   },
   "types": "js/dist/index.d.ts",
   "exports": {

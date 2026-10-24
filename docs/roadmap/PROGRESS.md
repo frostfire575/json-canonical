@@ -72,3 +72,7 @@ Before picking a package name with "fast" in it, the benchmark gained the two pa
 ## 2026-10-24: Linux ARM64 (V2-ARM64)
 
 CI now builds and tests `aarch64-unknown-linux-gnu` on GitHub's native `ubuntu-22.04-arm` runner, so the addon is tested on the hardware it ships for, with no emulation. The release workflow expects four addons. Covered: AWS Graviton, Docker on Apple Silicon, 64-bit Raspberry Pi OS. Still without a prebuilt addon: musl, Intel macOS, Windows ARM.
+
+## 2026-10-24: Package renamed to json-canonical (V2-NAME)
+
+Three independent reviews (search ranking, branding, a critic) all rejected `fast-canonical-json`: it reads as a fork of `canonical-json`, and "fast" is false for object input. `json-canonical` matches the queries people type ("canonical json", "json canonicalize") and npm ranks exact name matches first. The CLI installs as `jcanon` and `json-canonical`. The README gained a section for people coming from `canonical-json` or `json-stable-stringify`, including when to stay with them. The addon files keep the `stable-json-rs.*.node` names, which users never see.

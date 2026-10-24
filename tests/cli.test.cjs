@@ -8,7 +8,7 @@ const path = require('node:path');
 const json = require('..');
 
 const cli = path.join(__dirname, '..', 'js', 'dist', 'cli.js');
-const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'stable-json-cli-'));
+const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'json-canonical-cli-'));
 const file = (name, text) => {
   fs.writeFileSync(path.join(dir, name), text);
   return name;
@@ -37,7 +37,7 @@ test('standard input is read when the file is omitted or -', () => {
 
 test('select prints the raw token and exits 1 when nothing matches', () => {
   assert.deepEqual(run(['select', '/big', a]), { status: 0, stdout: '12345678901234567890', stderr: '' });
-  assert.deepEqual(run(['select', '/missing', a]), { status: 1, stdout: '', stderr: "stable-json: nothing at '/missing'\n" });
+  assert.deepEqual(run(['select', '/missing', a]), { status: 1, stdout: '', stderr: "jcanon: nothing at '/missing'\n" });
   assert.equal(run(['select', 'a', a]).status, 2);
 });
 

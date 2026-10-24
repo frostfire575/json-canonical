@@ -1,4 +1,4 @@
-import json = require('stable-json-rs');
+import json = require('json-canonical');
 
 const sorted: string = json.sortKeys(Buffer.from('{"b":1,"a":2}'));
 const hash: string = json.canonicalHash(sorted, { algorithm: 'sha256', encoding: 'base64' });

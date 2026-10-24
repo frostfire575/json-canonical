@@ -1,4 +1,4 @@
-import { canonicalize, canonicalizeAsync, select, JsonError, type JsonErrorCode, type CanonicalOptions } from 'stable-json-rs';
+import { canonicalize, canonicalizeAsync, select, JsonError, type JsonErrorCode, type CanonicalOptions } from 'json-canonical';
 
 const options: CanonicalOptions = { maxDepth: 64, strictNumbers: true };
 const text: string = canonicalize('{"a":1}', options);
