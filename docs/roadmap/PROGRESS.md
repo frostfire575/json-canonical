@@ -64,3 +64,7 @@ canonicalizes both documents in full; that is recorded as a known gap.
 ## 2026-10-24: Release workflow (V2-PUBLISH-CI)
 
 Publishing from this machine would have shipped only the Windows addon, so publishing moved to CI. `.github/workflows/release.yml` calls `ci.yml` for the full matrix, takes the addons those jobs built and tested, checks that the tag matches the package version and that the tarball holds all three addons, and publishes with provenance. A manual run stops at `npm publish --dry-run`; one passed. Tag pushes no longer start a separate CI run.
+
+## 2026-10-24: Benchmarks against canonical-json and json-stable-stringify (V2-BENCH-PEERS)
+
+Before picking a package name with "fast" in it, the benchmark gained the two packages users are most likely to compare against. `canonical-json` is faster than every earlier baseline (1.17x to 1.62x of `canonicalizeValue`), which cut the reported canonicalize lead from 1.6-4.2x to 1.37-2.67x and `canonicalHash` from 1.5-4.6x to 1.4-3.4x. The engine still wins every canonicalize and hash cell. README and docs/performance.md now quote the new figures.

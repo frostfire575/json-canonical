@@ -23,3 +23,6 @@ history at commit 39ef120.
 | 2026-10-24T15-17-29-365Z.json | 500 ms, 9 x 100 ms, pinned | adds `equal` and `canonicalHash` cells | Run 1 of 3 for the equal/canonicalHash section |
 | 2026-10-24T15-21-22-748Z.json | same | same | Run 2 of 3 |
 | 2026-10-24T15-25-14-173Z.json | same | same | Run 3 of 3; 52 of 441 cells had MAD above 5% |
+| 2026-10-24T16-11-41-552Z.json | 500 ms, 9 x 100 ms, pinned | adds `canonical-json` 0.4.0 and `json-stable-stringify` 1.3.0 baselines | Run 1 of 3 for the competitor section |
+| 2026-10-24T16-16-26-099Z.json | same | same | Run 2 of 3 |
+| 2026-10-24T16-21-13-048Z.json | same | same | Run 3 of 3; 65 of 546 cells had MAD above 5%; README canonicalize column now from these |

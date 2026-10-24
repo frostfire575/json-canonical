@@ -14,7 +14,8 @@ to `benches/results/<timestamp>.json` and never overwritten.
 
 Baselines are what a Node developer would write without this package:
 `JSON.parse` followed by `canonicalizeValue` (the same algorithm as the
-`canonicalize` npm package), `safe-stable-stringify`, `fast-json-stable-stringify`
+`canonicalize` npm package), `canonical-json` 0.4.0, `json-stable-stringify`
+1.3.0, `safe-stable-stringify`, `fast-json-stable-stringify`
 at commit 49e230d, `JSON.stringify`, plain property access, `util.isDeepStrictEqual` on two parsed documents for `equal`,
 and `crypto.createHash('sha256')` over a JavaScript serializer for `canonicalHash`. "previous native"
 is the 0.1 addon built from commit 39ef120, kept at `target/baseline/old.node`.
@@ -36,6 +37,11 @@ pinned, single runs varied by up to about 30% on small fixtures, so the table
 reports three runs. Linux and macOS have not been measured.
 
 ## Results
+
+These runs predate the `canonical-json` and `json-stable-stringify` baselines.
+`canonical-json` turned out faster than every baseline used here, so the
+canonicalize column overstates the lead; the section on those two packages below
+has the current figures.
 
 Code with the Ryu number formatter (decisions D10), runs `2026-10-24T14-38-40-349Z`, `14-41-08-351Z` and `14-43-36-189Z`.
 Each cell is the median ratio over the three runs against the fastest JavaScript
@@ -124,6 +130,36 @@ different and accepts duplicate keys, while `equal` follows RFC 8785, so `[-0]`
 equals `[0]` and duplicate keys throw. Against `canonicalizeValue` on both
 sides, the comparison with the same semantics, `equal` is 1.7 to 4.2 times faster
 in the median (1.7x on floats).
+
+## canonical-json and json-stable-stringify
+
+Runs `2026-10-24T16-11-41-552Z`, `16-16-26-099Z` and `16-21-13-048Z`, same harness
+and pinning. These are the two packages people are most likely to use today:
+`canonical-json` is a JavaScript RFC 8785 serializer, and `json-stable-stringify`
+(8.5 million weekly downloads) sorts keys around `JSON.stringify`. Both take a
+parsed value, so each baseline is `JSON.parse` followed by the package. On every
+fixture both produced exactly the canonical bytes, because the data has no
+duplicate keys, lone surrogates or integers above 2^53. All 546 cells produced
+the checked output; 65 had a within-run MAD above 5%.
+
+Each cell is the median over the three runs of the per-run ratio, with the range.
+
+| fixture | canonicalize vs canonical-json | same, Buffer in/out | canonicalize vs json-stable-stringify | sortKeys vs json-stable-stringify | canonicalHash vs canonical-json | canonicalHash vs json-stable-stringify |
+|---|---:|---:|---:|---:|---:|---:|
+| jsonplaceholder-data | 1.43x (1.39-1.49) | 1.55x (1.40-1.69) | 2.37x (2.36-2.38) | 2.27x (2.03-2.34) | 1.56x (1.55-1.71) | 2.54x (2.45-2.61) |
+| synthetic-already-sorted | 2.62x (2.57-2.70) | 4.28x (4.02-4.29) | 3.96x (3.93-4.07) | 4.24x (4.09-4.44) | 3.42x (3.34-6.01) | 5.23x (4.85-5.90) |
+| synthetic-floats | 1.37x (1.30-1.51) | 1.42x (1.39-1.73) | 2.03x (1.82-2.14) | 5.12x (4.85-5.13) | 1.43x (1.40-1.46) | 1.87x (1.86-2.02) |
+| synthetic-records-8mb | 1.71x (1.67-2.63) | 2.50x (2.15-3.54) | 2.39x (2.04-2.57) | 2.36x (2.13-2.50) | 1.75x (1.61-1.81) | 2.63x (2.40-2.69) |
+| typescript-package | 1.69x (1.68-1.71) | 1.65x (1.36-1.66) | 2.55x (2.55-2.63) | 2.57x (2.50-2.97) | 1.40x (1.22-1.64) | 2.11x (1.78-2.16) |
+| typescript-package-lock | 2.67x (2.63-2.72) | 2.56x (2.37-2.75) | 3.66x (3.33-4.15) | 3.54x (3.49-3.61) | 2.39x (2.20-2.53) | 3.09x (3.09-3.10) |
+| upstream-test | 2.50x (2.38-2.51) | 2.53x (2.31-2.69) | 2.90x (2.64-2.94) | 3.14x (2.57-3.81) | 1.89x (1.70-2.05) | 2.34x (2.22-2.48) |
+
+`canonical-json` is the fastest JavaScript canonicalizer measured: 1.17x to 1.62x
+the speed of `canonicalizeValue` in the median. The engine still wins on every
+fixture, by 1.37x on the doubles and up to 2.67x on package-lock, and the hash
+follows at 1.40x to 3.42x. `json-stable-stringify` is the slowest serializer in
+the set, 0.57x to 0.85x of `safe-stable-stringify`, so the engine leads it by 1.9x
+to 5.2x across canonicalize, sortKeys and canonicalHash.
 
 ## Boundary changes, before and after
 

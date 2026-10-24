@@ -18,6 +18,9 @@ const root = path.join(__dirname, '..');
 const optional = (file) => (fs.existsSync(file) ? require(file) : null);
 const upstream = optional(path.join(root, 'upstream/fast-json-stable-stringify/index.js'));
 const safeStable = require('safe-stable-stringify');
+const jsonStable = require('json-stable-stringify');
+// ESM only, with no require condition in its exports map, so load the file itself.
+const canonicalJson = require(path.join(root, 'node_modules/canonical-json/index.js')).default;
 const old = optional(path.join(root, 'target/baseline/old.node'));
 
 function rng(seed) {
@@ -92,8 +95,11 @@ function cells(name, text) {
     ['canonicalize', 'native string', () => json.canonicalize(text), canonical],
     ['canonicalize', 'native buffer->buffer', () => json.canonicalize(bytes, { output: 'buffer' }), canonical],
     ['canonicalize', 'JS JSON.parse+canonicalizeValue', () => json.canonicalizeValue(JSON.parse(text)), canonical],
+    ['canonicalize', 'JS JSON.parse+canonical-json', () => canonicalJson(JSON.parse(text)), canonical],
+    ['canonicalize', 'JS JSON.parse+json-stable-stringify', () => jsonStable(JSON.parse(text)), canonical],
     ['sortKeys', 'native string', () => json.sortKeys(text), sorted],
     ['sortKeys', 'JS JSON.parse+safe-stable-stringify', () => safeStable(JSON.parse(text)), null],
+    ['sortKeys', 'JS JSON.parse+json-stable-stringify', () => jsonStable(JSON.parse(text)), null],
     ['minify', 'native string', () => json.minify(text), null],
     ['minify', 'JS JSON.stringify(JSON.parse)', () => JSON.stringify(JSON.parse(text)), minified],
     ['validate', 'native', () => json.validate(text), undefined],
@@ -107,6 +113,8 @@ function cells(name, text) {
     ['canonicalHash', 'native buffer', () => json.canonicalHash(bytes), hash],
     ['canonicalHash', 'JS JSON.parse+canonicalizeValue+sha256', () => sha256(json.canonicalizeValue(JSON.parse(text))), hash],
     ['canonicalHash', 'JS JSON.parse+safe-stable-stringify+sha256', () => sha256(safeStable(JSON.parse(text))), hash],
+    ['canonicalHash', 'JS JSON.parse+canonical-json+sha256', () => sha256(canonicalJson(JSON.parse(text))), hash],
+    ['canonicalHash', 'JS JSON.parse+json-stable-stringify+sha256', () => sha256(jsonStable(JSON.parse(text))), hash],
   ];
   if (upstream) list.push(['sortKeys', 'JS JSON.parse+fast-json-stable-stringify', () => upstream(JSON.parse(text)), null]);
   if (old) {

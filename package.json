@@ -3,22 +3,61 @@
   "version": "0.2.0",
   "description": "Fast RFC 8785 JSON canonicalization, key sorting, minification, validation and JSON Pointer selection for JSON text, in Rust",
   "license": "MIT",
-  "keywords": ["json", "canonical", "canonicalization", "jcs", "rfc8785", "stable", "sort", "deterministic", "hash", "signature", "json-pointer", "napi", "rust"],
+  "keywords": [
+    "json",
+    "canonical",
+    "canonicalization",
+    "jcs",
+    "rfc8785",
+    "stable",
+    "sort",
+    "deterministic",
+    "hash",
+    "signature",
+    "json-pointer",
+    "napi",
+    "rust"
+  ],
   "main": "js/index.cjs",
-  "bin": { "stable-json": "js/dist/cli.js" },
+  "bin": {
+    "stable-json": "js/dist/cli.js"
+  },
   "types": "js/dist/index.d.ts",
   "exports": {
     ".": {
-      "import": { "types": "./js/index.d.mts", "default": "./js/index.mjs" },
-      "require": { "types": "./js/dist/index.d.ts", "default": "./js/index.cjs" }
+      "import": {
+        "types": "./js/index.d.mts",
+        "default": "./js/index.mjs"
+      },
+      "require": {
+        "types": "./js/dist/index.d.ts",
+        "default": "./js/index.cjs"
+      }
     }
   },
-  "files": ["js/dist", "js/index.cjs", "js/index.mjs", "js/index.d.mts", "native/*.js", "native/*.d.ts", "native/*.node", "LICENSE", "NOTICE", "README.md"],
-  "engines": { "node": ">=22.13.0" },
+  "files": [
+    "js/dist",
+    "js/index.cjs",
+    "js/index.mjs",
+    "js/index.d.mts",
+    "native/*.js",
+    "native/*.d.ts",
+    "native/*.node",
+    "LICENSE",
+    "NOTICE",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=22.13.0"
+  },
   "packageManager": "pnpm@12.10.1",
   "napi": {
     "binaryName": "stable-json-rs",
-    "targets": ["x86_64-pc-windows-msvc", "x86_64-unknown-linux-gnu", "aarch64-apple-darwin"]
+    "targets": [
+      "x86_64-pc-windows-msvc",
+      "x86_64-unknown-linux-gnu",
+      "aarch64-apple-darwin"
+    ]
   },
   "scripts": {
     "build:native": "napi build --release --platform --manifest-path crates/node/Cargo.toml --output-dir native --js binding.js --dts binding.d.ts",
@@ -37,7 +76,9 @@
   "devDependencies": {
     "@napi-rs/cli": "3.10.8",
     "@types/node": "^24.0.0",
+    "canonical-json": "^0.4.0",
     "fast-stable-stringify": "^1.0.0",
+    "json-stable-stringify": "^1.3.0",
     "safe-stable-stringify": "^2.5.0",
     "tape": "^5.9.0",
     "typescript": "7.0.2"

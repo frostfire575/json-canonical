@@ -100,26 +100,29 @@ a file that cannot be read. `stable-json --help` lists everything.
 ## Performance
 
 Measured on an i7-12700K, Windows 11, Node 24.22, string in and string out,
-against the JavaScript pipeline you would write otherwise (`JSON.parse` followed
-by a serializer, or property access for `select`). All outputs are
+against the fastest JavaScript pipeline measured (`JSON.parse` followed by
+`canonical-json`, `safe-stable-stringify` or another serializer, or property
+access for `select`). All outputs are
 checked before timing. The full table, raw samples and method are in
 [docs/performance.md](docs/performance.md).
 
 | Fixture | canonicalize | sortKeys | validate | select |
 |---|---:|---:|---:|---:|
-| npm package-lock, 144 KB | 3.7x | 2.4x | 2.0x | 2.0x |
-| JSONPlaceholder data, 1.4 MB | 2.3x | 1.4x | 1.4x | 1.4x |
-| package.json, 1.8 KB | 2.7x | 1.8x | 1.2x | **0.9x** |
-| records with Unicode, indented, 8 MB | 2.6x | 2.0x | 1.1x | 1.1x |
-| same records, already sorted, 6 MB | 4.2x | 3.4x | 1.4x | 1.4x |
-| 200k random doubles, 4 MB | 1.6x | 4.2x | 1.6x | 1.5x |
+| npm package-lock, 144 KB | 2.7x | 2.4x | 2.0x | 2.0x |
+| JSONPlaceholder data, 1.4 MB | 1.4x | 1.4x | 1.4x | 1.4x |
+| package.json, 1.8 KB | 1.7x | 1.8x | 1.2x | **0.9x** |
+| records with Unicode, indented, 8 MB | 1.7x | 2.0x | 1.1x | 1.1x |
+| same records, already sorted, 6 MB | 2.6x | 3.4x | 1.4x | 1.4x |
+| 200k random doubles, 4 MB | 1.4x | 4.2x | 1.6x | 1.5x |
 
 Each figure is the median of three pinned runs; single runs vary by up to about
-30% on the small fixtures.
+30% on the small fixtures. The canonicalize column is against `canonical-json`,
+the fastest JavaScript RFC 8785 serializer we found. Against
+`json-stable-stringify` the same column is 2.0x to 4.0x.
 
 The speedup comes from never building JavaScript objects. Passing a `Buffer`
 straight from `fs.readFile` or a socket also skips string transcoding, and for
-canonicalization of large input that is up to 6.6x faster than the JavaScript
+canonicalization of large input that is up to 4.3x faster than the JavaScript
 pipeline.
 
 Numbers with up to 15 significant digits (prices, counters, most coordinates) are
@@ -127,8 +130,8 @@ re-spelled without touching floating point. Longer ones go through a port of the
 Ryu algorithm. On tiny documents the Node-API call overhead is a large share of
 the time, which is why `select` on package.json loses.
 
-`canonicalHash` is 1.5 to 4.6 times faster than `JSON.parse`, a stable
-stringify and SHA-256. `equal` is slower than `util.isDeepStrictEqual` on two
+`canonicalHash` is 1.4 to 3.4 times faster than `JSON.parse`, the fastest
+JavaScript serializer and SHA-256. `equal` is slower than `util.isDeepStrictEqual` on two
 parsed documents for most inputs (0.49x to 1.22x), because it canonicalizes both
 sides in full; it is the right choice when `-0`, duplicate keys and RFC 8785
 rules matter, not for speed. Details are in docs/performance.md.
