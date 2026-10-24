@@ -1,5 +1,11 @@
 name: Verify and package (no publishing)
-on: [push, pull_request, workflow_dispatch]
+on:
+  # Tags only run through release.yml, which calls this workflow.
+  push:
+    branches: ['**']
+  pull_request:
+  workflow_dispatch:
+  workflow_call:
 permissions:
   contents: read
 env:
