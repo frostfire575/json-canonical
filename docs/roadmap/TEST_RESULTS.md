@@ -52,3 +52,5 @@ https://github.com/frostfire575/stable-json-rs/actions/runs/40104034037: the sam
 ## Not run
 
 - Benchmarks on Linux and macOS.
+
+CLI commit 0062229, run https://github.com/frostfire575/stable-json-rs/actions/runs/40105582760: all six jobs passed, including the 7 CLI tests and the `stable-json` bin shim check in `test:pack` on Windows x64, Linux x64 and macOS ARM64 with Node 22.13.0 and 24.22.1.
