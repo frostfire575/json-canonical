@@ -80,3 +80,7 @@ Three independent reviews (search ranking, branding, a critic) all rejected `fas
 ## 2026-10-24: json-canonical 0.2.0 published (V2-RELEASE)
 
 The tag `v0.2.0` ran the release workflow, which published `json-canonical@0.2.0` with a provenance attestation using a seven-day granular token. Next: the owner sets up trusted publishing on npmjs.com and deletes the token, then release-please (V2-RELEASE-PLEASE).
+
+## 2026-10-24: release-please and trusted publishing (V2-RELEASE-PLEASE)
+
+release.yml runs release-please on every push to main and publishes from the same run when the release PR is merged, authenticating through the npm trusted publisher instead of a token. `json-canonical@0.2.1` was the first release made that way. The npm token and the `NPM_TOKEN` secret are no longer used.

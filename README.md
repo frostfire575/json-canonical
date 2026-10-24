@@ -6,8 +6,8 @@ compare it. The same single-pass engine also sorts keys while keeping every
 number exactly as written, minifies, validates with line and column errors, and
 extracts values by JSON Pointer without building JavaScript objects.
 
-Status: 0.2.0 on npm (`npm install json-canonical`), published from CI with
-provenance. CI passes on Windows x64,
+Status: on npm (`npm install json-canonical`), published from CI through npm
+trusted publishing with provenance. CI passes on Windows x64,
 Linux x64, Linux ARM64 and macOS ARM64 with Node 22.13 and 24.22. Other
 platforms (Alpine/musl, Intel Macs, Windows ARM) have no prebuilt addon yet. Benchmarks are from Windows only.
 
