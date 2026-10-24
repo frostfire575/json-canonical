@@ -12,9 +12,9 @@
 | 2026-10-24 | Independent review | `strictNumbers` docs promised "exactly representable", but the check rejects changed printed values (2^60 written in full is rejected, `0.1` accepted) | Behaviour kept, since it is what signing needs; docs and message corrected | `review: strictNumbers...` JS test |
 | 2026-10-24 | Independent review | Sorting moved bytes at every unsorted level, O(size x depth): 1 s for a 4 MB value under 1000 levels | Unsorted objects record patches; one final pass copies each byte once | `review: deep unsorted nesting stays linear` |
 | 2026-10-24 | Independent review | A bare `\r` did not start a new line in error positions (the review's expected column was also off by one; the test uses column 1) | `\n`, `\r\n` and `\r` all end a line | Rust `errors_and_limits` |
+| 2026-10-24 | First CI run, Linux and macOS on Node 24.21.0 and 24.20.0 | Differential tests failed because their oracle was wrong: after warmup, V8's `JSON.parse` in those releases returns a backslash for any one-character escaped key (`"\u007f"`, `"\""`, `"\u0000"`). Reproduced in plain JavaScript with no addon loaded; 22.13.0 and 24.22.1 are correct. The engine's output was right | CI pins Node 24.22.1 instead of the runner's cached 24.x | `.github/workflows/ci.yml` matrix |
 
 ## Known gaps
 
 - Float-heavy canonicalization is about 0.8x of the JavaScript pipeline (TASKS V2-FLOAT).
 - `select` on a 1.8 KB string is about 0.9x of `JSON.parse` plus property access.
-- Linux and macOS have not run (TASKS V2-CI).
