@@ -1,24 +1,57 @@
 name: Release
-# A v* tag publishes to npm. A manual run does everything except the upload
-# (npm publish --dry-run), so the pipeline can be checked without releasing.
+# A push to main lets release-please open or update the release PR. Merging that
+# PR creates the tag and the GitHub release, and the same run publishes to npm.
+# The publish has to live in this file: a tag pushed with GITHUB_TOKEN starts no
+# other workflow, and the npm trusted publisher is registered for release.yml.
+# A manual run does everything except the upload (npm publish --dry-run).
 on:
   push:
+    branches: [main]
     tags: ['v*']
   workflow_dispatch:
 permissions:
   contents: read
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
 env:
   BUILD_NODE: 24.22.1
 jobs:
+  release-please:
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: write
+      pull-requests: write
+    outputs:
+      release_created: ${{ steps.release.outputs.release_created }}
+      tag_name: ${{ steps.release.outputs.tag_name }}
+    steps:
+      - id: release
+        uses: googleapis/release-please-action@45996ed1f6d02564a971a2fa1b5860e934307cf7 # v5.0.0
+        with:
+          config-file: release-please-config.json
+          manifest-file: .release-please-manifest.json
+
   verify:
+    needs: release-please
+    # release-please is skipped on tag pushes and manual runs; !cancelled() keeps
+    # this job from being skipped along with it.
+    if: >-
+      !cancelled() && needs.release-please.result != 'failure' &&
+      (github.event_name != 'push' || github.ref_type == 'tag' ||
+       needs.release-please.outputs.release_created == 'true')
     uses: ./.github/workflows/ci.yml
 
   publish:
-    needs: verify
+    needs: [release-please, verify]
+    if: ${{ !cancelled() && needs.verify.result == 'success' }}
     runs-on: ubuntu-22.04
     permissions:
       contents: read
-      id-token: write # npm provenance and trusted publishing
+      id-token: write # npm trusted publishing and provenance
+    env:
+      RELEASE_TAG: ${{ needs.release-please.outputs.tag_name || (github.ref_type == 'tag' && github.ref_name) || '' }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
@@ -43,8 +76,8 @@ jobs:
       - name: Check the tag, the version and the addons
         run: |
           version=$(node -p "require('./package.json').version")
-          if [ "$GITHUB_REF_TYPE" = tag ] && [ "$GITHUB_REF_NAME" != "v$version" ]; then
-            echo "tag $GITHUB_REF_NAME does not match package.json version $version"; exit 1
+          if [ -n "$RELEASE_TAG" ] && [ "$RELEASE_TAG" != "v$version" ]; then
+            echo "tag $RELEASE_TAG does not match package.json version $version"; exit 1
           fi
           ls -l native
           for addon in win32-x64-msvc linux-x64-gnu linux-arm64-gnu darwin-arm64; do
@@ -56,7 +89,7 @@ jobs:
         run: |
           count=$(npm pack --dry-run --json | node -e "const [p] = JSON.parse(require('fs').readFileSync(0)); console.log(p.files.filter(f => f.path.endsWith('.node')).length)")
           test "$count" = 4 || { echo "tarball has $count addons, expected 4"; exit 1; }
+      # No token: npm 11.5+ exchanges the job's OIDC token with the trusted
+      # publisher configured on npmjs.com.
       - name: Publish
-        run: npm publish --provenance --access public ${{ github.ref_type != 'tag' && '--dry-run' || '' }}
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npm publish --provenance --access public ${{ env.RELEASE_TAG == '' && '--dry-run' || '' }}
