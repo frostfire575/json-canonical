@@ -1,8 +1,8 @@
 # Benchmark history
 
 All runs on Windows 11 x64, i7-12700K, Node 24.22.1, via `node benches/run.cjs`.
-Raw files are in `benches/results/` and are never edited. Benchmarks of 0.1 are on
-`master` under its own history.
+Raw files are in `benches/results/` and are never edited. Benchmarks of 0.1 are in
+history at commit 39ef120.
 
 | Raw file | Settings | Code state | Status |
 |---|---|---|---|

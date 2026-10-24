@@ -16,7 +16,7 @@ Baselines are what a Node developer would write without this package:
 `JSON.parse` followed by `canonicalizeValue` (the same algorithm as the
 `canonicalize` npm package), `safe-stable-stringify`, `fast-json-stable-stringify`
 at commit 49e230d, `JSON.stringify`, and plain property access. "previous native"
-is the 0.1 addon from `master`, kept at `target/baseline/old.node`.
+is the 0.1 addon built from commit 39ef120, kept at `target/baseline/old.node`.
 
 Fixtures: four files recorded with source URLs, commits and hashes in
 `benches/data/manifest.json` (TypeScript's package.json and package-lock.json,

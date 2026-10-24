@@ -1,11 +1,11 @@
 # Development journal
 
-The 0.1 journal is on `master`. This one starts with the rewrite.
+The 0.1 journal is in history at commit 39ef120. This one starts with the rewrite.
 
 ## 2026-10-24: v2 rewrite on `rewrite/v2`
 
 Removed the 0.1 implementation, tests, scripts and evidence from this branch (all
-remain on `master`). Built a Cargo workspace with a zero-dependency engine crate
+remain in history at 39ef120). Built a Cargo workspace with a zero-dependency engine crate
 and a napi-rs binding crate. The engine parses and writes in one pass, sorts
 objects by moving member spans, and compares keys in UTF-16 order on UTF-8 bytes.
 

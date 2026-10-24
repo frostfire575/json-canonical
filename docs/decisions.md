@@ -9,7 +9,7 @@ The 0.1 design validated with serde, then scanned the text a second time to buil
 a token tree, and its main export was a copy of fast-json-stable-stringify in
 JavaScript. Review found the double pass, a selection path that re-parsed the
 subtree at every path segment, string-typed errors, and no answer for the main
-reason people sort JSON keys: hashing and signatures. 0.1 remains on `master`.
+reason people sort JSON keys: hashing and signatures. 0.1 remains in history at commit 39ef120.
 
 ## D8. RFC 8785 is the primary operation
 
