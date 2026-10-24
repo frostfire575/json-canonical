@@ -37,6 +37,12 @@ Seeded coverage inside those runs:
   levels around a 4 MB value, bare CR line counting.
 - RFC 8785 section 3.2.4 example and Appendix B number vectors.
 
+## CI
+
+https://github.com/frostfire575/stable-json-rs/actions/runs/40101134172: Windows x64, Linux x64 and macOS ARM64, each on Node 22.13.0 and 24.22.1. Every job builds with Node 24.22.1, runs rustfmt, clippy and the Rust tests, then switches to the matrix Node for the JS tests, type tests and `test:pack`. All six passed and uploaded a native artifact per target.
+
+Two earlier runs failed for reasons outside the engine. Node 24.20 and 24.21 have a V8 `JSON.parse` defect that broke the test oracle (REGRESSIONS.md), and @napi-rs/cli 3.10.8 times out on its own filesystem lock on Windows under Node 22.13, so builds now use Node 24.
+
 ## Not run
 
-- Linux x64 and macOS ARM64: no local machines. CI is configured but needs a push.
+- Benchmarks on Linux and macOS.

@@ -6,8 +6,8 @@ compare it. The same single-pass engine also sorts keys while keeping every
 number exactly as written, minifies, validates with line and column errors, and
 extracts values by JSON Pointer without building JavaScript objects.
 
-Status: 0.2.0, a from-scratch rewrite. Not published. Verified on Windows x64 with
-Node 22.13 and 24; Linux and macOS are set up in CI but have not run yet.
+Status: 0.2.0, a from-scratch rewrite. Not published. CI passes on Windows x64,
+Linux x64 and macOS ARM64 with Node 22.13 and 24.22. Benchmarks are from Windows only.
 
 ```js
 const json = require('stable-json-rs');

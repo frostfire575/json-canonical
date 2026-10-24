@@ -1,11 +1,11 @@
 # Session handoff
 
-- Branch: `rewrite/v2` (from `master` at 39ef120). No push, publication or release.
+- Branch: `rewrite/v2` (from `master` at 39ef120), pushed to the public repository
+  github.com/frostfire575/stable-json-rs. No publication or release.
 - Phase: v2 engine, binding, API, tests, benchmarks and docs complete locally on
   Windows x64. Review findings fixed.
 - Active task: none.
-- Next: push the branch so CI runs on Linux x64 and macOS ARM64 with Node 22.13
-  and 24 (V2-CI, needs approval). Then decide on V2-FLOAT: either approve the
+- Next: CI is green on all three platforms (V2-CI done). Decide on V2-FLOAT: either approve the
   `ryu-js` crate (formats doubles exactly like JavaScript, no dependencies of its
   own) or hand-write a Ryu-family formatter.
 - Passing: `pnpm check` (build, rustfmt, clippy pedantic, 13 Rust tests, 22 JS

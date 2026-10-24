@@ -23,7 +23,7 @@ recorded as such; the reference run is pinned to the performance cores.
 
 Verified on Windows x64 with Node 24.22.1 and Node 22.13.0: Rust tests, clippy
 pedantic, JS tests, strict type tests, and installing the packed tarball into a
-fresh consumer. Linux and macOS not run.
+fresh consumer. CI later passed on Windows x64, Linux x64 and macOS ARM64 with Node 22.13.0 and 24.22.1.
 
 An independent review then found five defects: a shared-buffer race through option
 getters, wrong digits at 46 powers of two, misdocumented `strictNumbers`,
