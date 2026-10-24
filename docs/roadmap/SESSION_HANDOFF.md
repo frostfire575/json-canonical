@@ -6,8 +6,9 @@
 - Phase: v2 engine, binding, API, tests, benchmarks and docs complete locally on
   Windows x64. Review findings fixed.
 - Active task: none.
-- Next: V2-CI, V2-FLOAT and V2-CLI are done. Remaining plan: benchmarks for
-  `equal` and `canonicalHash`, then V2-RELEASE (needs explicit approval).
+- Next: V2-CI, V2-FLOAT, V2-CLI and V2-BENCH-API are done. Remaining plan:
+  V2-RELEASE (needs explicit approval). `equal` is slower than
+  `isDeepStrictEqual` (REGRESSIONS.md); no task for it yet.
 - Passing: `pnpm check` (build, rustfmt, clippy pedantic, 14 Rust tests, 29 JS
   tests, strict types) on Node 24.22.1; the 29 JS tests on Node 22.13.0;
   `pnpm test:pack` with consumers on both runtimes.

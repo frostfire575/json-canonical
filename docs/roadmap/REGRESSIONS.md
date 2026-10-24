@@ -17,3 +17,4 @@
 ## Known gaps
 
 - `select` on a 1.8 KB string is about 0.9x of `JSON.parse` plus property access.
+- `equal` is 0.49x to 1.22x of `JSON.parse` plus `util.isDeepStrictEqual` (0.49x on 200,000 doubles), because it canonicalizes both inputs in full.

@@ -15,7 +15,8 @@ to `benches/results/<timestamp>.json` and never overwritten.
 Baselines are what a Node developer would write without this package:
 `JSON.parse` followed by `canonicalizeValue` (the same algorithm as the
 `canonicalize` npm package), `safe-stable-stringify`, `fast-json-stable-stringify`
-at commit 49e230d, `JSON.stringify`, and plain property access. "previous native"
+at commit 49e230d, `JSON.stringify`, plain property access, `util.isDeepStrictEqual` on two parsed documents for `equal`,
+and `crypto.createHash('sha256')` over a JavaScript serializer for `canonicalHash`. "previous native"
 is the 0.1 addon built from commit 39ef120, kept at `target/baseline/old.node`.
 
 Fixtures: four files recorded with source URLs, commits and hashes in
@@ -88,6 +89,41 @@ between the two sets of runs, the largest being JSONPlaceholder `select` (1.83x 
 1.41x) and `sortKeys` (1.59x to 1.38x). The new values sit inside or just under
 the earlier runs' ranges (1.46-1.99 and 1.28-1.69), which points to machine
 variance; neither path formats doubles.
+
+## equal and canonicalHash
+
+Runs `2026-10-24T15-17-29-365Z`, `15-21-22-748Z` and `15-25-14-173Z`, same
+harness and pinning. These runs repeat every cell above as well; this section
+only reports the two new operations. The second document for `equal` is the
+same value with keys in reverse order and a two-space indent, so the comparison
+returns true and has to sort every object. All 441 cells produced the checked
+output; 52 had a within-run MAD above 5%, more than the runs above, so read
+differences under about 10% as noise.
+
+| fixture | equal | canonicalHash | canonicalHash, Buffer in |
+|---|---:|---:|---:|
+| jsonplaceholder-data | 0.63x (0.62-0.68) | 1.62x (1.60-1.68) | 1.67x (1.66-1.85) |
+| synthetic-already-sorted | 0.93x (0.92-1.03) | 4.60x (4.37-4.81) | 5.33x (5.31-5.86) |
+| synthetic-floats | 0.49x (0.49-0.49) | 1.63x (1.59-1.75) | 1.64x (1.59-1.69) |
+| synthetic-records-8mb | 0.86x (0.74-0.89) | 2.54x (2.32-2.58) | 2.79x (2.70-3.00) |
+| typescript-package | 0.79x (0.73-0.94) | 1.51x (1.40-1.70) | 1.55x (1.54-1.93) |
+| typescript-package-lock | 1.22x (1.20-1.42) | 2.30x (2.11-2.32) | 2.38x (2.34-2.40) |
+| upstream-test | 0.95x (0.87-0.99) | 1.72x (1.48-1.85) | 1.74x (1.59-1.80) |
+
+`canonicalHash` wins on every fixture. The fastest JavaScript baseline was
+always `safe-stable-stringify` plus SHA-256, which gives the same hash on these
+fixtures because their strings and numbers already print the RFC 8785 way.
+`canonicalizeValue` plus SHA-256 was slower still.
+
+`equal` loses on six of seven fixtures. It canonicalizes both documents in full
+and compares the bytes, while `isDeepStrictEqual` walks two trees that
+`JSON.parse` built very quickly, so on floats the engine pays for formatting
+400,000 doubles that the JavaScript side never prints. The two also answer
+slightly different questions: `isDeepStrictEqual` treats `0` and `-0` as
+different and accepts duplicate keys, while `equal` follows RFC 8785, so `[-0]`
+equals `[0]` and duplicate keys throw. Against `canonicalizeValue` on both
+sides, the comparison with the same semantics, `equal` is 1.7 to 4.2 times faster
+in the median (1.7x on floats).
 
 ## Boundary changes, before and after
 

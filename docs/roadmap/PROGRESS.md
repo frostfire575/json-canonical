@@ -51,3 +51,12 @@ file or standard input, and exits 0, 1 (rejected JSON, unequal values, no match)
 or 2 (usage or file error). Seven new tests run the compiled CLI as a child
 process and compare its output with the API. `test:pack` now runs the bin shim
 npm installs. All 29 JS tests pass on Node 24.22.1 and 22.13.0.
+
+## 2026-10-24: Benchmarks for equal and canonicalHash (V2-BENCH-API)
+
+`benches/run.cjs` now times `equal` against `JSON.parse` with `util.isDeepStrictEqual`
+and with `canonicalizeValue` on both sides, and `canonicalHash` (string and Buffer
+input) against SHA-256 over `safe-stable-stringify` and over `canonicalizeValue`.
+Over three pinned runs `canonicalHash` is 1.51x to 4.60x of the fastest
+JavaScript pipeline. `equal` is 0.49x to 1.22x of `isDeepStrictEqual`, because it
+canonicalizes both documents in full; that is recorded as a known gap.

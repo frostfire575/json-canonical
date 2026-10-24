@@ -20,3 +20,6 @@ history at commit 39ef120.
 | 2026-10-24T14-38-40-349Z.json | 500 ms, 9 x 100 ms, pinned | Ryu number formatter (D10) | Reference run 1 of 3; floats canonicalize 1.61x |
 | 2026-10-24T14-41-08-351Z.json | same | same | Reference run 2 of 3; "after" column of the formatter table |
 | 2026-10-24T14-43-36-189Z.json | same | same | Reference run 3 of 3; medians of these three are in docs/performance.md and README |
+| 2026-10-24T15-17-29-365Z.json | 500 ms, 9 x 100 ms, pinned | adds `equal` and `canonicalHash` cells | Run 1 of 3 for the equal/canonicalHash section |
+| 2026-10-24T15-21-22-748Z.json | same | same | Run 2 of 3 |
+| 2026-10-24T15-25-14-173Z.json | same | same | Run 3 of 3; 52 of 441 cells had MAD above 5% |

@@ -5,6 +5,8 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const os = require('node:os');
+const { createHash } = require('node:crypto');
+const { isDeepStrictEqual } = require('node:util');
 const json = require('..');
 
 const WARMUP_MS = Number(process.env.WARMUP_MS ?? 500);
@@ -64,6 +66,18 @@ function pointerFor(text) {
   return { segments, pointer: segments.map((s) => '/' + s.replaceAll('~', '~0').replaceAll('/', '~1')).join('') };
 }
 
+// The same value written differently: keys in reverse order, two-space indent.
+function reformat(text) {
+  const reverse = (v) => {
+    if (Array.isArray(v)) return v.map(reverse);
+    if (v === null || typeof v !== 'object') return v;
+    return Object.fromEntries(Object.keys(v).reverse().map((k) => [k, reverse(v[k])]));
+  };
+  return JSON.stringify(reverse(JSON.parse(text)), null, 2);
+}
+
+const sha256 = (data) => createHash('sha256').update(data).digest('hex');
+
 function cells(name, text) {
   const bytes = Buffer.from(text);
   const canonical = json.canonicalizeValue(JSON.parse(text));
@@ -72,6 +86,8 @@ function cells(name, text) {
   const { segments, pointer } = pointerFor(text);
   const walk = (v) => { for (const s of segments) v = v[s]; return v; };
   const selected = JSON.stringify(walk(JSON.parse(text)));
+  const other = reformat(text);
+  const hash = sha256(canonical);
   const list = [
     ['canonicalize', 'native string', () => json.canonicalize(text), canonical],
     ['canonicalize', 'native buffer->buffer', () => json.canonicalize(bytes, { output: 'buffer' }), canonical],
@@ -84,6 +100,13 @@ function cells(name, text) {
     ['validate', 'JS JSON.parse', () => { JSON.parse(text); }, undefined],
     ['select', 'native', () => json.select(text, pointer), null],
     ['select', 'JS JSON.parse+walk+stringify', () => JSON.stringify(walk(JSON.parse(text))), selected],
+    ['equal', 'native string', () => json.equal(text, other), true],
+    ['equal', 'JS JSON.parse+isDeepStrictEqual', () => isDeepStrictEqual(JSON.parse(text), JSON.parse(other)), true],
+    ['equal', 'JS JSON.parse+canonicalizeValue', () => json.canonicalizeValue(JSON.parse(text)) === json.canonicalizeValue(JSON.parse(other)), true],
+    ['canonicalHash', 'native string', () => json.canonicalHash(text), hash],
+    ['canonicalHash', 'native buffer', () => json.canonicalHash(bytes), hash],
+    ['canonicalHash', 'JS JSON.parse+canonicalizeValue+sha256', () => sha256(json.canonicalizeValue(JSON.parse(text))), hash],
+    ['canonicalHash', 'JS JSON.parse+safe-stable-stringify+sha256', () => sha256(safeStable(JSON.parse(text))), hash],
   ];
   if (upstream) list.push(['sortKeys', 'JS JSON.parse+fast-json-stable-stringify', () => upstream(JSON.parse(text)), null]);
   if (old) {

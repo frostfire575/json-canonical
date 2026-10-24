@@ -127,6 +127,12 @@ re-spelled without touching floating point. Longer ones go through a port of the
 Ryu algorithm. On tiny documents the Node-API call overhead is a large share of
 the time, which is why `select` on package.json loses.
 
+`canonicalHash` is 1.5 to 4.6 times faster than `JSON.parse`, a stable
+stringify and SHA-256. `equal` is slower than `util.isDeepStrictEqual` on two
+parsed documents for most inputs (0.49x to 1.22x), because it canonicalizes both
+sides in full; it is the right choice when `-0`, duplicate keys and RFC 8785
+rules matter, not for speed. Details are in docs/performance.md.
+
 Calls are synchronous, so use the `Async` variants for multi-megabyte input on a
 server.
 

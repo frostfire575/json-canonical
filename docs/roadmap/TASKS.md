@@ -16,6 +16,7 @@ acceptance checks were run, and their results are in TEST_RESULTS.md.
 | V2-CI | P1 | V2-PACK | CI on Windows x64, Linux x64, macOS ARM64 for Node 22.13 and 24 | Green workflow run | DONE (run 40101134172, all six jobs) |
 | V2-FLOAT | P2 | V2-NUM | Close the float-heavy gap (0.8x of V8) | Floats fixture at or above 1.0x with 1M-double test passing | DONE (Ryu port, D10; floats 1.60x over three pinned runs) |
 | V2-CLI | P2 | V2-JS | `stable-json` command for every operation, file or stdin input, exit status by outcome | `tests/cli.test.cjs` checks output against the API; `test:pack` runs the installed bin shim | DONE |
+| V2-BENCH-API | P2 | V2-BENCH | Benchmark `equal` and `canonicalHash` against JavaScript baselines | Three pinned runs, outputs checked, results in docs/performance.md | DONE (hash 1.5-4.6x; equal 0.49-1.22x, REGRESSIONS.md) |
 | V2-STREAM | P3 | V2-CORE | Streaming canonicalization for inputs larger than memory | Use case first | DEFERRED |
 | V2-WASM | P3 | V2-NODE | WASI build for platforms without a prebuilt addon | Use case first | DEFERRED |
 | V2-RELEASE | P0 | V2-CI | Publish | Explicit approval | BLOCKED |
