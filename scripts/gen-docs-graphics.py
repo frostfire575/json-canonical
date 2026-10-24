@@ -34,14 +34,16 @@ MONO = "ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monosp
 # Each image is drawn twice. GitHub picks one through <picture> and
 # prefers-color-scheme; a media query inside the SVG would follow the OS theme
 # instead of GitHub's. Series colors were checked with the dataviz palette
-# validator on their own paper: light CVD delta E 18.7, dark 20.4, both 3:1+.
+# validator on PAPER: light CVD delta E 18.7, dark 20.4, both 3:1+. PAPER is
+# GitHub's page color, so the image edge disappears; sheets and boxes keep the
+# paper tone.
 THEMES = {
     "light": dict(
-        PAPER="#faf9f5", SHEET="#fffefb", OAT="#f0eee6", INK="#141413", INK2="#5e5d59",
+        PAPER="#ffffff", SHEET="#faf9f5", OAT="#f0eee6", INK="#141413", INK2="#5e5d59",
         MUTED="#87867f", CLAY="#c4623f", SKY="#4f86c0", OLIVE="#6b7f4f",
     ),
     "dark": dict(
-        PAPER="#262624", SHEET="#30302e", OAT="#3b3a37", INK="#f0eee6", INK2="#c2c0b6",
+        PAPER="#0d1117", SHEET="#1c1c1b", OAT="#2a2a28", INK="#f0eee6", INK2="#c2c0b6",
         MUTED="#8f8d85", CLAY="#d97149", SKY="#5794d8", OLIVE="#97ab74",
     ),
 }

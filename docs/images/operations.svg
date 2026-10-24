@@ -11,7 +11,7 @@
 <clipPath id="h7"><path d="M250.0,506.0 L306.0,506.0 L306.0,528.0 L250.0,528.0 z"/></clipPath>
 <clipPath id="h8"><path d="M312.0,506.0 L368.0,506.0 L368.0,528.0 L312.0,528.0 z"/></clipPath>
 </defs>
-<rect width="960" height="548" rx="14" fill="#faf9f5"/>
+<rect width="960" height="548" rx="14" fill="#ffffff"/>
 <g filter="url(#pencil)">
 <path d="M249.6,160.3 L342.8,161.2 L344.8,201.2 L249.4,199.3 z" fill="#c1d0db" opacity="1"/>
 <path d="M249.2,160.4 Q296.8,159.6 344.9,159.8" fill="none" stroke="#87867f" stroke-width="0.90" stroke-linecap="round" opacity="1.00"/>

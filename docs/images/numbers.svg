@@ -4,10 +4,10 @@
 <filter id="pencil" x="-2%" y="-2%" width="104%" height="104%"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="7" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="1.6"/></filter>
 
 </defs>
-<rect width="960" height="384" rx="14" fill="#faf9f5"/>
+<rect width="960" height="384" rx="14" fill="#ffffff"/>
 <g filter="url(#pencil)">
 <path d="M40.4,154.0 L210.3,171.8 L210.8,235.0 L40.3,234.7 z" fill="#f0eee6" opacity="1"/>
-<path d="M36.1,149.1 L190.4,150.2 L205.5,165.7 L206.6,229.9 L37.1,231.1 z" fill="#fffefb" opacity="1"/>
+<path d="M36.1,149.1 L190.4,150.2 L205.5,165.7 L206.6,229.9 L37.1,231.1 z" fill="#faf9f5" opacity="1"/>
 <path d="M33.1,150.4 Q112.7,148.3 193.2,150.1" fill="none" stroke="#141413" stroke-width="1.40" stroke-linecap="round" opacity="1.00"/>
 <path d="M33.5,149.4 Q113.1,150.1 192.4,149.0" fill="none" stroke="#141413" stroke-width="0.77" stroke-linecap="round" opacity="0.70"/>
 <path d="M187.5,148.2 Q197.2,158.5 206.8,168.2" fill="none" stroke="#141413" stroke-width="1.40" stroke-linecap="round" opacity="1.00"/>
@@ -22,7 +22,7 @@
 <path d="M189.1,148.3 Q190.6,158.0 189.9,167.5" fill="none" stroke="#141413" stroke-width="0.61" stroke-linecap="round" opacity="0.70"/>
 <path d="M188.3,166.9 Q198.4,166.5 209.1,166.0" fill="none" stroke="#141413" stroke-width="1.10" stroke-linecap="round" opacity="1.00"/>
 <path d="M188.5,166.3 Q198.0,165.4 208.5,165.2" fill="none" stroke="#141413" stroke-width="0.61" stroke-linecap="round" opacity="0.70"/>
-<path d="M340.4,118.9 L449.1,188.9 L340.6,261.1 L230.2,189.0 z" fill="#fffefb" opacity="1"/>
+<path d="M340.4,118.9 L449.1,188.9 L340.6,261.1 L230.2,189.0 z" fill="#faf9f5" opacity="1"/>
 <path d="M338.9,118.1 Q395.8,154.2 451.4,190.9" fill="none" stroke="#141413" stroke-width="1.60" stroke-linecap="round" opacity="1.00"/>
 <path d="M337.2,118.7 Q396.1,153.9 451.2,192.2" fill="none" stroke="#141413" stroke-width="0.88" stroke-linecap="round" opacity="0.70"/>
 <path d="M451.5,189.8 Q396.1,226.3 338.0,260.8" fill="none" stroke="#141413" stroke-width="1.60" stroke-linecap="round" opacity="1.00"/>
@@ -35,7 +35,7 @@
 <path d="M209.8,190.7 Q220.0,193.0 226.0,190.0" fill="none" stroke="#141413" stroke-width="0.8" stroke-linecap="round"/>
 <path d="M226.1,189.8 Q220.4,189.6 215.0,189.5" fill="none" stroke="#141413" stroke-width="1.60" stroke-linecap="round" opacity="1.00"/>
 <path d="M226.0,189.9 Q222.4,194.0 219.0,198.3" fill="none" stroke="#141413" stroke-width="1.60" stroke-linecap="round" opacity="1.00"/>
-<path d="M519.1,104.8 L759.4,103.3 L759.8,181.1 L520.5,179.1 z" fill="#fffefb" opacity="1"/>
+<path d="M519.1,104.8 L759.4,103.3 L759.8,181.1 L520.5,179.1 z" fill="#faf9f5" opacity="1"/>
 <path d="M518.5,104.7 Q639.6,103.8 761.5,104.7" fill="none" stroke="#6b7f4f" stroke-width="1.80" stroke-linecap="round" opacity="1.00"/>
 <path d="M519.9,103.1 Q639.6,104.6 760.7,104.6" fill="none" stroke="#6b7f4f" stroke-width="0.99" stroke-linecap="round" opacity="0.70"/>
 <path d="M759.3,103.4 Q760.5,142.1 759.2,180.5" fill="none" stroke="#6b7f4f" stroke-width="1.80" stroke-linecap="round" opacity="1.00"/>
@@ -48,7 +48,7 @@
 <path d="M429.3,159.2 Q470.5,140.2 514.0,142.0" fill="none" stroke="#6b7f4f" stroke-width="0.8" stroke-linecap="round"/>
 <path d="M513.9,141.7 Q509.2,139.4 503.9,137.5" fill="none" stroke="#6b7f4f" stroke-width="1.60" stroke-linecap="round" opacity="1.00"/>
 <path d="M514.1,142.2 Q509.4,144.7 504.0,146.8" fill="none" stroke="#6b7f4f" stroke-width="1.60" stroke-linecap="round" opacity="1.00"/>
-<path d="M519.6,220.2 L761.1,219.2 L761.1,316.2 L519.9,315.0 z" fill="#fffefb" opacity="1"/>
+<path d="M519.6,220.2 L761.1,219.2 L761.1,316.2 L519.9,315.0 z" fill="#faf9f5" opacity="1"/>
 <path d="M518.3,220.5 Q640.3,217.7 762.0,219.6" fill="none" stroke="#4f86c0" stroke-width="1.80" stroke-linecap="round" opacity="1.00"/>
 <path d="M518.7,219.7 Q640.0,220.3 762.0,220.5" fill="none" stroke="#4f86c0" stroke-width="0.99" stroke-linecap="round" opacity="0.70"/>
 <path d="M759.3,219.0 Q760.6,267.7 759.9,317.5" fill="none" stroke="#4f86c0" stroke-width="1.80" stroke-linecap="round" opacity="1.00"/>
@@ -62,7 +62,7 @@
 <path d="M514.0,253.9 Q509.7,250.5 505.3,247.0" fill="none" stroke="#4f86c0" stroke-width="1.60" stroke-linecap="round" opacity="1.00"/>
 <path d="M514.4,253.7 Q508.8,255.4 503.3,257.1" fill="none" stroke="#4f86c0" stroke-width="1.60" stroke-linecap="round" opacity="1.00"/>
 <path d="M800.3,154.4 L951.5,170.1 L952.5,235.3 L799.9,235.3 z" fill="#f0eee6" opacity="1"/>
-<path d="M796.9,151.1 L931.3,150.8 L948.3,166.5 L947.2,231.1 L795.7,229.0 z" fill="#fffefb" opacity="1"/>
+<path d="M796.9,151.1 L931.3,150.8 L948.3,166.5 L947.2,231.1 L795.7,229.0 z" fill="#faf9f5" opacity="1"/>
 <path d="M794.8,150.7 Q864.2,149.5 934.4,149.7" fill="none" stroke="#141413" stroke-width="1.40" stroke-linecap="round" opacity="1.00"/>
 <path d="M794.4,150.2 Q864.0,150.2 933.5,150.0" fill="none" stroke="#141413" stroke-width="0.77" stroke-linecap="round" opacity="0.70"/>
 <path d="M930.7,148.5 Q940.0,158.5 950.0,167.9" fill="none" stroke="#141413" stroke-width="1.40" stroke-linecap="round" opacity="1.00"/>

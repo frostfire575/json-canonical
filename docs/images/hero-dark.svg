@@ -4,11 +4,11 @@
 <filter id="pencil" x="-2%" y="-2%" width="104%" height="104%"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="7" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="1.6"/></filter>
 
 </defs>
-<rect width="960" height="420" rx="14" fill="#262624"/>
+<rect width="960" height="420" rx="14" fill="#0d1117"/>
 <g filter="url(#pencil)">
 <path d="M40.0,64.0 q4.0,2.9 8.0,0 q4.0,-2.9 8.0,0 q4.0,3.7 8.0,0 q4.0,-3.1 8.0,0 q4.0,3.0 8.0,0 q4.0,-2.9 8.0,0 q4.0,2.5 8.0,0 q4.0,-3.0 8.0,0 q4.0,3.2 8.0,0 q4.0,-2.5 8.0,0 q4.0,2.4 8.0,0 q4.0,-3.3 8.0,0 q4.0,2.3 8.0,0 q4.0,-2.5 8.0,0 q4.0,3.3 8.0,0 q4.0,-3.7 8.0,0 q4.0,3.8 8.0,0 q4.0,-2.3 8.0,0 q4.0,3.2 8.0,0 q4.0,-2.8 8.0,0 q4.0,2.5 8.0,0 q4.0,-3.8 8.0,0" fill="none" stroke="#d97149" stroke-width="1.6" stroke-linecap="round"/>
-<path d="M44.1,99.9 L293.3,116.4 L292.9,250.9 L43.9,251.8 z" fill="#3b3a37" opacity="1"/>
-<path d="M40.0,96.3 L274.0,96.4 L289.9,111.5 L291.2,247.2 L40.8,246.5 z" fill="#30302e" opacity="1"/>
+<path d="M44.1,99.9 L293.3,116.4 L292.9,250.9 L43.9,251.8 z" fill="#2a2a28" opacity="1"/>
+<path d="M40.0,96.3 L274.0,96.4 L289.9,111.5 L291.2,247.2 L40.8,246.5 z" fill="#1c1c1b" opacity="1"/>
 <path d="M39.2,95.8 Q156.8,94.3 276.0,95.8" fill="none" stroke="#f0eee6" stroke-width="1.40" stroke-linecap="round" opacity="1.00"/>
 <path d="M38.1,96.8 Q157.3,97.9 275.2,97.0" fill="none" stroke="#f0eee6" stroke-width="0.77" stroke-linecap="round" opacity="0.70"/>
 <path d="M272.5,94.1 Q282.6,103.7 290.7,114.0" fill="none" stroke="#f0eee6" stroke-width="1.40" stroke-linecap="round" opacity="1.00"/>
@@ -23,8 +23,8 @@
 <path d="M274.2,92.7 Q273.5,104.3 273.4,115.3" fill="none" stroke="#f0eee6" stroke-width="0.61" stroke-linecap="round" opacity="0.70"/>
 <path d="M273.6,111.6 Q282.0,111.9 291.5,111.4" fill="none" stroke="#f0eee6" stroke-width="1.10" stroke-linecap="round" opacity="1.00"/>
 <path d="M272.4,111.4 Q281.8,111.2 290.4,112.1" fill="none" stroke="#f0eee6" stroke-width="0.61" stroke-linecap="round" opacity="0.70"/>
-<path d="M73.1,290.7 L324.9,308.2 L324.4,375.5 L74.2,374.1 z" fill="#3b3a37" opacity="1"/>
-<path d="M68.9,284.8 L305.0,286.5 L321.1,300.9 L320.3,370.0 L70.6,369.6 z" fill="#30302e" opacity="1"/>
+<path d="M73.1,290.7 L324.9,308.2 L324.4,375.5 L74.2,374.1 z" fill="#2a2a28" opacity="1"/>
+<path d="M68.9,284.8 L305.0,286.5 L321.1,300.9 L320.3,370.0 L70.6,369.6 z" fill="#1c1c1b" opacity="1"/>
 <path d="M67.8,286.5 Q187.0,284.0 307.4,286.6" fill="none" stroke="#f0eee6" stroke-width="1.40" stroke-linecap="round" opacity="1.00"/>
 <path d="M67.8,286.7 Q186.9,288.2 306.8,286.6" fill="none" stroke="#f0eee6" stroke-width="0.77" stroke-linecap="round" opacity="0.70"/>
 <path d="M302.3,284.3 Q312.0,294.0 321.0,304.2" fill="none" stroke="#f0eee6" stroke-width="1.40" stroke-linecap="round" opacity="1.00"/>
@@ -51,7 +51,7 @@
 <path d="M336.7,318.4 Q393.3,268.2 420.0,196.0" fill="none" stroke="#f0eee6" stroke-width="0.9" stroke-linecap="round"/>
 <path d="M419.8,196.2 Q415.8,199.7 411.6,203.0" fill="none" stroke="#f0eee6" stroke-width="1.80" stroke-linecap="round" opacity="1.00"/>
 <path d="M420.3,196.3 Q420.6,201.4 421.2,207.2" fill="none" stroke="#f0eee6" stroke-width="1.80" stroke-linecap="round" opacity="1.00"/>
-<path d="M431.1,152.1 L930.2,151.3 L930.1,192.0 L430.3,190.9 z" fill="#30302e" opacity="1"/>
+<path d="M431.1,152.1 L930.2,151.3 L930.1,192.0 L430.3,190.9 z" fill="#1c1c1b" opacity="1"/>
 <path d="M427.2,152.0 Q679.9,152.3 933.3,151.1" fill="none" stroke="#f0eee6" stroke-width="1.50" stroke-linecap="round" opacity="1.00"/>
 <path d="M427.9,151.5 Q679.9,152.6 932.9,151.3" fill="none" stroke="#f0eee6" stroke-width="0.83" stroke-linecap="round" opacity="0.70"/>
 <path d="M929.6,149.8 Q929.7,172.0 930.2,194.4" fill="none" stroke="#f0eee6" stroke-width="1.50" stroke-linecap="round" opacity="1.00"/>
@@ -64,7 +64,7 @@
 <path d="M680.7,195.8 Q680.3,214.4 680.0,238.0" fill="none" stroke="#f0eee6" stroke-width="0.8" stroke-linecap="round"/>
 <path d="M680.1,238.3 Q681.8,233.8 684.0,229.5" fill="none" stroke="#f0eee6" stroke-width="1.60" stroke-linecap="round" opacity="1.00"/>
 <path d="M679.8,237.7 Q678.0,234.0 675.5,229.6" fill="none" stroke="#f0eee6" stroke-width="1.60" stroke-linecap="round" opacity="1.00"/>
-<path d="M430.1,244.0 L930.2,243.2 L929.2,309.3 L430.8,311.2 z" fill="#30302e" opacity="1"/>
+<path d="M430.1,244.0 L930.2,243.2 L929.2,309.3 L430.8,311.2 z" fill="#1c1c1b" opacity="1"/>
 <path d="M427.1,244.5 Q679.6,242.3 932.5,243.9" fill="none" stroke="#f0eee6" stroke-width="1.50" stroke-linecap="round" opacity="1.00"/>
 <path d="M426.2,244.4 Q679.9,244.2 933.5,243.4" fill="none" stroke="#f0eee6" stroke-width="0.83" stroke-linecap="round" opacity="0.70"/>
 <path d="M929.3,242.4 Q929.4,276.8 929.0,312.4" fill="none" stroke="#f0eee6" stroke-width="1.50" stroke-linecap="round" opacity="1.00"/>
