@@ -47,15 +47,15 @@ jobs:
             echo "tag $GITHUB_REF_NAME does not match package.json version $version"; exit 1
           fi
           ls -l native
-          for addon in win32-x64-msvc linux-x64-gnu darwin-arm64; do
+          for addon in win32-x64-msvc linux-x64-gnu linux-arm64-gnu darwin-arm64; do
             test -f "native/stable-json-rs.$addon.node" || { echo "missing $addon addon"; exit 1; }
           done
       - run: pnpm test
       - run: pnpm test:pack
-      - name: Check the tarball holds all three addons
+      - name: Check the tarball holds all four addons
         run: |
           count=$(npm pack --dry-run --json | node -e "const [p] = JSON.parse(require('fs').readFileSync(0)); console.log(p.files.filter(f => f.path.endsWith('.node')).length)")
-          test "$count" = 3 || { echo "tarball has $count addons, expected 3"; exit 1; }
+          test "$count" = 4 || { echo "tarball has $count addons, expected 4"; exit 1; }
       - name: Publish
         run: npm publish --provenance --access public ${{ github.ref_type != 'tag' && '--dry-run' || '' }}
         env:

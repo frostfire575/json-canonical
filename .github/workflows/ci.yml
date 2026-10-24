@@ -20,6 +20,7 @@ jobs:
         platform:
           - { os: windows-latest, target: x86_64-pc-windows-msvc, host: win32/x64 }
           - { os: ubuntu-22.04, target: x86_64-unknown-linux-gnu, host: linux/x64 }
+          - { os: ubuntu-22.04-arm, target: aarch64-unknown-linux-gnu, host: linux/arm64 }
           - { os: macos-15, target: aarch64-apple-darwin, host: darwin/arm64 }
         node: [22.13.0, 24.22.1]
     runs-on: ${{ matrix.platform.os }}
