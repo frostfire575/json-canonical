@@ -1,6 +1,6 @@
 {
   "name": "json-canonical",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "RFC 8785 canonical JSON for Node, native (Rust) and computed from JSON text: deterministic stringify, key sorting that keeps big numbers exact, canonical hash, equal, minify, validate and JSON Pointer select",
   "license": "MIT",
   "repository": {

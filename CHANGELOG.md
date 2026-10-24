@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.2](https://github.com/frostfire575/json-canonical/compare/v0.2.1...v0.2.2) (2026-10-24)
+
+
+### Miscellaneous Chores
+
+* release 0.2.2 ([2214a77](https://github.com/frostfire575/json-canonical/commit/2214a77e6628344d8c032380e376f2a54ec845f7))
+
 ## [0.2.1](https://github.com/frostfire575/json-canonical/compare/v0.2.0...v0.2.1) (2026-10-24)
 
 
