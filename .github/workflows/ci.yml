@@ -2,6 +2,10 @@ name: Verify and package (no publishing)
 on: [push, pull_request, workflow_dispatch]
 permissions:
   contents: read
+env:
+  # Node 24.20 and 24.21 JSON.parse decode one-character escaped keys as a backslash
+  # after warmup, which breaks the V8 oracle in the differential tests.
+  BUILD_NODE: 24.22.1
 jobs:
   verify:
     strategy:
@@ -11,17 +15,18 @@ jobs:
           - { os: windows-latest, target: x86_64-pc-windows-msvc, host: win32/x64 }
           - { os: ubuntu-22.04, target: x86_64-unknown-linux-gnu, host: linux/x64 }
           - { os: macos-15, target: aarch64-apple-darwin, host: darwin/arm64 }
-        # Node 24.20 and 24.21 JSON.parse decode one-character escaped keys as a backslash
-        # after warmup, which breaks the V8 oracle in the differential tests.
         node: [22.13.0, 24.22.1]
     runs-on: ${{ matrix.platform.os }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           persist-credentials: false
+      # Building needs Node 24: @napi-rs/cli 3.10.8 times out on its own filesystem
+      # lock on Windows under Node 22.13. Consumers never run the CLI, so the
+      # runtime matrix below still covers 22.13.
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
         with:
-          node-version: ${{ matrix.node }}
+          node-version: ${{ env.BUILD_NODE }}
           package-manager-cache: false
       - uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # v6.0.10
         with:
@@ -30,13 +35,21 @@ jobs:
         with:
           toolchain: stable
           components: rustfmt, clippy
-      - name: Check actual build host
-        run: node -e "require('node:assert/strict').equal(process.platform + '/' + process.arch, '${{ matrix.platform.host }}')"
       - run: pnpm install --frozen-lockfile
-      - run: pnpm check
+      - run: pnpm build
+      - run: pnpm lint:rust
+      - run: pnpm test:rust
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+        with:
+          node-version: ${{ matrix.node }}
+          package-manager-cache: false
+      - name: Check actual runtime host and version
+        run: node -e "const assert = require('node:assert/strict'); assert.equal(process.platform + '/' + process.arch, '${{ matrix.platform.host }}'); assert.equal(process.version, 'v${{ matrix.node }}')"
+      - run: pnpm test
+      - run: pnpm test:types
       - run: pnpm test:pack
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
-        if: matrix.node == 24
+        if: matrix.node == env.BUILD_NODE
         with:
           archive: true
           name: native-${{ matrix.platform.target }}
