@@ -2,6 +2,7 @@
 //! nearest IEEE 754 double.
 
 use crate::error::ErrorKind;
+use crate::ryu;
 use std::fmt::Write;
 
 /// Significant digits of a grammar-checked JSON number token, written to `digits`
@@ -31,73 +32,14 @@ fn decimal(token: &str, digits: &mut String) -> (bool, i64) {
 
 /// Shortest round-trip digits of finite non-zero `v`, and their point position.
 fn shortest(v: f64, digits: &mut String) -> i64 {
-    digits.clear();
-    let _ = write!(digits, "{:e}", v.abs());
-    let k = digits
-        .bytes()
-        .take_while(|&b| b != b'e')
-        .filter(u8::is_ascii_digit)
-        .count();
-    // `{:e}` finds the shortest round-trip length k, but among k-digit candidates it
-    // does not always pick the closest (113017829008754.13 instead of .12), which
-    // ECMA-262 requires. Below 16 digits in the normal range only one k-digit
-    // candidate exists (DBL_DIG is 15), so the check can be skipped there.
-    if k >= 16 || v.abs() < f64::MIN_POSITIVE {
-        closest(v.abs(), k, digits);
+    let (mut d, mut e) = ryu::shortest(v);
+    while d % 10 == 0 {
+        d /= 10;
+        e += 1;
     }
-    let e = digits.find('e').unwrap_or(digits.len());
-    let exponent: i64 = digits[e + 1..].parse().unwrap_or(0);
-    digits.truncate(e);
-    digits.retain(|c| c != '.');
-    let significant = digits.trim_end_matches('0').len().max(1);
-    digits.truncate(significant);
-    exponent + 1
-}
-
-/// Replaces `digits` (the `{:e}` form of `v`, k digits) with the closest k-digit
-/// decimal that still rounds to `v`, in `{:e}` form.
-///
-/// The decimal correctly rounded to k digits is the closest one, but at a power of
-/// two the rounding interval is lopsided and it can fall outside (2^-24 rounds to
-/// ...062e-8, which parses to a different double; V8 prints ...063e-8). Then the
-/// closest valid one is its neighbour on the wide side.
-fn closest(v: f64, k: usize, digits: &mut String) {
-    // Away from powers of two the interval is symmetric around v, so the correctly
-    // rounded decimal, being closer than the k-digit one `{:e}` found, lies inside.
-    if v.to_bits() & ((1 << 52) - 1) != 0 {
-        digits.clear();
-        let _ = write!(digits, "{:.*e}", k - 1, v);
-        return;
-    }
-    let mut rounded = String::new();
-    let _ = write!(rounded, "{:.*e}", k - 1, v);
-    let Some((mantissa, exponent)) = rounded.split_once('e') else {
-        return;
-    };
-    let (Ok(m), Ok(exponent)) = (
-        mantissa.replace('.', "").parse::<u64>(),
-        exponent.parse::<i64>(),
-    ) else {
-        return;
-    };
-    let scale = exponent - i64::try_from(k).unwrap_or(0) + 1;
-    let round_trips = |m: u64| format!("{m}e{scale}").parse::<f64>() == Ok(v);
-    let Some(m) = [Some(m), m.checked_sub(1), m.checked_add(1)]
-        .into_iter()
-        .flatten()
-        .find(|&m| round_trips(m))
-    else {
-        return;
-    };
-    let text = m.to_string();
     digits.clear();
-    let _ = write!(
-        digits,
-        "{}.{}e{}",
-        &text[..1],
-        &text[1..],
-        scale + i64::try_from(text.len()).unwrap_or(0) - 1
-    );
+    let _ = write!(digits, "{d}");
+    i64::from(e) + i64::try_from(digits.len()).unwrap_or(0)
 }
 
 fn write_digits(negative: bool, digits: &str, n: i64, out: &mut String) {
@@ -239,6 +181,34 @@ mod tests {
         ] {
             assert_eq!(es(v), expected);
             assert_eq!(expected.parse::<f64>(), Ok(v));
+        }
+    }
+
+    /// Rust's `{:e}` finds the shortest length but not always the closest digits, so
+    /// it checks length and round trip; closeness is checked against V8 in JS.
+    #[test]
+    fn shortest_round_trips_with_minimal_length() {
+        let mut state = 0x9e37_79b9_7f4a_7c15_u64;
+        let mut digits = String::new();
+        for i in 0..2_000_000_u64 {
+            state ^= state << 13;
+            state ^= state >> 7;
+            state ^= state << 17;
+            let bits = if i % 4 == 0 {
+                state & 0x000f_ffff_ffff_ffff
+            } else {
+                state
+            };
+            let v = f64::from_bits(bits).abs();
+            if !v.is_finite() || v == 0.0 {
+                continue;
+            }
+            let n = shortest(v, &mut digits);
+            let back: f64 = format!("0.{digits}e{n}").parse().unwrap();
+            assert_eq!(back.to_bits(), v.to_bits(), "{bits:#x}");
+            let std = format!("{v:e}");
+            let len = std.split('e').next().unwrap().replace('.', "").len();
+            assert_eq!(digits.len(), len, "{bits:#x}");
         }
     }
 

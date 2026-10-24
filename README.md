@@ -84,27 +84,25 @@ checked before timing. The full table, raw samples and method are in
 
 | Fixture | canonicalize | sortKeys | validate | select |
 |---|---:|---:|---:|---:|
-| npm package-lock, 144 KB | 3.5x | 2.5x | 2.1x | 2.1x |
-| JSONPlaceholder data, 1.4 MB | 2.2x | 1.6x | 1.5x | 1.8x |
-| package.json, 1.8 KB | 2.6x | 1.8x | 1.2x | **0.9x** |
-| records with Unicode, indented, 8 MB | 2.7x | 2.1x | 1.2x | 1.2x |
-| same records, already sorted, 6 MB | 3.8x | 3.8x | 1.4x | 1.3x |
-| 200k random doubles, 4 MB | **0.8x** | 4.2x | 1.7x | 1.7x |
+| npm package-lock, 144 KB | 3.7x | 2.4x | 2.0x | 2.0x |
+| JSONPlaceholder data, 1.4 MB | 2.3x | 1.4x | 1.4x | 1.4x |
+| package.json, 1.8 KB | 2.7x | 1.8x | 1.2x | **0.9x** |
+| records with Unicode, indented, 8 MB | 2.6x | 2.0x | 1.1x | 1.1x |
+| same records, already sorted, 6 MB | 4.2x | 3.4x | 1.4x | 1.4x |
+| 200k random doubles, 4 MB | 1.6x | 4.2x | 1.6x | 1.5x |
 
 Each figure is the median of three pinned runs; single runs vary by up to about
 30% on the small fixtures.
 
 The speedup comes from never building JavaScript objects. Passing a `Buffer`
 straight from `fs.readFile` or a socket also skips string transcoding, and for
-canonicalization of large input that is up to 6.9x faster than the JavaScript
+canonicalization of large input that is up to 6.6x faster than the JavaScript
 pipeline.
 
-Documents full of 16 to 17 digit doubles canonicalize slower than V8, because
-formatting such a double correctly takes two passes through Rust's float
-formatter. Typical data (prices, counters, coordinates with fewer digits) takes a
-fast path that never touches floating point. On tiny documents the Node-API call
-overhead is a large share of the time, which is why `select` on package.json
-loses.
+Numbers with up to 15 significant digits (prices, counters, most coordinates) are
+re-spelled without touching floating point. Longer ones go through a port of the
+Ryu algorithm. On tiny documents the Node-API call overhead is a large share of
+the time, which is why `select` on package.json loses.
 
 Calls are synchronous, so use the `Async` variants for multi-megabyte input on a
 server.

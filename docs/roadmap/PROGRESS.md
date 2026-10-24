@@ -31,3 +31,13 @@ O(size x depth) sorting of deep unsorted objects, and bare CR line counting. All
 are fixed with regression tests. The power-of-two fix first checked every long
 number and cut float canonicalization to 0.28x; limiting it to exact powers of two
 restored 0.80x. Final numbers are medians of three pinned runs.
+
+## 2026-10-24: Ryu number formatter (V2-FLOAT)
+
+Replaced Rust's `{:e}` and the closest-digit correction with a port of Ryu's
+`d2d`, plus a script that generates its power-of-five tables. A new Rust test
+checks 2,000,000 random doubles for round trip and minimal length. The 22 JS tests
+pass on Node 24.22.1 and 22.13.0, and a one-off sweep of 19,991,770 doubles (a
+fifth subnormal, a fifth next to powers of two) found no difference from
+`String(Number)` on either. Canonicalizing 200,000 random doubles went from 0.80x
+to 1.60x of the JavaScript pipeline over three pinned runs.

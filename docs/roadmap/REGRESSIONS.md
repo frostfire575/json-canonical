@@ -16,5 +16,4 @@
 
 ## Known gaps
 
-- Float-heavy canonicalization is about 0.8x of the JavaScript pipeline (TASKS V2-FLOAT).
 - `select` on a 1.8 KB string is about 0.9x of `JSON.parse` plus property access.

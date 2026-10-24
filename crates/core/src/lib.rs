@@ -9,6 +9,8 @@
 mod error;
 mod number;
 mod parser;
+mod ryu;
+mod ryu_tables;
 mod text;
 
 pub use error::{Error, ErrorKind};

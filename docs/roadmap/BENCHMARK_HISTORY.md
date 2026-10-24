@@ -16,4 +16,7 @@ history at commit 39ef120.
 | 2026-10-24T04-57-37-315Z.json | 500 ms, 9 x 100 ms, pinned | review fixes: deferred sort patches, round-trip check on every 16-17 digit number | Floats canonicalize regressed to 0.28x; superseded |
 | 2026-10-24T05-00-56-883Z.json | 500 ms, 9 x 100 ms, pinned | round-trip check limited to powers of two (final code) | Reference run 1 of 3 |
 | 2026-10-24T05-03-37-786Z.json | same | final code | Reference run 2 of 3 |
-| 2026-10-24T05-06-06-944Z.json | same | final code | Reference run 3 of 3; medians of runs 1-3 are in docs/performance.md and README |
+| 2026-10-24T05-06-06-944Z.json | same | final code | Reference run 3 of 3 before the Ryu port |
+| 2026-10-24T14-38-40-349Z.json | 500 ms, 9 x 100 ms, pinned | Ryu number formatter (D10) | Reference run 1 of 3; floats canonicalize 1.61x |
+| 2026-10-24T14-41-08-351Z.json | same | same | Reference run 2 of 3; "after" column of the formatter table |
+| 2026-10-24T14-43-36-189Z.json | same | same | Reference run 3 of 3; medians of these three are in docs/performance.md and README |

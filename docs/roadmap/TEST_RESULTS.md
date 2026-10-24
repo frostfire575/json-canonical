@@ -9,7 +9,7 @@ rustc 1.98.1, pnpm 12.10.1, TypeScript 7.0.2.
 |---|---|
 | `cargo fmt --all --check` | pass |
 | `cargo clippy --workspace --all-targets --locked -- -D warnings` (pedantic enabled in workspace lints) | pass |
-| `cargo test --workspace --locked` | 13 passed |
+| `cargo test --workspace --locked` | 14 passed (13 before the Ryu port) |
 | `pnpm build` (release addon + TypeScript) | pass |
 | `pnpm test` (Node 24.22.1 and Node 22.13.0) | 22 passed on each |
 | `pnpm test:types` (strict, NodeNext, `.mts` and `.cts` consumers, one `@ts-expect-error`) | pass |
@@ -36,6 +36,10 @@ Seeded coverage inside those runs:
   argument reentrancy, strictNumbers semantics, linear time for 1000 unsorted
   levels around a 4 MB value, bare CR line counting.
 - RFC 8785 section 3.2.4 example and Appendix B number vectors.
+- After the Ryu port: 2,000,000 random doubles in Rust (round trip, and the same
+  digit count as `{:e}`), and a one-off sweep of 19,991,770 doubles against
+  `String(n)` on Node 24.22.1 and 22.13.0 with no mismatch. The sweep script is
+  not committed.
 
 ## CI
 

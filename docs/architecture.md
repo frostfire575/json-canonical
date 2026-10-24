@@ -45,13 +45,11 @@ mode follows ECMA-262 `Number::toString` (`number.rs`):
    is its own shortest representation, because distinct decimals of that length
    map to distinct doubles. Its digits are re-spelled directly, with no float
    parse or format. Most real data takes this path.
-2. Otherwise the token is parsed to the nearest double. Rust's `{:e}` gives the
-   shortest round-trip length k. For k of 16 or 17, or a subnormal, `{:e}` can
-   return a k-digit candidate that is not the closest, so the value is formatted
-   again correctly rounded to k digits. Below 16 digits only one candidate exists.
-   At an exact power of two the rounding interval is lopsided and the correctly
-   rounded value can fall outside it, so there the rounded value and its two
-   neighbours are parsed back and the closest one that round-trips wins.
+2. Otherwise the token is parsed to the nearest double, and a port of Ryu's `d2d`
+   (`crates/core/src/ryu.rs`) produces its digits. Ryu returns the shortest digits
+   that round-trip, closest to the exact value and even on a tie, which is the
+   ECMA-262 rule. At a power of two the rounding interval is lopsided and Ryu
+   accounts for it, so no second pass is needed.
 3. `strictNumbers` compares the token's significant digits and exponent with the
    canonical digits and rejects any difference, so it catches numbers whose
    printed value would change, not numbers that are inexact in binary.
