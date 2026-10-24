@@ -68,3 +68,7 @@ Publishing from this machine would have shipped only the Windows addon, so publi
 ## 2026-10-24: Benchmarks against canonical-json and json-stable-stringify (V2-BENCH-PEERS)
 
 Before picking a package name with "fast" in it, the benchmark gained the two packages users are most likely to compare against. `canonical-json` is faster than every earlier baseline (1.17x to 1.62x of `canonicalizeValue`), which cut the reported canonicalize lead from 1.6-4.2x to 1.37-2.67x and `canonicalHash` from 1.5-4.6x to 1.4-3.4x. The engine still wins every canonicalize and hash cell. README and docs/performance.md now quote the new figures.
+
+## 2026-10-24: Linux ARM64 (V2-ARM64)
+
+CI now builds and tests `aarch64-unknown-linux-gnu` on GitHub's native `ubuntu-22.04-arm` runner, so the addon is tested on the hardware it ships for, with no emulation. The release workflow expects four addons. Covered: AWS Graviton, Docker on Apple Silicon, 64-bit Raspberry Pi OS. Still without a prebuilt addon: musl, Intel macOS, Windows ARM.

@@ -19,6 +19,7 @@ acceptance checks were run, and their results are in TEST_RESULTS.md.
 | V2-BENCH-API | P2 | V2-BENCH | Benchmark `equal` and `canonicalHash` against JavaScript baselines | Three pinned runs, outputs checked, results in docs/performance.md | DONE (hash 1.5-4.6x; equal 0.49-1.22x, REGRESSIONS.md) |
 | V2-PUBLISH-CI | P1 | V2-CI | Release workflow: a `v*` tag runs the CI matrix and publishes the three tested addons with provenance | Manual run reaches `npm publish --dry-run` with all three addons in the tarball | DONE (run 40108866513) |
 | V2-BENCH-PEERS | P1 | V2-BENCH | Benchmark against `canonical-json` and `json-stable-stringify` before naming the package "fast" | Three pinned runs, outputs checked, docs/performance.md and README updated | DONE (canonicalize 1.37-2.67x of canonical-json) |
+| V2-ARM64 | P1 | V2-CI | Linux ARM64 (`aarch64-unknown-linux-gnu`) addon, built and tested on a native ARM runner | Green CI on `ubuntu-22.04-arm` with Node 22.13 and 24.22; release tarball holds four addons | DONE (run 40111746583) |
 | V2-STREAM | P3 | V2-CORE | Streaming canonicalization for inputs larger than memory | Use case first | DEFERRED |
 | V2-WASM | P3 | V2-NODE | WASI build for platforms without a prebuilt addon | Use case first | DEFERRED |
 | V2-RELEASE | P0 | V2-PUBLISH-CI | Publish: `NPM_TOKEN` repository secret, then push tag `v0.2.0` | Explicit approval | BLOCKED |

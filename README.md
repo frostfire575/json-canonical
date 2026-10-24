@@ -7,7 +7,8 @@ number exactly as written, minifies, validates with line and column errors, and
 extracts values by JSON Pointer without building JavaScript objects.
 
 Status: 0.2.0, a from-scratch rewrite. Not published. CI passes on Windows x64,
-Linux x64 and macOS ARM64 with Node 22.13 and 24.22. Benchmarks are from Windows only.
+Linux x64, Linux ARM64 and macOS ARM64 with Node 22.13 and 24.22. Other
+platforms (Alpine/musl, Intel Macs, Windows ARM) have no prebuilt addon yet. Benchmarks are from Windows only.
 
 ```js
 const json = require('stable-json-rs');
