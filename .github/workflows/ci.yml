@@ -7,12 +7,12 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        include:
+        platform:
           - { os: windows-latest, target: x86_64-pc-windows-msvc, host: win32/x64 }
           - { os: ubuntu-22.04, target: x86_64-unknown-linux-gnu, host: linux/x64 }
           - { os: macos-15, target: aarch64-apple-darwin, host: darwin/arm64 }
         node: [22.13.0, 24]
-    runs-on: ${{ matrix.os }}
+    runs-on: ${{ matrix.platform.os }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
@@ -29,7 +29,7 @@ jobs:
           toolchain: stable
           components: rustfmt, clippy
       - name: Check actual build host
-        run: node -e "require('node:assert/strict').equal(process.platform + '/' + process.arch, '${{ matrix.host }}')"
+        run: node -e "require('node:assert/strict').equal(process.platform + '/' + process.arch, '${{ matrix.platform.host }}')"
       - run: pnpm install --frozen-lockfile
       - run: pnpm check
       - run: pnpm test:pack
@@ -37,6 +37,6 @@ jobs:
         if: matrix.node == 24
         with:
           archive: true
-          name: native-${{ matrix.target }}
+          name: native-${{ matrix.platform.target }}
           path: native/*.node
           if-no-files-found: error
