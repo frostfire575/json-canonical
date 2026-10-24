@@ -47,6 +47,8 @@ https://github.com/frostfire575/stable-json-rs/actions/runs/40101134172: Windows
 
 Two earlier runs failed for reasons outside the engine. Node 24.20 and 24.21 have a V8 `JSON.parse` defect that broke the test oracle (REGRESSIONS.md), and @napi-rs/cli 3.10.8 times out on its own filesystem lock on Windows under Node 22.13, so builds now use Node 24.
 
+https://github.com/frostfire575/stable-json-rs/actions/runs/40104034037: the same six jobs on `050470c` (Ryu formatter) all passed, so the V8 number tests ran against the new formatter on Linux x64 and macOS ARM64 too.
+
 ## Not run
 
 - Benchmarks on Linux and macOS.
