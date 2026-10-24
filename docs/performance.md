@@ -1,5 +1,22 @@
 # Performance
 
+json-canonical beats the fastest JavaScript route for every operation except
+`equal` on most inputs and `select` on tiny documents. The charts below are drawn
+from runs `2026-10-24T16-11-41-552Z`, `16-16-26-099Z` and `16-21-13-048Z` by
+`scripts/gen-docs-graphics.py`; the sections after them hold the method, every
+table and the earlier runs.
+
+![canonicalize speedup over JSON.parse plus canonical-json and plus json-stable-stringify](images/speedup.svg)
+
+![Speedup of each operation over the fastest JavaScript baseline, per fixture](images/operations.svg)
+
+The grid divides native ops/s by the fastest JavaScript baseline in the same run,
+then takes the median of the three runs. Those runs repeated every cell, so the
+`equal` and `canonicalHash` columns differ slightly from the 15:17 to 15:25 runs
+quoted under [equal and canonicalHash](#equal-and-canonicalhash): `equal` on
+package.json is 0.85x here and 0.79x there, inside the noise that section
+describes.
+
 ## Method
 
 `pnpm bench` (`benches/run.cjs`) times the public API end to end, including

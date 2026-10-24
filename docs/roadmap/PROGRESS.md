@@ -84,3 +84,7 @@ The tag `v0.2.0` ran the release workflow, which published `json-canonical@0.2.0
 ## 2026-10-24: release-please and trusted publishing (V2-RELEASE-PLEASE)
 
 release.yml runs release-please on every push to main and publishes from the same run when the release PR is merged, authenticating through the npm trusted publisher instead of a token. `json-canonical@0.2.1` was the first release made that way. The npm token and the `NPM_TOKEN` secret are no longer used.
+
+## 2026-10-24: Docs and graphics (V2-DOCS-GRAPHICS)
+
+The README now opens like claude-code-statusline: a hero image, a view counter, links and badges. It was rewritten around a quick start, a table of what canonical means, and the API, CLI and error tables. `scripts/gen-docs-graphics.py` draws five hand-drawn SVGs into `docs/images` with the Python standard library: the hero (real output from the built package), the data flow, the number paths, and two benchmark charts read from runs 16-11, 16-16 and 16-21. The chart values match the tables in docs/performance.md. architecture.md was rewritten around the two diagrams, and performance.md gained a summary with both charts; its tables are unchanged.
