@@ -294,15 +294,20 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "0c790de23124f9ab44544d7ac05d60440adc586479ce501c1d6d7da3cd8c9cf5"
 
 [[package]]
-name = "stable-json-rs"
-version = "0.1.0"
+name = "stable-json-core"
+version = "0.2.0"
 dependencies = [
- "memchr",
+ "serde_json",
+]
+
+[[package]]
+name = "stable-json-node"
+version = "0.2.0"
+dependencies = [
  "napi",
  "napi-build",
  "napi-derive",
- "serde",
- "serde_json",
+ "stable-json-core",
 ]
 
 [[package]]

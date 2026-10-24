@@ -1,10 +1,10 @@
 {
   "name": "stable-json-rs",
-  "version": "0.1.0",
-  "description": "Bounded Rust JSON-text sorting and extraction with compatible JavaScript serialization",
+  "version": "0.2.0",
+  "description": "Fast RFC 8785 JSON canonicalization, key sorting, minification, validation and JSON Pointer selection for JSON text, in Rust",
   "license": "MIT",
+  "keywords": ["json", "canonical", "canonicalization", "jcs", "rfc8785", "stable", "sort", "deterministic", "hash", "signature", "json-pointer", "napi", "rust"],
   "main": "js/index.cjs",
-  "module": "js/index.mjs",
   "types": "js/dist/index.d.ts",
   "exports": {
     ".": {
@@ -12,7 +12,7 @@
       "require": { "types": "./js/dist/index.d.ts", "default": "./js/index.cjs" }
     }
   },
-  "files": ["js/dist", "js/index.cjs", "js/index.mjs", "js/index.d.mts", "native", "examples", "LICENSE", "NOTICE", "THIRD_PARTY_NOTICES.txt", "README.md", "docs", "benches/*.md"],
+  "files": ["js/dist", "js/index.cjs", "js/index.mjs", "js/index.d.mts", "native/*.js", "native/*.d.ts", "native/*.node", "LICENSE", "NOTICE", "README.md"],
   "engines": { "node": ">=22.13.0" },
   "packageManager": "pnpm@12.10.1",
   "napi": {
@@ -20,19 +20,18 @@
     "targets": ["x86_64-pc-windows-msvc", "x86_64-unknown-linux-gnu", "aarch64-apple-darwin"]
   },
   "scripts": {
-    "build:native": "napi build --release --platform --output-dir native --js binding.js --dts binding.d.ts",
+    "build:native": "napi build --release --platform --manifest-path crates/node/Cargo.toml --output-dir native --js binding.js --dts binding.d.ts",
     "build:js": "tsc -p tsconfig.json",
     "build": "pnpm build:native && pnpm build:js",
     "test": "node --test tests/*.test.cjs tests/*.test.mjs",
     "test:types": "tsc -p tests/tsconfig.json",
-    "test:rust": "cargo test --locked",
-    "bench": "node benches/run.cjs",
-    "bench:text": "node benches/native-text-verification/run.cjs",
-    "check": "pnpm build && pnpm test:rust && pnpm test && pnpm test:types",
+    "test:rust": "cargo test --workspace --locked",
+    "lint:rust": "cargo fmt --all --check && cargo clippy --workspace --all-targets --locked -- -D warnings",
     "test:pack": "node scripts/test-pack.cjs",
-    "audit:deps": "node scripts/audit.cjs",
+    "bench": "node benches/run.cjs",
     "setup:upstream": "node scripts/setup-upstream.cjs",
-    "licenses:generate": "node scripts/license-notices.cjs"
+    "licenses:generate": "node scripts/license-notices.cjs",
+    "check": "pnpm build && pnpm lint:rust && pnpm test:rust && pnpm test && pnpm test:types"
   },
   "devDependencies": {
     "@napi-rs/cli": "3.10.8",

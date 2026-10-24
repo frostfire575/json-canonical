@@ -1,109 +1,20 @@
-# Regressions
+# Regressions and defects found
 
-## 2026-10-19 fixed during MVP review
-- Comparator must capture second opts.cmp read and invoke with no receiver.
-  Regression tests compare dynamic getters, mutation and strict callback this.
-- Object keys use indexed loop; Array.prototype iterator patches must not alter
-  traversal. Regression executes in an isolated child.
-- Literal lone surrogate text silently becomes U+FFFD at Node-API. Public native
-  wrappers now reject ill-formed strings before conversion; escaped values retain
-  spelling. Internal generated binding is not a supported public API.
-- TS ESM default initially typed as CJS namespace: conditional .d.mts declaration
-  verified by strict consumer compilation.
+| Date | Found by | Defect | Fix | Guard |
+|---|---|---|---|---|
+| 2026-10-24 | JS differential test, 20k seeded documents | Canonical output printed `113017829008754.13`; V8 prints `.12`. Rust's `{:e}` returns the shortest length but not always the closest digits. | Re-round correctly to the shortest length for 16 to 17 digit values and subnormals (`number::shortest`) | `closest_shortest_digits` Rust test; 1M-double JS test |
+| 2026-10-24 | Benchmark, 4 to 8 MB documents | String input spent longer in Node-API conversion than in parsing (validate 0.90x of `JSON.parse` on 8 MB) | `encodeInto` a reused buffer from 1 KiB up; U+FFFD byte scan replaces `isWellFormed` on large input | BENCHMARK_HISTORY.md before/after; large-document differential test |
+| 2026-10-24 | Benchmark, 4 KB document | `{ output: 'buffer' }` ran at half the speed of string output because of external Buffer creation and finalization | Copy outputs under 64 KiB | BENCHMARK_HISTORY.md before/after |
+| 2026-10-24 | Rust mutation test | Test oracle disagreed with serde_json on lone surrogate escapes and huge exponents; both are valid RFC 8259 that serde_json rejects | Test cross-checks those cases with an independent escape walker instead of skipping them | `seeded_mutations_agree_with_serde_on_validity` |
+| 2026-10-24 | Independent review | An option getter (or a reentrant argument conversion) could call the API and overwrite the shared encode buffer before the native call read it, so `canonicalize(a, opts)` returned `b` | Read every option before encoding; `equal` converts its second argument first | `review: option getters...` JS test |
+| 2026-10-24 | Independent review | Re-rounding at the shortest length picked a decimal outside the rounding interval at powers of two (46 of 2,098), e.g. 2^-24 printed ...062e-8, which parses to another double | At exact powers of two, try the rounded value and its two neighbours and keep the one that round-trips | Every power of two and both neighbours against `String(n)`; Rust vectors |
+| 2026-10-24 | Same fix, benchmark | The first version of that fix checked every 16-17 digit number and dropped float canonicalization to 0.28x | Check only exact powers of two; other intervals are symmetric | BENCHMARK_HISTORY.md 04-57 vs 05-00 |
+| 2026-10-24 | Independent review | `strictNumbers` docs promised "exactly representable", but the check rejects changed printed values (2^60 written in full is rejected, `0.1` accepted) | Behaviour kept, since it is what signing needs; docs and message corrected | `review: strictNumbers...` JS test |
+| 2026-10-24 | Independent review | Sorting moved bytes at every unsorted level, O(size x depth): 1 s for a 4 MB value under 1000 levels | Unsorted objects record patches; one final pass copies each byte once | `review: deep unsorted nesting stays linear` |
+| 2026-10-24 | Independent review | A bare `\r` did not start a new line in error positions (the review's expected column was also off by one; the test uses column 1) | `\n`, `\r\n` and `\r` all end a line | Rust `errors_and_limits` |
 
-## 2026-10-19 packed-consumer harness correction
-TypeScript7 exports package.json but not the bin/tsc subpath. The new packed TS
-consumer check initially failed ERR_PACKAGE_PATH_NOT_EXPORTED before compilation.
-Read the exported package.json bin manifest and resolve its declared executable
-instead. Both npm and pnpm packed consumer checks now pass. No library API
-expectation was weakened; this was test-runner executable discovery.
+## Known gaps
 
-## 2026-10-19 output-routing regression caught before adoption
-- Candidate1: output>=1024bytes, whole-output is_ascii plus non-ASCII count.
-  Independent public API20control cells reproduced sparse-Unicode throughput
-  10007/9957 vs original11849/11913ops/s (-15.5/-16.4%,~1%MAD). Rejected despite
-  positive dense-Unicode/Latin1/realCLDR results; raw116cells retained in
-  OUTPUT_BENCHMARK_REVIEW.md. No failing candidate merged or marked DONE.
-- Isolated predicate probe00-55-33-341Z-25732: fullcount14.700us on sparse text;
-  prefix-screen0.515us. Prefix-screen still14.955us on dense-prefix/ASCIItail,
-  so that intermediate strategy was also rejected before production adoption.
-- Revised bounded4x256byte sampling probe00-56-25-381Z-2764: dense0.513us,
-  sparse0.300us,prefix/tail0.390us. Heuristic only chooses lossless encoding;
-  serialization tokens/ordering/errors unchanged. Rebuilt pnpm check PASS:
-  5Rust48JS/strictTS; both root and private clippy PASS. Independent public-API
-  before/after gate is still PENDING. Original output route retained in archive.
-
-### Resolution: bounded output route accepted
-Candidate2public before/after gate PASS208 exact cells on WindowsNode24/22.
-RealCLDR +31-32%/+34-35%; matched sparse controls within~2%,mixedprefix withingate.
-Root5Rust49JS/TS and independent4encoding groups pass; final same-tarball installed
-consumers and byte identities pass. The full-count candidate is rejected and its
-116cells remain unchanged. No serialization semantics were weakened to fix it.
-A single short-warmup batchsize1cell~20% low was preserved; matched1s repeats were
-within~3% with original/candidate binaries. Exactcause unproven; not represented
-as a reproducible implementation defect or silently excluded from raw evidence.
-
-## RD-01: Native wrapper validation and use must share a snapshot
-Independent reviewer reproduced literal lone-surrogate replacement when native
-batch reread an indexed value not checked by the .some/iterator guards. Original
-expected-fail suite:5PASS/2FAIL in7groups. A later8group suite adds option mutation.
-Lead also reproduced limitsgetter bypass: first maxDepth1 validated, second read
-undefined yielded[[0]] instead of error. Ninth regression group failed beforefix.
-Fix: captureindexedbatchvaluesonce; validate/passplain snapshot. Captureoption
-valuesduringvalidationloop andforwardthat tuple. Compatibilitystringifyunchanged.
-Allnewnegativecases retained; final compiled and installed verification follows.
-
-### RD-01 resolution
-Source757bc26 release build5Rust62JS/strictTS PASS; all62JS and independent9security
-groups PASS on Node22/24. Actual readiness-benchmark-01 npm/pnpm installations pass
-both runtime versions including the single-read batch and changing-limit getter
-regressions. Current native batch34913/34898 vsold34629/35020batches/s (two runs)
-shows no meaningful before/after throughput change. No failing case removed;
-public compatibility traversal unchanged. Final documentation pack remains a
-separate identity/install gate; combined-target verification remains unexecuted.
-
-### RD-01 final artifact closure
-Same final documentation tarball passes both installers/runtimes with installed
-batch/limit getter regressions. Packed/installed/loaded source identities and
-independent actual native extraction PASS;12runtime/package/license files equal
-measured security-fixed candidate. Missing-combined rejection is expected and
-retained as a release gate; it is not a serialization regression.
-
-## Additional native text review, 2026-10-19
-No new reproducible runtime defect found by independent12-group review. Added
-permanent lexical/Unicode/duplicate/pointer/options/depth/malformed coverage;
-74groupfullsuite PASS both local runtimes. Prior batch/option regressions remain.
-Clarified security documentation: sorting rejects decodedduplicates, whereas
-selection uses the last traversed duplicate and can retain unvisited escaped
-surrogate keys. No runtime behavior or expected result was weakened.
-Distribution review's first failing prototype was a reviewer assumption about
-pnpm transitive package hoisting, corrected using createRequire from its declaring
-wrapper. Original FAIL report retained; actual library loading already succeeded.
-
-## Development tooling: Node22 Windows package generation stall
-Extra minimum-runtime optional prototype stalled in napi-rs3.10.8 create-npm-dirs,
-producing filesystemreconciliation metadata warnings. Node22CLI--help passes;
-actual addon and full74tests also pass. Do not claim this proves Linux22failure.
-Preserve the failed unique prototype/report; leadterminated only own confirmed
-child to stop repeated metadata creation. Toolhost/runtime separation and bounded
-prototype commands are being verified, with allCIbuildhosts explicitlyNode24.
-Consumer matrix remainsNode22/24. This is an unverified development-tool scope,
-not a hidden passing optional/runtime claim. Finalresolution evidence follows.
-
-### Tooling resolution
-Bounded plain-fs probe verifies Node22Windowsfstatdevice4033986277 vs lstat0 on
-samefile/ino; Node24consistent. InstalledCLIcomparesbothidentities and retries.
-Use Node24buildtoolhost, retain22/24consumerruntimes. ActualNode22optionalconsumer
-checks7PASS with Node24metadata; Node22metadata generation remains FAILED, not
-hidden as passed. Future commands timeout/outputcap; reports preserve artifacts.
-No native API behavior or safety guard changed. FinalallNode24CIconfiglintPASS;
-foreignexecutionstillUNVERIFIED. See DISTRIBUTION_REVIEW_2.md for commands/scopes.
-
-## Final example verification harness corrections
-V1failedbecauseNodedisallowsdirectTypeScriptstrippingunder node_modules; V2failed
-TypeScript7TS5112becausecommandlinefilescoexistedwithtsconfig. PreservedFAILreports
-andindependentlycapturedexpectedrejections. CorrectV3copiesidenticalshippedTSbytes
-intoconsumerapplication, typechecksstrict explicitproject andexecutesactualinstalled
-API on22/24;22commandsPASS. No runtime/sourcefixorweakenedexpectation. Shipped
-CJS/ESMexamplesrunfromeachinstalledpackage. ProductTSconsumersarecompilednormally,
-withnode22type-strippingflagusedonlyfortheextraapplicationexecutionprobe.
+- Float-heavy canonicalization is about 0.8x of the JavaScript pipeline (TASKS V2-FLOAT).
+- `select` on a 1.8 KB string is about 0.9x of `JSON.parse` plus property access.
+- Linux and macOS have not run (TASKS V2-CI).

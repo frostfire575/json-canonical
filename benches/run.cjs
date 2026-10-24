@@ -1,225 +1,147 @@
 'use strict';
-const assert = require('node:assert/strict');
+// End-to-end benchmark of the public API against the JavaScript pipelines people use
+// today and, when present, the previous native build (target/baseline/old.node).
+// Every cell checks its output before timing. Raw samples go to benches/results/.
 const fs = require('node:fs');
 const path = require('node:path');
 const os = require('node:os');
-const crypto = require('node:crypto');
-const { spawnSync, execFileSync } = require('node:child_process');
-const { performance } = require('node:perf_hooks');
-const { datasets, describe } = require('./datasets.cjs');
-const root = path.resolve(__dirname, '..');
-const oracle = require('../upstream/fast-json-stable-stringify');
-const sampleMs = Number(process.env.BENCH_SAMPLE_MS || 35);
-const repetitions = Number(process.env.BENCH_REPS || 7);
-if (!(sampleMs > 0) || !Number.isInteger(repetitions) || repetitions < 5) throw new Error('Use BENCH_SAMPLE_MS > 0 and integer BENCH_REPS >= 5');
-let sink = 0;
-const median = (xs) => [...xs].sort((a, b) => a - b)[Math.floor(xs.length / 2)];
-function loadMethod(name, value, dataset) {
-  if (name.startsWith('select-')) {
-    const pointers = { tiny: '/a', 'dependency-lock': '/name', 'public-api-data': '/users/0/email', unicode: '/বাংলা😀0', deep: '/a'.repeat(80) + '/leaf', wide: '/key-1500' };
-    const pointer = pointers[dataset];
-    if (pointer === undefined) throw new Error(`No selective path for ${dataset}`);
-    const segments = pointer.slice(1).split('/').map((part) => part.replace(/~1/g, '/').replace(/~0/g, '~'));
-    const input = JSON.stringify(value);
-    const lookup = (document) => {
-      let result = document;
-      for (const segment of segments) result = result?.[segment];
-      return result;
-    };
-    const scalar = lookup(JSON.parse(input));
-    if (scalar !== null && typeof scalar === 'object') throw new Error('Selective scalar cases must select scalar values');
-    const isScalar = name.endsWith('-scalar');
-    let fn;
-    if (name === 'select-js-text') fn = () => JSON.stringify(lookup(JSON.parse(input)));
-    else if (name === 'select-js-scalar') fn = () => lookup(JSON.parse(input));
-    else {
-      const api = require('../js/index.cjs');
-      if (name === 'select-native-text') fn = () => api.selectJson(input, pointer);
-      else if (name === 'select-native-scalar') fn = () => {
-        const raw = api.selectJson(input, pointer);
-        return raw === undefined ? undefined : JSON.parse(raw);
-      };
-      else throw new Error(`Unknown selective method ${name}`);
-    }
-    return { fn, expected: isScalar ? scalar : JSON.stringify(scalar), comparable: false,
-      operationGroup: isScalar ? 'selection returning JS scalar' : 'selection returning raw JSON text',
-      scalarOutput: isScalar, pointer, inputBytes: Buffer.byteLength(input),
-      input: 'pre-existing normalized JSON text; JS baseline uses predecoded path segments, native includes pointer parsing' };
-  }
-  if (name === 'JSON.stringify-context') return { fn: () => JSON.stringify(value), expected: JSON.stringify(value), comparable: false };
-  if (name === 'upstream') return { fn: () => oracle(value), expected: oracle(value), comparable: true };
-  if (name === 'upstream-from-text') {
-    const input = JSON.stringify(value);
-    return { fn: () => oracle(JSON.parse(input)), expected: oracle(value), comparable: true, input: 'pre-existing JSON text; parsing included' };
-  }
-  if (['safe-stable-stringify', 'fast-stable-stringify'].includes(name)) {
-    const fn = require(name);
-    return { fn: () => fn(value), expected: oracle(value), comparable: true };
-  }
-  if (name === 'batch-upstream-loop') return { fn: () => JSON.stringify(value.map((v) => oracle(v))), expected: JSON.stringify(value.map((v) => oracle(v))), comparable: true, units: value.length };
-  if (name === 'batch-text-upstream-loop') {
-    const inputs = value.map((v) => JSON.stringify(v));
-    return { fn: () => JSON.stringify(inputs.map((text) => oracle(JSON.parse(text)))), expected: JSON.stringify(value.map((v) => oracle(v))), comparable: true, units: value.length, input: 'batch of pre-existing JSON texts' };
-  }
-  const api = require('../js/index.cjs');
-  const expected = oracle(value);
-  if (name === 'public-stringify') return { fn: () => api.stringify(value), expected, comparable: true };
-  if (name === 'native-text') {
-    const input = JSON.stringify(value);
-    return { fn: () => api.stringifyJson(input), expected, comparable: true, input: 'pre-existing JSON text; object conversion excluded' };
-  }
-  if (name === 'native-roundtrip') return { fn: () => api.stringifyJson(JSON.stringify(value)), expected, comparable: true, input: 'JS object; JSON.stringify conversion included' };
-  if (name === 'batch-public') return { fn: () => JSON.stringify(api.stringifyBatch(value)), expected: JSON.stringify(value.map((v) => oracle(v))), comparable: true, units: value.length };
-  if (name === 'batch-text-native' || name === 'batch-text-native-loop') {
-    const inputs = value.map((v) => JSON.stringify(v));
-    const fn = name === 'batch-text-native'
-      ? () => JSON.stringify(api.stringifyJsonBatch(inputs))
-      : () => JSON.stringify(inputs.map((input) => api.stringifyJson(input)));
-    return { fn, expected: JSON.stringify(value.map((v) => oracle(v))), comparable: true, units: value.length, input: 'batch of pre-existing JSON texts' };
-  }
-  if (name === 'cache-hit' || name === 'cache-miss') {
-    const cache = api.createSerializerCache();
-    // Explicit version is part of the caller contract; hit input is unchanged.
-    let version = 0;
-    const fn = name === 'cache-hit' ? () => cache.stringify(value, 1) : () => cache.stringify(value, ++version);
-    return { fn, expected, comparable: true, cache: name === 'cache-hit' ? 'same identity/version' : 'same identity/new version every call' };
-  }
-  throw new Error(`Unknown method ${name}`);
-}
-function consume(value) {
-  sink = (sink + value.length + value.charCodeAt(value.length >>> 1)) >>> 0;
-}
-function consumeScalar(value) {
-  if (typeof value === 'string') { consume(value); return; }
-  sink = (sink + (typeof value === 'number' ? value + 31 : value === undefined ? 17 : value === null ? 19 : value ? 23 : 29)) >>> 0;
-}
-function runFor(fn, milliseconds, consumeResult = consume) {
-  let count = 0;
-  const start = performance.now();
-  // Check the clock every 16 calls to amortize timer overhead. Large operations
-  // can overshoot the target; elapsed time, rather than target, is recorded.
-  do {
-    for (let j = 0; j < 16; j++) { consumeResult(fn()); count++; }
-  } while (performance.now() - start < milliseconds);
-  return { iterations: count, elapsedMs: performance.now() - start };
-}
-async function worker(dataset, method) {
-  const value = datasets()[dataset];
-  let prepared;
-  try { prepared = loadMethod(method, value, dataset); }
-  catch (error) {
-    if (error.code === 'MODULE_NOT_FOUND' || /is not a function/.test(error.message)) return { dataset, method, status: 'UNAVAILABLE', reason: error.message };
-    throw error;
-  }
-  const { fn, expected } = prepared;
-  try { assert.equal(fn(), expected); }
-  catch (error) {
-    return { dataset, method,
-      status: error.code === 'MODULE_NOT_FOUND' || /is not a function/.test(error.message) ? 'UNAVAILABLE' : 'INCOMPATIBLE', reason: error.message };
-  }
-  const consumeResult = prepared.scalarOutput ? consumeScalar : consume;
-  runFor(fn, sampleMs * 2, consumeResult);
-  const cpuStart = process.cpuUsage();
-  const memoryBefore = process.memoryUsage();
-  const samples = [];
-  // Yield between repetitions so the probe describes one sample's blocking
-  // impact, and permits timer work rather than measuring a whole-run stall.
-  const timerDelaysMs = [];
-  for (let rep = 0; rep < repetitions; rep++) {
-    await new Promise((resolve) => setImmediate(resolve));
-    const scheduled = performance.now();
-    const probe = new Promise((resolve) => setTimeout(() => resolve(performance.now() - scheduled), 0));
-    const sample = runFor(fn, sampleMs, consumeResult);
-    samples.push({ ...sample, opsPerSecond: sample.iterations / sample.elapsedMs * 1000 });
-    timerDelaysMs.push(await probe);
-  }
-  const cpu = process.cpuUsage(cpuStart);
-  const memoryAfter = process.memoryUsage();
-  const rates = samples.map((s) => s.opsPerSecond);
-  const rate = median(rates);
-  const mad = median(rates.map((n) => Math.abs(n - rate)));
-  const outputBytes = Buffer.byteLength(typeof expected === 'string' ? expected : JSON.stringify(expected) ?? '');
-  return { dataset, method, status: 'OK', comparableStableOperation: prepared.comparable,
-    operationGroup: prepared.operationGroup, pointer: prepared.pointer,
-    scalarOutput: prepared.scalarOutput, inputMiBPerSecond: prepared.inputBytes === undefined ? undefined : rate * prepared.inputBytes / 1048576,
-    inputContract: prepared.input, cacheContract: prepared.cache, unitsPerOperation: prepared.units || 1,
-    ...describe(value), outputBytes, repetitions, sampleMs,
-    medianOpsPerSecond: rate, medianItemsPerSecond: rate * (prepared.units || 1), medianLatencyUs: 1e6 / rate, madPercent: mad / rate * 100,
-    minOpsPerSecond: Math.min(...rates), maxOpsPerSecond: Math.max(...rates),
-    outputMiBPerSecond: rate * outputBytes / 1048576,
-    cpuMicroseconds: cpu, rssBeforeBytes: memoryBefore.rss, rssAfterBytes: memoryAfter.rss,
-    processMaxRssBytes: process.resourceUsage().maxRSS * 1024,
-    heapUsedBeforeBytes: memoryBefore.heapUsed, heapUsedAfterBytes: memoryAfter.heapUsed,
-    timerDelayMs: { median: median(timerDelaysMs), max: Math.max(...timerDelaysMs), samples: timerDelaysMs }, samples, sink };
-}
-function command(file, args) {
-  try { return execFileSync(file, args, { cwd: root, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim(); }
-  catch { return 'UNAVAILABLE'; }
-}
-function coldStart(modulePath) {
-  const samples = [];
-  for (let i = 0; i < 5; i++) {
-    const result = spawnSync(process.execPath, ['-e', `const {performance}=require('node:perf_hooks'); const t=performance.now(); require(${JSON.stringify(modulePath)}); process.stdout.write(String(performance.now()-t));`], { cwd: root, encoding: 'utf8' });
-    if (result.status !== 0) return { module: modulePath, status: 'UNAVAILABLE', reason: result.stderr.trim() };
-    samples.push(Number(result.stdout));
-  }
-  return { module: modulePath, status: 'OK', medianRequireMs: median(samples), samples, contract: 'fresh process require duration; OS disk cache may be warm; process startup excluded' };
-}
-function fileHash(filename) {
-  try { return crypto.createHash('sha256').update(fs.readFileSync(filename)).digest('hex'); }
-  catch { return 'UNAVAILABLE'; }
-}
-function packageVersion(name) {
-  try {
-    let directory = path.dirname(require.resolve(name));
-    while (directory !== path.dirname(directory)) {
-      const filename = path.join(directory, 'package.json');
-      if (fs.existsSync(filename)) {
-        const pkg = JSON.parse(fs.readFileSync(filename, 'utf8'));
-        if (pkg.name === name) return pkg.version;
-      }
-      directory = path.dirname(directory);
-    }
-  } catch { /* Missing optional competitor. */ }
-  return 'UNAVAILABLE';
-}
-async function main() {
-  const selected = process.env.BENCH_DATASETS?.split(',') || Object.keys(datasets());
-  for (const name of selected) if (!(name in datasets())) throw new Error(`Unknown dataset ${name}`);
-  const methods = process.env.BENCH_METHODS?.split(',') || ['JSON.stringify-context', 'upstream', 'safe-stable-stringify', 'fast-stable-stringify', 'public-stringify', 'upstream-from-text', 'native-text', 'native-roundtrip'];
-  const timestamp = new Date().toISOString();
-  const report = {
-    timestamp, command: 'node benches/run.cjs', workingDirectory: root,
-    configuration: { BENCH_REPS: String(repetitions), BENCH_SAMPLE_MS: String(sampleMs),
-      BENCH_DATASETS: process.env.BENCH_DATASETS || null, BENCH_METHODS: process.env.BENCH_METHODS || null,
-      note: 'null means variable unset; when BENCH_METHODS is unset, batch/cache extras are automatically included for batch-32' },
-    environment: { platform: process.platform, arch: process.arch, osRelease: os.release(), node: process.version, v8: process.versions.v8,
-      cpu: os.cpus()[0]?.model, logicalCpus: os.cpus().length, totalMemoryBytes: os.totalmem(), rust: command('rustc', ['--version']),
-      commit: command('git', ['rev-parse', 'HEAD']), dirty: command('git', ['status', '--short']), upstreamCommit: command('git', ['-C', 'upstream/fast-json-stable-stringify', 'rev-parse', 'HEAD']),
-      dependencies: Object.fromEntries(['safe-stable-stringify', 'fast-stable-stringify', '@napi-rs/cli'].map((name) => [name, packageVersion(name)])),
-      sourceHashes: Object.fromEntries(['benches/run.cjs', 'benches/datasets.cjs', 'js/dist/index.js', 'src/lib.rs', 'src/engine.rs', 'src/tree.rs', 'src/selection.rs', 'pnpm-lock.yaml'].map((file) => [file, fileHash(path.join(root, file))])),
-      nativeArtifacts: fs.existsSync(path.join(root, 'native')) ? fs.readdirSync(path.join(root, 'native')).filter((name) => name.endsWith('.node')).map((name) => ({ file: name, sha256: fileHash(path.join(root, 'native', name)) })) : [] },
-    coldStart: ['./upstream/fast-json-stable-stringify', './js/index.cjs', './native/binding.js'].map(coldStart), results: [],
-    limitations: ['Sampled RSS and process maximum RSS include runtime, fixture preparation, require and warmup; they are not allocation counts or serializer-only peaks.',
-      'Timer probes measure synchronous sample-burst blocking plus timer scheduling, not per-request event-loop delay or asynchronous responsiveness.',
-      'Native text accepts pre-existing JSON; compare separately with parse-and-sort JS and use native-roundtrip for JS object conversion cost.',
-      'JSON.stringify-context is not stable serialization; all stable-compatible candidates must match the oracle exact string before timing.',
-      'Each cell uses a fresh process. Runs are serial and fixed-order; OS scheduling, thermal state and GC influence results. These are local exploratory measurements, not cross-platform claims.']
+const json = require('..');
+
+const WARMUP_MS = Number(process.env.WARMUP_MS ?? 500);
+const SAMPLE_MS = Number(process.env.SAMPLE_MS ?? 100);
+const SAMPLES = Number(process.env.SAMPLES ?? 9);
+const only = process.env.ONLY ? new RegExp(process.env.ONLY) : null;
+
+const root = path.join(__dirname, '..');
+const optional = (file) => (fs.existsSync(file) ? require(file) : null);
+const upstream = optional(path.join(root, 'upstream/fast-json-stable-stringify/index.js'));
+const safeStable = require('safe-stable-stringify');
+const old = optional(path.join(root, 'target/baseline/old.node'));
+
+function rng(seed) {
+  return () => {
+    seed = (seed + 0x6d2b79f5) | 0;
+    let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
   };
-  for (const dataset of selected) {
-    const allMethods = [...methods, ...(dataset === 'batch-32' && !process.env.BENCH_METHODS ? ['batch-public', 'batch-upstream-loop', 'batch-text-native', 'batch-text-native-loop', 'batch-text-upstream-loop', 'cache-hit', 'cache-miss'] : [])];
-    for (const method of allMethods) {
-      const result = spawnSync(process.execPath, [__filename, '--worker', dataset, method], { cwd: root, encoding: 'utf8', timeout: 120000 });
-      const item = result.status === 0 ? JSON.parse(result.stdout) : { dataset, method, status: 'ERROR', reason: result.stderr || result.error?.message };
-      report.results.push(item);
-      console.log(`${dataset.padEnd(23)} ${method.padEnd(23)} ${item.status === 'OK' ? `${item.medianOpsPerSecond.toFixed(1)} ops/s MAD ${item.madPercent.toFixed(1)}%` : item.status}`);
-    }
-  }
-  fs.mkdirSync(path.join(__dirname, 'results'), { recursive: true });
-  const filename = path.join(__dirname, 'results', `${timestamp.replace(/[:.]/g, '-')}-${process.pid}.json`);
-  fs.writeFileSync(filename, JSON.stringify(report, null, 2) + '\n', { flag: 'wx' });
-  console.log(`Raw results: ${path.relative(root, filename)}`);
-  if (report.results.some((r) => r.status === 'ERROR')) process.exitCode = 1;
 }
-if (process.argv[2] === '--worker') worker(process.argv[3], process.argv[4]).then((result) => process.stdout.write(JSON.stringify(result))).catch((error) => { console.error(error); process.exitCode = 1; });
-else main().catch((error) => { console.error(error); process.exitCode = 1; });
+
+function synthetic() {
+  const next = rng(1);
+  const words = ['alpha', 'beta', 'gamma', 'δέλτα', '東京', 'café', 'naïve', 'zeta', 'omega', 'kappa'];
+  const records = Array.from({ length: 40000 }, (_, i) => ({
+    zid: i, name: words[i % 10] + ' ' + words[(i * 7) % 10], score: Math.round(next() * 1e6) / 1e3,
+    tags: [words[i % 3], words[i % 5]], active: i % 3 === 0, meta: { y: next() < 0.5 ? null : i * 31, x: 'v' + i, created: 1.7e12 + i },
+  }));
+  const floats = Array.from({ length: 200000 }, () => (next() - 0.5) * 10 ** Math.floor(next() * 12 - 4));
+  const sortedRecords = JSON.parse(json.sortKeys(JSON.stringify(records)));
+  return {
+    'synthetic-records-8mb': JSON.stringify(records, null, 1),
+    'synthetic-already-sorted': JSON.stringify(sortedRecords),
+    'synthetic-floats': JSON.stringify(floats),
+  };
+}
+
+function fixtures() {
+  const data = path.join(__dirname, 'data');
+  const manifest = JSON.parse(fs.readFileSync(path.join(data, 'manifest.json'), 'utf8'));
+  const files = Object.fromEntries(manifest.map((m) => [m.file.replace(/\.json$/, ''), fs.readFileSync(path.join(data, m.file), 'utf8')]));
+  return { ...files, ...synthetic() };
+}
+
+function pointerFor(text) {
+  // A path to a scalar roughly in the middle of the document.
+  let value = JSON.parse(text);
+  const segments = [];
+  while (value !== null && typeof value === 'object') {
+    const keys = Object.keys(value);
+    if (keys.length === 0) break;
+    const key = keys[Math.floor(keys.length / 2)];
+    segments.push(key);
+    value = value[key];
+  }
+  return { segments, pointer: segments.map((s) => '/' + s.replaceAll('~', '~0').replaceAll('/', '~1')).join('') };
+}
+
+function cells(name, text) {
+  const bytes = Buffer.from(text);
+  const canonical = json.canonicalizeValue(JSON.parse(text));
+  const sorted = json.sortKeys(text);
+  const minified = JSON.stringify(JSON.parse(text));
+  const { segments, pointer } = pointerFor(text);
+  const walk = (v) => { for (const s of segments) v = v[s]; return v; };
+  const selected = JSON.stringify(walk(JSON.parse(text)));
+  const list = [
+    ['canonicalize', 'native string', () => json.canonicalize(text), canonical],
+    ['canonicalize', 'native buffer->buffer', () => json.canonicalize(bytes, { output: 'buffer' }), canonical],
+    ['canonicalize', 'JS JSON.parse+canonicalizeValue', () => json.canonicalizeValue(JSON.parse(text)), canonical],
+    ['sortKeys', 'native string', () => json.sortKeys(text), sorted],
+    ['sortKeys', 'JS JSON.parse+safe-stable-stringify', () => safeStable(JSON.parse(text)), null],
+    ['minify', 'native string', () => json.minify(text), null],
+    ['minify', 'JS JSON.stringify(JSON.parse)', () => JSON.stringify(JSON.parse(text)), minified],
+    ['validate', 'native', () => json.validate(text), undefined],
+    ['validate', 'JS JSON.parse', () => { JSON.parse(text); }, undefined],
+    ['select', 'native', () => json.select(text, pointer), null],
+    ['select', 'JS JSON.parse+walk+stringify', () => JSON.stringify(walk(JSON.parse(text))), selected],
+  ];
+  if (upstream) list.push(['sortKeys', 'JS JSON.parse+fast-json-stable-stringify', () => upstream(JSON.parse(text)), null]);
+  if (old) {
+    list.push(['sortKeys', 'previous native stringifyJson', () => old.stringifyJson(text), null]);
+    list.push(['select', 'previous native selectJson', () => old.selectJson(text, segments), null]);
+  }
+  return list.map(([op, impl, run, expected]) => {
+    const output = run();
+    let equivalent;
+    if (expected !== null) equivalent = String(output) === String(expected);
+    else if (op === 'select') equivalent = JSON.stringify(JSON.parse(output)) === selected;
+    else equivalent = JSON.stringify(JSON.parse(output)) === minified || json.canonicalize(output) === canonical;
+    return { fixture: name, bytes: bytes.length, op, impl, run, equivalent, exact: expected !== null && equivalent };
+  });
+}
+
+function measure(run) {
+  const until = (ms, fn) => { const end = performance.now() + ms; let n = 0; while (performance.now() < end) { fn(); n++; } return n; };
+  until(WARMUP_MS, run);
+  const samples = [];
+  for (let s = 0; s < SAMPLES; s++) {
+    const start = performance.now();
+    let n = 0;
+    do { run(); n++; } while (performance.now() - start < SAMPLE_MS);
+    samples.push(n / ((performance.now() - start) / 1000));
+  }
+  const sorted = samples.slice().sort((a, b) => a - b);
+  const median = sorted[Math.floor(sorted.length / 2)];
+  const mad = sorted.map((v) => Math.abs(v - median)).sort((a, b) => a - b)[Math.floor(sorted.length / 2)];
+  return { samples, median, madPct: (100 * mad) / median };
+}
+
+function main() {
+  const all = Object.entries(fixtures()).flatMap(([name, text]) => cells(name, text)).filter((c) => !only || only.test(`${c.fixture} ${c.op} ${c.impl}`));
+  const next = rng(Date.now() | 0);
+  for (let i = all.length - 1; i > 0; i--) { const j = Math.floor(next() * (i + 1)); [all[i], all[j]] = [all[j], all[i]]; }
+  const results = [];
+  for (const cell of all) {
+    const { run, ...meta } = cell;
+    results.push({ ...meta, ...measure(run) });
+    process.stderr.write('.');
+  }
+  process.stderr.write('\n');
+  results.sort((a, b) => a.fixture.localeCompare(b.fixture) || a.op.localeCompare(b.op) || b.median - a.median);
+  const environment = { node: process.version, v8: process.versions.v8, platform: `${process.platform}-${process.arch}`, cpu: os.cpus()[0]?.model, date: new Date().toISOString(), WARMUP_MS, SAMPLE_MS, SAMPLES };
+  const dir = path.join(__dirname, 'results');
+  fs.mkdirSync(dir, { recursive: true });
+  const file = path.join(dir, `${environment.date.replace(/[:.]/g, '-')}.json`);
+  fs.writeFileSync(file, JSON.stringify({ environment, results }, null, 1));
+  console.log(`| fixture | op | implementation | ops/s | MiB/s | vs best JS | MAD % | output |`);
+  console.log('|---|---|---|---:|---:|---:|---:|---|');
+  for (const r of results) {
+    const js = results.filter((o) => o.fixture === r.fixture && o.op === r.op && o.impl.startsWith('JS')).reduce((m, o) => Math.max(m, o.median), 0);
+    const ratio = js ? `${(r.median / js).toFixed(2)}x` : '';
+    const mib = ((r.median * r.bytes) / 2 ** 20).toFixed(0);
+    console.log(`| ${r.fixture} | ${r.op} | ${r.impl} | ${r.median.toFixed(0)} | ${mib} | ${ratio} | ${r.madPct.toFixed(1)} | ${r.exact ? 'exact' : r.equivalent ? 'same value' : 'DIFFERENT'} |`);
+  }
+  console.log(`\n${JSON.stringify(environment)}\nraw: ${path.relative(root, file)}`);
+}
+
+main();

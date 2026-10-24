@@ -9,8 +9,14 @@
  */
 export declare const __napiBindingTarget: 'native' | 'wasm32-wasi' | 'wasm32-wasip1'
 
-export declare function selectJson(input: string, path: Array<string>, maxDepth?: number | undefined | null, maxBytes?: number | undefined | null): string | null
+export declare function equal(a: string | Buffer, b: string | Buffer, maxDepth: number | undefined | null, maxBytes: number | undefined | null, strictNumbers: boolean): boolean
 
-export declare function stringifyJson(input: string, maxDepth?: number | undefined | null, maxBytes?: number | undefined | null): string
+export declare function select(input: string | Buffer, path: Array<string>, maxDepth?: number | undefined | null, maxBytes?: number | undefined | null): string | null
 
-export declare function stringifyJsonBatch(inputs: Array<string>, maxDepth?: number | undefined | null, maxBytes?: number | undefined | null): string[]
+/** Copies the input up front: JavaScript may mutate a Buffer while the worker runs. */
+export declare function transformAsync(input: string | Buffer, mode: number, asBuffer: boolean, maxDepth: number | undefined | null, maxBytes: number | undefined | null, strictNumbers: boolean): Promise<string | Buffer>
+
+/** Mode 0 minifies, 1 sorts keys, 2 canonicalizes per RFC 8785. */
+export declare function transformSync(input: string | Buffer, mode: number, asBuffer: boolean, maxDepth: number | undefined | null, maxBytes: number | undefined | null, strictNumbers: boolean): string | Buffer
+
+export declare function validate(input: string | Buffer, maxDepth?: number | undefined | null, maxBytes?: number | undefined | null): void

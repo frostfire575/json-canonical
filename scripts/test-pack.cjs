@@ -1,64 +1,46 @@
 'use strict';
-const fs = require('node:fs');
-const path = require('node:path');
-const assert = require('node:assert/strict');
+// Packs the package, installs the tarball into a fresh consumer with lifecycle
+// scripts disabled, and exercises CJS, ESM and the native addon from there.
 const { execFileSync } = require('node:child_process');
-const root = path.resolve(__dirname, '..');
-const directory = path.join(root, '.pack-test', `${Date.now()}-${process.pid}`);
-fs.mkdirSync(directory, { recursive: true });
-// Run through `pnpm test:pack`; npm_execpath is the project runner, not a
-// shell-built command, so paths and argument boundaries are preserved.
-const runner = process.env.npm_execpath;
-if (!runner) throw new Error('Run this check with pnpm test:pack');
-function pnpm(args, cwd) {
-  const binary = /\.(?:c?js|mjs)$/.test(runner) ? process.execPath : runner;
-  const prefix = binary === process.execPath ? [runner] : [];
-  return execFileSync(binary, [...prefix, ...args], { cwd, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] });
+const fs = require('node:fs');
+const os = require('node:os');
+const path = require('node:path');
+
+const root = path.join(__dirname, '..');
+const shell = process.platform === 'win32';
+const run = (cmd, args, cwd) => execFileSync(cmd, args, { cwd, stdio: ['ignore', 'pipe', 'inherit'], shell }).toString();
+
+const out = fs.mkdtempSync(path.join(os.tmpdir(), 'stable-json-pack-'));
+run('pnpm', ['pack', '--pack-destination', out], root);
+const tarball = fs.readdirSync(out).find((f) => f.endsWith('.tgz'));
+const listing = run('tar', ['-tzf', tarball], out).split(/\r?\n/).filter(Boolean);
+for (const required of ['package/js/dist/index.js', 'package/js/index.mjs', 'package/native/binding.js', 'package/LICENSE']) {
+  if (!listing.includes(required)) throw new Error(`tarball is missing ${required}`);
 }
-pnpm(['pack', '--pack-destination', directory], root);
-const filename = fs.readdirSync(directory).find(file => file.endsWith('.tgz'));
-assert.ok(filename, 'packed tarball exists');
-fs.writeFileSync(path.join(directory, 'package.json'), JSON.stringify({ name: 'stable-json-pack-test', private: true }));
-if (process.argv.includes('--npm')) {
-  const npmCli = path.join(path.dirname(process.execPath), 'node_modules/npm/bin/npm-cli.js');
-  console.log(execFileSync(process.execPath, [npmCli, 'install', '--offline', '--ignore-scripts', '--no-audit', '--no-fund', path.join(directory, filename)], { cwd: directory, encoding: 'utf8' }));
-} else {
-  console.log(pnpm(['add', '--offline', '--ignore-scripts', path.join(directory, filename)], directory));
-}
-fs.writeFileSync(path.join(directory, 'verify.cjs'), `
+if (!listing.some((f) => f.endsWith('.node'))) throw new Error('tarball has no native addon');
+const unexpected = listing.filter((f) => /^package\/(crates|tests|benches|target|upstream)\//.test(f));
+if (unexpected.length) throw new Error(`tarball contains development files: ${unexpected.join(', ')}`);
+
+const consumer = path.join(out, 'consumer');
+fs.mkdirSync(consumer);
+fs.writeFileSync(path.join(consumer, 'package.json'), JSON.stringify({ name: 'consumer', private: true }));
+run('npm', ['install', '--offline', '--ignore-scripts', '--no-audit', '--no-fund', path.join(out, tarball)], consumer);
+fs.writeFileSync(path.join(consumer, 'smoke.cjs'), `
 const assert = require('node:assert/strict');
-const api = require('stable-json-rs');
-assert.equal(api.stringify({z:1,a:2}), '{"a":2,"z":1}');
-assert.equal(api.stringifyJson('{"z":1,"a":2}'), '{"a":2,"z":1}');
-assert.deepEqual(api.stringifyJsonBatch(['{"z":1,"a":2}']), ['{"a":2,"z":1}']);
-assert.equal(api.selectJson('{"a":[1,2]}', '/a/1'), '2');
-assert.ok(require('node:fs').statSync(require('node:path').join(require('node:path').dirname(require.resolve('stable-json-rs')), '../THIRD_PARTY_NOTICES.txt')).size > 0);
-import('stable-json-rs').then(esm => {
-  assert.equal(esm.default({z:1,a:2}), '{"a":2,"z":1}');
-  assert.equal(esm.stringifyJson('0'), '0');
-  console.log('Packed CJS, ESM and release native APIs PASS');
-}).catch(error => { console.error(error); process.exitCode = 1; });
+const json = require('stable-json-rs');
+assert.equal(json.canonicalize(' {"b":[1.0,1e21],"a":"\\\\u00e9"} '), '{"a":"é","b":[1,1e+21]}');
+assert.equal(json.sortKeys(Buffer.from('{"b":1.10,"a":2}')), '{"a":2,"b":1.10}');
+assert.equal(json.select('{"a":[0,{"b":"x"}]}', '/a/1/b'), '"x"');
+assert.throws(() => json.validate('{'), json.JsonError);
+json.canonicalizeAsync('[2,1]').then((v) => assert.equal(v, '[2,1]'));
 `);
-console.log(execFileSync(process.execPath, ['verify.cjs'], { cwd: directory, encoding: 'utf8' }));
-fs.writeFileSync(path.join(directory, 'types.cts'), `
-import api = require('stable-json-rs');
-const text: string | undefined = api.stringify({a: 1});
-const selected: string | undefined = api.selectJson('{"a":1}', '/a');
-const batch: string[] = api.stringifyJsonBatch(['{}']);
-api.createSerializerCache().stringify({}, 1);
-void [text, selected, batch];
+fs.writeFileSync(path.join(consumer, 'smoke.mjs'), `
+import assert from 'node:assert/strict';
+import { canonicalHash, equal } from 'stable-json-rs';
+assert.equal(equal('{"a":1}', '{ "a": 1.0 }'), true);
+assert.equal(canonicalHash('{}'), '44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a');
 `);
-fs.writeFileSync(path.join(directory, 'types.mts'), `
-import stringify, {selectJson} from 'stable-json-rs';
-const text: string | undefined = stringify({a: 1});
-const selected: string | undefined = selectJson('{"a":1}', '/a');
-void [text, selected];
-`);
-fs.writeFileSync(path.join(directory, 'tsconfig.json'), JSON.stringify({ compilerOptions: {
-  target: 'ES2022', module: 'NodeNext', moduleResolution: 'NodeNext', strict: true, noEmit: true, skipLibCheck: true,
-}, include: ['types.cts', 'types.mts'] }));
-const tsManifest = require.resolve('typescript/package.json');
-const tsBinary = path.resolve(path.dirname(tsManifest), JSON.parse(fs.readFileSync(tsManifest, 'utf8')).bin.tsc);
-execFileSync(process.execPath, [tsBinary, '-p', directory], { cwd: directory, stdio: 'inherit' });
-console.log('Packed CJS/ESM TypeScript consumers PASS');
-console.log(`Artifact preserved: ${path.join(directory, filename)}`);
+const node = process.env.CONSUMER_NODE ?? process.execPath;
+run(node, ['smoke.cjs'], consumer);
+run(node, ['smoke.mjs'], consumer);
+console.log(`packed ${tarball} (${listing.length} files) installed and verified with ${run(node, ['--version'], consumer).trim()} in ${consumer}`);

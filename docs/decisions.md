@@ -1,144 +1,65 @@
 # Decisions
 
-## ADR 001 — Separate compatibility from text processing (2026-10-19)
-Accepted. Preserve upstream traversal in a typed JS fallback, including quirks;
-offer Rust text APIs separately. Rejected automatic serde conversion of live JS
-objects: it changes numbers, UTF-16, getters, comparator and toJSON behavior.
-Direct Node-API traversal is an experiment for later profiling, not the default.
+Newest first. Each entry records what was chosen, what it was weighed against,
+and the evidence.
 
-## ADR 002 — Native token-preserving text output
-Accepted for MVP. Use serde_json RawValue for validation/traversal; preserve raw
-primitive tokens, decode keys for UTF-16 sorting, and reject duplicate decoded
-keys and lone surrogate keys. Text API is explicitly distinct from JS stringify.
-Bound bytes and nesting; never relax compatibility implicitly for speed.
+## D9. Rewrite from scratch on `rewrite/v2` (2026-10-24)
 
-## ADR 003 — Version-required cache
-Accepted. Require an explicit version argument each time. Cache stores one result
-per weakly-held object, supports delete/clear, and recomputes for a changed version.
-Caller must change version on any observable mutation; document that responsibility.
+The 0.1 design validated with serde, then scanned the text a second time to build
+a token tree, and its main export was a copy of fast-json-stable-stringify in
+JavaScript. Review found the double pass, a selection path that re-parsed the
+subtree at every path segment, string-typed errors, and no answer for the main
+reason people sort JSON keys: hashing and signatures. 0.1 remains on `master`.
 
-## ADR 004 — Local Git workflow
-User authorizes local commits, branches and merges. Use a local implementation
-branch after the initial memory commit; merge stable verified milestones locally.
-No push, publish or release is authorized.
+## D8. RFC 8785 is the primary operation
 
-## ADR 005 — Candidate packages bundle native artifacts
-Accepted for local/CI validation: official napi-generated loader resolves local
-native files; CI combines three target artifacts into one root tarball. This
-allows ordinary npm installation without Rust or unpublished optional packages.
-Download size is the tradeoff. Scoped sidecar packages may be adopted before
-public release, using official napi create-npm-dirs tooling and separate approval.
-Fixture bytes are excluded from Git line-ending conversion for checksum stability.
+Sorting keys alone does not make equal values produce equal bytes, because number
+and string spellings still differ. JCS is the published standard for that, so it
+is the headline function, and `sortKeys` stays for people who must keep
+spellings. `canonicalHash` and `equal` are thin conveniences on top of it.
 
-## ADR 006 — Single validation, borrowed token tree
-Accepted after two longer end-to-end confirmation runs. Repeated RawValue
-subtree deserialization was65–67% slower than parse+upstream on deep/Unicode
-workloads. Replace that strategy with one complete serde validation, then safe
-structural scanning, borrowed unescaped keys/scalars and one output emission.
-This adds scanner maintenance and node-vector memory; independent lexical corpus,
-malformed cases, depth bounds and generated oracle tests must stay passing. The
-scanner is never a standalone validator. No unsafe code introduced. Stage timings
-in `cargo bench --bench engine` distinguish validation, scan/sort and emission;
-these Rust-only results are not end-to-end npm API performance claims.
+## D7. No compatibility clone of fast-json-stable-stringify
 
-## ADR 007 — Raw selective extraction
-Accepted as an explicit niche API after two benchmark confirmations on real
-dependency metadata (+49% throughput). API fixture and deep/Unicode inputs lose,
-so no general replacement recommendation. RawValue visitors walk path-level
-containers without constructing a JS DOM or full Rust token tree. A separate
-allocation-free scan enforces whole-document depth after serde syntax validation.
-Use JSON Pointer subset (no fragments/expressions), last duplicate wins, raw text
-output and undefined for missing. Traversed object keys must decode as Unicode
-scalar strings, while untouched raw subtrees need not. These differences are
-explicit; no full RFC6901 compliance claim. Tests independently cover3500 paths.
+The 0.1 `stringify` export reproduced upstream quirks in JavaScript and had no
+measured advantage. Dropped. `canonicalizeValue` covers live objects with defined
+semantics instead.
 
-## ADR 008 — CI host selection
-Use macos-15 ARM64 rather than near-deprecated macos-14; current hosted runner
-labels checked against [GitHub's runner reference](https://docs.github.com/en/actions/reference/runners/github-hosted-runners)
-on2026-10-19. CI definitions remain unexecuted evidence until jobs run.
+## D6. Correct shortest digits instead of trusting `{:e}`
 
-## ADR 009 — Batch and cache usefulness after independent reproduction
-Retain ordered batches for convenience, bounded aggregate input and indexed
-document errors, with no acceleration claim. Real record sizes1/8/32/128 showed
-native batch3–33% below the same native calls in a loop, including direct returned
-element consumption. Isolated probes show array input/output conversion and wrapper
-validation costs; saved generic call overhead is small. Preallocation saves3 Rust
-reallocations at32 items but did not improve real throughput, so reject that change.
-An additional adaptive JavaScript/native batch dispatcher would add error and
-observable-access complexity without an established acceptance result. Keep the
-small shared-engine implementation; no speculative batch optimization or workers.
+Fuzzing against `String(Number)` found doubles where Rust's shortest formatting
+picks a non-closest digit. Correct rounding to the shortest length fixes it at
+the cost of a second format for 16 to 17 digit values. A Ryu-family formatter
+would remove that cost but needs a dependency (for example `ryu-js`, which
+formats exactly like JavaScript); not added without approval. Float-heavy input
+is the one measured case slower than V8.
 
-Keep the explicit versioned WeakMap cache. Two real32/128-record pools with the
-same mutation/version schedule show miss overhead3–5%,~1.8x throughput at50% hits
-and~7.3–7.7x at90%. These conditional gains justify the feature. No deep hashing,
-automatic mutation detection or immutable-object assumption is introduced.
+## D5. Encode large strings in JavaScript, not through Node-API
 
-## ADR 010 — Bounded lossless output encoding
-Accepted for the verified Windows Node22.13/24.20 scope after independent exact
-tests and repeated public-API comparisons. Napi UTF8 output creation dominated
-the measured dense-Unicode workload; use the existing napi Utf16String path for
-dense output. Four distributed256-byte samples must each contain at least32
-non-ASCII bytes. This empirical classifier bounds routing work at1024 bytes and
-returns identical content regardless of classification. Input and pure engine
-semantics, token spelling, limits and error behavior stay unchanged.
+Measured on 4 to 8 MB documents: Node-API string conversion took longer than the
+parse itself. `TextEncoder.encodeInto` into a reused buffer is faster from 1 KiB
+up and slower below it, hence the threshold.
 
-Reject unconditional UTF16 (ASCII regressions), the extra encoding_rs production
-dependency (slower probes), and full-output density counting (16% sparse regression).
-Prefix-only screening still penalized Unicode prefixes with long ASCII tails.
-Bounded sampling passed mixed-prefix controls, real CLDR (~31–32% improvement on
-Node24,34–35% on22) and the broader matrix. Dense synthetic Unicode improved but
-still loses to JS parse+upstream. Keep the explicit JS compatibility route; automatic
-JSON.parse fallback would change native duplicate/token/Unicode semantics.
-Raw evidence, an anomalous short-warmup batch cell and targeted confirmation are
-retained in OUTPUT_BENCHMARK_REVIEW.md. This is not a universal speed guarantee or
-cross-platform performance verification. Selection output is unchanged.
+## D4. Zero-dependency core
 
-## ADR 011 — Single-read native wrapper validation
-Accepted after failing-before/passing-after independent regressions. Snapshot text
-batch length and indexed strings before validation/native conversion, without
-using caller-overridable array methods/iterators. Capture native option values
-while validating them, preserving depth-before-bytes order. Native receives the
-same immutable strings and numeric limits that passed guards. This deliberately
-changes extension-API behavior for stateful accessors; it closes silent Unicode
-replacement and limit bypasses. Upstream-compatible stringify traversal is not
-changed. No claim of sandboxing hostile global runtime mutation.
+The engine needs no parser, formatter or SIMD crate to beat `JSON.parse` on
+validation. Fewer dependencies keep the audit surface and the build small.
+`serde_json` stays as a dev-dependency oracle for the Rust tests.
 
-## ADR 012 — Inspect actual packed candidate identities
-CI candidate schema2 binds selected runtime/declaration/license/docs and target
-binary bytes from the tarball, verifies architecture headers and requires all
-three actual targets before upload. Installed files and actual loaded local addon
-must match the packed hashes. Header inspection never substitutes for execution
-on a target. Strict installed TS checks no longer skip declaration checking.
-Old schema1 candidate evidence remains immutable; new checks use new candidate
-folders. A host-only artifact must fail the combined gate rather than receive
-synthetic foreign binaries.
+## D3. Errors are an enum with stable codes
 
-## ADR 013 — Keep public performance claims at API boundaries
-Installed CJS/ESM stringify/alias measurements do not establish a repeated >=10%
-gain over upstream across seven real fixtures. Retain the compatibility traversal
-for observable behavior, without advertising Rust acceleration. Object-to-native
-roundtrip includes JSON.stringify on every call and is a separate, exact-checked
-JSON-only comparison. Existing-text native results cannot advertise a universal
-stringify speedup. Retain JS/native batches for ordered convenience and native
-aggregate limits/indexed errors; measured native batching is4-7% slower than the
-same-native loop. Keep explicit-version cache for skipped known-unchanged work,
-with historical miss costs disclosed; no fresh cache timing claimed. No new API
-or automatic native/fallback routing is justified by these measurements.
+Each `ErrorKind` maps to one `ERR_JSON_*` code exposed as `error.code`, with byte
+offset, line and UTF-16 column, so callers can branch on the cause and show
+where it is.
 
-## ADR 014 — Native JSON-text positioning and distribution boundary
-Keep named native text sorting/extraction as the performance-oriented surface,
-with upstream-compatible live-object stringify retained and default export
-unchanged. Positioning does not imply every native operation wins: scalar tokens,
-raw output, duplicate/Unicode scope and synchronous conversion costs remain
-explicit. Evaluate original real-world text as well as normalized controls; no
-semantic mismatch can be counted as an equivalent speedup.
+## D2. Lone surrogates
 
-Keep one combined root tarball for the initial three-target distribution. Current
-loader supports bundled target files without optional dependencies. A real
-Windows-only split prototype passes offline npm/pnpm native/exports/types and
-missing optional/version controls. This proves feasibility, not registry readiness
-or foreign runtime support. Do not add unavailable optional packages to root;
-metadata generation cannot produce missing native builds. Split distribution
-requires exact package names/versions, notice inventory, controlled registry names
-and independent real target execution. No publishing tool invoked. See distribution.md
-and DISTRIBUTION_REVIEW_2.md. No measured need justifies added release coordination.
+RFC 8259 grammar accepts `"\ud800"`, and so does `JSON.parse`, so validation,
+minify, sort and select accept it. RFC 8785 requires valid Unicode, so
+canonicalization rejects it. A lone surrogate *character* in a JavaScript string
+cannot be encoded as UTF-8 at all, so every function rejects that input.
+
+## D1. Duplicate keys
+
+`select` and `validate` follow `JSON.parse` (accepted, last wins). `sortKeys` and
+`canonicalize` reject them, because two equal keys have no defined order and
+RFC 8785 forbids them.

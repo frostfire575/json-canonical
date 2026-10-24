@@ -1,0 +1,1484 @@
+{
+ "environment": {
+  "node": "v24.22.1",
+  "v8": "13.6.233.17-node.58",
+  "platform": "win32-x64",
+  "cpu": "12th Gen Intel(R) Core(TM) i7-12700K",
+  "date": "2026-10-24T04:25:35.618Z",
+  "WARMUP_MS": 100,
+  "SAMPLE_MS": 30,
+  "SAMPLES": 3
+ },
+ "results": [
+  {
+   "fixture": "jsonplaceholder-data",
+   "bytes": 1378184,
+   "op": "canonicalize",
+   "impl": "native buffer->buffer",
+   "equivalent": true,
+   "exact": true,
+   "samples": [
+    381.36279996567066,
+    393.3639501607926,
+    365.34290753171285
+   ],
+   "median": 381.36279996567066,
+   "madPct": 3.146911601289449
+  },
+  {
+   "fixture": "jsonplaceholder-data",
+   "bytes": 1378184,
+   "op": "canonicalize",
+   "impl": "native string",
+   "equivalent": true,
+   "exact": true,
+   "samples": [
+    272.3418677205224,
+    218.81085676954396,
+    259.43449765373214
+   ],
+   "median": 259.43449765373214,
+   "madPct": 4.975194194882183
+  },
+  {
+   "fixture": "jsonplaceholder-data",
+   "bytes": 1378184,
+   "op": "canonicalize",
+   "impl": "JS JSON.parse+canonicalizeValue",
+   "equivalent": true,
+   "exact": true,
+   "samples": [
+    112.26904153112167,
+    115.06685384208352,
+    109.06850047171741
+   ],
+   "median": 112.26904153112167,
+   "madPct": 2.4920603870892353
+  },
+  {
+   "fixture": "jsonplaceholder-data",
+   "bytes": 1378184,
+   "op": "minify",
+   "impl": "native string",
+   "equivalent": true,
+   "exact": false,
+   "samples": [
+    322.97863819286005,
+    387.18545215193075,
+    332.76319905228723
+   ],
+   "median": 332.76319905228723,
+   "madPct": 2.94039752210993
+  },
+  {
+   "fixture": "jsonplaceholder-data",
+   "bytes": 1378184,
+   "op": "minify",
+   "impl": "JS JSON.stringify(JSON.parse)",
+   "equivalent": true,
+   "exact": true,
+   "samples": [
+    278.39299192042955,
+    255.7274967794388,
+    252.8492954986502
+   ],
+   "median": 255.7274967794388,
+   "madPct": 1.1254954265911452
+  },
+  {
+   "fixture": "jsonplaceholder-data",
+   "bytes": 1378184,
+   "op": "select",
+   "impl": "JS JSON.parse+walk+stringify",
+   "equivalent": true,
+   "exact": true,
+   "samples": [
+    569.9142279086973,
+    585.4762849578287,
+    574.7144786541555
+   ],
+   "median": 574.7144786541555,
+   "madPct": 0.8352409629037513
+  },
+  {
+   "fixture": "jsonplaceholder-data",
+   "bytes": 1378184,
+   "op": "select",
+   "impl": "native",
+   "equivalent": true,
+   "exact": false,
+   "samples": [
+    534.8855502242216,
+    529.2504257352407,
+    535.1448511195388
+   ],
+   "median": 534.8855502242216,
+   "madPct": 0.048477827678932904
+  },
+  {
+   "fixture": "jsonplaceholder-data",
+   "bytes": 1378184,
+   "op": "select",
+   "impl": "previous native selectJson",
+   "equivalent": true,
+   "exact": false,
+   "samples": [
+    326.818746323309,
+    325.99624452328584,
+    329.2007663793885
+   ],
+   "median": 326.818746323309,
+   "madPct": 0.2516691007710803
+  },
+  {
+   "fixture": "jsonplaceholder-data",
+   "bytes": 1378184,
+   "op": "sortKeys",
+   "impl": "native string",
+   "equivalent": true,
+   "exact": true,
+   "samples": [
+    276.75532062104037,
+    280.29262550102237,
+    284.51210915148994
+   ],
+   "median": 280.29262550102237,
+   "madPct": 1.2620042620311822
+  },
+  {
+   "fixture": "jsonplaceholder-data",
+   "bytes": 1378184,
+   "op": "sortKeys",
+   "impl": "previous native stringifyJson",
+   "equivalent": true,
+   "exact": false,
+   "samples": [
+    239.3862137479541,
+    250.32698963019706,
+    262.76029691913624
+   ],
+   "median": 250.32698963019706,
+   "madPct": 4.370593797498847
+  },
+  {
+   "fixture": "jsonplaceholder-data",
+   "bytes": 1378184,
+   "op": "sortKeys",
+   "impl": "JS JSON.parse+safe-stable-stringify",
+   "equivalent": true,
+   "exact": false,
+   "samples": [
+    200.99867628013442,
+    213.6413023573922,
+    198.1996861838121
+   ],
+   "median": 200.99867628013442,
+   "madPct": 1.3925415570505177
+  },
+  {
+   "fixture": "jsonplaceholder-data",
+   "bytes": 1378184,
+   "op": "sortKeys",
+   "impl": "JS JSON.parse+fast-json-stable-stringify",
+   "equivalent": true,
+   "exact": false,
+   "samples": [
+    156.60431726781405,
+    149.0886212582503,
+    154.6618164720986
+   ],
+   "median": 154.6618164720986,
+   "madPct": 1.2559666244873653
+  },
+  {
+   "fixture": "jsonplaceholder-data",
+   "bytes": 1378184,
+   "op": "validate",
+   "impl": "JS JSON.parse",
+   "equivalent": true,
+   "exact": true,
+   "samples": [
+    595.9041521277701,
+    607.2732154158402,
+    602.4115485464489
+   ],
+   "median": 602.4115485464489,
+   "madPct": 0.8070341415469202
+  },
+  {
+   "fixture": "jsonplaceholder-data",
+   "bytes": 1378184,
+   "op": "validate",
+   "impl": "native",
+   "equivalent": true,
+   "exact": true,
+   "samples": [
+    518.8134735859202,
+    547.7968898025953,
+    561.13944315162
+   ],
+   "median": 547.7968898025953,
+   "madPct": 2.4356752653036824
+  },
+  {
+   "fixture": "synthetic-already-sorted",
+   "bytes": 5904178,
+   "op": "canonicalize",
+   "impl": "native buffer->buffer",
+   "equivalent": true,
+   "exact": true,
+   "samples": [
+    41.73640123706723,
+    40.8217416596075,
+    40.019289297440345
+   ],
+   "median": 40.8217416596075,
+   "madPct": 1.9657474902918377
+  },
+  {
+   "fixture": "synthetic-already-sorted",
+   "bytes": 5904178,
+   "op": "canonicalize",
+   "impl": "native string",
+   "equivalent": true,
+   "exact": true,
+   "samples": [
+    23.69022659701874,
+    24.1680744570042,
+    21.817340858861325
+   ],
+   "median": 23.69022659701874,
+   "madPct": 2.017067494177508
+  },
+  {
+   "fixture": "synthetic-already-sorted",
+   "bytes": 5904178,
+   "op": "canonicalize",
+   "impl": "JS JSON.parse+canonicalizeValue",
+   "equivalent": true,
+   "exact": true,
+   "samples": [
+    7.928107917404977,
+    7.801565618188204,
+    7.807498321387841
+   ],
+   "median": 7.807498321387841,
+   "madPct": 0.07598724912158814
+  },
+  {
+   "fixture": "synthetic-already-sorted",
+   "bytes": 5904178,
+   "op": "minify",
+   "impl": "native string",
+   "equivalent": true,
+   "exact": false,
+   "samples": [
+    33.294101783398446,
+    35.64846337298633,
+    34.99954500591416
+   ],
+   "median": 34.99954500591416,
+   "madPct": 1.8540765800313035
+  },
+  {
+   "fixture": "synthetic-already-sorted",
+   "bytes": 5904178,
+   "op": "minify",
+   "impl": "JS JSON.stringify(JSON.parse)",
+   "equivalent": true,
+   "exact": true,
+   "samples": [
+    23.308502009192956,
+    23.304971183403488,
+    23.91600698347398
+   ],
+   "median": 23.308502009192956,
+   "madPct": 0.015148231268040411
+  },
+  {
+   "fixture": "synthetic-already-sorted",
+   "bytes": 5904178,
+   "op": "select",
+   "impl": "JS JSON.parse+walk+stringify",
+   "equivalent": true,
+   "exact": true,
+   "samples": [
+    38.199431592458225,
+    46.62069865778982,
+    47.42696839703828
+   ],
+   "median": 46.62069865778982,
+   "madPct": 1.7294244025957717
+  },
+  {
+   "fixture": "synthetic-already-sorted",
+   "bytes": 5904178,
+   "op": "select",
+   "impl": "native",
+   "equivalent": true,
+   "exact": false,
+   "samples": [
+    46.04825396532899,
+    46.92962902128438,
+    46.55395953064491
+   ],
+   "median": 46.55395953064491,
+   "madPct": 0.8069549710206206
+  },
+  {
+   "fixture": "synthetic-already-sorted",
+   "bytes": 5904178,
+   "op": "select",
+   "impl": "previous native selectJson",
+   "equivalent": true,
+   "exact": false,
+   "samples": [
+    39.01023238395475,
+    40.830075433565646,
+    43.489605984172094
+   ],
+   "median": 40.830075433565646,
+   "madPct": 4.4571141010306246
+  },
+  {
+   "fixture": "synthetic-already-sorted",
+   "bytes": 5904178,
+   "op": "sortKeys",
+   "impl": "native string",
+   "equivalent": true,
+   "exact": true,
+   "samples": [
+    29.331706401349738,
+    27.469659760794165,
+    25.3754294791452
+   ],
+   "median": 27.469659760794165,
+   "madPct": 6.7785573493457045
+  },
+  {
+   "fixture": "synthetic-already-sorted",
+   "bytes": 5904178,
+   "op": "sortKeys",
+   "impl": "previous native stringifyJson",
+   "equivalent": true,
+   "exact": false,
+   "samples": [
+    17.620959073560645,
+    18.199123894176132,
+    18.14605395910633
+   ],
+   "median": 18.14605395910633,
+   "madPct": 0.2924599209800721
+  },
+  {
+   "fixture": "synthetic-already-sorted",
+   "bytes": 5904178,
+   "op": "sortKeys",
+   "impl": "JS JSON.parse+safe-stable-stringify",
+   "equivalent": true,
+   "exact": false,
+   "samples": [
+    8.250552787036627,
+    9.596164604930847,
+    10.407646706187869
+   ],
+   "median": 9.596164604930847,
+   "madPct": 8.456317025242084
+  },
+  {
+   "fixture": "synthetic-already-sorted",
+   "bytes": 5904178,
+   "op": "sortKeys",
+   "impl": "JS JSON.parse+fast-json-stable-stringify",
+   "equivalent": true,
+   "exact": false,
+   "samples": [
+    7.649183946810584,
+    8.180956206523218,
+    6.937266300841517
+   ],
+   "median": 7.649183946810584,
+   "madPct": 6.952012965178636
+  },
+  {
+   "fixture": "synthetic-already-sorted",
+   "bytes": 5904178,
+   "op": "validate",
+   "impl": "JS JSON.parse",
+   "equivalent": true,
+   "exact": true,
+   "samples": [
+    45.58789003288904,
+    46.55363444223922,
+    37.63352846317746
+   ],
+   "median": 45.58789003288904,
+   "madPct": 2.1184231352963483
+  },
+  {
+   "fixture": "synthetic-already-sorted",
+   "bytes": 5904178,
+   "op": "validate",
+   "impl": "native",
+   "equivalent": true,
+   "exact": true,
+   "samples": [
+    45.92443593311493,
+    43.83292641766448,
+    45.48421356657528
+   ],
+   "median": 45.48421356657528,
+   "madPct": 0.9678574872912702
+  },
+  {
+   "fixture": "synthetic-floats",
+   "bytes": 4052927,
+   "op": "canonicalize",
+   "impl": "JS JSON.parse+canonicalizeValue",
+   "equivalent": true,
+   "exact": true,
+   "samples": [
+    24.783515987846688,
+    25.2322629807382,
+    23.55146702088099
+   ],
+   "median": 24.783515987846688,
+   "madPct": 1.8106671914976356
+  },
+  {
+   "fixture": "synthetic-floats",
+   "bytes": 4052927,
+   "op": "canonicalize",
+   "impl": "native buffer->buffer",
+   "equivalent": true,
+   "exact": true,
+   "samples": [
+    20.71452689056337,
+    21.446985197290584,
+    19.967333442488115
+   ],
+   "median": 20.71452689056337,
+   "madPct": 3.535964449474777
+  },
+  {
+   "fixture": "synthetic-floats",
+   "bytes": 4052927,
+   "op": "canonicalize",
+   "impl": "native string",
+   "equivalent": true,
+   "exact": true,
+   "samples": [
+    20.261207486921236,
+    20.05285933721257,
+    19.448858254777466
+   ],
+   "median": 20.05285933721257,
+   "madPct": 1.0389947199301859
+  },
+  {
+   "fixture": "synthetic-floats",
+   "bytes": 4052927,
+   "op": "minify",
+   "impl": "native string",
+   "equivalent": true,
+   "exact": false,
+   "samples": [
+    115.56685542586663,
+    105.59773598453991,
+    107.78969153285004
+   ],
+   "median": 107.78969153285004,
+   "madPct": 2.0335484007226348
+  },
+  {
+   "fixture": "synthetic-floats",
+   "bytes": 4052927,
+   "op": "minify",
+   "impl": "JS JSON.stringify(JSON.parse)",
+   "equivalent": true,
+   "exact": true,
+   "samples": [
+    34.18698228088602,
+    34.562430983144736,
+    33.99556697806575
+   ],
+   "median": 34.18698228088602,
+   "madPct": 0.559906988126554
+  },
+  {
+   "fixture": "synthetic-floats",
+   "bytes": 4052927,
+   "op": "select",
+   "impl": "native",
+   "equivalent": true,
+   "exact": false,
+   "samples": [
+    126.35116780066497,
+    123.5231266173917,
+    123.30342197822458
+   ],
+   "median": 123.5231266173917,
+   "madPct": 0.17786518620731348
+  },
+  {
+   "fixture": "synthetic-floats",
+   "bytes": 4052927,
+   "op": "select",
+   "impl": "JS JSON.parse+walk+stringify",
+   "equivalent": true,
+   "exact": true,
+   "samples": [
+    100.57503777849772,
+    97.50643542474306,
+    96.28902112581858
+   ],
+   "median": 97.50643542474306,
+   "madPct": 1.248547640595579
+  },
+  {
+   "fixture": "synthetic-floats",
+   "bytes": 4052927,
+   "op": "select",
+   "impl": "previous native selectJson",
+   "equivalent": true,
+   "exact": false,
+   "samples": [
+    70.82169693507392,
+    72.05441549458043,
+    72.43962157541961
+   ],
+   "median": 72.05441549458043,
+   "madPct": 0.5346044072318592
+  },
+  {
+   "fixture": "synthetic-floats",
+   "bytes": 4052927,
+   "op": "sortKeys",
+   "impl": "native string",
+   "equivalent": true,
+   "exact": true,
+   "samples": [
+    99.62441595186289,
+    99.92705325112756,
+    86.0340867051511
+   ],
+   "median": 99.62441595186289,
+   "madPct": 0.30377824188289776
+  },
+  {
+   "fixture": "synthetic-floats",
+   "bytes": 4052927,
+   "op": "sortKeys",
+   "impl": "previous native stringifyJson",
+   "equivalent": true,
+   "exact": false,
+   "samples": [
+    63.733847453037534,
+    62.354441350972856,
+    64.33081478193537
+   ],
+   "median": 63.733847453037534,
+   "madPct": 0.9366566632239125
+  },
+  {
+   "fixture": "synthetic-floats",
+   "bytes": 4052927,
+   "op": "sortKeys",
+   "impl": "JS JSON.parse+fast-json-stable-stringify",
+   "equivalent": true,
+   "exact": false,
+   "samples": [
+    28.645169421855577,
+    28.379018823805563,
+    28.77838628076828
+   ],
+   "median": 28.645169421855577,
+   "madPct": 0.4650587222956425
+  },
+  {
+   "fixture": "synthetic-floats",
+   "bytes": 4052927,
+   "op": "sortKeys",
+   "impl": "JS JSON.parse+safe-stable-stringify",
+   "equivalent": true,
+   "exact": false,
+   "samples": [
+    22.203620522361998,
+    26.35803168762597,
+    26.273337291847884
+   ],
+   "median": 26.273337291847884,
+   "madPct": 0.3223587275468261
+  },
+  {
+   "fixture": "synthetic-floats",
+   "bytes": 4052927,
+   "op": "validate",
+   "impl": "native",
+   "equivalent": true,
+   "exact": true,
+   "samples": [
+    138.6904844458638,
+    137.57050488375197,
+    135.30627929380975
+   ],
+   "median": 137.57050488375197,
+   "madPct": 0.8141131436990999
+  },
+  {
+   "fixture": "synthetic-floats",
+   "bytes": 4052927,
+   "op": "validate",
+   "impl": "JS JSON.parse",
+   "equivalent": true,
+   "exact": true,
+   "samples": [
+    100.99836887633656,
+    95.02602129216562,
+    98.39646559895478
+   ],
+   "median": 98.39646559895478,
+   "madPct": 2.644305627792203
+  },
+  {
+   "fixture": "synthetic-records-8mb",
+   "bytes": 8184179,
+   "op": "canonicalize",
+   "impl": "native buffer->buffer",
+   "equivalent": true,
+   "exact": true,
+   "samples": [
+    32.0106531453669,
+    34.645892989230255,
+    29.824216070480563
+   ],
+   "median": 32.0106531453669,
+   "madPct": 6.8303419644619
+  },
+  {
+   "fixture": "synthetic-records-8mb",
+   "bytes": 8184179,
+   "op": "canonicalize",
+   "impl": "native string",
+   "equivalent": true,
+   "exact": true,
+   "samples": [
+    20.68881335173309,
+    20.722382245063063,
+    20.104220277920913
+   ],
+   "median": 20.68881335173309,
+   "madPct": 0.16225625297722654
+  },
+  {
+   "fixture": "synthetic-records-8mb",
+   "bytes": 8184179,
+   "op": "canonicalize",
+   "impl": "JS JSON.parse+canonicalizeValue",
+   "equivalent": true,
+   "exact": true,
+   "samples": [
+    7.694024051519211,
+    7.855447202753826,
+    7.5838987761862615
+   ],
+   "median": 7.694024051519211,
+   "madPct": 1.4313092160298713
+  },
+  {
+   "fixture": "synthetic-records-8mb",
+   "bytes": 8184179,
+   "op": "minify",
+   "impl": "native string",
+   "equivalent": true,
+   "exact": false,
+   "samples": [
+    28.17480777737483,
+    27.611418978433147,
+    24.61938431843734
+   ],
+   "median": 27.611418978433147,
+   "madPct": 2.0404195792390767
+  },
+  {
+   "fixture": "synthetic-records-8mb",
+   "bytes": 8184179,
+   "op": "minify",
+   "impl": "JS JSON.stringify(JSON.parse)",
+   "equivalent": true,
+   "exact": true,
+   "samples": [
+    23.80158994620834,
+    21.349274124680107,
+    23.871703914482165
+   ],
+   "median": 23.80158994620834,
+   "madPct": 0.2945768263056557
+  },
+  {
+   "fixture": "synthetic-records-8mb",
+   "bytes": 8184179,
+   "op": "select",
+   "impl": "JS JSON.parse+walk+stringify",
+   "equivalent": true,
+   "exact": true,
+   "samples": [
+    44.03162351200693,
+    45.192429364233305,
+    45.440603451214756
+   ],
+   "median": 45.192429364233305,
+   "madPct": 0.5491496927090688
+  },
+  {
+   "fixture": "synthetic-records-8mb",
+   "bytes": 8184179,
+   "op": "select",
+   "impl": "native",
+   "equivalent": true,
+   "exact": false,
+   "samples": [
+    40.041242479753805,
+    40.13710836216505,
+    39.67214935770721
+   ],
+   "median": 40.041242479753805,
+   "madPct": 0.2394178513809085
+  },
+  {
+   "fixture": "synthetic-records-8mb",
+   "bytes": 8184179,
+   "op": "select",
+   "impl": "previous native selectJson",
+   "equivalent": true,
+   "exact": false,
+   "samples": [
+    33.75573003517232,
+    32.916284014866626,
+    33.30324939804451
+   ],
+   "median": 33.30324939804451,
+   "madPct": 1.161944825722028
+  },
+  {
+   "fixture": "synthetic-records-8mb",
+   "bytes": 8184179,
+   "op": "sortKeys",
+   "impl": "native string",
+   "equivalent": true,
+   "exact": true,
+   "samples": [
+    25.399147604606394,
+    23.093888202487438,
+    24.70880671288839
+   ],
+   "median": 24.70880671288839,
+   "madPct": 2.793906236507632
+  },
+  {
+   "fixture": "synthetic-records-8mb",
+   "bytes": 8184179,
+   "op": "sortKeys",
+   "impl": "previous native stringifyJson",
+   "equivalent": true,
+   "exact": false,
+   "samples": [
+    15.144998212889968,
+    15.863673931700193,
+    16.592718451434596
+   ],
+   "median": 15.863673931700193,
+   "madPct": 4.530323315421301
+  },
+  {
+   "fixture": "synthetic-records-8mb",
+   "bytes": 8184179,
+   "op": "sortKeys",
+   "impl": "JS JSON.parse+safe-stable-stringify",
+   "equivalent": true,
+   "exact": false,
+   "samples": [
+    11.608631249506683,
+    7.131284087537924,
+    8.82732516158419
+   ],
+   "median": 8.82732516158419,
+   "madPct": 19.213533465690148
+  },
+  {
+   "fixture": "synthetic-records-8mb",
+   "bytes": 8184179,
+   "op": "sortKeys",
+   "impl": "JS JSON.parse+fast-json-stable-stringify",
+   "equivalent": true,
+   "exact": false,
+   "samples": [
+    6.463104720393047,
+    7.961434809781555,
+    8.103799952835875
+   ],
+   "median": 7.961434809781555,
+   "madPct": 1.7881844975909003
+  },
+  {
+   "fixture": "synthetic-records-8mb",
+   "bytes": 8184179,
+   "op": "validate",
+   "impl": "JS JSON.parse",
+   "equivalent": true,
+   "exact": true,
+   "samples": [
+    44.5457116956989,
+    43.47731571052784,
+    43.40324873316784
+   ],
+   "median": 43.47731571052784,
+   "madPct": 0.17035775127686315
+  },
+  {
+   "fixture": "synthetic-records-8mb",
+   "bytes": 8184179,
+   "op": "validate",
+   "impl": "native",
+   "equivalent": true,
+   "exact": true,
+   "samples": [
+    40.02705829140439,
+    40.332989158492566,
+    40.3878852499404
+   ],
+   "median": 40.332989158492566,
+   "madPct": 0.1361071732921093
+  },
+  {
+   "fixture": "typescript-package",
+   "bytes": 1838,
+   "op": "canonicalize",
+   "impl": "native string",
+   "equivalent": true,
+   "exact": true,
+   "samples": [
+    199732.00178663994,
+    205194.52814592991,
+    206100.35727617744
+   ],
+   "median": 205194.52814592991,
+   "madPct": 0.44144896963496033
+  },
+  {
+   "fixture": "typescript-package",
+   "bytes": 1838,
+   "op": "canonicalize",
+   "impl": "native buffer->buffer",
+   "equivalent": true,
+   "exact": true,
+   "samples": [
+    175053.3191149038,
+    172540.78554882907,
+    172147.7304163191
+   ],
+   "median": 172540.78554882907,
+   "madPct": 0.22780418627381946
+  },
+  {
+   "fixture": "typescript-package",
+   "bytes": 1838,
+   "op": "canonicalize",
+   "impl": "JS JSON.parse+canonicalizeValue",
+   "equivalent": true,
+   "exact": true,
+   "samples": [
+    82230.0441315689,
+    78360.03869958785,
+    79262.96772817241
+   ],
+   "median": 79262.96772817241,
+   "madPct": 1.1391562219586635
+  },
+  {
+   "fixture": "typescript-package",
+   "bytes": 1838,
+   "op": "minify",
+   "impl": "native string",
+   "equivalent": true,
+   "exact": false,
+   "samples": [
+    311833.40443686844,
+    307978.4415090788,
+    311704.2409374915
+   ],
+   "median": 311704.2409374915,
+   "madPct": 0.04143783831381094
+  },
+  {
+   "fixture": "typescript-package",
+   "bytes": 1838,
+   "op": "minify",
+   "impl": "JS JSON.stringify(JSON.parse)",
+   "equivalent": true,
+   "exact": true,
+   "samples": [
+    214173.5852578362,
+    216755.23974443454,
+    222991.82363315072
+   ],
+   "median": 216755.23974443454,
+   "madPct": 1.1910459417923334
+  },
+  {
+   "fixture": "typescript-package",
+   "bytes": 1838,
+   "op": "select",
+   "impl": "JS JSON.parse+walk+stringify",
+   "equivalent": true,
+   "exact": true,
+   "samples": [
+    327155.76147461525,
+    327043.77360251773,
+    284046.7833918321
+   ],
+   "median": 327043.77360251773,
+   "madPct": 0.034242471845262086
+  },
+  {
+   "fixture": "typescript-package",
+   "bytes": 1838,
+   "op": "select",
+   "impl": "native",
+   "equivalent": true,
+   "exact": false,
+   "samples": [
+    259226.42062876927,
+    262378.13515541516,
+    261970.31003151735
+   ],
+   "median": 261970.31003151735,
+   "madPct": 0.15567608552616016
+  },
+  {
+   "fixture": "typescript-package",
+   "bytes": 1838,
+   "op": "select",
+   "impl": "previous native selectJson",
+   "equivalent": true,
+   "exact": false,
+   "samples": [
+    204104.758667124,
+    210020.03206464084,
+    204419.7053529861
+   ],
+   "median": 204419.7053529861,
+   "madPct": 0.1540686526860247
+  },
+  {
+   "fixture": "typescript-package",
+   "bytes": 1838,
+   "op": "sortKeys",
+   "impl": "native string",
+   "equivalent": true,
+   "exact": true,
+   "samples": [
+    219855.67388297027,
+    217611.5721761179,
+    220957.82835353474
+   ],
+   "median": 219855.67388297027,
+   "madPct": 0.5013081769047985
+  },
+  {
+   "fixture": "typescript-package",
+   "bytes": 1838,
+   "op": "sortKeys",
+   "impl": "previous native stringifyJson",
+   "equivalent": true,
+   "exact": false,
+   "samples": [
+    186804.68994754006,
+    191237.98096952698,
+    197647.56073579885
+   ],
+   "median": 191237.98096952698,
+   "madPct": 2.318206351850865
+  },
+  {
+   "fixture": "typescript-package",
+   "bytes": 1838,
+   "op": "sortKeys",
+   "impl": "JS JSON.parse+safe-stable-stringify",
+   "equivalent": true,
+   "exact": false,
+   "samples": [
+    125828.89535019123,
+    126648.935815655,
+    130347.54902615158
+   ],
+   "median": 126648.935815655,
+   "madPct": 0.6474910035228287
+  },
+  {
+   "fixture": "typescript-package",
+   "bytes": 1838,
+   "op": "sortKeys",
+   "impl": "JS JSON.parse+fast-json-stable-stringify",
+   "equivalent": true,
+   "exact": false,
+   "samples": [
+    89808.78559860241,
+    84342.76954862813,
+    96280.69988406492
+   ],
+   "median": 89808.78559860241,
+   "madPct": 6.086282108750995
+  },
+  {
+   "fixture": "typescript-package",
+   "bytes": 1838,
+   "op": "validate",
+   "impl": "native",
+   "equivalent": true,
+   "exact": true,
+   "samples": [
+    412130.58579608914,
+    425256.74400932505,
+    423720.05746036733
+   ],
+   "median": 423720.05746036733,
+   "madPct": 0.36266551981704376
+  },
+  {
+   "fixture": "typescript-package",
+   "bytes": 1838,
+   "op": "validate",
+   "impl": "JS JSON.parse",
+   "equivalent": true,
+   "exact": true,
+   "samples": [
+    354045.4239412087,
+    320007.7327147032,
+    352661.9645071304
+   ],
+   "median": 352661.9645071304,
+   "madPct": 0.3922905142355764
+  },
+  {
+   "fixture": "typescript-package-lock",
+   "bytes": 143844,
+   "op": "canonicalize",
+   "impl": "native buffer->buffer",
+   "equivalent": true,
+   "exact": true,
+   "samples": [
+    4257.428047802962,
+    4233.178116802199,
+    4177.289469583478
+   ],
+   "median": 4233.178116802199,
+   "madPct": 0.5728540196433333
+  },
+  {
+   "fixture": "typescript-package-lock",
+   "bytes": 143844,
+   "op": "canonicalize",
+   "impl": "native string",
+   "equivalent": true,
+   "exact": true,
+   "samples": [
+    4033.9779982872546,
+    3816.5278888628472,
+    4081.8629224145575
+   ],
+   "median": 4033.9779982872546,
+   "madPct": 1.1870397941593585
+  },
+  {
+   "fixture": "typescript-package-lock",
+   "bytes": 143844,
+   "op": "canonicalize",
+   "impl": "JS JSON.parse+canonicalizeValue",
+   "equivalent": true,
+   "exact": true,
+   "samples": [
+    1074.9535815498693,
+    1076.068242291443,
+    723.3130367311447
+   ],
+   "median": 1074.9535815498693,
+   "madPct": 0.10369384880476647
+  },
+  {
+   "fixture": "typescript-package-lock",
+   "bytes": 143844,
+   "op": "minify",
+   "impl": "native string",
+   "equivalent": true,
+   "exact": false,
+   "samples": [
+    5592.412959751014,
+    5650.374752795869,
+    4990.4682057275995
+   ],
+   "median": 5592.412959751014,
+   "madPct": 1.0364362120968325
+  },
+  {
+   "fixture": "typescript-package-lock",
+   "bytes": 143844,
+   "op": "minify",
+   "impl": "JS JSON.stringify(JSON.parse)",
+   "equivalent": true,
+   "exact": true,
+   "samples": [
+    2560.40221591164,
+    2641.859604975982,
+    2664.1581917931085
+   ],
+   "median": 2641.859604975982,
+   "madPct": 0.8440488955252045
+  },
+  {
+   "fixture": "typescript-package-lock",
+   "bytes": 143844,
+   "op": "select",
+   "impl": "native",
+   "equivalent": true,
+   "exact": false,
+   "samples": [
+    6248.33820792348,
+    6232.003839181309,
+    5432.536561304048
+   ],
+   "median": 6232.003839181309,
+   "madPct": 0.26210460012035175
+  },
+  {
+   "fixture": "typescript-package-lock",
+   "bytes": 143844,
+   "op": "select",
+   "impl": "previous native selectJson",
+   "equivalent": true,
+   "exact": false,
+   "samples": [
+    4343.501326259968,
+    4291.188759081224,
+    4328.730449955151
+   ],
+   "median": 4328.730449955151,
+   "madPct": 0.3412288308450755
+  },
+  {
+   "fixture": "typescript-package-lock",
+   "bytes": 143844,
+   "op": "select",
+   "impl": "JS JSON.parse+walk+stringify",
+   "equivalent": true,
+   "exact": true,
+   "samples": [
+    3953.0549806833315,
+    3289.9437386388004,
+    4064.9729279465905
+   ],
+   "median": 3953.0549806833315,
+   "madPct": 2.8311760855881833
+  },
+  {
+   "fixture": "typescript-package-lock",
+   "bytes": 143844,
+   "op": "sortKeys",
+   "impl": "native string",
+   "equivalent": true,
+   "exact": true,
+   "samples": [
+    3595.0508133802628,
+    3932.363350373572,
+    4011.497415733668
+   ],
+   "median": 3932.363350373572,
+   "madPct": 2.012379282107242
+  },
+  {
+   "fixture": "typescript-package-lock",
+   "bytes": 143844,
+   "op": "sortKeys",
+   "impl": "previous native stringifyJson",
+   "equivalent": true,
+   "exact": false,
+   "samples": [
+    2766.371587030707,
+    2899.601304820572,
+    2893.7591261512766
+   ],
+   "median": 2893.7591261512766,
+   "madPct": 0.20188890694110237
+  },
+  {
+   "fixture": "typescript-package-lock",
+   "bytes": 143844,
+   "op": "sortKeys",
+   "impl": "JS JSON.parse+safe-stable-stringify",
+   "equivalent": true,
+   "exact": false,
+   "samples": [
+    1829.6557253254787,
+    1723.3436844425278,
+    1797.8086347114145
+   ],
+   "median": 1797.8086347114145,
+   "madPct": 1.771439406796281
+  },
+  {
+   "fixture": "typescript-package-lock",
+   "bytes": 143844,
+   "op": "sortKeys",
+   "impl": "JS JSON.parse+fast-json-stable-stringify",
+   "equivalent": true,
+   "exact": false,
+   "samples": [
+    1209.941137998623,
+    1394.8113019567127,
+    1398.7742833721343
+   ],
+   "median": 1394.8113019567127,
+   "madPct": 0.28412312187764294
+  },
+  {
+   "fixture": "typescript-package-lock",
+   "bytes": 143844,
+   "op": "validate",
+   "impl": "native",
+   "equivalent": true,
+   "exact": true,
+   "samples": [
+    6611.778934008564,
+    6617.8255620994105,
+    6773.875420461688
+   ],
+   "median": 6617.8255620994105,
+   "madPct": 0.09136880436190503
+  },
+  {
+   "fixture": "typescript-package-lock",
+   "bytes": 143844,
+   "op": "validate",
+   "impl": "JS JSON.parse",
+   "equivalent": true,
+   "exact": true,
+   "samples": [
+    4372.482510069974,
+    4341.4428835135,
+    4399.296112622024
+   ],
+   "median": 4372.482510069974,
+   "madPct": 0.6132352156995048
+  },
+  {
+   "fixture": "upstream-test",
+   "bytes": 3965,
+   "op": "canonicalize",
+   "impl": "native string",
+   "equivalent": true,
+   "exact": true,
+   "samples": [
+    97424.24040423121,
+    96638.96349713045,
+    89128.57980907534
+   ],
+   "median": 96638.96349713045,
+   "madPct": 0.8125882963594512
+  },
+  {
+   "fixture": "upstream-test",
+   "bytes": 3965,
+   "op": "canonicalize",
+   "impl": "native buffer->buffer",
+   "equivalent": true,
+   "exact": true,
+   "samples": [
+    90362.75094745924,
+    90246.21085887439,
+    89238.70520570516
+   ],
+   "median": 90246.21085887439,
+   "madPct": 0.12913571381638822
+  },
+  {
+   "fixture": "upstream-test",
+   "bytes": 3965,
+   "op": "canonicalize",
+   "impl": "JS JSON.parse+canonicalizeValue",
+   "equivalent": true,
+   "exact": true,
+   "samples": [
+    34200.61474522724,
+    34311.83125241431,
+    33744.845000233036
+   ],
+   "median": 34200.61474522724,
+   "madPct": 0.3251886201916589
+  },
+  {
+   "fixture": "upstream-test",
+   "bytes": 3965,
+   "op": "minify",
+   "impl": "native string",
+   "equivalent": true,
+   "exact": false,
+   "samples": [
+    170076.1893334967,
+    172555.16298913173,
+    162049.3813993119
+   ],
+   "median": 170076.1893334967,
+   "madPct": 1.4575665561121487
+  },
+  {
+   "fixture": "upstream-test",
+   "bytes": 3965,
+   "op": "minify",
+   "impl": "JS JSON.stringify(JSON.parse)",
+   "equivalent": true,
+   "exact": true,
+   "samples": [
+    103876.80084781097,
+    103068.04890484049,
+    101721.80486211699
+   ],
+   "median": 103068.04890484049,
+   "madPct": 0.7846776489551867
+  },
+  {
+   "fixture": "upstream-test",
+   "bytes": 3965,
+   "op": "select",
+   "impl": "native",
+   "equivalent": true,
+   "exact": false,
+   "samples": [
+    166004.55920973918,
+    165127.27866646167,
+    165601.31707868358
+   ],
+   "median": 165601.31707868358,
+   "madPct": 0.24350176566772036
+  },
+  {
+   "fixture": "upstream-test",
+   "bytes": 3965,
+   "op": "select",
+   "impl": "JS JSON.parse+walk+stringify",
+   "equivalent": true,
+   "exact": true,
+   "samples": [
+    160241.562155265,
+    164642.51909720013,
+    154290.74255544666
+   ],
+   "median": 160241.562155265,
+   "madPct": 2.7464515964159406
+  },
+  {
+   "fixture": "upstream-test",
+   "bytes": 3965,
+   "op": "select",
+   "impl": "previous native selectJson",
+   "equivalent": true,
+   "exact": false,
+   "samples": [
+    114415.02692902234,
+    112419.09358147814,
+    116096.90408255857
+   ],
+   "median": 114415.02692902234,
+   "madPct": 1.469979248949169
+  },
+  {
+   "fixture": "upstream-test",
+   "bytes": 3965,
+   "op": "sortKeys",
+   "impl": "native string",
+   "equivalent": true,
+   "exact": true,
+   "samples": [
+    118840.52175189322,
+    118300.60349969318,
+    116434.84114341997
+   ],
+   "median": 118300.60349969318,
+   "madPct": 0.45639517992943635
+  },
+  {
+   "fixture": "upstream-test",
+   "bytes": 3965,
+   "op": "sortKeys",
+   "impl": "previous native stringifyJson",
+   "equivalent": true,
+   "exact": false,
+   "samples": [
+    96395.50154325805,
+    100105.97103458317,
+    98848.21499986533
+   ],
+   "median": 98848.21499986533,
+   "madPct": 1.272411479276131
+  },
+  {
+   "fixture": "upstream-test",
+   "bytes": 3965,
+   "op": "sortKeys",
+   "impl": "JS JSON.parse+safe-stable-stringify",
+   "equivalent": true,
+   "exact": false,
+   "samples": [
+    55401.75433336158,
+    52703.643614093264,
+    50274.695070147136
+   ],
+   "median": 52703.643614093264,
+   "madPct": 4.608691880453997
+  },
+  {
+   "fixture": "upstream-test",
+   "bytes": 3965,
+   "op": "sortKeys",
+   "impl": "JS JSON.parse+fast-json-stable-stringify",
+   "equivalent": true,
+   "exact": false,
+   "samples": [
+    44733.03511310135,
+    45465.302707586816,
+    45063.51222080893
+   ],
+   "median": 45063.51222080893,
+   "madPct": 0.733358523162281
+  },
+  {
+   "fixture": "upstream-test",
+   "bytes": 3965,
+   "op": "validate",
+   "impl": "native",
+   "equivalent": true,
+   "exact": true,
+   "samples": [
+    206017.53865536905,
+    217880.16590875218,
+    214315.47371052048
+   ],
+   "median": 214315.47371052048,
+   "madPct": 1.6632920323086842
+  },
+  {
+   "fixture": "upstream-test",
+   "bytes": 3965,
+   "op": "validate",
+   "impl": "JS JSON.parse",
+   "equivalent": true,
+   "exact": true,
+   "samples": [
+    163672.7212131256,
+    143084.2607313181,
+    148445.38949416997
+   ],
+   "median": 148445.38949416997,
+   "madPct": 3.6115158450659925
+  }
+ ]
+}

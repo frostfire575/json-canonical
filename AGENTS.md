@@ -5,19 +5,20 @@ PROGRESS.md, TASKS.md, docs/architecture.md and docs/decisions.md; inspect Git s
 and recent commits and verify incomplete work before continuing.
 
 ## Objective and boundaries
-Build a measured Rust-powered npm library with explicit JavaScript compatibility.
+Build a measured Rust-powered npm library for JSON text: RFC 8785 canonicalization,
+token-preserving key sorting, minification, validation and JSON Pointer selection.
 Never assume Rust is faster. No publishing, remote pushes, releases, unrelated
 deletions or modifications outside this repository without human approval.
 Local dependencies, builds, tests, benchmarks and local commits are authorized.
 
 ## Architecture and conventions
 Use Rust stable, napi-rs v3, TypeScript wrappers, pnpm and Node's test runner.
-Keep the pure Rust engine separate from bindings. Preserve upstream observable
-semantics in the compatibility API; use separate explicit APIs for JSON text.
-Do not convert arbitrary JS values through serde_json and call it compatible.
-Use rustfmt, clippy and strict TypeScript. Avoid unsafe Rust and speculative
-parallelism. Upstream checkout is a pinned read-only reference, never edit it.
-Preserve MIT attribution for adapted code.
+`crates/core` is the engine: no dependencies, `unsafe` forbidden, clippy pedantic
+clean. `crates/node` is the binding; `js/index.ts` owns argument validation and
+error conversion. Canonical output must match V8 (`String(Number)`, UTF-16 key
+order); test against V8 as the oracle. Ask before adding dependencies. Avoid
+speculative parallelism. The upstream checkout is a pinned read-only benchmark
+baseline, never edit it. Preserve MIT attribution for adapted code.
 
 ## Workflow and evidence
 Tasks live in docs/roadmap/TASKS.md with ID, priority, dependencies, acceptance

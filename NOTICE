@@ -1,8 +1,6 @@
-stable-json-rs compatibility traversal is adapted from
-fast-json-stable-stringify, commit 49e230da2c84247b29ad4de02c9395793caefd15
-https://github.com/epoberezkin/fast-json-stable-stringify
-Copyright (c) 2017 Evgeny Poberezkin
-Copyright (c) 2013 James Halliday
-Licensed under the MIT license reproduced in LICENSE.
+stable-json-rs contains no code adapted from other projects.
 
-Benchmark datasets have separate notices under benches/data/.
+The benchmark compares against fast-json-stable-stringify, commit
+49e230da2c84247b29ad4de02c9395793caefd15, which is fetched into upstream/ for
+local runs and is not part of the package. Benchmark datasets have separate
+notices under benches/data/. Rust dependency notices are in THIRD_PARTY_NOTICES.txt.

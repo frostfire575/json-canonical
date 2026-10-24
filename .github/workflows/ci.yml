@@ -8,21 +8,10 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - os: windows-latest
-            target: x86_64-pc-windows-msvc
-            platform: win32
-            arch: x64
-            node: 24
-          - os: ubuntu-22.04
-            target: x86_64-unknown-linux-gnu
-            platform: linux
-            arch: x64
-            node: 24
-          - os: macos-15
-            target: aarch64-apple-darwin
-            platform: darwin
-            arch: arm64
-            node: 24
+          - { os: windows-latest, target: x86_64-pc-windows-msvc, host: win32/x64 }
+          - { os: ubuntu-22.04, target: x86_64-unknown-linux-gnu, host: linux/x64 }
+          - { os: macos-15, target: aarch64-apple-darwin, host: darwin/arm64 }
+        node: [22.13.0, 24]
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
@@ -40,122 +29,14 @@ jobs:
           toolchain: stable
           components: rustfmt, clippy
       - name: Check actual build host
-        run: node -e "require('node:assert/strict').equal(process.platform + '/' + process.arch, '${{ matrix.platform }}/${{ matrix.arch }}')"
-      - run: node scripts/setup-upstream.cjs
+        run: node -e "require('node:assert/strict').equal(process.platform + '/' + process.arch, '${{ matrix.host }}')"
       - run: pnpm install --frozen-lockfile
-      - run: cargo fmt --all --check
-      - run: cargo clippy --all-targets --locked -- -D warnings
       - run: pnpm check
-      - run: node examples/json-text.cjs
-      - run: node examples/json-text.mjs
-      - run: pnpm licenses:generate
-      - run: git diff --exit-code -- THIRD_PARTY_NOTICES.txt
-      - run: node --test benches/harness.test.cjs
-      - run: node --test benches/reproduction/reproduction.test.cjs
-      - run: node --test tests/candidate-verifier.test.cjs
       - run: pnpm test:pack
-      - run: pnpm test:pack --npm
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+        if: matrix.node == 24
         with:
           archive: true
           name: native-${{ matrix.target }}
           path: native/*.node
           if-no-files-found: error
-  bundle:
-    needs: verify
-    runs-on: ubuntu-22.04
-    steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
-        with:
-          persist-credentials: false
-      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
-        with:
-          node-version: 24
-          package-manager-cache: false
-      - uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # v6.0.10
-        with:
-          version: 12.10.1
-      - run: pnpm install --frozen-lockfile
-      - run: pnpm build:js
-      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
-        with:
-          digest-mismatch: error
-          pattern: native-*
-          path: native
-          merge-multiple: true
-      - name: Pack the combined candidate exactly once
-        run: pnpm pack --pack-destination .verification/ci-candidate
-      - name: Record candidate identity
-        run: node scripts/verify-ci-candidate.cjs manifest .verification/ci-candidate --all-targets
-      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
-        with:
-          archive: true
-          name: multi-platform-npm-candidate
-          path: |
-            .verification/ci-candidate/*.tgz
-            .verification/ci-candidate/candidate.json
-          include-hidden-files: true
-          if-no-files-found: error
-  verify-candidate:
-    needs: bundle
-    strategy:
-      fail-fast: false
-      matrix:
-        node: [22.13.0, 24]
-        include:
-          - os: windows-latest
-            platform: win32
-            arch: x64
-          - os: ubuntu-22.04
-            platform: linux
-            arch: x64
-          - os: macos-15
-            platform: darwin
-            arch: arm64
-        # OS is an axis so each Node version verifies the same three targets.
-        os: [windows-latest, ubuntu-22.04, macos-15]
-    runs-on: ${{ matrix.os }}
-    steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
-        with:
-          persist-credentials: false
-      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
-        with:
-          node-version: ${{ matrix.node }}
-          package-manager-cache: false
-      - uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # v6.0.10
-        with:
-          version: 12.10.1
-      - name: Check actual install host
-        run: node -e "require('node:assert/strict').equal(process.platform + '/' + process.arch, '${{ matrix.platform }}/${{ matrix.arch }}')"
-      # Only the TypeScript compiler is used from dev dependencies. There is no
-      # Rust setup, native compilation or JS build in this installation job.
-      - run: pnpm install --frozen-lockfile --ignore-scripts
-      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
-        with:
-          digest-mismatch: error
-          name: multi-platform-npm-candidate
-          path: .verification/ci-candidate
-      - name: Verify checksum and prepare isolated consumers
-        run: node scripts/verify-ci-candidate.cjs prepare .verification/ci-candidate
-      - name: Install exact candidate with npm and lifecycle scripts disabled
-        run: npm install --offline --ignore-scripts --no-audit --no-fund ./candidate.tgz
-        working-directory: .verification/ci-candidate/npm
-      - name: Install exact candidate with pnpm and lifecycle scripts disabled
-        run: pnpm add --offline --ignore-scripts ./candidate.tgz
-        working-directory: .verification/ci-candidate/pnpm
-      - name: Verify installed CJS, ESM, types and all bundled native files
-        run: node scripts/verify-ci-candidate.cjs verify .verification/ci-candidate --all-targets
-      - name: Run CJS and ESM examples from each installed package
-        run: >-
-          node -e "const path=require('node:path'),cp=require('node:child_process');
-          for(const manager of ['npm','pnpm'])for(const file of ['json-text.cjs','json-text.mjs'])
-          cp.execFileSync(process.execPath,[path.join('.verification/ci-candidate',manager,'node_modules/stable-json-rs/examples',file)],{stdio:'inherit'})"
-      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
-        if: always()
-        with:
-          archive: true
-          name: candidate-evidence-${{ matrix.os }}-node-${{ matrix.node }}
-          path: .verification/ci-candidate/verification-*.json
-          include-hidden-files: true
-          if-no-files-found: warn

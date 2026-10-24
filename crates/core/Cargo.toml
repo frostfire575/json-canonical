@@ -1,0 +1,15 @@
+[package]
+name = "stable-json-core"
+description = "Single-pass JSON text engine: RFC 8785 canonicalization, key sorting, minification, validation and JSON Pointer selection"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+
+[dependencies]
+
+[dev-dependencies]
+serde_json = "1"
+
+[lints]
+workspace = true

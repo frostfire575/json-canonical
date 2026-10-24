@@ -1,4 +1,5 @@
 import api from './index.cjs';
-export const { stringify, stableStringify, stringifyBatch, createSerializerCache,
-  stringifyJson, stringifyJsonBatch, selectJson } = api;
-export default api.stringify;
+export const {
+  JsonError, canonicalize, canonicalizeAsync, sortKeys, sortKeysAsync, minify, minifyAsync,
+  validate, isValid, select, equal, canonicalHash, canonicalizeValue,
+} = api;

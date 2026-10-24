@@ -1,0 +1,252 @@
+{
+ "environment": {
+  "node": "v24.22.1",
+  "v8": "13.6.233.17-node.58",
+  "platform": "win32-x64",
+  "cpu": "12th Gen Intel(R) Core(TM) i7-12700K",
+  "date": "2026-10-24T04:28:38.804Z",
+  "WARMUP_MS": 300,
+  "SAMPLE_MS": 100,
+  "SAMPLES": 5
+ },
+ "results": [
+  {
+   "fixture": "synthetic-floats",
+   "bytes": 4052927,
+   "op": "canonicalize",
+   "impl": "JS JSON.parse+canonicalizeValue",
+   "equivalent": true,
+   "exact": true,
+   "samples": [
+    23.060319646777373,
+    22.102883026385673,
+    22.558375436034602,
+    23.490684377598743,
+    22.748125175350147
+   ],
+   "median": 22.748125175350147,
+   "madPct": 1.3723964899117036
+  },
+  {
+   "fixture": "synthetic-floats",
+   "bytes": 4052927,
+   "op": "canonicalize",
+   "impl": "native string",
+   "equivalent": true,
+   "exact": true,
+   "samples": [
+    18.30058900445722,
+    18.55814359178005,
+    18.317081502769934,
+    17.984075101497485,
+    18.41968327354614
+   ],
+   "median": 18.317081502769934,
+   "madPct": 0.5601425683490663
+  },
+  {
+   "fixture": "synthetic-floats",
+   "bytes": 4052927,
+   "op": "canonicalize",
+   "impl": "native buffer->buffer",
+   "equivalent": true,
+   "exact": true,
+   "samples": [
+    17.917486391668923,
+    14.234885576431127,
+    17.51813564993155,
+    17.141236071674335,
+    17.790824382324885
+   ],
+   "median": 17.51813564993155,
+   "madPct": 2.15148224553615
+  },
+  {
+   "fixture": "synthetic-floats",
+   "bytes": 4052927,
+   "op": "minify",
+   "impl": "native string",
+   "equivalent": true,
+   "exact": false,
+   "samples": [
+    98.6172870187113,
+    98.69768405884217,
+    103.13811787936822,
+    106.45339857313785,
+    105.71434063082806
+   ],
+   "median": 103.13811787936822,
+   "madPct": 3.2144087578243585
+  },
+  {
+   "fixture": "synthetic-floats",
+   "bytes": 4052927,
+   "op": "minify",
+   "impl": "JS JSON.stringify(JSON.parse)",
+   "equivalent": true,
+   "exact": true,
+   "samples": [
+    31.610757773085297,
+    33.05940858371031,
+    34.001548770546464,
+    32.749357703221825,
+    34.353488811498174
+   ],
+   "median": 33.05940858371031,
+   "madPct": 2.8498398102027322
+  },
+  {
+   "fixture": "synthetic-floats",
+   "bytes": 4052927,
+   "op": "select",
+   "impl": "native",
+   "equivalent": true,
+   "exact": false,
+   "samples": [
+    128.45443622336063,
+    128.1665771143806,
+    127.95363747584894,
+    128.41827214202632,
+    128.23965426589223
+   ],
+   "median": 128.23965426589223,
+   "madPct": 0.13928443363060794
+  },
+  {
+   "fixture": "synthetic-floats",
+   "bytes": 4052927,
+   "op": "select",
+   "impl": "JS JSON.parse+walk+stringify",
+   "equivalent": true,
+   "exact": true,
+   "samples": [
+    102.26812098132741,
+    102.84574167206624,
+    77.85357688527331,
+    95.56858049120383,
+    87.9891831964112
+   ],
+   "median": 95.56858049120383,
+   "madPct": 7.614595867657781
+  },
+  {
+   "fixture": "synthetic-floats",
+   "bytes": 4052927,
+   "op": "select",
+   "impl": "previous native selectJson",
+   "equivalent": true,
+   "exact": false,
+   "samples": [
+    72.26151442068829,
+    72.6193999095889,
+    67.87780056532492,
+    71.54617545447498,
+    72.82088065932054
+   ],
+   "median": 72.26151442068829,
+   "madPct": 0.7740859614092249
+  },
+  {
+   "fixture": "synthetic-floats",
+   "bytes": 4052927,
+   "op": "sortKeys",
+   "impl": "native string",
+   "equivalent": true,
+   "exact": true,
+   "samples": [
+    106.80586383611605,
+    106.22702840510627,
+    105.34037390086928,
+    105.38427417539211,
+    106.04791244684425
+   ],
+   "median": 106.04791244684425,
+   "madPct": 0.6257909808312229
+  },
+  {
+   "fixture": "synthetic-floats",
+   "bytes": 4052927,
+   "op": "sortKeys",
+   "impl": "previous native stringifyJson",
+   "equivalent": true,
+   "exact": false,
+   "samples": [
+    62.605423060617866,
+    62.87026092954525,
+    62.23621845623912,
+    63.200224631654905,
+    62.34380649907461
+   ],
+   "median": 62.605423060617866,
+   "madPct": 0.42302704139696806
+  },
+  {
+   "fixture": "synthetic-floats",
+   "bytes": 4052927,
+   "op": "sortKeys",
+   "impl": "JS JSON.parse+safe-stable-stringify",
+   "equivalent": true,
+   "exact": false,
+   "samples": [
+    26.072695890682425,
+    24.319913875078317,
+    17.629206659256585,
+    24.795396651960203,
+    26.770154133623947
+   ],
+   "median": 24.795396651960203,
+   "madPct": 5.151356345094986
+  },
+  {
+   "fixture": "synthetic-floats",
+   "bytes": 4052927,
+   "op": "sortKeys",
+   "impl": "JS JSON.parse+fast-json-stable-stringify",
+   "equivalent": true,
+   "exact": false,
+   "samples": [
+    23.02038147841492,
+    23.42401289257671,
+    20.26980461259667,
+    20.733467133307954,
+    24.36439387479152
+   ],
+   "median": 23.02038147841492,
+   "madPct": 5.838358489570715
+  },
+  {
+   "fixture": "synthetic-floats",
+   "bytes": 4052927,
+   "op": "validate",
+   "impl": "native",
+   "equivalent": true,
+   "exact": true,
+   "samples": [
+    131.05448309303495,
+    130.59141118944407,
+    131.94502039492906,
+    129.5566571193364,
+    129.1767565306299
+   ],
+   "median": 130.59141118944407,
+   "madPct": 0.7923599727447634
+  },
+  {
+   "fixture": "synthetic-floats",
+   "bytes": 4052927,
+   "op": "validate",
+   "impl": "JS JSON.parse",
+   "equivalent": true,
+   "exact": true,
+   "samples": [
+    97.44936043984649,
+    96.42643627176814,
+    95.26340808652888,
+    99.90039930189535,
+    100.42057964584367
+   ],
+   "median": 97.44936043984649,
+   "madPct": 2.24316747021336
+  }
+ ]
+}

@@ -1,29 +1,21 @@
-[package]
-name = "stable-json-rs"
-version = "0.1.0"
+[workspace]
+resolver = "3"
+members = ["crates/core", "crates/node"]
+
+[workspace.package]
+version = "0.2.0"
 edition = "2024"
 rust-version = "1.88"
 license = "MIT"
-description = "Bounded deterministic JSON text engine with Node-API bindings"
 
-[lib]
-crate-type = ["cdylib", "rlib"]
+[workspace.lints.rust]
+unsafe_code = "forbid"
 
-[dependencies]
-napi = { version = "3", default-features = false, features = ["napi8", "dyn-symbols"] }
-napi-derive = "3"
-serde = "1"
-serde_json = { version = "1", features = ["raw_value"] }
-memchr = "2"
-
-[build-dependencies]
-napi-build = "2"
+[workspace.lints.clippy]
+pedantic = { level = "warn", priority = -1 }
+module_name_repetitions = "allow"
+missing_errors_doc = "allow"
 
 [profile.release]
-lto = "thin"
+lto = "fat"
 codegen-units = 1
-
-[[bench]]
-name = "engine"
-harness = false
-
