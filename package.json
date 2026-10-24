@@ -3,6 +3,12 @@
   "version": "0.2.0",
   "description": "RFC 8785 canonical JSON for Node, native (Rust) and computed from JSON text: deterministic stringify, key sorting that keeps big numbers exact, canonical hash, equal, minify, validate and JSON Pointer select",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/frostfire575/json-canonical.git"
+  },
+  "homepage": "https://github.com/frostfire575/json-canonical#readme",
+  "bugs": "https://github.com/frostfire575/json-canonical/issues",
   "keywords": [
     "json",
     "canonical",
