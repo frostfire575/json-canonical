@@ -60,3 +60,7 @@ input) against SHA-256 over `safe-stable-stringify` and over `canonicalizeValue`
 Over three pinned runs `canonicalHash` is 1.51x to 4.60x of the fastest
 JavaScript pipeline. `equal` is 0.49x to 1.22x of `isDeepStrictEqual`, because it
 canonicalizes both documents in full; that is recorded as a known gap.
+
+## 2026-10-24: Release workflow (V2-PUBLISH-CI)
+
+Publishing from this machine would have shipped only the Windows addon, so publishing moved to CI. `.github/workflows/release.yml` calls `ci.yml` for the full matrix, takes the addons those jobs built and tested, checks that the tag matches the package version and that the tarball holds all three addons, and publishes with provenance. A manual run stops at `npm publish --dry-run`; one passed. Tag pushes no longer start a separate CI run.

@@ -6,8 +6,10 @@
 - Phase: v2 engine, binding, API, tests, benchmarks and docs complete locally on
   Windows x64. Review findings fixed.
 - Active task: none.
-- Next: V2-CI, V2-FLOAT, V2-CLI and V2-BENCH-API are done. Remaining plan:
-  V2-RELEASE (needs explicit approval). `equal` is slower than
+- Next: V2-CI, V2-FLOAT, V2-CLI, V2-BENCH-API and V2-PUBLISH-CI are done.
+  Remaining plan: V2-RELEASE (needs explicit approval). The owner adds an
+  `NPM_TOKEN` repository secret, then the tag `v0.2.0` publishes through
+  release.yml. The name `stable-json-rs` was free on npm on 2026-10-24. `equal` is slower than
   `isDeepStrictEqual` (REGRESSIONS.md); no task for it yet.
 - Passing: `pnpm check` (build, rustfmt, clippy pedantic, 14 Rust tests, 29 JS
   tests, strict types) on Node 24.22.1; the 29 JS tests on Node 22.13.0;
