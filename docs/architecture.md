@@ -4,7 +4,10 @@ json-canonical reads JSON text once and writes the result during that one pass.
 It never builds a token tree or JavaScript objects, and that is where the speed
 comes from. This page follows a call from JavaScript into Rust and back.
 
-![Data flow: input, TypeScript wrapper, Rust single-pass parser, output](images/pipeline.svg)
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="images/pipeline-dark.svg">
+  <img src="images/pipeline.svg" alt="Data flow: input, TypeScript wrapper, Rust single-pass parser, output" width="100%">
+</picture>
 
 ## Layout
 
@@ -59,7 +62,10 @@ control bytes, written with safe `u64::from_le_bytes`.
 
 ## Numbers
 
-![Number formatting paths in canonicalize](images/numbers.svg)
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="images/numbers-dark.svg">
+  <img src="images/numbers.svg" alt="Number formatting paths in canonicalize" width="100%">
+</picture>
 
 Sort and minify never interpret numbers, so they never lose precision. Canonical
 mode follows ECMA-262 `Number::toString` (`number.rs`) in one of two ways:

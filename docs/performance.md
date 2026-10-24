@@ -6,9 +6,15 @@ from runs `2026-10-24T16-11-41-552Z`, `16-16-26-099Z` and `16-21-13-048Z` by
 `scripts/gen-docs-graphics.py`; the sections after them hold the method, every
 table and the earlier runs.
 
-![canonicalize speedup over JSON.parse plus canonical-json and plus json-stable-stringify](images/speedup.svg)
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="images/speedup-dark.svg">
+  <img src="images/speedup.svg" alt="canonicalize speedup over JSON.parse plus canonical-json and plus json-stable-stringify" width="100%">
+</picture>
 
-![Speedup of each operation over the fastest JavaScript baseline, per fixture](images/operations.svg)
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="images/operations-dark.svg">
+  <img src="images/operations.svg" alt="Speedup of each operation over the fastest JavaScript baseline, per fixture" width="100%">
+</picture>
 
 The grid divides native ops/s by the fastest JavaScript baseline in the same run,
 then takes the median of the three runs. Those runs repeated every cell, so the

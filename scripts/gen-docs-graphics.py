@@ -31,17 +31,21 @@ SERIF = "Georgia, 'Times New Roman', serif"
 SANS = "-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif"
 MONO = "ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace"
 
-PAPER = "#faf9f5"
-SHEET = "#fffefb"
-OAT = "#f0eee6"
-INK = "#141413"
-INK2 = "#5e5d59"
-MUTED = "#87867f"
-# Two series colors, checked with the dataviz palette validator on PAPER:
-# CVD delta E 18.7, normal-vision delta E 23.2, both above 3:1 contrast.
-CLAY = "#c4623f"
-SKY = "#4f86c0"
-OLIVE = "#6b7f4f"
+# Each image is drawn twice. GitHub picks one through <picture> and
+# prefers-color-scheme; a media query inside the SVG would follow the OS theme
+# instead of GitHub's. Series colors were checked with the dataviz palette
+# validator on their own paper: light CVD delta E 18.7, dark 20.4, both 3:1+.
+THEMES = {
+    "light": dict(
+        PAPER="#faf9f5", SHEET="#fffefb", OAT="#f0eee6", INK="#141413", INK2="#5e5d59",
+        MUTED="#87867f", CLAY="#c4623f", SKY="#4f86c0", OLIVE="#6b7f4f",
+    ),
+    "dark": dict(
+        PAPER="#262624", SHEET="#30302e", OAT="#3b3a37", INK="#f0eee6", INK2="#c2c0b6",
+        MUTED="#8f8d85", CLAY="#d97149", SKY="#5794d8", OLIVE="#97ab74",
+    ),
+}
+globals().update(THEMES["light"])
 
 FIXTURES = [
     ("typescript-package", "package.json", "1.8 KB"),
@@ -68,7 +72,8 @@ class Sketch:
 
     # ------------------------------------------------------------ strokes
 
-    def line(self, x1, y1, x2, y2, color=INK, width=1.5, rough=1.0, passes=2, dash=None, opacity=1):
+    def line(self, x1, y1, x2, y2, color=None, width=1.5, rough=1.0, passes=2, dash=None, opacity=1):
+        color = color or INK  # read per call, since main() swaps the theme globals
         length = max(math.hypot(x2 - x1, y2 - y1), 1)
         nx, ny = -(y2 - y1) / length, (x2 - x1) / length
         for p in range(passes):
@@ -86,7 +91,8 @@ class Sketch:
                 f'stroke-linecap="round" opacity="{opacity * (1 if p == 0 else 0.7):.2f}"{extra}/>'
             )
 
-    def poly(self, points, color=INK, width=1.5, rough=1.0, closed=True):
+    def poly(self, points, color=None, width=1.5, rough=1.0, closed=True):
+        color = color or INK
         pts = points + ([points[0]] if closed else [])
         for (x1, y1), (x2, y2) in zip(pts, pts[1:]):
             # Overshoot the corners a little, the way a quick hand does.
@@ -118,7 +124,8 @@ class Sketch:
         del self.strokes[start:]
         self.strokes.append(f'<g clip-path="url(#{cid})">' + "".join(group) + "</g>")
 
-    def rect(self, x, y, w, h, color=INK, width=1.5, fill=None, hatch=None, rough=1.0):
+    def rect(self, x, y, w, h, color=None, width=1.5, fill=None, hatch=None, rough=1.0):
+        color = color or INK
         pts = [(x, y), (x + w, y), (x + w, y + h), (x, y + h)]
         if fill:
             self.fill(pts, fill)
@@ -134,7 +141,8 @@ class Sketch:
         self.poly(pts, INK, 1.4)
         self.poly([(x + w - fold, y), (x + w - fold, y + fold), (x + w, y + fold)], INK, 1.1, closed=False)
 
-    def ellipse(self, cx, cy, rx, ry, color=INK, width=1.5):
+    def ellipse(self, cx, cy, rx, ry, color=None, width=1.5):
+        color = color or INK
         start = self.rng.uniform(0, math.tau)
         n = 18
         pts = []
@@ -146,7 +154,8 @@ class Sketch:
             f'<path d="{catmull_rom(pts)}" fill="none" stroke="{color}" stroke-width="{width}" stroke-linecap="round"/>'
         )
 
-    def arrow(self, x1, y1, x2, y2, color=INK, width=1.6, bend=0.15, head=11):
+    def arrow(self, x1, y1, x2, y2, color=None, width=1.6, bend=0.15, head=11):
+        color = color or INK
         dx, dy = x2 - x1, y2 - y1
         cx = (x1 + x2) / 2 - dy * bend + self.j(2)
         cy = (y1 + y2) / 2 + dx * bend + self.j(2)
@@ -162,11 +171,13 @@ class Sketch:
             a = angle + math.pi - side * math.radians(26 + self.j(4))
             self.line(x2, y2, x2 + head * math.cos(a), y2 + head * math.sin(a), color, width, rough=0.4, passes=1)
 
-    def check(self, x, y, color=OLIVE, size=14):
+    def check(self, x, y, color=None, size=14):
+        color = color or OLIVE
         self.line(x, y, x + size * 0.35, y + size * 0.4, color, 2.4, 0.5, 1)
         self.line(x + size * 0.35, y + size * 0.4, x + size, y - size * 0.5, color, 2.4, 0.5, 1)
 
-    def squiggle(self, x, y, w, color=CLAY, width=1.6):
+    def squiggle(self, x, y, w, color=None, width=1.6):
+        color = color or CLAY
         d = f"M{x:.1f},{y:.1f}"
         step = 8
         for i in range(int(w // step)):
@@ -175,17 +186,20 @@ class Sketch:
 
     # ------------------------------------------------------------ text
 
-    def text(self, x, y, s, size=14, fill=INK, family=SANS, anchor="start", weight="normal", rotate=0):
+    def text(self, x, y, s, size=14, fill=None, family=SANS, anchor="start", weight="normal", rotate=0):
+        fill = fill or INK
         rot = f' transform="rotate({rotate} {x} {y})"' if rotate else ""
         self.texts.append(
             f'<text x="{x:.1f}" y="{y:.1f}" font-family="{family}" font-size="{size}" fill="{fill}" '
             f'text-anchor="{anchor}" font-weight="{weight}" xml:space="preserve"{rot}>{escape(s)}</text>'
         )
 
-    def hand(self, x, y, s, size=15, fill=INK2, anchor="start", rotate=0):
+    def hand(self, x, y, s, size=15, fill=None, anchor="start", rotate=0):
+        fill = fill or INK2
         self.text(x, y, s, size, fill, HAND, anchor, rotate=rotate)
 
-    def mono(self, x, y, s, size=12.5, fill=INK, anchor="start"):
+    def mono(self, x, y, s, size=12.5, fill=None, anchor="start"):
+        fill = fill or INK
         self.text(x, y, s, size, fill, MONO, anchor)
 
     def tooltip(self, s):
@@ -532,16 +546,18 @@ def operations(runs):
 def main():
     OUT.mkdir(parents=True, exist_ok=True)
     runs = load_runs()
-    files = {
-        "hero.svg": hero(),
-        "pipeline.svg": pipeline(),
-        "numbers.svg": numbers(),
-        "speedup.svg": speedup(runs),
-        "operations.svg": operations(runs),
-    }
-    for name, content in files.items():
-        (OUT / name).write_text(content, encoding="utf-8", newline="\n")
-        print(f"docs/images/{name}")
+    for theme, suffix in (("light", ""), ("dark", "-dark")):
+        globals().update(THEMES[theme])
+        files = {
+            "hero": hero(),
+            "pipeline": pipeline(),
+            "numbers": numbers(),
+            "speedup": speedup(runs),
+            "operations": operations(runs),
+        }
+        for name, content in files.items():
+            (OUT / f"{name}{suffix}.svg").write_text(content, encoding="utf-8", newline="\n")
+            print(f"docs/images/{name}{suffix}.svg")
 
 
 if __name__ == "__main__":

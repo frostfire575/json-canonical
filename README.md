@@ -1,9 +1,8 @@
 <p align="center">
-  <img
-    src="https://raw.githubusercontent.com/frostfire575/json-canonical/main/docs/images/hero.svg"
-    alt="Two differently written JSON files go through jcanon and come out as the same canonical bytes and the same SHA-256 hash"
-    width="100%"
-  >
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/frostfire575/json-canonical/main/docs/images/hero-dark.svg">
+    <img src="https://raw.githubusercontent.com/frostfire575/json-canonical/main/docs/images/hero.svg" alt="Two differently written JSON files go through jcanon and come out as the same canonical bytes and the same SHA-256 hash" width="100%">
+  </picture>
 </p>
 
 <h1 align="center">
@@ -98,11 +97,10 @@ included.
 ## Performance
 
 <p align="center">
-  <img
-    src="https://raw.githubusercontent.com/frostfire575/json-canonical/main/docs/images/speedup.svg"
-    alt="canonicalize is 1.37x to 2.67x faster than JSON.parse plus canonical-json and 2.03x to 3.96x faster than JSON.parse plus json-stable-stringify across seven fixtures"
-    width="100%"
-  >
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/frostfire575/json-canonical/main/docs/images/speedup-dark.svg">
+    <img src="https://raw.githubusercontent.com/frostfire575/json-canonical/main/docs/images/speedup.svg" alt="canonicalize is 1.37x to 2.67x faster than JSON.parse plus canonical-json and 2.03x to 3.96x faster than JSON.parse plus json-stable-stringify across seven fixtures" width="100%">
+  </picture>
 </p>
 
 The speed comes from never building JavaScript objects: one pass over the bytes
@@ -110,11 +108,10 @@ validates and writes the output at the same time. Passing a `Buffer` straight fr
 `fs.readFile` or a socket also skips string transcoding.
 
 <p align="center">
-  <img
-    src="https://raw.githubusercontent.com/frostfire575/json-canonical/main/docs/images/operations.svg"
-    alt="Speedup of each operation over the fastest JavaScript baseline per fixture; select on package.json and equal on most fixtures are slower"
-    width="100%"
-  >
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/frostfire575/json-canonical/main/docs/images/operations-dark.svg">
+    <img src="https://raw.githubusercontent.com/frostfire575/json-canonical/main/docs/images/operations.svg" alt="Speedup of each operation over the fastest JavaScript baseline per fixture; select on package.json and equal on most fixtures are slower" width="100%">
+  </picture>
 </p>
 
 Not everything wins. `select` on a 1.8 KB file loses to `JSON.parse` because the

@@ -1,0 +1,108 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="384" viewBox="0 0 960 384" role="img" aria-label="Number formatting paths in canonicalize">
+<title>Number formatting paths in canonicalize</title>
+<defs>
+<filter id="pencil" x="-2%" y="-2%" width="104%" height="104%"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="7" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="1.6"/></filter>
+
+</defs>
+<rect width="960" height="384" rx="14" fill="#262624"/>
+<g filter="url(#pencil)">
+<path d="M40.4,154.0 L210.3,171.8 L210.8,235.0 L40.3,234.7 z" fill="#3b3a37" opacity="1"/>
+<path d="M36.1,149.1 L190.4,150.2 L205.5,165.7 L206.6,229.9 L37.1,231.1 z" fill="#30302e" opacity="1"/>
+<path d="M33.1,150.4 Q112.7,148.3 193.2,150.1" fill="none" stroke="#f0eee6" stroke-width="1.40" stroke-linecap="round" opacity="1.00"/>
+<path d="M33.5,149.4 Q113.1,150.1 192.4,149.0" fill="none" stroke="#f0eee6" stroke-width="0.77" stroke-linecap="round" opacity="0.70"/>
+<path d="M187.5,148.2 Q197.2,158.5 206.8,168.2" fill="none" stroke="#f0eee6" stroke-width="1.40" stroke-linecap="round" opacity="1.00"/>
+<path d="M188.9,148.9 Q198.1,158.0 207.5,168.3" fill="none" stroke="#f0eee6" stroke-width="0.77" stroke-linecap="round" opacity="0.70"/>
+<path d="M205.4,164.2 Q206.7,198.0 205.1,232.0" fill="none" stroke="#f0eee6" stroke-width="1.40" stroke-linecap="round" opacity="1.00"/>
+<path d="M205.2,164.2 Q205.5,198.1 205.7,231.1" fill="none" stroke="#f0eee6" stroke-width="0.77" stroke-linecap="round" opacity="0.70"/>
+<path d="M208.5,230.1 Q120.7,231.8 32.9,230.2" fill="none" stroke="#f0eee6" stroke-width="1.40" stroke-linecap="round" opacity="1.00"/>
+<path d="M209.4,229.9 Q120.8,229.6 33.0,230.8" fill="none" stroke="#f0eee6" stroke-width="0.77" stroke-linecap="round" opacity="0.70"/>
+<path d="M36.5,230.3 Q35.5,189.6 35.6,148.9" fill="none" stroke="#f0eee6" stroke-width="1.40" stroke-linecap="round" opacity="1.00"/>
+<path d="M36.4,231.3 Q36.8,190.3 36.4,149.2" fill="none" stroke="#f0eee6" stroke-width="0.77" stroke-linecap="round" opacity="0.70"/>
+<path d="M190.3,147.5 Q189.0,158.3 190.9,167.5" fill="none" stroke="#f0eee6" stroke-width="1.10" stroke-linecap="round" opacity="1.00"/>
+<path d="M189.1,148.3 Q190.6,158.0 189.9,167.5" fill="none" stroke="#f0eee6" stroke-width="0.61" stroke-linecap="round" opacity="0.70"/>
+<path d="M188.3,166.9 Q198.4,166.5 209.1,166.0" fill="none" stroke="#f0eee6" stroke-width="1.10" stroke-linecap="round" opacity="1.00"/>
+<path d="M188.5,166.3 Q198.0,165.4 208.5,165.2" fill="none" stroke="#f0eee6" stroke-width="0.61" stroke-linecap="round" opacity="0.70"/>
+<path d="M340.4,118.9 L449.1,188.9 L340.6,261.1 L230.2,189.0 z" fill="#30302e" opacity="1"/>
+<path d="M338.9,118.1 Q395.8,154.2 451.4,190.9" fill="none" stroke="#f0eee6" stroke-width="1.60" stroke-linecap="round" opacity="1.00"/>
+<path d="M337.2,118.7 Q396.1,153.9 451.2,192.2" fill="none" stroke="#f0eee6" stroke-width="0.88" stroke-linecap="round" opacity="0.70"/>
+<path d="M451.5,189.8 Q396.1,226.3 338.0,260.8" fill="none" stroke="#f0eee6" stroke-width="1.60" stroke-linecap="round" opacity="1.00"/>
+<path d="M451.5,188.4 Q394.0,223.5 339.5,261.4" fill="none" stroke="#f0eee6" stroke-width="0.88" stroke-linecap="round" opacity="0.70"/>
+<path d="M342.5,261.8 Q285.7,224.0 228.5,187.8" fill="none" stroke="#f0eee6" stroke-width="1.60" stroke-linecap="round" opacity="1.00"/>
+<path d="M341.7,262.1 Q285.0,224.8 227.8,188.8" fill="none" stroke="#f0eee6" stroke-width="0.88" stroke-linecap="round" opacity="0.70"/>
+<path d="M228.3,190.9 Q284.7,154.7 341.7,119.5" fill="none" stroke="#f0eee6" stroke-width="1.60" stroke-linecap="round" opacity="1.00"/>
+<path d="M228.3,190.7 Q285.2,155.8 340.5,118.9" fill="none" stroke="#f0eee6" stroke-width="0.88" stroke-linecap="round" opacity="0.70"/>
+<path d="M209.5,190.0 Q219.0,193.5 226.0,190.0" fill="none" stroke="#f0eee6" stroke-width="1.6" stroke-linecap="round"/>
+<path d="M209.8,190.7 Q220.0,193.0 226.0,190.0" fill="none" stroke="#f0eee6" stroke-width="0.8" stroke-linecap="round"/>
+<path d="M226.1,189.8 Q220.4,189.6 215.0,189.5" fill="none" stroke="#f0eee6" stroke-width="1.60" stroke-linecap="round" opacity="1.00"/>
+<path d="M226.0,189.9 Q222.4,194.0 219.0,198.3" fill="none" stroke="#f0eee6" stroke-width="1.60" stroke-linecap="round" opacity="1.00"/>
+<path d="M519.1,104.8 L759.4,103.3 L759.8,181.1 L520.5,179.1 z" fill="#30302e" opacity="1"/>
+<path d="M518.5,104.7 Q639.6,103.8 761.5,104.7" fill="none" stroke="#97ab74" stroke-width="1.80" stroke-linecap="round" opacity="1.00"/>
+<path d="M519.9,103.1 Q639.6,104.6 760.7,104.6" fill="none" stroke="#97ab74" stroke-width="0.99" stroke-linecap="round" opacity="0.70"/>
+<path d="M759.3,103.4 Q760.5,142.1 759.2,180.5" fill="none" stroke="#97ab74" stroke-width="1.80" stroke-linecap="round" opacity="1.00"/>
+<path d="M759.7,103.3 Q760.2,142.0 760.6,181.7" fill="none" stroke="#97ab74" stroke-width="0.99" stroke-linecap="round" opacity="0.70"/>
+<path d="M763.3,179.8 Q640.1,181.5 518.1,179.7" fill="none" stroke="#97ab74" stroke-width="1.80" stroke-linecap="round" opacity="1.00"/>
+<path d="M763.5,180.5 Q640.1,177.7 517.4,180.9" fill="none" stroke="#97ab74" stroke-width="0.99" stroke-linecap="round" opacity="0.70"/>
+<path d="M519.2,182.9 Q521.0,142.2 519.0,101.3" fill="none" stroke="#97ab74" stroke-width="1.80" stroke-linecap="round" opacity="1.00"/>
+<path d="M519.4,182.8 Q519.3,142.3 519.6,102.2" fill="none" stroke="#97ab74" stroke-width="0.99" stroke-linecap="round" opacity="0.70"/>
+<path d="M430.3,159.9 Q470.2,141.1 514.0,142.0" fill="none" stroke="#97ab74" stroke-width="1.6" stroke-linecap="round"/>
+<path d="M429.3,159.2 Q470.5,140.2 514.0,142.0" fill="none" stroke="#97ab74" stroke-width="0.8" stroke-linecap="round"/>
+<path d="M513.9,141.7 Q509.2,139.4 503.9,137.5" fill="none" stroke="#97ab74" stroke-width="1.60" stroke-linecap="round" opacity="1.00"/>
+<path d="M514.1,142.2 Q509.4,144.7 504.0,146.8" fill="none" stroke="#97ab74" stroke-width="1.60" stroke-linecap="round" opacity="1.00"/>
+<path d="M519.6,220.2 L761.1,219.2 L761.1,316.2 L519.9,315.0 z" fill="#30302e" opacity="1"/>
+<path d="M518.3,220.5 Q640.3,217.7 762.0,219.6" fill="none" stroke="#5794d8" stroke-width="1.80" stroke-linecap="round" opacity="1.00"/>
+<path d="M518.7,219.7 Q640.0,220.3 762.0,220.5" fill="none" stroke="#5794d8" stroke-width="0.99" stroke-linecap="round" opacity="0.70"/>
+<path d="M759.3,219.0 Q760.6,267.7 759.9,317.5" fill="none" stroke="#5794d8" stroke-width="1.80" stroke-linecap="round" opacity="1.00"/>
+<path d="M759.0,218.6 Q759.9,267.7 759.6,318.0" fill="none" stroke="#5794d8" stroke-width="0.99" stroke-linecap="round" opacity="0.70"/>
+<path d="M761.5,315.3 Q640.3,314.5 518.9,315.6" fill="none" stroke="#5794d8" stroke-width="1.80" stroke-linecap="round" opacity="1.00"/>
+<path d="M761.1,316.4 Q640.3,316.6 518.8,315.8" fill="none" stroke="#5794d8" stroke-width="0.99" stroke-linecap="round" opacity="0.70"/>
+<path d="M519.6,316.1 Q518.5,267.9 519.6,219.0" fill="none" stroke="#5794d8" stroke-width="1.80" stroke-linecap="round" opacity="1.00"/>
+<path d="M520.1,315.8 Q521.0,268.2 520.7,219.9" fill="none" stroke="#5794d8" stroke-width="0.99" stroke-linecap="round" opacity="0.70"/>
+<path d="M429.9,219.4 Q468.5,244.8 514.0,254.0" fill="none" stroke="#5794d8" stroke-width="1.6" stroke-linecap="round"/>
+<path d="M430.1,219.5 Q466.7,244.5 514.0,254.0" fill="none" stroke="#5794d8" stroke-width="0.8" stroke-linecap="round"/>
+<path d="M514.0,253.9 Q509.7,250.5 505.3,247.0" fill="none" stroke="#5794d8" stroke-width="1.60" stroke-linecap="round" opacity="1.00"/>
+<path d="M514.4,253.7 Q508.8,255.4 503.3,257.1" fill="none" stroke="#5794d8" stroke-width="1.60" stroke-linecap="round" opacity="1.00"/>
+<path d="M800.3,154.4 L951.5,170.1 L952.5,235.3 L799.9,235.3 z" fill="#3b3a37" opacity="1"/>
+<path d="M796.9,151.1 L931.3,150.8 L948.3,166.5 L947.2,231.1 L795.7,229.0 z" fill="#30302e" opacity="1"/>
+<path d="M794.8,150.7 Q864.2,149.5 934.4,149.7" fill="none" stroke="#f0eee6" stroke-width="1.40" stroke-linecap="round" opacity="1.00"/>
+<path d="M794.4,150.2 Q864.0,150.2 933.5,150.0" fill="none" stroke="#f0eee6" stroke-width="0.77" stroke-linecap="round" opacity="0.70"/>
+<path d="M930.7,148.5 Q940.0,158.5 950.0,167.9" fill="none" stroke="#f0eee6" stroke-width="1.40" stroke-linecap="round" opacity="1.00"/>
+<path d="M931.4,149.0 Q939.9,158.4 948.1,167.1" fill="none" stroke="#f0eee6" stroke-width="0.77" stroke-linecap="round" opacity="0.70"/>
+<path d="M948.3,162.8 Q948.4,197.7 948.9,233.0" fill="none" stroke="#f0eee6" stroke-width="1.40" stroke-linecap="round" opacity="1.00"/>
+<path d="M948.6,163.1 Q947.4,197.9 948.2,233.7" fill="none" stroke="#f0eee6" stroke-width="0.77" stroke-linecap="round" opacity="0.70"/>
+<path d="M949.4,230.3 Q872.3,230.7 795.7,229.2" fill="none" stroke="#f0eee6" stroke-width="1.40" stroke-linecap="round" opacity="1.00"/>
+<path d="M948.4,229.9 Q872.2,231.6 796.0,230.8" fill="none" stroke="#f0eee6" stroke-width="0.77" stroke-linecap="round" opacity="0.70"/>
+<path d="M796.0,230.5 Q797.6,189.9 795.9,148.3" fill="none" stroke="#f0eee6" stroke-width="1.40" stroke-linecap="round" opacity="1.00"/>
+<path d="M795.8,232.1 Q795.6,190.3 795.2,149.2" fill="none" stroke="#f0eee6" stroke-width="0.77" stroke-linecap="round" opacity="0.70"/>
+<path d="M931.5,147.7 Q932.4,158.0 932.0,168.0" fill="none" stroke="#f0eee6" stroke-width="1.10" stroke-linecap="round" opacity="1.00"/>
+<path d="M931.4,147.6 Q932.2,158.1 931.8,169.2" fill="none" stroke="#f0eee6" stroke-width="0.61" stroke-linecap="round" opacity="0.70"/>
+<path d="M931.1,166.9 Q939.7,166.8 948.7,165.4" fill="none" stroke="#f0eee6" stroke-width="1.10" stroke-linecap="round" opacity="1.00"/>
+<path d="M930.3,166.3 Q940.3,165.9 949.6,166.8" fill="none" stroke="#f0eee6" stroke-width="0.61" stroke-linecap="round" opacity="0.70"/>
+<path d="M763.4,140.4 Q774.1,155.4 792.0,166.0" fill="none" stroke="#97ab74" stroke-width="1.6" stroke-linecap="round"/>
+<path d="M763.2,140.0 Q775.7,156.5 792.0,166.0" fill="none" stroke="#97ab74" stroke-width="0.8" stroke-linecap="round"/>
+<path d="M791.6,166.0 Q789.1,161.2 786.2,156.6" fill="none" stroke="#97ab74" stroke-width="1.60" stroke-linecap="round" opacity="1.00"/>
+<path d="M792.3,166.1 Q786.7,164.7 781.3,164.1" fill="none" stroke="#97ab74" stroke-width="1.60" stroke-linecap="round" opacity="1.00"/>
+<path d="M764.7,262.5 Q775.6,235.2 792.0,214.0" fill="none" stroke="#5794d8" stroke-width="1.6" stroke-linecap="round"/>
+<path d="M764.9,261.0 Q774.2,234.3 792.0,214.0" fill="none" stroke="#5794d8" stroke-width="0.8" stroke-linecap="round"/>
+<path d="M791.7,213.8 Q786.9,216.1 781.7,218.2" fill="none" stroke="#5794d8" stroke-width="1.60" stroke-linecap="round" opacity="1.00"/>
+<path d="M791.7,213.8 Q790.6,219.4 789.6,224.8" fill="none" stroke="#5794d8" stroke-width="1.60" stroke-linecap="round" opacity="1.00"/>
+</g>
+<text x="36.0" y="48.0" font-family="Georgia, 'Times New Roman', serif" font-size="22" fill="#f0eee6" text-anchor="start" font-weight="normal" xml:space="preserve">How canonicalize prints a number</text>
+<text x="36.0" y="76.0" font-family="'Segoe Print', 'Bradley Hand', 'Chalkboard SE', 'Comic Neue', 'Comic Sans MS', cursive" font-size="14" fill="#c2c0b6" text-anchor="start" font-weight="normal" xml:space="preserve">always what JavaScript&#x27;s String(Number) prints; sortKeys and minify never touch numbers</text>
+<text x="48.0" y="144.0" font-family="'Segoe Print', 'Bradley Hand', 'Chalkboard SE', 'Comic Neue', 'Comic Sans MS', cursive" font-size="15" fill="#f0eee6" text-anchor="start" font-weight="normal" xml:space="preserve">the token</text>
+<text x="52.0" y="182.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="14" fill="#f0eee6" text-anchor="start" font-weight="normal" xml:space="preserve">1.50</text>
+<text x="52.0" y="208.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="11.5" fill="#f0eee6" text-anchor="start" font-weight="normal" xml:space="preserve">113017829008754.13</text>
+<text x="340.0" y="186.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#f0eee6" text-anchor="middle" font-weight="normal" xml:space="preserve">15 significant</text>
+<text x="340.0" y="205.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#f0eee6" text-anchor="middle" font-weight="normal" xml:space="preserve">digits or fewer?</text>
+<text x="532.0" y="98.0" font-family="'Segoe Print', 'Bradley Hand', 'Chalkboard SE', 'Comic Neue', 'Comic Sans MS', cursive" font-size="15" fill="#97ab74" text-anchor="start" font-weight="normal" xml:space="preserve">yes: re-spell the digits</text>
+<text x="534.0" y="132.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#c2c0b6" text-anchor="start" font-weight="normal" xml:space="preserve">no float parse at all</text>
+<text x="534.0" y="160.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="13" fill="#f0eee6" text-anchor="start" font-weight="normal" xml:space="preserve">1.50  -&gt;  1.5</text>
+<text x="532.0" y="214.0" font-family="'Segoe Print', 'Bradley Hand', 'Chalkboard SE', 'Comic Neue', 'Comic Sans MS', cursive" font-size="15" fill="#5794d8" text-anchor="start" font-weight="normal" xml:space="preserve">no: parse, then Ryu</text>
+<text x="534.0" y="246.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#c2c0b6" text-anchor="start" font-weight="normal" xml:space="preserve">nearest double, then the</text>
+<text x="534.0" y="266.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#c2c0b6" text-anchor="start" font-weight="normal" xml:space="preserve">shortest digits that round-trip</text>
+<text x="534.0" y="290.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" fill="#8f8d85" text-anchor="start" font-weight="normal" xml:space="preserve">(ported d2d, ECMA-262 ties)</text>
+<text x="808.0" y="144.0" font-family="'Segoe Print', 'Bradley Hand', 'Chalkboard SE', 'Comic Neue', 'Comic Sans MS', cursive" font-size="15" fill="#f0eee6" text-anchor="start" font-weight="normal" xml:space="preserve">output</text>
+<text x="810.0" y="182.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="14" fill="#f0eee6" text-anchor="start" font-weight="normal" xml:space="preserve">1.5</text>
+<text x="810.0" y="208.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="11.5" fill="#f0eee6" text-anchor="start" font-weight="normal" xml:space="preserve">113017829008754.12</text>
+<text x="36.0" y="370.0" font-family="'Segoe Print', 'Bradley Hand', 'Chalkboard SE', 'Comic Neue', 'Comic Sans MS', cursive" font-size="13" fill="#8f8d85" text-anchor="start" font-weight="normal" xml:space="preserve">15 digits is enough: distinct decimals of that length are distinct doubles.</text>
+<text x="36.0" y="350.0" font-family="'Segoe Print', 'Bradley Hand', 'Chalkboard SE', 'Comic Neue', 'Comic Sans MS', cursive" font-size="13" fill="#8f8d85" text-anchor="start" font-weight="normal" xml:space="preserve">strictNumbers: true throws ERR_JSON_PRECISION if the printed value would change.</text>
+</svg>
